@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/retry.dart';
 import 'package:http/http.dart' as http;
@@ -21,6 +22,7 @@ import 'package:tahfidz/model/profil.dart';
 //     ),
 //   ));
 // }
+enum Gender { lakiLaki, perempuan }
 
 class ProfileScreen extends StatefulWidget {
   final String telepon;
@@ -46,8 +48,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   List<String> _jenisKelamin = <String>['Laki-laki', 'Perempuan'];
 
-  String? _gender;
-
+  Gender _gender = Gender.lakiLaki;
   @override
   void initState() {
     super.initState();
@@ -101,6 +102,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           centerTitle: true,
         ),
         body: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -144,70 +146,68 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 height: heightBody / 2,
                 padding: EdgeInsets.all(20),
                 child: SingleChildScrollView(
-                  reverse: true,
-                  child: Column(
-                    children: [
-                      buildTextField("Nama", _controllerNama.text, false, false,
-                          _controllerNama),
-                      buildTextField("Telepon", _controllerTelepon.text, false,
-                          false, _controllerTelepon),
-                      buildTextField("Alamat", _controllerAlamat.text, false,
-                          false, _controllerAlamat),
-                      // buildTextField(
-                      //     "Jenis Kelamin",
-                      //     _controllerJenisKelamin.text,
-                      //     false,
-                      //     false,
-                      //     _controllerJenisKelamin),
-                      buildDropDownField(widthBody),
-                      buildTextField(
-                          "Tanggal Lahir",
-                          _controllerTanggalLahir.text,
-                          false,
-                          false,
-                          _controllerTanggalLahir),
-                      buildTextField(
-                          "Tempat Lahir",
-                          _controllerTempatLahir.text,
-                          false,
-                          false,
-                          _controllerTempatLahir),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          OutlineButton(
-                            padding: EdgeInsets.symmetric(horizontal: 50),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20)),
-                            onPressed: () {
-                              Get.back();
-                            },
-                            child: Text("Batal",
+                  // reverse: true,
+                  physics: FixedExtentScrollPhysics(),
+                  child: Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Column(
+                      children: [
+                        buildRadioGender(),
+                        buildTextField("Nama", _controllerNama.text, false,
+                            false, _controllerNama),
+                        buildTextField("Telepon", _controllerTelepon.text,
+                            false, false, _controllerTelepon),
+                        buildTextField("Alamat", _controllerAlamat.text, false,
+                            false, _controllerAlamat),
+                        buildTextField(
+                            "Tanggal Lahir",
+                            _controllerTanggalLahir.text,
+                            false,
+                            false,
+                            _controllerTanggalLahir),
+                        buildTextField(
+                            "Tempat Lahir",
+                            _controllerTempatLahir.text,
+                            false,
+                            false,
+                            _controllerTempatLahir),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            OutlineButton(
+                              padding: EdgeInsets.symmetric(horizontal: 50),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20)),
+                              onPressed: () {
+                                Get.back();
+                              },
+                              child: Text("Batal",
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      letterSpacing: 2.2,
+                                      color: Colors.black)),
+                            ),
+                            RaisedButton(
+                              onPressed: () {
+                                print("ini simpan");
+                              },
+                              color: mainColor,
+                              padding: EdgeInsets.symmetric(horizontal: 50),
+                              elevation: 2,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: Text(
+                                "Simpan",
                                 style: TextStyle(
                                     fontSize: 14,
                                     letterSpacing: 2.2,
-                                    color: Colors.black)),
-                          ),
-                          RaisedButton(
-                            onPressed: () {
-                              print("ini simpan");
-                            },
-                            color: mainColor,
-                            padding: EdgeInsets.symmetric(horizontal: 50),
-                            elevation: 2,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20)),
-                            child: Text(
-                              "Simpan",
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  letterSpacing: 2.2,
-                                  color: Colors.white),
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
+                                    color: Colors.white),
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               )
@@ -218,27 +218,61 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget buildDropDownField(double widthBody) {
-    return Container(
-      padding: EdgeInsets.only(bottom: 35.0),
-      width: widthBody,
-      child: Column(children: <Widget>[
-        Container(
-          child: DropdownButton(
-              value: _gender,
-              items: _jenisKelamin.map((value) {
-                return DropdownMenuItem(
-                  child: Text(value),
-                  value: value,
-                );
-              }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  _gender = value as String?;
-                });
-              }),
-        )
-      ]),
+  // Widget buildDro
+  //pDownField(double widthBody) {
+  //   return Container(
+  //     padding: EdgeInsets.only(bottom: 35.0),
+  //     width: widthBody,
+  //     child: Column(children: <Widget>[
+  //       Container(
+  //         child: DropdownButton(
+  //             value: _gender,
+  //             items: _jenisKelamin.map((value) {
+  //               return DropdownMenuItem(
+  //                 child: Text(value),
+  //                 value: value,
+  //               );
+  //             }).toList(),
+  //             onChanged: (value) {
+  //               setState(() {
+  //                 _gender = value as String?;
+  //               });
+  //             }),
+  //       )
+  //     ]),
+  //   );
+  // }
+
+  Widget buildRadioGender() {
+    return Wrap(
+      alignment: WrapAlignment.center,
+      clipBehavior: Clip.none,
+      children: <Widget>[
+        ListTile(
+          title: const Text('Laki-Laki'),
+          leading: Radio<Gender>(
+            value: Gender.lakiLaki,
+            groupValue: _gender,
+            onChanged: (Gender? value) {
+              setState(() {
+                _gender = value!;
+              });
+            },
+          ),
+        ),
+        ListTile(
+          title: const Text('Perempuan'),
+          leading: Radio<Gender>(
+            value: Gender.perempuan,
+            groupValue: _gender,
+            onChanged: (Gender? value) {
+              setState(() {
+                _gender = value!;
+              });
+            },
+          ),
+        ),
+      ],
     );
   }
 
@@ -269,10 +303,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 : null,
             contentPadding: EdgeInsets.only(bottom: 3),
             labelText: labelText,
+            labelStyle: GoogleFonts.poppins(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
             floatingLabelBehavior: FloatingLabelBehavior.always,
             hintText: placeholder,
             hintStyle: TextStyle(
-              fontSize: 16,
+              fontSize: 18,
               fontWeight: FontWeight.bold,
               color: Colors.black,
             )),
