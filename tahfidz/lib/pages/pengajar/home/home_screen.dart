@@ -56,16 +56,18 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: SafeArea(
-        bottom: true,
+        bottom: false,
         child: Container(
           height: heightBody,
           width: widhtBody,
+          // padding: EdgeInsets.all(20),
           // color: Colors.black26,
           child: Column(
             children: [
               Container(
-                height: 350,
+                height: 250,
                 width: widhtBody,
+                // color: Colors.black,
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
@@ -82,14 +84,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     Positioned(
                       top: 0,
-                      height: 252,
+                      height: 145,
                       width: widhtBody,
                       child: Container(
                         decoration: const BoxDecoration(
                           color: Color.fromRGBO(0, 45, 245, 100),
                           borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(50),
-                            bottomRight: Radius.circular(50),
+                            bottomLeft: Radius.circular(90),
+                            bottomRight: Radius.circular(90),
                           ),
                         ),
                       ),
@@ -97,11 +99,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     Positioned(
                       top: 30,
                       width: widhtBody / 1.25,
-                      height: heightBody / 2.7,
+                      height: heightBody / 3.5,
                       child: Card(
                         color: Colors.white,
                         shape: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(35),
+                          borderRadius: BorderRadius.circular(50),
                           borderSide: BorderSide(
                             color: Colors.transparent,
                           ),
@@ -112,8 +114,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: [
                               ProfilePicture(
                                   sizeAvatar: 100,
-                                  heightBtn: 30,
-                                  widthBtn: 50,
+                                  heightBtn: 20,
+                                  widthBtn: 40,
                                   sizeIcon: 18),
                               SizedBox(height: 15),
                               Text(
@@ -139,29 +141,54 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              Container(
-                color: Colors.white,
-                child: Wrap(
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: [
-                    ItemMenu(
-                        title: 'Expend', icon: Icons.home, color: 0xffFED525),
-                    ItemMenu(
-                        title: 'Collection',
-                        icon: Icons.star,
-                        color: 0xffFD637B),
-                    ItemMenu(
-                        title: 'Incomes',
-                        icon: Icons.monetization_on,
-                        color: 0xff21CDFF),
-                    ItemMenu(
-                        title: 'Sales',
-                        icon: Icons.show_chart,
-                        color: 0xff7585F6)
-                  ],
-                ),
+              SizedBox(
+                height: 20,
               ),
+              Container(
+                width: widhtBody,
+                // color: Colors.black,
+                height: heightBody / 2,
+                padding: EdgeInsets.all(20),
+                child: Container(
+                  // color: Colors.white,
+                  height: heightBody,
+                  width: widhtBody,
+                  child: Wrap(
+                    alignment: WrapAlignment.center,
+                    spacing: 6,
+                    runSpacing: 6,
+                    children: [
+                      GestureDetector(
+                          onTap: () => {print('ok')},
+                          child: ItemMenu(
+                              title: 'Dashboard',
+                              icon: Icons.dashboard_customize,
+                              color: 0xff7585F6)),
+                      GestureDetector(
+                        onTap: () => {print('ok')},
+                        child: ItemMenu(
+                            title: 'Absensi',
+                            icon: Icons.book,
+                            color: 0xffFED525),
+                      ),
+                      GestureDetector(
+                        onTap: () => {print('ok')},
+                        child: ItemMenu(
+                            title: 'Penilaian',
+                            icon: Icons.book_online_outlined,
+                            color: 0xffFD637B),
+                      ),
+                      GestureDetector(
+                        onTap: () => {print('ok')},
+                        child: ItemMenu(
+                            title: 'Rekap',
+                            icon: Icons.report_off_rounded,
+                            color: 0xff21CDFF),
+                      ),
+                    ],
+                  ),
+                ),
+              )
             ],
           ),
         ),
