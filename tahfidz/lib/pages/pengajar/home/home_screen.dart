@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:progress_dialog/progress_dialog.dart';
+// import 'package:progress_dialog/progress_dialog.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/item-menu.dart';
 import 'package:tahfidz/components/constants.dart';
@@ -10,11 +10,11 @@ import 'package:tahfidz/main.dart';
 // ignore: duplicate_import
 import 'package:tahfidz/components/constants.dart';
 
-// void main() {
-//   runApp(GetMaterialApp(
-//     home: HomeScreen(),
-//   ));
-// }
+void main() {
+  runApp(GetMaterialApp(
+    home: HomeScreen(),
+  ));
+}
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
