@@ -10,6 +10,7 @@ import 'package:progress_dialog/progress_dialog.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/constants.dart';
+import 'package:tahfidz/controllers/profile_controller.dart';
 import 'package:tahfidz/pages/pengajar/home/home_screen.dart';
 
 import 'model/profil.dart';
@@ -46,24 +47,21 @@ class _MyAppPageState extends State<MyAppPage> {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController _controllerTelepon = TextEditingController();
-    TextEditingController _controllerPassword = TextEditingController();
-
     Future<void> _loginProses() async {
       try {
         Response response;
 
-        ProgressDialog? progressDialog = ProgressDialog(context);
-        progressDialog.style(message: "Harap Tunggu...");
-        progressDialog.show();
+        // ProgressDialog? progressDialog = ProgressDialog(context);
+        // progressDialog.style(message: "Harap Tunggu...");
+        // progressDialog.show();
 
         response = await dio.post("http://rtq-freelance.my.id/api/login",
             data: FormData.fromMap({
-              "no_hp": "${_controllerTelepon.text}",
-              "password": "${_controllerPassword.text}",
+              "no_hp": "${ProfileController.telepon.text}",
+              "password": "${ProfileController.password.text}",
             }));
 
-        progressDialog.hide();
+        // progressDialog.hide();
 
         if (response.data['status'] == true) {
           SpUtil.putBool("status", response.data['status']);
@@ -71,8 +69,8 @@ class _MyAppPageState extends State<MyAppPage> {
           SpUtil.putString("keterangan", response.data['data']['keterangan']);
           SpUtil.putString("no_hp", response.data['data']['no_hp']);
           setState(() {
-            _controllerTelepon.text = "";
-            _controllerPassword.text = "";
+            ProfileController.telepon.text = "";
+            ProfileController.password.text = "";
           });
 
           Get.off(HomeScreen(telepon: response.data['data']['no_hp']));
@@ -85,7 +83,7 @@ class _MyAppPageState extends State<MyAppPage> {
     }
 
     final fieldTelepon = TextFormField(
-      controller: _controllerTelepon,
+      controller: ProfileController.telepon,
       keyboardType: TextInputType.phone,
       decoration: InputDecoration(
         hintText: "Telepon",
@@ -100,7 +98,7 @@ class _MyAppPageState extends State<MyAppPage> {
       },
     );
     final fieldPassword = TextFormField(
-      controller: _controllerPassword,
+      controller: ProfileController.password,
       obscureText: true,
       decoration: InputDecoration(
         hintText: "Password",

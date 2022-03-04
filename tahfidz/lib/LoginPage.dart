@@ -3,6 +3,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:tahfidz/controllers/profile_controller.dart';
 import 'package:tahfidz/pages/pengajar/home/home_screen.dart';
 
 class LoginPage extends StatefulWidget {
@@ -16,22 +17,19 @@ class _LoginPageState extends State<LoginPage> {
   Dio dio = new Dio();
   @override
   Widget build(BuildContext context) {
-    TextEditingController _controllerTelepon = new TextEditingController();
-    TextEditingController _controllerPassword = new TextEditingController();
-
     Future<void> _loginProses() async {
       try {
         Response response;
 
         response = await dio.post("http://rtq-freelance.my.id/api/login",
             data: FormData.fromMap({
-              "no_hp": "${_controllerTelepon.text}",
-              "password": "${_controllerPassword.text}",
+              "no_hp": "${ProfileController.telepon.text}",
+              "password": "${ProfileController.password.text}",
             }));
         if (response.data['status'] == true) {
           setState(() {
-            _controllerTelepon.text = "";
-            _controllerPassword.text = "";
+            ProfileController.telepon.text = "";
+            ProfileController.password.text = "";
           });
           // Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
         } else {
@@ -45,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     final fieldTelepon = TextFormField(
-      controller: _controllerTelepon,
+      controller: ProfileController.telepon,
       keyboardType: TextInputType.phone,
       decoration: InputDecoration(
           hintText: "Telepon",
@@ -53,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(20))),
     );
     final fieldPassword = TextFormField(
-      controller: _controllerPassword,
+      controller: ProfileController.password,
       obscureText: true,
       decoration: InputDecoration(
         hintText: "Password",
@@ -76,7 +74,8 @@ class _LoginPageState extends State<LoginPage> {
         // side: BorderSide(color: Colors.red),
       ),
       onPressed: () {
-        if (_controllerPassword.text == '' || _controllerTelepon.text == '') {
+        if (ProfileController.password.text == '' ||
+            ProfileController.telepon.text == '') {
           sendLoginFailed();
         } else {
           _loginProses();

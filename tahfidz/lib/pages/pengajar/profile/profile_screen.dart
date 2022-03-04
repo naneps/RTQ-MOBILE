@@ -12,6 +12,7 @@ import 'package:http/http.dart' as http;
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/profile_avatar.dart';
+import 'package:tahfidz/controllers/profile_controller.dart';
 
 import 'package:tahfidz/model/profil.dart';
 
@@ -35,16 +36,12 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  TextEditingController _controllerTelepon = TextEditingController();
-  TextEditingController _controllerNama = TextEditingController();
-  TextEditingController _controllerAlamat = TextEditingController();
-  TextEditingController _controllerTeleponLama = TextEditingController();
-  TextEditingController _controllerJenisKelamin = TextEditingController();
-  TextEditingController _controllerTanggalLahir = TextEditingController();
-  TextEditingController _controllerTempatLahir = TextEditingController();
-
   bool showPassword = false;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  DateTime dataTiru = DateTime.utc(2022, 10, 10);
+
+  // final tahun_lahir = dataTiru.year;
+  DateTime tanggal_lahir = DateTime.utc(2022, 10, 10);
 
   List<String> _jenisKelamin = <String>['Laki-laki', 'Perempuan'];
 
@@ -63,13 +60,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
       if (response.statusCode == 200) {
         var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
-        _controllerNama.text = jsonResponse['data']['nama'];
-        _controllerTelepon.text = jsonResponse['data']['no_hp'];
-        _controllerTeleponLama.text = jsonResponse['data']['no_hp'];
-        _controllerAlamat.text = jsonResponse['data']['alamat'];
-        _controllerJenisKelamin.text = jsonResponse['data']['alamat'];
-        _controllerTanggalLahir.text = jsonResponse['data']['alamat'];
-        _controllerTempatLahir.text = jsonResponse['data']['alamat'];
+        ProfileController.nama.text = jsonResponse['data']['nama'];
+        ProfileController.alamat.text = jsonResponse['data']['no_hp'];
+        ProfileController.teleponLama.text = jsonResponse['data']['no_hp'];
+        ProfileController.alamat.text = jsonResponse['data']['alamat'];
+        ProfileController.jenisKelamin.text = jsonResponse['data']['alamat'];
+        ProfileController.alamat.text = jsonResponse['data']['alamat'];
+        ProfileController.tempatLahir.text = jsonResponse['data']['alamat'];
       } else {
         dataFailed();
       }
@@ -153,24 +150,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Column(
                       children: [
                         // buildRadioGender(),
-                        buildTextField("Nama", _controllerNama.text, false,
-                            false, _controllerNama),
-                        buildTextField("Telepon", _controllerTelepon.text,
-                            false, false, _controllerTelepon),
-                        buildTextField("Alamat", _controllerAlamat.text, false,
-                            false, _controllerAlamat),
+                        Text(
+                          tanggal_lahir.year.toString(),
+                        ),
+                        buildTextField("Nama", ProfileController.nama.text,
+                            false, false, ProfileController.nama),
+                        buildTextField(
+                            "Telepon",
+                            ProfileController.telepon.text,
+                            false,
+                            false,
+                            ProfileController.telepon),
+                        buildTextField("Alamat", ProfileController.alamat.text,
+                            false, false, ProfileController.alamat),
                         buildTextField(
                             "Tanggal Lahir",
-                            _controllerTanggalLahir.text,
+                            ProfileController.tanggalLahir.text,
                             false,
                             false,
-                            _controllerTanggalLahir),
+                            ProfileController.tanggalLahir),
                         buildTextField(
                             "Tempat Lahir",
-                            _controllerTempatLahir.text,
+                            ProfileController.tempatLahir.text,
                             false,
                             false,
-                            _controllerTempatLahir),
+                            ProfileController.tempatLahir),
                         // example(),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -219,30 +223,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  // Widget buildDropDownField(double widthBody) {
-  //   return Container(
-  //     padding: EdgeInsets.only(bottom: 35.0),
-  //     width: widthBody,
-  //     child: Column(children: <Widget>[
-  //       Container(
-  //         child: DropdownButton(
-  //             value: _gender,
-  //             items: _jenisKelamin.map((value) {
-  //               return DropdownMenuItem(
-  //                 child: Text(value),
-  //                 value: value,
-  //               );
-  //             }).toList(),
-  //             onChanged: (value) {
-  //               setState(() {
-  //                 _gender = value as String?;
-  //               });
-  //             }),
-  //       )
-  //     ]),
-  //   );
-  // }
-
+ 
   Widget buildRadioGender() {
     return Wrap(
       alignment: WrapAlignment.center,

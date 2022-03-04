@@ -340,3 +340,32 @@
 //     ),
 //   );
 // }
+
+
+
+
+
+
+ // Widget buildDropDownField(double widthBody) {
+  //   return Container(
+  //     padding: EdgeInsets.only(bottom: 35.0),
+  //     width: widthBody,
+  //     child: Column(children: <Widget>[
+  //       Container(
+  //         child: DropdownButton(
+  //             value: _gender,
+  //             items: _jenisKelamin.map((value) {
+  //               return DropdownMenuItem(
+  //                 child: Text(value),
+  //                 value: value,
+  //               );
+  //             }).toList(),
+  //             onChanged: (value) {
+  //               setState(() {
+  //                 _gender = value as String?;
+  //               });
+  //             }),
+  //       )
+  //     ]),
+  //   );
+  // }

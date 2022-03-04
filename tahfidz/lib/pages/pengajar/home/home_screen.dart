@@ -29,24 +29,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  TextEditingController _controllerNama = TextEditingController();
-  TextEditingController _controllerKeterangan = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    getProfil();
-  }
-
-  getProfil() async {
+  Future getProfil() async {
     final client = RetryClient(http.Client());
     try {
       var response = await client
           .get(Uri.parse(link_public + 'info_profil/' + widget.telepon));
-
       var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
-      _controllerNama.text = jsonResponse['data']['nama'];
-      _controllerKeterangan.text = jsonResponse['data']['keterangan'];
+      return jsonResponse['data']['nama'];
     } finally {
       client.close();
     }
@@ -128,37 +117,72 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Colors.white,
                         shape: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50),
-                          borderSide: BorderSide(
+                          borderSide: const BorderSide(
                             color: Colors.transparent,
                           ),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.all(20),
-                          child: Column(
-                            children: [
-                              ProfilePicture(
-                                  sizeAvatar: 100,
-                                  heightBtn: 20,
-                                  widthBtn: 40,
-                                  sizeIcon: 18),
-                              SizedBox(height: 15),
-                              Text(
-                                _controllerNama.text,
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              SizedBox(height: 10),
-                              Text(
-                                _controllerKeterangan.text,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
+                          padding: const EdgeInsets.all(20),
+                          child: FutureBuilder(
+                            future: getProfil(),
+                            builder:
+                                (BuildContext context, AsyncSnapshot snapshot) {
+                              if (snapshot.hasError) {
+                                return const Icon(Icons.error_outline,
+                                    color: Colors.red, size: 60);
+                              }
+                              return Column(
+                                children: [
+                                  const ProfilePicture(
+                                      sizeAvatar: 100,
+                                      heightBtn: 20,
+                                      widthBtn: 40,
+                                      sizeIcon: 18),
+                                  const SizedBox(height: 15),
+                                  Text(
+                                    snapshot.data!,
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    SpUtil.getString('keterangan')!,
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
                           ),
+                          // child: Column(
+                          //   children: [
+                          //     ProfilePicture(
+                          //         sizeAvatar: 100,
+                          //         heightBtn: 20,
+                          //         widthBtn: 40,
+                          //         sizeIcon: 18),
+                          //     SizedBox(height: 15),
+                          //     Text(
+                          //       _controllerNama.text,
+                          //       style: TextStyle(
+                          //         fontSize: 18,
+                          //         fontWeight: FontWeight.bold,
+                          //       ),
+                          //     ),
+                          //     SizedBox(height: 10),
+                          //     Text(
+                          //       SpUtil.getString('keterangan')!,
+                          //       style: TextStyle(
+                          //         fontSize: 12,
+                          //         fontWeight: FontWeight.bold,
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
                         ),
                       ),
                     ), //Hero Section
