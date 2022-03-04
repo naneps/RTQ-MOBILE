@@ -1,32 +1,56 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/retry.dart';
+import 'package:http/http.dart' as http;
 import 'package:progress_dialog/progress_dialog.dart';
-// import 'package:progress_dialog/progress_dialog.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/item-menu.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/profile_avatar.dart';
 import 'package:tahfidz/main.dart';
-// ignore: duplicate_import
 import 'package:tahfidz/components/constants.dart';
 
-void main() {
-  runApp(GetMaterialApp(
-    home: HomeScreen(),
-  ));
-}
+// void main() {
+//   runApp(GetMaterialApp(
+//     home: HomeScreen(),
+//   ));
+// }
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  // const HomeScreen({Key? key}) : super(key: key);
+  final String telepon;
+  HomeScreen({required this.telepon});
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final String? nama = SpUtil.getString("nama", defValue: "");
-  final String? keterangan = SpUtil.getString("keterangan", defValue: "");
+  TextEditingController _controllerNama = TextEditingController();
+  TextEditingController _controllerKeterangan = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    getProfil();
+  }
+
+  getProfil() async {
+    final client = RetryClient(http.Client());
+    try {
+      var response = await client
+          .get(Uri.parse(link_public + 'info_profil/' + widget.telepon));
+
+      var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
+      _controllerNama.text = jsonResponse['data']['nama'];
+      _controllerKeterangan.text = jsonResponse['data']['keterangan'];
+    } finally {
+      client.close();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   sizeIcon: 18),
                               SizedBox(height: 15),
                               Text(
-                                nama!,
+                                _controllerNama.text,
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -127,7 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               SizedBox(height: 10),
                               Text(
-                                keterangan!,
+                                _controllerKeterangan.text,
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,

@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
             _controllerTelepon.text = "";
             _controllerPassword.text = "";
           });
-          Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+          // Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
         } else {
           setState(() {
             sendLoginFailed();
