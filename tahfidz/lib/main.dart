@@ -41,11 +41,13 @@ class MyAppPage extends StatefulWidget {
 }
 
 class _MyAppPageState extends State<MyAppPage> {
-  Dio dio = new Dio();
+  Dio dio = Dio();
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
-    TextEditingController _controllerTelepon = new TextEditingController();
-    TextEditingController _controllerPassword = new TextEditingController();
+    TextEditingController _controllerTelepon = TextEditingController();
+    TextEditingController _controllerPassword = TextEditingController();
 
     Future<void> _loginProses() async {
       try {
@@ -86,9 +88,16 @@ class _MyAppPageState extends State<MyAppPage> {
       controller: _controllerTelepon,
       keyboardType: TextInputType.phone,
       decoration: InputDecoration(
-          hintText: "Telepon",
-          prefixIcon: const Icon(Icons.phone),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(50))),
+        hintText: "Telepon",
+        prefixIcon: const Icon(Icons.phone),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(50)),
+      ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Telepon tidak boleh kosong';
+        }
+        return null;
+      },
     );
     final fieldPassword = TextFormField(
       controller: _controllerPassword,
@@ -100,6 +109,12 @@ class _MyAppPageState extends State<MyAppPage> {
           borderRadius: BorderRadius.circular(50),
         ),
       ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Password tidak boleh kosong';
+        }
+        return null;
+      },
     );
     final loginText = Center(
         child: Text(
@@ -114,9 +129,7 @@ class _MyAppPageState extends State<MyAppPage> {
         // side: BorderSide(color: Colors.red),
       ),
       onPressed: () {
-        if (_controllerPassword.text == '' || _controllerTelepon.text == '') {
-          sendLoginFailed();
-        } else {
+        if (_formKey.currentState!.validate()) {
           _loginProses();
         }
       },
@@ -180,6 +193,7 @@ class _MyAppPageState extends State<MyAppPage> {
                 ],
               ),
               child: Form(
+                key: _formKey,
                 child: ListView(
                   padding: EdgeInsets.all(20),
                   children: [

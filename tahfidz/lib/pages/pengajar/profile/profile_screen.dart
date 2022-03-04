@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/retry.dart';
@@ -36,12 +37,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController _controllerNama = new TextEditingController();
   TextEditingController _controllerAlamat = new TextEditingController();
   TextEditingController _controllerTeleponLama = new TextEditingController();
-  // jenis kelamin
-  // tanggal lahir
-  // Tempat Lahir
+  TextEditingController _controllerJenisKelamin = new TextEditingController();
+  TextEditingController _controllerTanggalLahir = new TextEditingController();
+  TextEditingController _controllerTempatLahir = new TextEditingController();
 
   bool showPassword = false;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  List<String> _jenisKelamin = <String>['Laki-laki', 'Perempuan'];
+
+  String? _gender;
 
   @override
   void initState() {
@@ -55,11 +60,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
       var response = await client.get(Uri.parse(
           'http://rtq-freelance.my.id/api/info_profil/' + widget.telepon));
 
-      var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
-      _controllerNama.text = jsonResponse['data']['nama'];
-      _controllerTelepon.text = jsonResponse['data']['no_hp'];
-      _controllerTeleponLama.text = jsonResponse['data']['no_hp'];
-      _controllerAlamat.text = jsonResponse['data']['alamat'];
+      if (response.statusCode == 200) {
+        var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
+        _controllerNama.text = jsonResponse['data']['nama'];
+        _controllerTelepon.text = jsonResponse['data']['no_hp'];
+        _controllerTeleponLama.text = jsonResponse['data']['no_hp'];
+        _controllerAlamat.text = jsonResponse['data']['alamat'];
+        _controllerJenisKelamin.text = jsonResponse['data']['alamat'];
+        _controllerTanggalLahir.text = jsonResponse['data']['alamat'];
+        _controllerTempatLahir.text = jsonResponse['data']['alamat'];
+      } else {
+        dataFailed();
+      }
     } finally {
       client.close();
     }
@@ -141,6 +153,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           false, _controllerTelepon),
                       buildTextField("Alamat", _controllerAlamat.text, false,
                           false, _controllerAlamat),
+                      // buildTextField(
+                      //     "Jenis Kelamin",
+                      //     _controllerJenisKelamin.text,
+                      //     false,
+                      //     false,
+                      //     _controllerJenisKelamin),
+                      buildDropDownField(widthBody),
+                      buildTextField(
+                          "Tanggal Lahir",
+                          _controllerTanggalLahir.text,
+                          false,
+                          false,
+                          _controllerTanggalLahir),
+                      buildTextField(
+                          "Tempat Lahir",
+                          _controllerTempatLahir.text,
+                          false,
+                          false,
+                          _controllerTempatLahir),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -149,7 +180,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20)),
                             onPressed: () {
-                              print("ini batal");
+                              Get.back();
                             },
                             child: Text("Batal",
                                 style: TextStyle(
@@ -159,8 +190,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           RaisedButton(
                             onPressed: () {
-                              print(_controllerTeleponLama.text);
-                              print(_controllerTelepon.text);
                               print("ini simpan");
                             },
                             color: mainColor,
@@ -186,6 +215,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget buildDropDownField(double widthBody) {
+    return Container(
+      padding: EdgeInsets.only(bottom: 35.0),
+      width: widthBody,
+      child: Column(children: <Widget>[
+        Container(
+          child: DropdownButton(
+              value: _gender,
+              items: _jenisKelamin.map((value) {
+                return DropdownMenuItem(
+                  child: Text(value),
+                  value: value,
+                );
+              }).toList(),
+              onChanged: (value) {
+                setState(() {
+                  _gender = value as String?;
+                });
+              }),
+        )
+      ]),
     );
   }
 
@@ -225,5 +278,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
             )),
       ),
     );
+  }
+
+  void dataFailed() {
+    Fluttertoast.showToast(
+        msg: "Data gagal diambil!",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0);
   }
 }
