@@ -73,6 +73,8 @@ flutter:
   assets:
     - assets/images/
     - assets/
+    # - http://rtq-freelance.my.id/
+    # - https://flutter.dev/assets-and-images/#from-packages
 
   #   - images/a_dot_ham.jpeg
 

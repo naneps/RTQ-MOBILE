@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 // import 'package:progress_dialog/progress_dialog.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/item-menu.dart';
@@ -42,14 +43,8 @@ class _HomeScreenState extends State<HomeScreen> {
             margin: EdgeInsets.only(right: 20),
             child: TextButton(
               onPressed: () {
-                // ProgressDialog? progress = new ProgressDialog(context);
-                // progress.style(message: "Harap Tunggu...");
-                // progress.show();
-
                 SpUtil.clear();
                 Get.off(MyAppPage());
-
-                // progress.hide();
               },
               child: Icon(
                 Icons.logout_rounded,

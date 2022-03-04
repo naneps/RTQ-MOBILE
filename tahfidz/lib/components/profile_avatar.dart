@@ -23,8 +23,9 @@ class ProfilePicture extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           CircleAvatar(
-            backgroundImage: AssetImage("assets/images/avatar.png"),
+            backgroundImage: AssetImage('assets/images/avatar.png'),
           ),
+          // Image.network(SpUtil.getString('gambar')!),
           Positioned(
             right: 3,
             bottom: 3,
