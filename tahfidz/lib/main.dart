@@ -70,6 +70,7 @@ class _MyAppPageState extends State<MyAppPage> {
           SpUtil.putString("nama", response.data['data']['nama']);
           SpUtil.putString("keterangan", response.data['data']['keterangan']);
           SpUtil.putString("no_hp", response.data['data']['no_hp']);
+          // SpUtil.putString("gambar", response.data['data']['gambar']);
           setState(() {
             _controllerTelepon.text = "";
             _controllerPassword.text = "";
