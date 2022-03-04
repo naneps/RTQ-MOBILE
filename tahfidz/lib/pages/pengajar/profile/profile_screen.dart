@@ -152,7 +152,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     padding: EdgeInsets.all(10),
                     child: Column(
                       children: [
-                        buildRadioGender(),
+                        // buildRadioGender(),
                         buildTextField("Nama", _controllerNama.text, false,
                             false, _controllerNama),
                         buildTextField("Telepon", _controllerTelepon.text,
@@ -171,6 +171,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             false,
                             false,
                             _controllerTempatLahir),
+                        // example(),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -218,8 +219,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  // Widget buildDro
-  //pDownField(double widthBody) {
+  // Widget buildDropDownField(double widthBody) {
   //   return Container(
   //     padding: EdgeInsets.only(bottom: 35.0),
   //     width: widthBody,
