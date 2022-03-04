@@ -35,13 +35,13 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  TextEditingController _controllerTelepon = new TextEditingController();
-  TextEditingController _controllerNama = new TextEditingController();
-  TextEditingController _controllerAlamat = new TextEditingController();
-  TextEditingController _controllerTeleponLama = new TextEditingController();
-  TextEditingController _controllerJenisKelamin = new TextEditingController();
-  TextEditingController _controllerTanggalLahir = new TextEditingController();
-  TextEditingController _controllerTempatLahir = new TextEditingController();
+  TextEditingController _controllerTelepon = TextEditingController();
+  TextEditingController _controllerNama = TextEditingController();
+  TextEditingController _controllerAlamat = TextEditingController();
+  TextEditingController _controllerTeleponLama = TextEditingController();
+  TextEditingController _controllerJenisKelamin = TextEditingController();
+  TextEditingController _controllerTanggalLahir = TextEditingController();
+  TextEditingController _controllerTempatLahir = TextEditingController();
 
   bool showPassword = false;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
