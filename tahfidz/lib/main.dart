@@ -10,7 +10,6 @@ import 'package:progress_dialog/progress_dialog.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/constants.dart';
-import 'package:tahfidz/controllers/profile_controller.dart';
 import 'package:tahfidz/pages/pengajar/home/home_screen.dart';
 
 import 'model/profil.dart';
@@ -47,6 +46,9 @@ class _MyAppPageState extends State<MyAppPage> {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController _controllerTelepon = TextEditingController();
+    TextEditingController _controllerPassword = TextEditingController();
+
     Future<void> _loginProses() async {
       try {
         Response response;
@@ -55,11 +57,15 @@ class _MyAppPageState extends State<MyAppPage> {
         // progressDialog.style(message: "Harap Tunggu...");
         // progressDialog.show();
 
-        response = await dio.post("http://rtq-freelance.my.id/api/login",
-            data: FormData.fromMap({
-              "no_hp": "${ProfileController.telepon.text}",
-              "password": "${ProfileController.password.text}",
-            }));
+        response = await dio.post(
+          "http://rtq-freelance.my.id/api/login",
+          data: FormData.fromMap(
+            {
+              "no_hp": "${_controllerTelepon.text}",
+              "password": "${_controllerPassword.text}",
+            },
+          ),
+        );
 
         // progressDialog.hide();
 
@@ -69,8 +75,8 @@ class _MyAppPageState extends State<MyAppPage> {
           SpUtil.putString("keterangan", response.data['data']['keterangan']);
           SpUtil.putString("no_hp", response.data['data']['no_hp']);
           setState(() {
-            ProfileController.telepon.text = "";
-            ProfileController.password.text = "";
+            _controllerTelepon.text = "";
+            _controllerPassword.text = "";
           });
 
           Get.off(HomeScreen(telepon: response.data['data']['no_hp']));
@@ -83,7 +89,7 @@ class _MyAppPageState extends State<MyAppPage> {
     }
 
     final fieldTelepon = TextFormField(
-      controller: ProfileController.telepon,
+      controller: _controllerTelepon,
       keyboardType: TextInputType.phone,
       decoration: InputDecoration(
         hintText: "Telepon",
@@ -98,7 +104,7 @@ class _MyAppPageState extends State<MyAppPage> {
       },
     );
     final fieldPassword = TextFormField(
-      controller: ProfileController.password,
+      controller: _controllerPassword,
       obscureText: true,
       decoration: InputDecoration(
         hintText: "Password",

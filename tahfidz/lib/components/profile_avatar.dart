@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sp_util/sp_util.dart';
@@ -10,9 +12,13 @@ class ProfilePicture extends StatelessWidget {
   final double? heightBtn;
   final double? sizeIcon;
   final double? widthBtn;
-
-  const ProfilePicture(
-      {this.sizeAvatar, this.heightBtn, this.widthBtn, this.sizeIcon});
+  dynamic onPress;
+  ProfilePicture(
+      {this.sizeAvatar,
+      this.heightBtn,
+      this.widthBtn,
+      this.sizeIcon,
+      this.onPress});
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -42,11 +48,7 @@ class ProfilePicture extends StatelessWidget {
                     // primary: Colors.white,
                     backgroundColor: Color.fromARGB(255, 15, 75, 255),
                   ),
-                  onPressed: () {
-                    Get.to(ProfileScreen(
-                      telepon: SpUtil.getString('no_hp')!,
-                    ));
-                  },
+                  onPressed: onPress,
                   child: Icon(
                     Icons.edit,
                     color: Colors.white,

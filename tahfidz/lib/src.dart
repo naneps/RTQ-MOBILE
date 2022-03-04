@@ -369,3 +369,33 @@
   //     ]),
   //   );
   // }
+
+
+
+
+
+ // child: Column(
+                          //   children: [
+                          //     ProfilePicture(
+                          //         sizeAvatar: 100,
+                          //         heightBtn: 20,
+                          //         widthBtn: 40,
+                          //         sizeIcon: 18),
+                          //     SizedBox(height: 15),
+                          //     Text(
+                          //       _controllerNama.text,
+                          //       style: TextStyle(
+                          //         fontSize: 18,
+                          //         fontWeight: FontWeight.bold,
+                          //       ),
+                          //     ),
+                          //     SizedBox(height: 10),
+                          //     Text(
+                          //       SpUtil.getString('keterangan')!,
+                          //       style: TextStyle(
+                          //         fontSize: 12,
+                          //         fontWeight: FontWeight.bold,
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),

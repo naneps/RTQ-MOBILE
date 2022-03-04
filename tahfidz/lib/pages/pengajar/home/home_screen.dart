@@ -12,6 +12,7 @@ import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/profile_avatar.dart';
 import 'package:tahfidz/main.dart';
 import 'package:tahfidz/components/constants.dart';
+import 'package:tahfidz/pages/pengajar/profile/profile_screen.dart';
 
 // void main() {
 //   runApp(GetMaterialApp(
@@ -114,6 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: widhtBody / 1.25,
                       height: heightBody / 3.5,
                       child: Card(
+                        elevation: 5,
                         color: Colors.white,
                         shape: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50),
@@ -127,17 +129,25 @@ class _HomeScreenState extends State<HomeScreen> {
                             future: getProfil(),
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
-                              if (snapshot.hasError) {
-                                return const Icon(Icons.error_outline,
-                                    color: Colors.red, size: 60);
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    color: mainColor,
+                                  ),
+                                );
                               }
                               return Column(
                                 children: [
-                                  const ProfilePicture(
-                                      sizeAvatar: 100,
-                                      heightBtn: 20,
-                                      widthBtn: 40,
-                                      sizeIcon: 18),
+                                  ProfilePicture(
+                                    sizeAvatar: 100,
+                                    heightBtn: 20,
+                                    widthBtn: 40,
+                                    sizeIcon: 18,
+                                    onPress: () {
+                                      Get.to(ProfileScreen());
+                                    },
+                                  ),
                                   const SizedBox(height: 15),
                                   Text(
                                     snapshot.data!,
@@ -158,31 +168,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               );
                             },
                           ),
-                          // child: Column(
-                          //   children: [
-                          //     ProfilePicture(
-                          //         sizeAvatar: 100,
-                          //         heightBtn: 20,
-                          //         widthBtn: 40,
-                          //         sizeIcon: 18),
-                          //     SizedBox(height: 15),
-                          //     Text(
-                          //       _controllerNama.text,
-                          //       style: TextStyle(
-                          //         fontSize: 18,
-                          //         fontWeight: FontWeight.bold,
-                          //       ),
-                          //     ),
-                          //     SizedBox(height: 10),
-                          //     Text(
-                          //       SpUtil.getString('keterangan')!,
-                          //       style: TextStyle(
-                          //         fontSize: 12,
-                          //         fontWeight: FontWeight.bold,
-                          //       ),
-                          //     ),
-                          //   ],
-                          // ),
                         ),
                       ),
                     ), //Hero Section
@@ -242,5 +227,9 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  void goToProfileScreen() {
+    Get.to(ProfileScreen());
   }
 }

@@ -26,9 +26,9 @@ import 'package:tahfidz/model/profil.dart';
 enum Gender { lakiLaki, perempuan }
 
 class ProfileScreen extends StatefulWidget {
-  final String telepon;
+  final String? telepon;
 
-  ProfileScreen({required this.telepon});
+  ProfileScreen({this.telepon});
   // const ProfileScreen({Key? key}) : super(key: key);
 
   @override
@@ -56,7 +56,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final client = RetryClient(http.Client());
     try {
       var response = await client.get(Uri.parse(
-          'http://rtq-freelance.my.id/api/info_profil/' + widget.telepon));
+          'http://rtq-freelance.my.id/api/info_profil/' + widget.telepon!));
 
       if (response.statusCode == 200) {
         var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
@@ -223,7 +223,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
- 
   Widget buildRadioGender() {
     return Wrap(
       alignment: WrapAlignment.center,
