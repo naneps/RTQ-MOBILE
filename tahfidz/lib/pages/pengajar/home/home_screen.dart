@@ -10,11 +10,11 @@ import 'package:tahfidz/main.dart';
 // ignore: duplicate_import
 import 'package:tahfidz/components/constants.dart';
 
-void main() {
-  runApp(GetMaterialApp(
-    home: HomeScreen(),
-  ));
-}
+// void main() {
+//   runApp(GetMaterialApp(
+//     home: HomeScreen(),
+//   ));
+// }
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 // progress.hide();
               },
               child: Icon(
-                Icons.settings,
+                Icons.logout_rounded,
                 color: Colors.white,
                 size: 32,
               ),
@@ -116,7 +116,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Column(
                             children: [
                               ProfilePicture(
-                                  sizeAvatar: 100, sizeBtn: 30, sizeIcon: 18),
+                                  sizeAvatar: 100,
+                                  heightBtn: 30,
+                                  widthBtn: 50,
+                                  sizeIcon: 18),
                               SizedBox(height: 15),
                               Text(
                                 nama!,

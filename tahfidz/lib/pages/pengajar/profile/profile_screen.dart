@@ -1,23 +1,29 @@
 // ignore_for_file: deprecated_member_use
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/retry.dart';
+import 'package:http/http.dart' as http;
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/profile_avatar.dart';
 
 import 'package:tahfidz/model/profil.dart';
 
-void main(List<String> args) {
-  runApp(MaterialApp(
-    home: ProfileScreen(
-      telepon: '',
-    ),
-  ));
-}
+// void main(List<String> args) {
+//   runApp(MaterialApp(
+//     home: ProfileScreen(
+//       telepon: '',
+//     ),
+//   ));
+// }
 
 class ProfileScreen extends StatefulWidget {
   final String telepon;
+
   ProfileScreen({required this.telepon});
   // const ProfileScreen({Key? key}) : super(key: key);
 
@@ -26,6 +32,14 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  TextEditingController _controllerTelepon = new TextEditingController();
+  TextEditingController _controllerNama = new TextEditingController();
+  TextEditingController _controllerAlamat = new TextEditingController();
+  TextEditingController _controllerTeleponLama = new TextEditingController();
+  // jenis kelamin
+  // tanggal lahir
+  // Tempat Lahir
+
   bool showPassword = false;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -36,19 +50,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   getUser() async {
-    // Dio dio = new Dio();
+    final client = RetryClient(http.Client());
+    try {
+      var response = await client.get(Uri.parse(
+          'http://rtq-freelance.my.id/api/info_profil/' + widget.telepon));
 
-    // var coba = dio
-    //     .get('https://rtq-freelance.my.id/api/info_profil/' + widget.telepon);
-
-    print(widget.telepon);
+      var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
+      _controllerNama.text = jsonResponse['data']['nama'];
+      _controllerTelepon.text = jsonResponse['data']['no_hp'];
+      _controllerTeleponLama.text = jsonResponse['data']['no_hp'];
+      _controllerAlamat.text = jsonResponse['data']['alamat'];
+    } finally {
+      client.close();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController _controllerTelepon = new TextEditingController();
-    TextEditingController _controllerNama = new TextEditingController();
-
     final heightBody = MediaQuery.of(context).size.height;
     final widthBody = MediaQuery.of(context).size.width;
 
@@ -102,7 +120,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           shape: CircleBorder(),
                           child: ProfilePicture(
                             sizeAvatar: 150,
-                            sizeBtn: 0,
+                            // sizeBtn: 0,
                           ),
                         )),
                   ],
@@ -117,10 +135,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   reverse: true,
                   child: Column(
                     children: [
-                      buildTextField(
-                          "Nama", "Namamu", false, false, _controllerNama),
-                      buildTextField(
-                          "Nama", "Namamu", false, false, _controllerNama),
+                      buildTextField("Nama", _controllerNama.text, false, false,
+                          _controllerNama),
+                      buildTextField("Telepon", _controllerTelepon.text, false,
+                          false, _controllerTelepon),
+                      buildTextField("Alamat", _controllerAlamat.text, false,
+                          false, _controllerAlamat),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -128,8 +148,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             padding: EdgeInsets.symmetric(horizontal: 50),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20)),
-                            onPressed: () {},
-                            child: Text("CANCEL",
+                            onPressed: () {
+                              print("ini batal");
+                            },
+                            child: Text("Batal",
                                 style: TextStyle(
                                     fontSize: 14,
                                     letterSpacing: 2.2,
@@ -137,8 +159,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           RaisedButton(
                             onPressed: () {
-                              // print(_controllerTelepon.text);
-                              // print(_controllerNama.text);
+                              print(_controllerTeleponLama.text);
+                              print(_controllerTelepon.text);
+                              print("ini simpan");
                             },
                             color: mainColor,
                             padding: EdgeInsets.symmetric(horizontal: 50),
@@ -146,7 +169,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20)),
                             child: Text(
-                              "SAVE",
+                              "Simpan",
                               style: TextStyle(
                                   fontSize: 14,
                                   letterSpacing: 2.2,
@@ -173,6 +196,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       padding: const EdgeInsets.only(bottom: 35.0),
       child: TextField(
         controller: controller,
+
         obscureText: isPasswordTextField ? showPassword : false,
         // ignore: dead_code
         keyboardType: (type == true) ? typekey : null,
