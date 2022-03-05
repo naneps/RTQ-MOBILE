@@ -151,8 +151,9 @@ class _MyAppPageState extends State<MyAppPage> {
           children: [
             Positioned(
               // top: 0,
+
               child: Container(
-                margin: EdgeInsets.only(top: 400),
+                margin: EdgeInsets.only(top: 500),
                 width: double.infinity,
                 height: 450,
                 decoration: BoxDecoration(

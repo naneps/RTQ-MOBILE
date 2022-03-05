@@ -28,7 +28,7 @@ enum Gender { lakiLaki, perempuan }
 class ProfileScreen extends StatefulWidget {
   final String? telepon;
 
-  ProfileScreen({this.telepon});
+  ProfileScreen( {this.telepon});
   // const ProfileScreen({Key? key}) : super(key: key);
 
   @override
@@ -145,6 +145,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: SingleChildScrollView(
                   // reverse: true,
                   physics: FixedExtentScrollPhysics(),
+                  
                   child: Padding(
                     padding: EdgeInsets.all(10),
                     child: Column(

@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               Container(
-                height: 250,
+                // height: 250,
                 width: widhtBody,
                 // color: Colors.black,
                 child: Stack(
@@ -145,7 +145,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     widthBtn: 40,
                                     sizeIcon: 18,
                                     onPress: () {
-                                      Get.to(ProfileScreen());
+                                      Get.to(ProfileScreen(
+                                          telepon: SpUtil.getString('no_hp')));
                                     },
                                   ),
                                   const SizedBox(height: 15),
@@ -175,9 +176,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 50,
               ),
               Container(
+                margin: EdgeInsets.only(top: 50),
                 width: widhtBody,
                 // color: Colors.black,
                 height: heightBody / 2,
@@ -230,6 +232,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void goToProfileScreen() {
-    Get.to(ProfileScreen());
+    Get.to(ProfileScreen(
+      telepon: SpUtil.getString('no_hp'),
+    ));
   }
 }
