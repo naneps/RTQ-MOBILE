@@ -399,3 +399,56 @@
                           //     ),
                           //   ],
                           // ),
+
+                          
+
+
+                           // child: Stack(
+                //   alignment: Alignment.center,
+                //   children: [
+                //     Positioned(
+                //       top: 0,
+                //       child: Container(
+                //         width: widhtBody,
+                //         height: 200,
+                //         // color: Colors.black,
+                //         child: Row(
+                //           children: [],
+                //         ),
+                //       ),
+                //     ),
+                //     Positioned(
+                //       top: 0,
+                //       height: 145,
+                //       width: widhtBody,
+                //       child: Container(
+                //         decoration: const BoxDecoration(
+                //           color: Color.fromRGBO(0, 45, 245, 100),
+                //           borderRadius: BorderRadius.only(
+                //             bottomLeft: Radius.circular(90),
+                //             bottomRight: Radius.circular(90),
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //     Positioned(
+                //       top: 30,
+                //       width: widhtBody / 1.25,
+                //       height: heightBody / 3.5,
+                //       child: Card(
+                //         elevation: 5,
+                //         color: Colors.white,
+                //         shape: OutlineInputBorder(
+                //           borderRadius: BorderRadius.circular(50),
+                //           borderSide: const BorderSide(
+                //             color: Colors.transparent,
+                //           ),
+                //         ),
+                //         child: Padding(
+                //           padding: const EdgeInsets.all(20),
+                //           
+                //         ),
+                //       ),
+                //     ), //Hero Section
+                //   ],
+                // ),

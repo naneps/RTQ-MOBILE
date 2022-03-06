@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/retry.dart';
 import 'package:http/http.dart' as http;
 import 'package:progress_dialog/progress_dialog.dart';
@@ -69,8 +70,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: SafeArea(
-        bottom: false,
+      body: Container(
+        // physics: BouncingScrollPhysics(),s
         child: Container(
           height: heightBody,
           width: widhtBody,
@@ -79,91 +80,80 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               Container(
-                // height: 250,
+                height: heightBody / 3.5,
                 width: widhtBody,
                 // color: Colors.black,
                 child: Stack(
+                  fit: StackFit.expand,
+                  // clipBehavior: Clip.antiAliasWithSaveLayer,
                   alignment: Alignment.center,
                   children: [
                     Positioned(
                       top: 0,
+                      height: 150,
+                      width: widhtBody,
                       child: Container(
-                        width: widhtBody,
-                        height: 200,
-                        // color: Colors.black,
-                        child: Row(
-                          children: [],
-                        ),
+                        // color: mainColor,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(90),
+                              bottomRight: Radius.circular(90),
+                            ),
+                            color: mainColor),
+                        // width: widhtBody,
                       ),
                     ),
                     Positioned(
                       top: 0,
-                      height: 145,
-                      width: widhtBody,
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          color: Color.fromRGBO(0, 45, 245, 100),
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(90),
-                            bottomRight: Radius.circular(90),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      top: 30,
-                      width: widhtBody / 1.25,
-                      height: heightBody / 3.5,
+                      height: 220,
+                      width: widhtBody / 1.2,
                       child: Card(
-                        elevation: 5,
-                        color: Colors.white,
-                        shape: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50),
-                          borderSide: const BorderSide(
-                            color: Colors.transparent,
+                        // color: mainColor,
+                        elevation: 1,
+                        shadowColor: Colors.transparent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(30),
                           ),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.all(20),
+                          padding: EdgeInsets.all(20),
                           child: FutureBuilder(
                             future: getProfil(),
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
-                                return Center(
-                                  child: CircularProgressIndicator(
-                                    color: mainColor,
-                                  ),
+                                return CircularProgressIndicator(
+                                  color: mainColor,
                                 );
                               }
                               return Column(
+                                // color: mainColor,
+
                                 children: [
                                   ProfilePicture(
                                     sizeAvatar: 100,
-                                    heightBtn: 20,
-                                    widthBtn: 40,
-                                    sizeIcon: 18,
-                                    onPress: () {
-                                      Get.to(ProfileScreen(
-                                          telepon: SpUtil.getString('no_hp')));
-                                    },
+                                    sizeIcon: 0,
+                                    widthBtn: 0,
                                   ),
-                                  const SizedBox(height: 15),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
                                   Text(
                                     snapshot.data!,
-                                    style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600),
                                   ),
-                                  const SizedBox(height: 10),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
                                   Text(
                                     SpUtil.getString('keterangan')!,
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500),
                                   ),
                                 ],
                               );
@@ -171,18 +161,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-                    ), //Hero Section
+                    ),
                   ],
                 ),
               ),
               SizedBox(
-                height: 50,
+                height: 10,
               ),
               Container(
                 margin: EdgeInsets.only(top: 50),
                 width: widhtBody,
                 // color: Colors.black,
-                height: heightBody / 2,
+                height: heightBody / 2.5,
                 padding: EdgeInsets.all(20),
                 child: Container(
                   // color: Colors.white,
@@ -229,6 +219,16 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  void onSelected(BuildContext context, int item) {
+    switch (item) {
+      case 0:
+        break;
+      case 1:
+        break;
+      default:
+    }
   }
 
   void goToProfileScreen() {
