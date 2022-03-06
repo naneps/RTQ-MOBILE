@@ -13,6 +13,7 @@ import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/profile_avatar.dart';
 import 'package:tahfidz/main.dart';
 import 'package:tahfidz/components/constants.dart';
+import 'package:tahfidz/pages/pengajar/absensi/absensi_screen.dart';
 import 'package:tahfidz/pages/pengajar/profile/profile_screen.dart';
 
 // void main() {
@@ -53,21 +54,48 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0,
         backgroundColor: mainColor,
         actions: [
-          // PopupMenuButton(itemBuilder: itemBuilder),
           Container(
             margin: EdgeInsets.only(right: 20),
-            child: TextButton(
-              onPressed: () {
-                SpUtil.clear();
-                Get.off(MyAppPage());
-              },
-              child: Icon(
-                Icons.logout_rounded,
-                color: Colors.white,
-                size: 32,
-              ),
+            child: PopupMenuButton(
+              onSelected: (value) => onSelected(context, value as int),
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  value: 0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Icon(
+                        Icons.edit,
+                        color: Colors.black,
+                      ),
+                      Text(
+                        "Edit Profile",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
+                ),
+                PopupMenuItem(
+                  value: 0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Icon(
+                        Icons.logout,
+                        color: Colors.black,
+                      ),
+                      Text(
+                        "Log Out",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ),
+          )
         ],
       ),
       body: Container(
@@ -124,8 +152,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 (BuildContext context, AsyncSnapshot snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
-                                return CircularProgressIndicator(
-                                  color: mainColor,
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    backgroundColor: Colors.yellow,
+                                    strokeWidth: 10,
+                                    // value: 1,
+                                    color: mainColor,
+                                  ),
                                 );
                               }
                               return Column(
@@ -190,7 +223,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               icon: Icons.dashboard_customize,
                               color: 0xff7585F6)),
                       GestureDetector(
-                        onTap: () => {print('ok')},
+                        onTap: () => {Get.to(Absensi_Screen())},
                         child: ItemMenu(
                             title: 'Absensi',
                             icon: Icons.book,
@@ -224,8 +257,11 @@ class _HomeScreenState extends State<HomeScreen> {
   void onSelected(BuildContext context, int item) {
     switch (item) {
       case 0:
+        Get.to(ProfileScreen(telepon: SpUtil.getString('no_hp')));
         break;
       case 1:
+        SpUtil.clear();
+        Get.off(MyAppPage());
         break;
       default:
     }
