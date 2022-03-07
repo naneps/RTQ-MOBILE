@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/retry.dart';
 import 'package:http/http.dart' as http;
-import 'package:progress_dialog/progress_dialog.dart';
+// import 'package:progress_dialog/progress_dialog.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/item-menu.dart';
 import 'package:tahfidz/components/constants.dart';
@@ -223,7 +223,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               icon: Icons.dashboard_customize,
                               color: 0xff7585F6)),
                       GestureDetector(
-                        onTap: () => {Get.to(Absensi_Screen())},
+                        onTap: () => {Get.to(AbsensiScreen())},
                         child: ItemMenu(
                             title: 'Absensi',
                             icon: Icons.book,

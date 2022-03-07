@@ -43,7 +43,7 @@ dependencies:
   lottie: ^1.2.2
   sqflite: ^2.0.2
   animated_splash_screen: ^1.2.0
-  progress_dialog:
+  # progress_dialog!:
   animated_text: ^1.0.2
   http: ^0.13.4
   # progress_button: ^0.0.1

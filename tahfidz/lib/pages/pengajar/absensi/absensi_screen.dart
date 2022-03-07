@@ -3,14 +3,20 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/profile_avatar.dart';
 
-class Absensi_Screen extends StatefulWidget {
-  const Absensi_Screen({Key? key}) : super(key: key);
+void main() => runApp(MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: AbsensiScreen(),
+    ));
+
+class AbsensiScreen extends StatefulWidget {
+  const AbsensiScreen({Key? key}) : super(key: key);
 
   @override
-  State<Absensi_Screen> createState() => _Absensi_ScreenState();
+  State<AbsensiScreen> createState() => _AbsensiScreenState();
 }
 
-class _Absensi_ScreenState extends State<Absensi_Screen> {
+class _AbsensiScreenState extends State<AbsensiScreen> {
+  final List users = List.generate(100, (index) => {'id': index});
   @override
   Widget build(BuildContext context) {
     final heightBody = MediaQuery.of(context).size.height;
@@ -26,8 +32,12 @@ class _Absensi_ScreenState extends State<Absensi_Screen> {
           style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.w600),
         ),
       ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {},
+      // ),
       body: Container(
         // physics: BouncingScrollPhysics(),s
+        height: heightBody,
         child: Container(
           height: heightBody,
           width: widhtBody,
@@ -40,7 +50,7 @@ class _Absensi_ScreenState extends State<Absensi_Screen> {
                 width: widhtBody,
                 // color: Colors.black,
                 child: Stack(
-                  fit: StackFit.expand,
+                  // fit: StackFit.expand,
                   // clipBehavior: Clip.antiAliasWithSaveLayer,
                   alignment: Alignment.center,
                   children: [
@@ -81,32 +91,44 @@ class _Absensi_ScreenState extends State<Absensi_Screen> {
                 height: 20,
               ),
               Container(
-                height: 40,
-                width: 200,
-                color: Colors.black,
+                height: heightBody / 16,
+                width: widhtBody / 1.4,
+
+                // color: Colors.black,
+                child: Card(),
               ),
               SizedBox(
-                height: 20,
+                height: 10,
               ),
               Container(
-                height: 100,
+                height: heightBody / 2.5,
                 width: widhtBody,
                 padding: EdgeInsets.only(
                   left: 10,
                   right: 10,
                 ),
-                color: Colors.green,
-                child: ListView(
-                  children: [
-                    ListTile(
-                      leading: ProfilePicture(
-                        sizeAvatar: 50,
-                        sizeIcon: 0,
-                        widthBtn: 0,
+                // color: Colors.green,
+                child: ListView.builder(
+                  physics: BouncingScrollPhysics(),
+                  itemCount: users.length,
+                  itemBuilder: (context, index) => Card(
+                    elevation: 5,
+                    margin: EdgeInsets.all(10),
+                    child: ListTile(
+                      title: Text("Ahmad Dhani"),
+                      trailing: ElevatedButton(
+                        onPressed: () {
+                          // print(index);
+                          users[index]['id'] = index;
+                          print(users[index]['id']);
+                        },
+                        child: Icon(Icons.delete),
                       ),
-                      title: Text("Ahamad Udin"),
-                    )
-                  ],
+                      leading: CircleAvatar(
+                        child: Text("te"),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ],
