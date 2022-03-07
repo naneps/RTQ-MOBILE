@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/profile_avatar.dart';
+import 'package:faker/faker.dart';
 
 void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -16,7 +17,16 @@ class AbsensiScreen extends StatefulWidget {
 }
 
 class _AbsensiScreenState extends State<AbsensiScreen> {
-  final List users = List.generate(100, (index) => {'id': index});
+  Faker fake = Faker();
+  final List users = List.generate(50, (index) {
+    return {
+      'id': index,
+      'name': faker.person.name().toString(),
+      'avatar': faker.image,
+    };
+  });
+
+  bool _isDropped = false;
   @override
   Widget build(BuildContext context) {
     final heightBody = MediaQuery.of(context).size.height;
@@ -38,6 +48,7 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
       body: Container(
         // physics: BouncingScrollPhysics(),s
         height: heightBody,
+        // color: Colors.white,
         child: Container(
           height: heightBody,
           width: widhtBody,
@@ -46,7 +57,7 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
           child: Column(
             children: [
               Container(
-                height: heightBody / 3.5,
+                height: heightBody / 5,
                 width: widhtBody,
                 // color: Colors.black,
                 child: Stack(
@@ -56,7 +67,7 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
                   children: [
                     Positioned(
                       top: 0,
-                      height: 150,
+                      height: 100,
                       width: widhtBody,
                       child: Container(
                         // color: mainColor,
@@ -71,7 +82,7 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
                     ),
                     Positioned(
                       top: 0,
-                      height: 220,
+                      height: 150,
                       width: widhtBody / 1.2,
                       child: Card(
                         // color: mainColor,
@@ -80,6 +91,27 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(
                             Radius.circular(30),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            // mainAxisSize: MainAxisSize.min,
+
+                            children: [
+                              Draggable(
+                                  child: Icon(Icons.sick),
+                                  data: "Hadir",
+                                  feedback: Icon(
+                                    Icons.sick,
+                                    size: 50,
+                                    color: Colors.grey,
+                                  )),
+                              Icon(Icons.co_present),
+                              Icon(Icons.co_present),
+                              Icon(Icons.co_present),
+                            ],
                           ),
                         ),
                       ),
@@ -93,16 +125,18 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
               Container(
                 height: heightBody / 16,
                 width: widhtBody / 1.4,
-
                 // color: Colors.black,
-                child: Card(),
+                child: Card(
+                  elevation: 5,
+                ),
               ),
               SizedBox(
-                height: 10,
+                height: 20,
               ),
               Container(
-                height: heightBody / 2.5,
+                height: heightBody / 2.2,
                 width: widhtBody,
+                // color: Colors.black,
                 padding: EdgeInsets.only(
                   left: 10,
                   right: 10,
@@ -113,20 +147,41 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
                   itemCount: users.length,
                   itemBuilder: (context, index) => Card(
                     elevation: 5,
+                    // shape: ,
                     margin: EdgeInsets.all(10),
                     child: ListTile(
-                      title: Text("Ahmad Dhani"),
-                      trailing: ElevatedButton(
-                        onPressed: () {
-                          // print(index);
-                          users[index]['id'] = index;
-                          print(users[index]['id']);
+                      title: Text(
+                        "${users[index]['name']}",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w600),
+                      ),
+                      // contentPadding: EdgeInsets.all(5),
+                      trailing: DragTarget(
+                        builder: (
+                          BuildContext context,
+                          List<dynamic> accepted,
+                          List<dynamic> rejected,
+                        ) {
+                          return Container(
+                            width: 50,
+                            height: 50,
+                            color: Colors.grey,
+                            child: Center(
+                                child: Text(
+                              _isDropped ? 'Drop here' : 'Dropped',
+                            )),
+                          );
                         },
-                        child: Icon(Icons.delete),
+                        onAccept: (data) {
+                          _isDropped = true;
+                          print(data);
+                          setState(() {});
+                        },
                       ),
                       leading: CircleAvatar(
-                        child: Text("te"),
-                      ),
+
+                          // child: Text("te"),
+                          ),
                     ),
                   ),
                 ),

@@ -112,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: widhtBody,
                 // color: Colors.black,
                 child: Stack(
-                  fit: StackFit.expand,
+                  // fit: StackFit.expand,
                   // clipBehavior: Clip.antiAliasWithSaveLayer,
                   alignment: Alignment.center,
                   children: [
@@ -137,8 +137,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: widhtBody / 1.2,
                       child: Card(
                         // color: mainColor,
-                        elevation: 1,
-                        shadowColor: Colors.transparent,
+                        elevation: 4,
+                        // shadowColor: Colors.transparent,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(
                             Radius.circular(30),
