@@ -1,9 +1,9 @@
-{
-    "dart.flutterAdditionalArgs": [
-        "--no-sound-null-safety"
-    ],
+// {
+//     "dart.flutterAdditionalArgs": [
+//         "--no-sound-null-safety"
+//     ],
 
-    "dart.vmAdditionalArgs": [
-        "--no-sound-null-safety"
-    ]
-}
+//     "dart.vmAdditionalArgs": [
+//         "--no-sound-null-safety"
+//     ]
+// }
