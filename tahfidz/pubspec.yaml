@@ -28,7 +28,6 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   animated_splash_screen: ^1.2.0
-  animated_text: ^1.0.2
   cupertino_icons: ^1.0.2
   dio: ^4.0.4
   flutter:

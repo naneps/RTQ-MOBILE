@@ -11,6 +11,7 @@ import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/item-menu.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/profile_avatar.dart';
+import 'package:tahfidz/controllers/profile_controller.dart';
 import 'package:tahfidz/main.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/pages/pengajar/absensi/absensi_screen.dart';
@@ -26,29 +27,30 @@ class HomeScreen extends StatefulWidget {
   // const HomeScreen({Key? key}) : super(key: key);
   final String telepon;
   HomeScreen({required this.telepon});
-
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Future getProfil() async {
-    final client = RetryClient(http.Client());
-    try {
-      var response = await client
-          .get(Uri.parse(link_public + 'info_profil/' + widget.telepon));
-      var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
-      return jsonResponse['data'];
-    } finally {
-      client.close();
-    }
-  }
+  ProfileController profileController = ProfileController();
+  // Future getProfil() async {
+  //   final client = RetryClient(http.Client());
+  //   try {
+  //     var response = await client
+  //         .get(Uri.parse(link_public + 'info_profil/' + widget.telepon));
+  //     var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
+  //     return jsonResponse['data'];
+  //   } finally {
+  //     client.close();
+  //   }
+  // }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getProfil();
+
+    profileController.getProfil(widget.telepon);
   }
 
   @override
@@ -154,7 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Padding(
                           padding: EdgeInsets.all(20),
                           child: FutureBuilder(
-                            future: getProfil(),
+                            future: profileController.getProfil(widget.telepon),
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
                               if (snapshot.connectionState ==
@@ -176,12 +178,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                         sizeAvatar: 100,
                                         sizeIcon: 0,
                                         widthBtn: 0,
-                                        avatar: snapshot.data['gambar']!),
+                                        avatar: snapshot.data['data']
+                                            ['gambar']!),
                                     SizedBox(
                                       height: 10,
                                     ),
                                     Text(
-                                      snapshot.data['nama']!,
+                                      snapshot.data['data']['nama']!,
                                       style: GoogleFonts.poppins(
                                           fontSize: 18,
                                           fontWeight: FontWeight.w600),

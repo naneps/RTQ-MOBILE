@@ -1,11 +1,9 @@
 // ignore_for_file: deprecated_member_use
 import 'dart:convert';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/retry.dart';
 import 'package:http/http.dart' as http;
@@ -39,7 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool showPassword = false;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   DateTime dataTiru = DateTime.utc(2022, 10, 10);
-
+  ProfileController profileController = ProfileController();
   // final tahun_lahir = dataTiru.year;
   DateTime tanggal_lahir = DateTime.utc(2022, 10, 10);
   String? avatar;
@@ -68,6 +66,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ProfileController.tanggalLahir.text = jsonResponse['data']['tanggal_lahir'];
         ProfileController.tempatLahir.text = jsonResponse['data']['alamat'];
         avatar = jsonResponse['data']['gambar'];
+        profileController.getProfil(widget.telepon!);
       } else {
         dataFailed();
       }
@@ -126,16 +125,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                     Positioned(
-                        bottom: 5,
-                        child: Card(
-                          elevation: 5,
-                          shape: CircleBorder(),
-                          child: ProfilePicture(
-                            sizeAvatar: 150,
-                            avatar: avatar!,
-                            // sizeBtn: 0,
-                          ),
-                        )),
+                      bottom: 5,
+                      child: FutureBuilder(
+                        future: profileController.getProfil(widget.telepon!),
+                        builder:
+                            (BuildContext context, AsyncSnapshot snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(
+                              child: CircularProgressIndicator(
+                                backgroundColor: Colors.yellow,
+                                strokeWidth: 10,
+                                // value: 1,
+                                color: mainColor,
+                              ),
+                            );
+                          } else if (snapshot.hasData) {
+                            return Card(
+                              elevation: 5,
+                              shape: CircleBorder(),
+                              child: ProfilePicture(
+                                sizeAvatar: 150,
+                                avatar: snapshot.data['data']['gambar'],
+                                // sizeBtn: 0,
+                              ),
+                            );
+                          } else if (snapshot.hasError) {
+                            // return CircularProgressIndicator();
+                          }
+                          return CircleAvatar(
+                            backgroundImage:
+                                AssetImage('assets/images/cancel.png'),
+                          );
+                        },
+                      ),
+                    ),
                   ],
                 ),
               ),
