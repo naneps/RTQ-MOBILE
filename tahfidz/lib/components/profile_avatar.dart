@@ -14,13 +14,14 @@ class ProfilePicture extends StatelessWidget {
   final double? widthBtn;
   final String? avatar;
   dynamic onPress;
-  ProfilePicture(
+  ProfilePicture( 
       {this.sizeAvatar,
       this.heightBtn,
       this.widthBtn,
       this.sizeIcon,
       this.onPress,
-      this.avatar});
+      this.avatar
+      });
   @override
   Widget build(BuildContext context) {
     return SizedBox(

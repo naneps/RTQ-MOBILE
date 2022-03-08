@@ -176,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       sizeAvatar: 100,
                                       sizeIcon: 0,
                                       widthBtn: 0,
-                                      snapshot.data['gambar']!
+                                      avatar: snapshot.data['gambar']!,
                                     ),
                                     SizedBox(
                                       height: 10,
