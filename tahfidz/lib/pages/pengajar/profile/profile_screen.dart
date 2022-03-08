@@ -63,9 +63,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ProfileController.nama.text = jsonResponse['data']['nama'];
         ProfileController.alamat.text = jsonResponse['data']['no_hp'];
         ProfileController.teleponLama.text = jsonResponse['data']['no_hp'];
-        ProfileController.alamat.text = jsonResponse['data']['alamat'];
+        ProfileController.telepon.text = jsonResponse['data']['no_hp'];
         ProfileController.jenisKelamin.text = jsonResponse['data']['alamat'];
-        ProfileController.alamat.text = jsonResponse['data']['alamat'];
+        ProfileController.tanggalLahir.text = jsonResponse['data']['tanggal_lahir'];
         ProfileController.tempatLahir.text = jsonResponse['data']['alamat'];
         avatar = jsonResponse['data']['gambar'];
       } else {
@@ -160,10 +160,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             false, false, ProfileController.nama),
                         buildTextField(
                             "Telepon",
-                            ProfileController.telepon.text,
+                            ProfileController.teleponLama.text,
                             false,
                             false,
-                            ProfileController.telepon),
+                            ProfileController.teleponLama),
                         buildTextField("Alamat", ProfileController.alamat.text,
                             false, false, ProfileController.alamat),
                         buildTextField(
