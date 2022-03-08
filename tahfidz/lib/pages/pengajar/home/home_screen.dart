@@ -38,10 +38,21 @@ class _HomeScreenState extends State<HomeScreen> {
       var response = await client
           .get(Uri.parse(link_public + 'info_profil/' + widget.telepon));
       var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
+      // print(jsonResponse);
+      // print("data profil");
+      // print(jsonResponse['data']['nama']);
       return jsonResponse['data']['nama'];
     } finally {
       client.close();
     }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print('OM');
+    getProfil();
   }
 
   @override
@@ -77,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 PopupMenuItem(
-                  value: 0,
+                  value: 1,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -160,36 +171,42 @@ class _HomeScreenState extends State<HomeScreen> {
                                     color: mainColor,
                                   ),
                                 );
-                              }
-                              return Column(
-                                // color: mainColor,
+                              } else if (snapshot.hasData) {
+                                return Column(
+                                  // color: mainColor,
 
-                                children: [
-                                  ProfilePicture(
-                                    sizeAvatar: 100,
-                                    sizeIcon: 0,
-                                    widthBtn: 0,
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    snapshot.data!,
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    SpUtil.getString('keterangan')!,
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ],
-                              );
+                                  children: [
+                                    ProfilePicture(
+                                      sizeAvatar: 100,
+                                      sizeIcon: 0,
+                                      widthBtn: 0,
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      snapshot.data!,
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      SpUtil.getString('keterangan')!,
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
+                                );
+                              } else if (snapshot.hasError) {
+                                print(snapshot.hasError);
+                                print(snapshot.hasData);
+                                return CircularProgressIndicator();
+                              }
+                              return CircularProgressIndicator();
                             },
                           ),
                         ),

@@ -164,10 +164,7 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
                             width: 50,
                             height: 50,
                             color: Colors.grey,
-                            child: Center(
-                                child: Text(
-                              _isDropped ? 'Drop here' : 'Dropped',
-                            )),
+                            child: Center(),
                           );
                         },
                         onAccept: (data) {
