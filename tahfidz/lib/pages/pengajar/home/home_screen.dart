@@ -38,10 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
       var response = await client
           .get(Uri.parse(link_public + 'info_profil/' + widget.telepon));
       var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
-      // print(jsonResponse);
-      // print("data profil");
-      // print(jsonResponse['data']['nama']);
-      return jsonResponse['data']['nama'];
+      return jsonResponse['data'];
     } finally {
       client.close();
     }
@@ -51,7 +48,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print('OM');
     getProfil();
   }
 
@@ -180,12 +176,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                       sizeAvatar: 100,
                                       sizeIcon: 0,
                                       widthBtn: 0,
+                                      snapshot.data['gambar']!
                                     ),
                                     SizedBox(
                                       height: 10,
                                     ),
                                     Text(
-                                      snapshot.data!,
+                                      snapshot.data['nama']!,
                                       style: GoogleFonts.poppins(
                                           fontSize: 18,
                                           fontWeight: FontWeight.w600),

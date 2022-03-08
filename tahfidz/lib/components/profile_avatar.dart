@@ -28,9 +28,9 @@ class ProfilePicture extends StatelessWidget {
         fit: StackFit.expand,
         clipBehavior: Clip.none,
         children: [
-          CircleAvatar(
-            backgroundImage: AssetImage('assets/images/avatar.png'),
-          ),
+          // CircleAvatar(
+          //   backgroundImage: AssetImage('assets/images/avatar.png'),
+          // ),
           // Image.network(SpUtil.getString('gambar')!),
           Positioned(
             right: 3,
