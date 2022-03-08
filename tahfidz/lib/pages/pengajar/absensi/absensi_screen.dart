@@ -161,10 +161,24 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
                           List<dynamic> rejected,
                         ) {
                           return Container(
-                            width: 50,
-                            height: 50,
-                            color: Colors.grey,
-                            child: Center(),
+                            width: 30,
+                            height: 30,
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                //CSS: inset 0px 4px 6px rgba(8, 56, 73, 0.5)
+                                BoxShadow(
+                                  color: const Color.fromRGBO(
+                                      8, 56, 73, 0.5), // shadow color
+                                ),
+                                const BoxShadow(
+                                  offset: Offset(0, 4),
+                                  blurRadius: 6,
+                                  color: Color(0xFFF9F8F9), // background color
+                                ),
+                              ],
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            child: Text(''),
                           );
                         },
                         onAccept: (data) {

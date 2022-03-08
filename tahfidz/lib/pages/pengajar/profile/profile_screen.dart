@@ -48,13 +48,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    getUser();
+    // getUser();
+    // profileController.getProfil(widget.telepon!);
   }
 
   getUser() async {
     final client = RetryClient(http.Client());
     try {
-      var response = await client.get(Uri.parse(link_public + 'info_profil/' + widget.telepon!));
+      var response = await client
+          .get(Uri.parse(link_public + 'info_profil/' + widget.telepon!));
 
       if (response.statusCode == 200) {
         var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
@@ -63,7 +65,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ProfileController.teleponLama.text = jsonResponse['data']['no_hp'];
         ProfileController.telepon.text = jsonResponse['data']['no_hp'];
         ProfileController.jenisKelamin.text = jsonResponse['data']['alamat'];
-        ProfileController.tanggalLahir.text = jsonResponse['data']['tanggal_lahir'];
+        ProfileController.tanggalLahir.text =
+            jsonResponse['data']['tanggal_lahir'];
         ProfileController.tempatLahir.text = jsonResponse['data']['alamat'];
         avatar = jsonResponse['data']['gambar'];
         profileController.getProfil(widget.telepon!);
@@ -140,22 +143,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 color: mainColor,
                               ),
                             );
-                          } else if (snapshot.hasData) {
-                            return Card(
-                              elevation: 5,
-                              shape: const CircleBorder(),
-                              child: ProfilePicture(
-                                sizeAvatar: 150,
-                                avatar: snapshot.data['data']['gambar'],
-                                // sizeBtn: 0,
-                              ),
-                            );
-                          } else if (snapshot.hasError) {
-                            // return CircularProgressIndicator();
                           }
-                          return const CircleAvatar(
-                            backgroundImage:
-                                AssetImage('assets/images/cancel.png'),
+                          return Card(
+                            elevation: 5,
+                            shape: const CircleBorder(),
+                            child: ProfilePicture(
+                              sizeAvatar: 150,
+                              avatar: snapshot.data['data']['gambar'],
+                              // sizeBtn: 0,
+                            ),
                           );
                         },
                       ),
@@ -204,7 +200,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             OutlineButton(
-                              padding: const EdgeInsets.symmetric(horizontal: 50),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 50),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20)),
                               onPressed: () {
@@ -225,7 +222,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 print(ProfileController.tempatLahir.text);
                               },
                               color: mainColor,
-                              padding: const EdgeInsets.symmetric(horizontal: 50),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 50),
                               elevation: 2,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20)),

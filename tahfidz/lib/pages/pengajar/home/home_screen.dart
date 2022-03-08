@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/retry.dart';
+// import 'package:http/retry.dart';
 import 'package:http/http.dart' as http;
 // import 'package:progress_dialog/progress_dialog.dart';
 import 'package:sp_util/sp_util.dart';
@@ -13,7 +13,7 @@ import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/profile_avatar.dart';
 import 'package:tahfidz/controllers/profile_controller.dart';
 import 'package:tahfidz/main.dart';
-import 'package:tahfidz/components/constants.dart';
+// import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/pages/pengajar/absensi/absensi_screen.dart';
 import 'package:tahfidz/pages/pengajar/profile/profile_screen.dart';
 
@@ -33,17 +33,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   ProfileController profileController = ProfileController();
-  // Future getProfil() async {
-  //   final client = RetryClient(http.Client());
-  //   try {
-  //     var response = await client
-  //         .get(Uri.parse(link_public + 'info_profil/' + widget.telepon));
-  //     var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
-  //     return jsonResponse['data'];
-  //   } finally {
-  //     client.close();
-  //   }
-  // }
 
   @override
   void initState() {
@@ -170,42 +159,39 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 );
                               } else if (snapshot.hasData) {
-                                return Column(
-                                  // color: mainColor,
-
-                                  children: [
-                                    ProfilePicture(
-                                        sizeAvatar: 100,
-                                        sizeIcon: 0,
-                                        widthBtn: 0,
-                                        avatar: snapshot.data['data']
-                                            ['gambar']!),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      snapshot.data['data']['nama']!,
-                                      style: GoogleFonts.poppins(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      SpUtil.getString('keterangan')!,
-                                      style: GoogleFonts.poppins(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ],
-                                );
                               } else if (snapshot.hasError) {
                                 print(snapshot.hasError);
                                 print(snapshot.hasData);
                                 return CircularProgressIndicator();
                               }
-                              return CircularProgressIndicator();
+                              return Column(
+                                // color: mainColor,
+                                children: [
+                                  ProfilePicture(
+                                      sizeAvatar: 100,
+                                      sizeIcon: 0,
+                                      widthBtn: 0,
+                                      avatar: snapshot.data['data']['gambar']!),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    snapshot.data['data']['nama']!,
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    SpUtil.getString('keterangan')!,
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ],
+                              );
                             },
                           ),
                         ),
