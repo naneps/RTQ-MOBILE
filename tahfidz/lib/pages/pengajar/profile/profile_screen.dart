@@ -42,7 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   DateTime tanggal_lahir = DateTime.utc(2022, 10, 10);
   String? avatar;
 
-  List<String> _jenisKelamin = <String>['Laki-laki', 'Perempuan'];
+  final List<String> _jenisKelamin = <String>['Laki-laki', 'Perempuan'];
 
   Gender _gender = Gender.lakiLaki;
   @override
@@ -87,7 +87,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           elevation: 0,
           backgroundColor: mainColor,
           leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios_new),
+              icon: const Icon(Icons.arrow_back_ios_new),
               onPressed: () {
                 Get.back();
               }),
@@ -99,11 +99,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           centerTitle: true,
         ),
         body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Container(
+              SizedBox(
                 width: widthBody,
                 height: heightBody / 3.5,
                 child: Stack(
@@ -114,10 +114,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Container(
                         width: widthBody,
                         height: 145,
-                        // margin: EdgeInsets.all(100.0),
+                        // margin: const EdgeInsets.all(100.0),
                         decoration: BoxDecoration(
                           color: mainColor,
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                             bottomRight: Radius.circular(90.0),
                             bottomLeft: Radius.circular(90.0),
                           ),
@@ -143,7 +143,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           } else if (snapshot.hasData) {
                             return Card(
                               elevation: 5,
-                              shape: CircleBorder(),
+                              shape: const CircleBorder(),
                               child: ProfilePicture(
                                 sizeAvatar: 150,
                                 avatar: snapshot.data['data']['gambar'],
@@ -153,7 +153,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           } else if (snapshot.hasError) {
                             // return CircularProgressIndicator();
                           }
-                          return CircleAvatar(
+                          return const CircleAvatar(
                             backgroundImage:
                                 AssetImage('assets/images/cancel.png'),
                           );
@@ -167,27 +167,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 // color: mainColor,
                 width: widthBody,
                 height: heightBody / 2,
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: SingleChildScrollView(
                   // reverse: true,
-                  physics: FixedExtentScrollPhysics(),
+                  // physics: const FixedExtentScrollPhysics(),
 
                   child: Padding(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     child: Column(
                       children: [
-                        // buildRadioGender(),
-                        Text(
-                          tanggal_lahir.year.toString(),
-                        ),
                         buildTextField("Nama", ProfileController.nama.text,
                             false, false, ProfileController.nama),
                         buildTextField(
                             "Telepon",
-                            ProfileController.teleponLama.text,
+                            ProfileController.telepon.text,
                             false,
                             false,
-                            ProfileController.teleponLama),
+                            ProfileController.telepon),
                         buildTextField("Alamat", ProfileController.alamat.text,
                             false, false, ProfileController.alamat),
                         buildTextField(
@@ -202,19 +198,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             false,
                             false,
                             ProfileController.tempatLahir),
-                        buildRadioGender(),
+                        // buildRadioGender(),
                         // example(),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             OutlineButton(
-                              padding: EdgeInsets.symmetric(horizontal: 50),
+                              padding: const EdgeInsets.symmetric(horizontal: 50),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20)),
                               onPressed: () {
                                 Get.back();
                               },
-                              child: Text("Batal",
+                              child: const Text("Batal",
                                   style: TextStyle(
                                       fontSize: 14,
                                       letterSpacing: 2.2,
@@ -222,14 +218,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             RaisedButton(
                               onPressed: () {
-                                print("ini simpan");
+                                print(ProfileController.nama.text);
+                                print(ProfileController.alamat.text);
+                                print(ProfileController.telepon.text);
+                                print(ProfileController.tanggalLahir.text);
+                                print(ProfileController.tempatLahir.text);
                               },
                               color: mainColor,
-                              padding: EdgeInsets.symmetric(horizontal: 50),
+                              padding: const EdgeInsets.symmetric(horizontal: 50),
                               elevation: 2,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20)),
-                              child: Text(
+                              child: const Text(
                                 "Simpan",
                                 style: TextStyle(
                                     fontSize: 14,
@@ -286,7 +286,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget buildTextField(String labelText, String placeholder,
       bool isPasswordTextField, bool type, dynamic controller) {
-    final typekey = TextInputType.number;
+    const typekey = TextInputType.number;
     return Padding(
       padding: const EdgeInsets.only(bottom: 35.0),
       child: TextField(
@@ -303,13 +303,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         showPassword = !showPassword;
                       });
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.remove_red_eye,
                       color: Colors.grey,
                     ),
                   )
                 : null,
-            contentPadding: EdgeInsets.only(bottom: 3),
+            contentPadding: const EdgeInsets.only(bottom: 3),
             labelText: labelText,
             labelStyle: GoogleFonts.poppins(
               fontSize: 20,
@@ -317,7 +317,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             floatingLabelBehavior: FloatingLabelBehavior.always,
             hintText: placeholder,
-            hintStyle: TextStyle(
+            hintStyle: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
               color: Colors.black,
