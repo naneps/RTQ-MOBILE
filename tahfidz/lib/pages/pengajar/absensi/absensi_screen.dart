@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/profile_avatar.dart';
-import 'package:faker/faker.dart';
 
 void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -17,12 +16,11 @@ class AbsensiScreen extends StatefulWidget {
 }
 
 class _AbsensiScreenState extends State<AbsensiScreen> {
-  Faker fake = Faker();
   final List users = List.generate(50, (index) {
     return {
       'id': index,
-      'name': faker.person.name().toString(),
-      'avatar': faker.image,
+      'name': "Hakim Asrori",
+      'avatar': "",
     };
   });
 

@@ -31,7 +31,6 @@ dependencies:
   animated_text: ^1.0.2
   cupertino_icons: ^1.0.2
   dio: ^4.0.4
-  faker: ^2.0.0
   flutter:
     sdk: flutter
   flutter_sequence_animation: null
