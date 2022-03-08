@@ -173,11 +173,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                   children: [
                                     ProfilePicture(
-                                      sizeAvatar: 100,
-                                      sizeIcon: 0,
-                                      widthBtn: 0,
-                                      avatar: snapshot.data['gambar']!,
-                                    ),
+                                        sizeAvatar: 100,
+                                        sizeIcon: 0,
+                                        widthBtn: 0,
+                                        avatar: snapshot.data['gambar']!),
                                     SizedBox(
                                       height: 10,
                                     ),
