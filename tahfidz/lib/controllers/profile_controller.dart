@@ -14,29 +14,30 @@ class ProfileController {
   static TextEditingController jenisKelamin = TextEditingController();
   static TextEditingController tanggalLahir = TextEditingController();
   static TextEditingController tempatLahir = TextEditingController();
-
+  // late Widget tlp;
   // ProfileController(this.tlp);
 
-  // getUser() async {
-  //   final client = RetryClient(http.Client());
-  //   try {
-  //     var response = await client.get(Uri.parse(
-  //         'http://rtq-freelance.my.id/api/info_profil/' + widget.tlp));
+  getProfil(String tlp) async {
+    final client = RetryClient(http.Client());
+    try {
+      var response = await client
+          .get(Uri.parse('http://rtq-freelance.my.id/api/info_profil/' + tlp));
 
-  //     if (response.statusCode == 200) {
-  //       var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
-  //       ProfileController.nama.text = jsonResponse['data']['nama'];
-  //       ProfileController.alamat.text = jsonResponse['data']['no_hp'];
-  //       ProfileController.teleponLama.text = jsonResponse['data']['no_hp'];
-  //       ProfileController.alamat.text = jsonResponse['data']['alamat'];
-  //       ProfileController.jenisKelamin.text = jsonResponse['data']['alamat'];
-  //       ProfileController.alamat.text = jsonResponse['data']['alamat'];
-  //       ProfileController.tempatLahir.text = jsonResponse['data']['alamat'];
-  //     } else {
-  //       dataFailed();
-  //     }
-  //   } finally {
-  //     client.close();
-  //   }
-  // }
+      if (response.statusCode == 200) {
+        var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
+        nama.text = jsonResponse['data']['nama'];
+        alamat.text = jsonResponse['data']['no_hp'];
+        teleponLama.text = jsonResponse['data']['no_hp'];
+        alamat.text = jsonResponse['data']['alamat'];
+        jenisKelamin.text = jsonResponse['data']['alamat'];
+        alamat.text = jsonResponse['data']['alamat'];
+        tempatLahir.text = jsonResponse['data']['alamat'];
+        return jsonResponse;
+      } else {
+        // dataFailed();
+      }
+    } finally {
+      client.close();
+    }
+  }
 }

@@ -37,7 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool showPassword = false;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   DateTime dataTiru = DateTime.utc(2022, 10, 10);
-
+  ProfileController profileController = ProfileController();
   // final tahun_lahir = dataTiru.year;
   DateTime tanggal_lahir = DateTime.utc(2022, 10, 10);
   String? avatar;
@@ -48,33 +48,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    getUser();
-  }
-
-  getUser() async {
-    final client = RetryClient(http.Client());
-    try {
-      var response = await client
-          .get(Uri.parse(link_public + 'info_profil/' + widget.telepon!));
-
-      if (response.statusCode == 200) {
-        var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
-        ProfileController.nama.text = jsonResponse['data']['nama'];
-        ProfileController.alamat.text = jsonResponse['data']['no_hp'];
-        ProfileController.teleponLama.text = jsonResponse['data']['no_hp'];
-        ProfileController.alamat.text = jsonResponse['data']['alamat'];
-        ProfileController.jenisKelamin.text = jsonResponse['data']['alamat'];
-        ProfileController.alamat.text = jsonResponse['data']['alamat'];
-        ProfileController.tempatLahir.text = jsonResponse['data']['alamat'];
-        avatar = jsonResponse['data']['gambar'];
-        // print(jsonResponse['data']['avatar']);
-        return jsonResponse;
-      } else {
-        dataFailed();
-      }
-    } finally {
-      client.close();
-    }
+    profileController.getProfil(widget.telepon!);
   }
 
   @override
@@ -129,7 +103,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Positioned(
                       bottom: 5,
                       child: FutureBuilder(
-                        future: getUser(),
+                        future: profileController.getProfil(widget.telepon!),
                         builder:
                             (BuildContext context, AsyncSnapshot snapshot) {
                           if (snapshot.connectionState ==
@@ -155,7 +129,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           } else if (snapshot.hasError) {
                             // return CircularProgressIndicator();
                           }
-                          return Text("eror");
+                          return CircleAvatar(
+                            backgroundImage:
+                                AssetImage('assets/images/cancel.png'),
+                          );
                         },
                       ),
                     ),
