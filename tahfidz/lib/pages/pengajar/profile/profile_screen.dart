@@ -1,11 +1,9 @@
 // ignore_for_file: deprecated_member_use
 import 'dart:convert';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/retry.dart';
 import 'package:http/http.dart' as http;
@@ -56,7 +54,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   getUser() async {
     final client = RetryClient(http.Client());
     try {
-      var response = await client.get(Uri.parse(link_public + 'info_profil/' + widget.telepon!));
+      var response = await client
+          .get(Uri.parse(link_public + 'info_profil/' + widget.telepon!));
 
       if (response.statusCode == 200) {
         var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
@@ -68,6 +67,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ProfileController.alamat.text = jsonResponse['data']['alamat'];
         ProfileController.tempatLahir.text = jsonResponse['data']['alamat'];
         avatar = jsonResponse['data']['gambar'];
+        // print(jsonResponse['data']['avatar']);
+        return jsonResponse;
       } else {
         dataFailed();
       }
@@ -126,16 +127,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                     Positioned(
-                        bottom: 5,
-                        child: Card(
-                          elevation: 5,
-                          shape: CircleBorder(),
-                          child: ProfilePicture(
-                            sizeAvatar: 150,
-                            avatar: avatar!,
-                            // sizeBtn: 0,
-                          ),
-                        )),
+                      bottom: 5,
+                      child: FutureBuilder(
+                        future: getUser(),
+                        builder:
+                            (BuildContext context, AsyncSnapshot snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(
+                              child: CircularProgressIndicator(
+                                backgroundColor: Colors.yellow,
+                                strokeWidth: 10,
+                                // value: 1,
+                                color: mainColor,
+                              ),
+                            );
+                          } else if (snapshot.hasData) {
+                            return Card(
+                              elevation: 5,
+                              shape: CircleBorder(),
+                              child: ProfilePicture(
+                                sizeAvatar: 150,
+                                avatar: snapshot.data['data']['gambar'],
+                                // sizeBtn: 0,
+                              ),
+                            );
+                          } else if (snapshot.hasError) {
+                            // return CircularProgressIndicator();
+                          }
+                          return Text("eror");
+                        },
+                      ),
+                    ),
                   ],
                 ),
               ),
