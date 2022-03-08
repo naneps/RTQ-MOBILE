@@ -42,6 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   // final tahun_lahir = dataTiru.year;
   DateTime tanggal_lahir = DateTime.utc(2022, 10, 10);
+  String? avatar;
 
   List<String> _jenisKelamin = <String>['Laki-laki', 'Perempuan'];
 
@@ -55,8 +56,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   getUser() async {
     final client = RetryClient(http.Client());
     try {
-      var response = await client.get(Uri.parse(
-          'http://rtq-freelance.my.id/api/info_profil/' + widget.telepon!));
+      var response = await client.get(Uri.parse(link_public + 'info_profil/' + widget.telepon!));
 
       if (response.statusCode == 200) {
         var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
@@ -67,6 +67,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ProfileController.jenisKelamin.text = jsonResponse['data']['alamat'];
         ProfileController.alamat.text = jsonResponse['data']['alamat'];
         ProfileController.tempatLahir.text = jsonResponse['data']['alamat'];
+        avatar = jsonResponse['data']['gambar'];
       } else {
         dataFailed();
       }
@@ -131,6 +132,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           shape: CircleBorder(),
                           child: ProfilePicture(
                             sizeAvatar: 150,
+                            avatar: avatar!,
                             // sizeBtn: 0,
                           ),
                         )),
