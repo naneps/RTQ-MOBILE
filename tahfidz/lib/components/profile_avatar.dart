@@ -12,13 +12,15 @@ class ProfilePicture extends StatelessWidget {
   final double? heightBtn;
   final double? sizeIcon;
   final double? widthBtn;
+  final String? avatar;
   dynamic onPress;
   ProfilePicture(
       {this.sizeAvatar,
       this.heightBtn,
       this.widthBtn,
       this.sizeIcon,
-      this.onPress});
+      this.onPress,
+      this.avatar});
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -28,9 +30,9 @@ class ProfilePicture extends StatelessWidget {
         fit: StackFit.expand,
         clipBehavior: Clip.none,
         children: [
-          // CircleAvatar(
-          //   backgroundImage: AssetImage('assets/images/avatar.png'),
-          // ),
+          CircleAvatar(
+            backgroundImage: AssetImage('${avatar}'),
+          ),
           // Image.network(SpUtil.getString('gambar')!),
           Positioned(
             right: 3,
