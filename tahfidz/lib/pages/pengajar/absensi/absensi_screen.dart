@@ -24,7 +24,9 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
     };
   });
 
-  bool _isDropped = false;
+  bool _isAccepted = false;
+  Color color1 = Colors.green;
+  Color? targetC;
   @override
   Widget build(BuildContext context) {
     final heightBody = MediaQuery.of(context).size.height;
@@ -99,16 +101,89 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
 
                             children: [
                               Draggable(
-                                  child: Icon(Icons.sick),
-                                  data: "Hadir",
-                                  feedback: Icon(
-                                    Icons.sick,
-                                    size: 50,
-                                    color: Colors.grey,
-                                  )),
-                              Icon(Icons.co_present),
-                              Icon(Icons.co_present),
-                              Icon(Icons.co_present),
+                                feedback: SizedBox(
+                                  width: 40,
+                                  height: 40,
+                                  child: Material(
+                                    color: color1.withOpacity(0.5),
+                                    shape: StadiumBorder(),
+                                    elevation: 4,
+                                  ),
+                                ),
+                                data: color1,
+                                child: SizedBox(
+                                  width: 40,
+                                  height: 40,
+                                  child: Material(
+                                    color: color1,
+                                    shape: StadiumBorder(),
+                                    elevation: 4,
+                                  ),
+                                ),
+                              ),
+                              Draggable(
+                                feedback: SizedBox(
+                                  width: 40,
+                                  height: 40,
+                                  child: Material(
+                                    color: color1.withOpacity(0.5),
+                                    shape: StadiumBorder(),
+                                    elevation: 4,
+                                  ),
+                                ),
+                                data: color1,
+                                child: SizedBox(
+                                  width: 40,
+                                  height: 40,
+                                  child: Material(
+                                    color: Colors.blue,
+                                    shape: StadiumBorder(),
+                                    elevation: 4,
+                                  ),
+                                ),
+                              ),
+                              Draggable(
+                                feedback: SizedBox(
+                                  width: 40,
+                                  height: 40,
+                                  child: Material(
+                                    color: color1.withOpacity(0.5),
+                                    shape: StadiumBorder(),
+                                    elevation: 4,
+                                  ),
+                                ),
+                                data: color1,
+                                child: SizedBox(
+                                  width: 40,
+                                  height: 40,
+                                  child: Material(
+                                    color: Colors.yellow,
+                                    shape: StadiumBorder(),
+                                    elevation: 4,
+                                  ),
+                                ),
+                              ),
+                              Draggable(
+                                feedback: SizedBox(
+                                  width: 40,
+                                  height: 40,
+                                  child: Material(
+                                    color: color1.withOpacity(0.5),
+                                    shape: StadiumBorder(),
+                                    elevation: 4,
+                                  ),
+                                ),
+                                data: color1,
+                                child: SizedBox(
+                                  width: 40,
+                                  height: 40,
+                                  child: Material(
+                                    color: Colors.red,
+                                    shape: StadiumBorder(),
+                                    elevation: 4,
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -154,39 +229,28 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
                             fontSize: 20, fontWeight: FontWeight.w600),
                       ),
                       // contentPadding: EdgeInsets.all(5),
-                      trailing: DragTarget(
-                        builder: (
-                          BuildContext context,
-                          List<dynamic> accepted,
-                          List<dynamic> rejected,
-                        ) {
-                          return Container(
-                            width: 30,
-                            height: 30,
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                //CSS: inset 0px 4px 6px rgba(8, 56, 73, 0.5)
-                                BoxShadow(
-                                  color: const Color.fromRGBO(
-                                      8, 56, 73, 0.5), // shadow color
-                                ),
-                                const BoxShadow(
-                                  offset: Offset(0, 4),
-                                  blurRadius: 6,
-                                  color: Color(0xFFF9F8F9), // background color
-                                ),
-                              ],
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            child: Text(''),
-                          );
-                        },
-                        onAccept: (data) {
-                          _isDropped = true;
-                          print(data);
-                          setState(() {});
-                        },
+                      trailing: InnerShadowBox(
+                        child: DragTarget(
+                          onAccept: (value) {
+                            _isAccepted = true;
+                            targetC = value as Color?;
+                          },
+                          builder: (context, candidate, rejected) {
+                            return (_isAccepted)
+                                ? SizedBox(
+                                    width: 30,
+                                    height: 30,
+                                    child: Material(
+                                      color: targetC,
+                                      shape: StadiumBorder(),
+                                      elevation: 4,
+                                    ),
+                                  )
+                                : Text('no');
+                          },
+                        ),
                       ),
+
                       leading: CircleAvatar(
 
                           // child: Text("te"),
@@ -198,6 +262,39 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class InnerShadowBox extends StatelessWidget {
+  final Widget child;
+  const InnerShadowBox({required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 35,
+      width: 35,
+      decoration: BoxDecoration(
+        boxShadow: [
+          //CSS: inset 0px 4px 6px rgba(8, 56, 73, 0.5)
+          BoxShadow(
+            color: Colors.grey, // shadow color
+            offset: Offset(4, 4),
+          ),
+          BoxShadow(
+            offset: Offset(0, 4),
+
+            blurRadius: 3,
+            // color: Colors.grey, // shadow color
+            color: Color(0xFFF9F8F9), // background color
+          ),
+        ],
+        borderRadius: BorderRadius.circular(25),
+      ),
+      child: Center(
+        child: child,
       ),
     );
   }
