@@ -13,6 +13,7 @@ import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/profile_avatar.dart';
 import 'package:tahfidz/controllers/profile_controller.dart';
 import 'package:tahfidz/main.dart';
+import 'package:tahfidz/pages/pengajar/absen_saya/my_absensi_page.dart';
 // import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/pages/pengajar/absensi/absensi_screen.dart';
 import 'package:tahfidz/pages/pengajar/profile/profile_screen.dart';
@@ -223,7 +224,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               icon: Icons.dashboard_customize,
                               color: 0xff7585F6)),
                       GestureDetector(
-                        onTap: () => {Get.to(AbsensiScreen())},
+                        onTap: () => {
+                          Get.to(AbsensiScreen(),
+                              transition: Transition.circularReveal)
+                        },
                         child: ItemMenu(
                             title: 'Absensi',
                             icon: Icons.book,
@@ -237,9 +241,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: 0xffFD637B),
                       ),
                       GestureDetector(
-                        onTap: () => {print('ok')},
+                        onTap: () => Get.to(MyAbsen(),
+                            transition: Transition.circularReveal),
                         child: ItemMenu(
-                            title: 'Rekap',
+                            title: 'Absensi Saya',
                             icon: Icons.report_off_rounded,
                             color: 0xff21CDFF),
                       ),
