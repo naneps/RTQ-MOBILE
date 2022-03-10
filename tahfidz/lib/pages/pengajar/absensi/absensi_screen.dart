@@ -29,7 +29,9 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
   Color izin = Colors.blue;
   Color sakit = Colors.yellow;
   Color alpa = Colors.red;
+
   Color? targetC;
+  String selectAbsen = 'hadir';
   @override
   Widget build(BuildContext context) {
     final heightBody = MediaQuery.of(context).size.height;
@@ -219,7 +221,33 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
                 itemCount: users.length,
                 itemBuilder: (context, index) {
                   final user = users[index]['id'];
-                  return buildUser(index, user);
+                  return Card(
+                    key: ValueKey(user),
+                    elevation: 2,
+                    // shape: ShapeBorder,
+                    margin: EdgeInsets.all(10),
+                    child: ListTile(
+                      key: ValueKey(index),
+                      title: Text(
+                        "${users[index]['name']}",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w600),
+                      ),
+                      // contentPadding: EdgeInsets.all(5),
+                      trailing: GestureDetector(
+                        onTap: _onButtonPressed,
+                        child: InnerShadowBox(
+                          child: Text(''),
+                        ),
+                      ),
+
+                      leading: CircleAvatar(
+
+                          // child: Text("te"),
+                          ),
+                    ),
+                  );
+                  ;
                 },
               ),
             ),
@@ -229,50 +257,108 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
     );
   }
 
-  Widget buildUser(int index, dynamic user) => Card(
-        key: ValueKey(user),
-        elevation: 2,
-        // shape: ShapeBorder,
-        margin: EdgeInsets.all(10),
-        child: ListTile(
-          key: ValueKey(index),
-          title: Text(
-            "${users[index]['name']}",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-          ),
-          // contentPadding: EdgeInsets.all(5),
-          trailing: InnerShadowBox(
-            child: DragTarget(
-              onAccept: (
-                value,
-              ) {
-                _isAccepted = true;
-                targetC = value as Color?;
-                // users[index];
-                print(user[index]['id']);
-              },
-              builder: (context, candidate, rejected) {
-                return (_isAccepted)
-                    ? SizedBox(
-                        width: 35,
-                        height: 35,
-                        child: Material(
-                          color: targetC,
-                          shape: StadiumBorder(),
-                          elevation: 1,
-                        ),
-                      )
-                    : Text('no');
-              },
+  void _onButtonPressed() {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Container(
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20), topRight: Radius.circular(20)),
             ),
-          ),
+            height: 200,
+            width: MediaQuery.of(context).size.width,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: Material(
+                    color: hadir,
+                    shape: StadiumBorder(),
+                    elevation: 4,
+                  ),
+                ),
+                SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: Material(
+                    color: izin,
+                    shape: StadiumBorder(),
+                    elevation: 4,
+                  ),
+                ),
+                SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: Material(
+                    color: sakit,
+                    shape: StadiumBorder(),
+                    elevation: 4,
+                  ),
+                ),
+                SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: Material(
+                    color: alpa,
+                    shape: StadiumBorder(),
+                    elevation: 4,
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
+  }
 
-          leading: CircleAvatar(
+  // Widget buildUser(int index, dynamic user) => Card(
+  //       key: ValueKey(user),
+  //       elevation: 2,
+  //       // shape: ShapeBorder,
+  //       margin: EdgeInsets.all(10),
+  //       child: ListTile(
+  //         key: ValueKey(index),
+  //         title: Text(
+  //           "${users[index]['name']}",
+  //           style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+  //         ),
+  //         // contentPadding: EdgeInsets.all(5),
+  //         trailing: InnerShadowBox(
+  //           child: DragTarget(
+  //             onAccept: (
+  //               value,
+  //             ) {
+  //               _isAccepted = true;
+  //               targetC = value as Color?;
+  //               // users[index];
+  //               print(user[index]['id']);
+  //             },
+  //             builder: (context, candidate, rejected) {
+  //               return (_isAccepted)
+  //                   ? SizedBox(
+  //                       width: 35,
+  //                       height: 35,
+  //                       child: Material(
+  //                         color: targetC,
+  //                         shape: StadiumBorder(),
+  //                         elevation: 1,
+  //                       ),
+  //                     )
+  //                   : Text('no');
+  //             },
+  //           ),
+  //         ),
 
-              // child: Text("te"),
-              ),
-        ),
-      );
+  //         leading: CircleAvatar(
+
+  //             // child: Text("te"),
+  //             ),
+  //       ),
+  //     );
 }
 
 class InnerShadowBox extends StatelessWidget {

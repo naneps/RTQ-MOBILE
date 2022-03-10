@@ -131,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     Positioned(
                       top: 0,
-                      height: 220,
+                      height: 210,
                       width: widhtBody / 1.2,
                       child: Card(
                         // color: mainColor,
@@ -160,15 +160,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 );
                               } else if (snapshot.hasData) {
                               } else if (snapshot.hasError) {
-                                print(snapshot.hasError);
-                                print(snapshot.hasData);
                                 return CircularProgressIndicator();
                               }
                               return Column(
                                 // color: mainColor,
                                 children: [
                                   ProfilePicture(
-                                      sizeAvatar: 100,
+                                      sizeAvatar: 90,
                                       sizeIcon: 0,
                                       widthBtn: 0,
                                       avatar: snapshot.data['data']['gambar']!),
