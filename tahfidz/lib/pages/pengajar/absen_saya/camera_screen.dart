@@ -29,16 +29,16 @@ class _CameraScreenState extends State<CameraScreen> {
     super.dispose();
   }
 
-  Future<File> takePicture() async {
-    Directory root = await getTemporaryDirectory();
+  Future<File> getPicture() async {
+    Directory root = await getApplicationDocumentsDirectory();
     String directoryPath = '${root.path}/Guided_Camrea';
     await Directory(directoryPath).create(recursive: true);
-    String filePath = '${directoryPath}/${DateTime.now()}.jpg';
+    String filePath = '$directoryPath/${DateTime.now()}.jpg';
 
     try {
       await controller!.takePicture();
     } catch (e) {
-      return null!;
+      print(e);
     }
     return File(filePath);
   }
@@ -64,7 +64,7 @@ class _CameraScreenState extends State<CameraScreen> {
                         ElevatedButton(
                           onPressed: () async {
                             if (!controller!.value.isTakingPicture) {
-                              File result = await takePicture();
+                              File result = await getPicture();
                               print(result);
                               Navigator.pop(context, result);
                             }

@@ -13,6 +13,7 @@ import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/profile_avatar.dart';
 import 'package:tahfidz/controllers/profile_controller.dart';
 import 'package:tahfidz/main.dart';
+import 'package:tahfidz/pages/aurh/LoginPage.dart';
 import 'package:tahfidz/pages/pengajar/absen_saya/my_absensi_page.dart';
 // import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/pages/pengajar/absensi/absensi_screen.dart';
@@ -266,7 +267,7 @@ class _HomeScreenState extends State<HomeScreen> {
         break;
       case 1:
         SpUtil.clear();
-        Get.off(MyAppPage());
+        Get.off(LoginPage());
         break;
       default:
     }

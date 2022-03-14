@@ -3,8 +3,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:tahfidz/controllers/profile_controller.dart';
+import 'package:get/route_manager.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
+import 'package:sp_util/sp_util.dart';
+
 import 'package:tahfidz/pages/pengajar/home/home_screen.dart';
+
+import '../../components/constants.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -14,28 +20,47 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  Dio dio = new Dio();
+  Dio dio = Dio();
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
+    TextEditingController _controllerTelepon = TextEditingController();
+    TextEditingController _controllerPassword = TextEditingController();
+
     Future<void> _loginProses() async {
       try {
         Response response;
 
-        response = await dio.post("http://rtq-freelance.my.id/api/login",
-            data: FormData.fromMap({
-              "no_hp": "${ProfileController.telepon.text}",
-              "password": "${ProfileController.password.text}",
-            }));
+        // ProgressDialog? progressDialog = ProgressDialog(context);
+        // progressDialog.style(message: "Harap Tunggu...");
+        // progressDialog.show();
+
+        response = await dio.post(
+          "http://rtq-freelance.my.id/api/login",
+          data: FormData.fromMap(
+            {
+              "no_hp": "${_controllerTelepon.text}",
+              "password": "${_controllerPassword.text}",
+            },
+          ),
+        );
+
+        // progressDialog.hide();
+
         if (response.data['status'] == true) {
+          SpUtil.putBool("status", response.data['status']);
+          SpUtil.putString("nama", response.data['data']['nama']);
+          SpUtil.putString("keterangan", response.data['data']['keterangan']);
+          SpUtil.putString("no_hp", response.data['data']['no_hp']);
           setState(() {
-            ProfileController.telepon.text = "";
-            ProfileController.password.text = "";
+            _controllerTelepon.text = "";
+            _controllerPassword.text = "";
           });
-          // Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
-        } else {
-          setState(() {
-            sendLoginFailed();
-          });
+
+          Get.off(HomeScreen(telepon: response.data['data']['no_hp']));
+        } else if (response.data['status'] == false) {
+          sendLoginFailed();
         }
       } on DioError catch (e) {
         print(e);
@@ -43,23 +68,36 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     final fieldTelepon = TextFormField(
-      controller: ProfileController.telepon,
+      controller: _controllerTelepon,
       keyboardType: TextInputType.phone,
       decoration: InputDecoration(
-          hintText: "Telepon",
-          prefixIcon: const Icon(Icons.phone),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20))),
+        hintText: "Telepon",
+        prefixIcon: const Icon(Icons.phone),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(50)),
+      ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Telepon tidak boleh kosong';
+        }
+        return null;
+      },
     );
     final fieldPassword = TextFormField(
-      controller: ProfileController.password,
+      controller: _controllerPassword,
       obscureText: true,
       decoration: InputDecoration(
         hintText: "Password",
         prefixIcon: Icon(Icons.lock),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(50),
         ),
       ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Password tidak boleh kosong';
+        }
+        return null;
+      },
     );
     final loginText = Center(
         child: Text(
@@ -67,17 +105,14 @@ class _LoginPageState extends State<LoginPage> {
       style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
     ));
     final loginButton = FlatButton(
-      color: Colors.deepPurple,
+      color: mainColor,
       height: 50,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(18.0),
+        borderRadius: BorderRadius.circular(50),
         // side: BorderSide(color: Colors.red),
       ),
       onPressed: () {
-        if (ProfileController.password.text == '' ||
-            ProfileController.telepon.text == '') {
-          sendLoginFailed();
-        } else {
+        if (_formKey.currentState!.validate()) {
           _loginProses();
         }
       },
@@ -88,56 +123,75 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
     return Scaffold(
-      backgroundColor: Colors.deepPurple,
+      // backgroundColor: Colors.deepPurple,
       body: SingleChildScrollView(
         child: Stack(
+          alignment: Alignment.center,
           children: [
-            Container(
-              // background: Color.fromARGB(255, 240, 238, 243),
-              padding: EdgeInsets.all(40),
-              child: Center(
-                  child: Text(
-                "Rumah Tahfidz",
-              )),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 400),
-              width: double.infinity,
-              height: 450,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(40),
-                      topLeft: Radius.circular(40))),
-            ),
-            Container(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-                margin: EdgeInsets.only(top: 200, left: 50, right: 50),
+            Positioned(
+              // top: 0,
+
+              child: Container(
+                margin: EdgeInsets.only(top: 500),
                 width: double.infinity,
-                height: 400,
+                height: 450,
                 decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.black38,
-                          spreadRadius: 0.1,
-                          blurRadius: 5)
-                    ]),
-                child: Form(
-                  child: ListView(
-                    padding: EdgeInsets.all(30),
-                    children: [
-                      loginText,
-                      SizedBox(height: 35),
-                      fieldTelepon,
-                      SizedBox(height: 35),
-                      fieldPassword,
-                      SizedBox(height: 35),
-                      loginButton,
-                    ],
-                  ),
-                ))
+                    color: mainColor,
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(40),
+                        topLeft: Radius.circular(40))),
+              ),
+            ),
+            Positioned(
+              top: 50,
+              child: Container(
+                // color: Color.fromARGB(255, 240, 238, 243),
+                padding: EdgeInsets.all(40),
+                child: Column(
+                  children: [
+                    Container(
+                      child: Lottie.asset('assets/splash.json'),
+                      width: 150,
+                      height: 150,
+                    ),
+                    Text(
+                      "Rumah Tahfidz ",
+                      style: GoogleFonts.poppins(
+                          fontSize: 24, fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 1, vertical: 5),
+              margin: EdgeInsets.only(top: 200, left: 50, right: 50),
+              width: double.infinity,
+              height: 380,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black38, spreadRadius: 0.1, blurRadius: 5)
+                ],
+              ),
+              child: Form(
+                key: _formKey,
+                child: ListView(
+                  padding: EdgeInsets.all(20),
+                  children: [
+                    loginText,
+                    SizedBox(height: 35),
+                    fieldTelepon,
+                    SizedBox(height: 35),
+                    fieldPassword,
+                    SizedBox(height: 35),
+                    loginButton,
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
