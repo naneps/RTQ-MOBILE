@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/splashScreen.dart';
 import 'package:tahfidz/pages/pengajar/absen_saya/camera_screen.dart';
+import 'package:tahfidz/pages/pengajar/absen_saya/components/buttonsl.dart';
 
 class MyAbsen extends StatefulWidget {
   const MyAbsen({Key? key}) : super(key: key);
@@ -118,6 +119,10 @@ class _MyAbsenState extends State<MyAbsen> {
                     hintText: 'JL.Lohbener lama No 14',
                     fillColor: Colors.white),
               ),
+            ),
+            MyButton(
+              color: greenColor,
+              icon: Icons.location_on,
             ),
           ],
         ),
