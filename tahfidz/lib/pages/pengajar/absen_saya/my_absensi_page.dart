@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/splashScreen.dart';
 import 'package:tahfidz/pages/pengajar/absen_saya/camera_screen.dart';
-import 'package:tahfidz/pages/pengajar/absen_saya/components/buttonsl.dart';
+import 'package:tahfidz/pages/pengajar/absen_saya/components/buttons.dart';
 
 class MyAbsen extends StatefulWidget {
   const MyAbsen({Key? key}) : super(key: key);
@@ -120,10 +120,85 @@ class _MyAbsenState extends State<MyAbsen> {
                     fillColor: Colors.white),
               ),
             ),
-            MyButton(
-              color: greenColor,
-              icon: Icons.location_on,
+            Container(
+              margin: EdgeInsets.only(top: 10, bottom: 10),
+              child: ElevatedButton(
+                child: Container(
+                  // color: mainColor,
+                  width: 120,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.location_on,
+                        size: 26,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        "Lokasi",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w600),
+                      )
+                    ],
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  elevation: 4,
+                  primary: mainColor,
+                  // onPrimary: mainColor,
+                  padding: EdgeInsets.all(10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                  ),
+                ),
+                onPressed: () {},
+              ),
             ),
+            Container(
+              margin: EdgeInsets.only(top: 10, bottom: 10),
+              child: ElevatedButton(
+                child: Container(
+                  // color: mainColor,
+                  width: 120,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.save_as_sharp,
+                        size: 26,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        "Simpan !",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w600),
+                      )
+                    ],
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  elevation: 4,
+                  primary: greenColor,
+                  // onPrimary: mainColor,
+                  padding: EdgeInsets.all(10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                  ),
+                ),
+                onPressed: () {},
+              ),
+            ),
+            // Container(child: MyButton())
           ],
         ),
       ),

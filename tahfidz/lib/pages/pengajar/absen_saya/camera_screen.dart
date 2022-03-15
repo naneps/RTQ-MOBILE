@@ -46,58 +46,79 @@ class _CameraScreenState extends State<CameraScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
-      body: FutureBuilder(
-        future: initializeCamera(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) =>
-            (snapshot.connectionState == ConnectionState.done)
-                ? Stack(children: [
-                    Column(
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      body: Container(
+        color: greenColor,
+        height: MediaQuery.of(context).size.height,
+        child: FutureBuilder(
+          future: initializeCamera(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) =>
+              (snapshot.connectionState == ConnectionState.done)
+                  ? Stack(
+                      alignment: Alignment.center,
                       children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.width *
-                              1.5 /
-                              controller!.value.aspectRatio,
-                          child: CameraPreview(controller!),
-                        ),
-                        ElevatedButton(
-                          onPressed: () async {
-                            if (!controller!.value.isTakingPicture) {
-                              File result = await getPicture();
-                              print(result);
-                              Navigator.pop(context, result);
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(90),
+                        Positioned(
+                          top: 0,
+                          child: Container(
+                            margin: EdgeInsets.all(10),
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                color: mainColor,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height /
+                                controller!.value.aspectRatio,
+                            child: SizedBox(
+                              width: 300,
+                              height: 300,
+                              child: Material(
+                                child: CameraPreview(controller!),
                               ),
                             ),
                           ),
-                          child: SizedBox(
-                            height: 60,
-                            width: 60,
-                            child: Icon(
-                              Icons.camera,
-                              size: 40,
-                            ),
-                          ),
                         ),
+                        Positioned(
+                            bottom: 270,
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                if (!controller!.value.isTakingPicture) {
+                                  File result = await getPicture();
+                                  print(result);
+                                  Navigator.pop(context, result);
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                elevation: 5,
+                                primary: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(100),
+                                  ),
+                                ),
+                              ),
+                              child: SizedBox(
+                                height: 60,
+                                width: 60,
+                                child: Icon(
+                                  Icons.camera,
+                                  size: 40,
+                                  color: mainColor,
+                                ),
+                              ),
+                            ))
                       ],
-                    ),
-                    Container()
-                  ])
-                : Center(
-                    child: SizedBox(
-                      height: 20,
-                      width: 29,
-                      child: CircularProgressIndicator(
-                        color: mainColor,
+                    )
+                  : Center(
+                      child: SizedBox(
+                        height: 20,
+                        width: 29,
+                        child: CircularProgressIndicator(
+                          color: mainColor,
+                        ),
                       ),
                     ),
-                  ),
+        ),
       ),
     );
   }
