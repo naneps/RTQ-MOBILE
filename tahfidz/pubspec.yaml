@@ -28,13 +28,14 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   animated_splash_screen: ^1.2.0
-  camera: ^0.9.4+16
   cupertino_icons: ^1.0.2
   dio: ^4.0.4
   flutter:
     sdk: flutter
   flutter_sequence_animation: null
   fluttertoast: ^8.0.8
+  geocoding: ^2.0.4
+  geolocator: ^8.2.0
   get: ^4.6.1
   google_fonts: ^2.3.1
   http: ^0.13.4

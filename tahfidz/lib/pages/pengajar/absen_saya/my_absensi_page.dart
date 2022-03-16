@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:camera/camera.dart';
+// import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
-import 'package:tahfidz/components/splashScreen.dart';
 import 'package:tahfidz/pages/pengajar/absen_saya/camera_screen.dart';
 import 'package:tahfidz/pages/pengajar/absen_saya/components/buttons.dart';
 
@@ -18,6 +18,44 @@ class MyAbsen extends StatefulWidget {
 
 class _MyAbsenState extends State<MyAbsen> {
   File? imageFile;
+  String? location = "Tekan Tombol";
+  String? address = "Cari";
+  Future<Position> _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      await Geolocator.openLocationSettings();
+
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+    return await Geolocator.getCurrentPosition();
+  }
+
+  Future<void> getAddress(Position position) async {
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(position.latitude, position.longitude);
+    Placemark place = placemarks[0];
+    address = '${place.subAdministrativeArea} , ${place.locality} ';
+    setState(() {});
+    print(placemarks);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,6 +139,10 @@ class _MyAbsenState extends State<MyAbsen> {
                 ],
               ),
             ),
+            SizedBox(height: 30),
+            Center(
+              child: Text("${location}"),
+            ),
             Container(
               margin: EdgeInsets.all(10),
               width: MediaQuery.of(context).size.width / 1.2,
@@ -116,7 +158,7 @@ class _MyAbsenState extends State<MyAbsen> {
                     ),
                     filled: true,
                     hintStyle: TextStyle(color: Colors.grey[800], fontSize: 16),
-                    hintText: 'JL.Lohbener lama No 14',
+                    hintText: address,
                     fillColor: Colors.white),
               ),
             ),
@@ -156,7 +198,14 @@ class _MyAbsenState extends State<MyAbsen> {
                     ),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () async {
+                  Position position = await _determinePosition();
+                  location =
+                      'Lat : ${position.latitude} , Long : ${position.longitude}';
+                  // print(position.latitude);
+                  getAddress(position);
+                  setState(() {});
+                },
               ),
             ),
             Container(
@@ -205,3 +254,5 @@ class _MyAbsenState extends State<MyAbsen> {
     );
   }
 }
+
+class $ {}
