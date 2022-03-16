@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/pages/pengajar/absen_saya/camera_screen.dart';
 import 'package:tahfidz/pages/pengajar/absen_saya/components/buttons.dart';
@@ -18,20 +19,33 @@ class MyAbsen extends StatefulWidget {
 
 class _MyAbsenState extends State<MyAbsen> {
   File? imageFile;
+
+  bool isAbsen = false;
   String? location = "Tekan Tombol";
-  String? address = "Cari";
+  String? address = "";
+
+  final picker = ImagePicker();
+
+  Future getImageFromCanera() async {
+    var pickImage = await picker.pickImage(source: ImageSource.camera);
+    setState(() {
+      if (pickImage != null) {
+        imageFile = File(pickImage.path);
+      } else {
+        print("no image  selecter");
+      }
+    });
+  }
+
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
-
-    // Test if location services are enabled.
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       await Geolocator.openLocationSettings();
 
       return Future.error('Location services are disabled.');
     }
-
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
@@ -39,7 +53,6 @@ class _MyAbsenState extends State<MyAbsen> {
         return Future.error('Location permissions are denied');
       }
     }
-
     if (permission == LocationPermission.deniedForever) {
       // Permissions are denied forever, handle appropriately.
       return Future.error(
@@ -52,7 +65,8 @@ class _MyAbsenState extends State<MyAbsen> {
     List<Placemark> placemarks =
         await placemarkFromCoordinates(position.latitude, position.longitude);
     Placemark place = placemarks[0];
-    address = '${place.subAdministrativeArea} , ${place.locality} ';
+    address =
+        '${place.subAdministrativeArea} , ${place.locality} , ${place.subLocality} , ${place.postalCode} ';
     setState(() {});
     print(placemarks);
   }
@@ -109,13 +123,7 @@ class _MyAbsenState extends State<MyAbsen> {
                       bottom: 0,
                       child: ElevatedButton(
                         onPressed: () async {
-                          imageFile = await Navigator.push<File>(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CameraScreen(),
-                            ),
-                          );
-                          setState(() {});
+                          getImageFromCanera();
                         },
                         style: ElevatedButton.styleFrom(
                           elevation: 5,
@@ -144,24 +152,19 @@ class _MyAbsenState extends State<MyAbsen> {
               child: Text("${location}"),
             ),
             Container(
-              margin: EdgeInsets.all(10),
+              padding: EdgeInsets.all(10),
+              margin: EdgeInsets.all(20),
               width: MediaQuery.of(context).size.width / 1.2,
-              height: MediaQuery.of(context).size.width / 7.5,
-              // color: mainColor,
-              child: TextField(
-                readOnly: true,
-                // focusNode: FocusNode(),
-                scrollPadding: EdgeInsets.all(10),
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    filled: true,
-                    hintStyle: TextStyle(color: Colors.grey[800], fontSize: 16),
-                    hintText: address,
-                    fillColor: Colors.white),
+              child: Text(
+                address!,
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              ),
+              decoration: BoxDecoration(
+                color: mainColor,
+                borderRadius: BorderRadius.all(Radius.circular(20)),
               ),
             ),
+
             Container(
               margin: EdgeInsets.only(top: 10, bottom: 10),
               child: ElevatedButton(
@@ -208,45 +211,52 @@ class _MyAbsenState extends State<MyAbsen> {
                 },
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(top: 10, bottom: 10),
-              child: ElevatedButton(
-                child: Container(
-                  // color: mainColor,
-                  width: 120,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.save_as_sharp,
-                        size: 26,
+
+            (isAbsen == false)
+                ? Container(
+                    margin: EdgeInsets.only(top: 10, bottom: 10),
+                    child: ElevatedButton(
+                      child: Container(
+                        // color: mainColor,
+                        width: 120,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.save_as_sharp,
+                              size: 26,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Simpan !",
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.w600),
+                            )
+                          ],
+                        ),
                       ),
-                      SizedBox(
-                        width: 10,
+                      style: ElevatedButton.styleFrom(
+                        elevation: 4,
+                        primary: greenColor,
+                        // onPrimary: mainColor,
+                        padding: EdgeInsets.all(10),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(20),
+                          ),
+                        ),
                       ),
-                      Text(
-                        "Simpan !",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w600),
-                      )
-                    ],
-                  ),
-                ),
-                style: ElevatedButton.styleFrom(
-                  elevation: 4,
-                  primary: greenColor,
-                  // onPrimary: mainColor,
-                  padding: EdgeInsets.all(10),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(20),
+                      onPressed: () {
+                        setState(() {
+                          isAbsen = true;
+                        });
+                      },
                     ),
-                  ),
-                ),
-                onPressed: () {},
-              ),
-            ),
+                  )
+                : Text("Sudah Absen"),
             // Container(child: MyButton())
           ],
         ),
@@ -255,4 +265,22 @@ class _MyAbsenState extends State<MyAbsen> {
   }
 }
 
-class $ {}
+// Container(
+//               margin: EdgeInsets.all(10),
+//               width: MediaQuery.of(context).size.width / 1.2,
+//               height: MediaQuery.of(context).size.width / 7.5,
+//               // color: mainColor,
+//               child: TextField(
+//                 readOnly: true,
+//                 // focusNode: FocusNode(),
+//                 scrollPadding: EdgeInsets.all(10),
+//                 decoration: InputDecoration(
+//                     border: OutlineInputBorder(
+//                       borderRadius: BorderRadius.circular(20),
+//                     ),
+//                     filled: true,
+//                     hintStyle: TextStyle(color: Colors.grey[800], fontSize: 16),
+//                     hintText: address,
+//                     fillColor: Colors.white),
+//               ),
+//             ),
