@@ -52,32 +52,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     // profileController.getProfil(widget.telepon!);
   }
 
-  getUser() async {
-    final client = RetryClient(http.Client());
-    try {
-      var response = await client
-          .get(Uri.parse(link_public + 'info_profil/' + widget.telepon!));
-
-      if (response.statusCode == 200) {
-        var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
-        ProfileController.nama.text = jsonResponse['data']['nama'];
-        ProfileController.alamat.text = jsonResponse['data']['no_hp'];
-        ProfileController.teleponLama.text = jsonResponse['data']['no_hp'];
-        ProfileController.telepon.text = jsonResponse['data']['no_hp'];
-        ProfileController.jenisKelamin.text = jsonResponse['data']['alamat'];
-        ProfileController.tanggalLahir.text =
-            jsonResponse['data']['tanggal_lahir'];
-        ProfileController.tempatLahir.text = jsonResponse['data']['alamat'];
-        avatar = jsonResponse['data']['gambar'];
-        profileController.getProfil(widget.telepon!);
-      } else {
-        dataFailed();
-      }
-    } finally {
-      client.close();
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final heightBody = MediaQuery.of(context).size.height;
@@ -128,7 +102,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                     Positioned(
-                      bottom: 5,
+                      bottom: 50,
                       child: FutureBuilder(
                         future: profileController.getProfil(widget.telepon!),
                         builder:
@@ -162,7 +136,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Container(
                 // color: mainColor,
                 width: widthBody,
-                height: heightBody / 2,
+                height: heightBody / 1.6,
                 padding: const EdgeInsets.all(20),
                 child: SingleChildScrollView(
                   // reverse: true,
@@ -213,28 +187,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       letterSpacing: 2.2,
                                       color: Colors.black)),
                             ),
-                            RaisedButton(
-                              onPressed: () {
-                                print(ProfileController.nama.text);
-                                print(ProfileController.alamat.text);
-                                print(ProfileController.telepon.text);
-                                print(ProfileController.tanggalLahir.text);
-                                print(ProfileController.tempatLahir.text);
-                              },
-                              color: mainColor,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 40),
-                              elevation: 2,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: const Text(
-                                "Simpan",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    letterSpacing: 2.2,
-                                    color: Colors.white),
-                              ),
-                            )
+                            ButtonSave()
                           ],
                         ),
                       ],
@@ -333,5 +286,53 @@ class _ProfileScreenState extends State<ProfileScreen> {
         backgroundColor: Colors.red,
         textColor: Colors.white,
         fontSize: 16.0);
+  }
+}
+
+class ButtonSave extends StatelessWidget {
+  const ButtonSave({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(top: 10, bottom: 10),
+      child: ElevatedButton(
+        child: Container(
+          // color: mainColor,
+          width: 120,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.save_as_sharp,
+                size: 26,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Text(
+                "Simpan !",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              )
+            ],
+          ),
+        ),
+        style: ElevatedButton.styleFrom(
+          elevation: 4,
+          primary: greenColor,
+          // onPrimary: mainColor,
+          padding: EdgeInsets.all(10),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(20),
+            ),
+          ),
+        ),
+        onPressed: () {
+          // print(imageFile!);
+        },
+      ),
+    );
   }
 }

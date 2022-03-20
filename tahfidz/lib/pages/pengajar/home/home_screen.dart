@@ -17,6 +17,7 @@ import 'package:tahfidz/pages/aurh/LoginPage.dart';
 import 'package:tahfidz/pages/pengajar/absen_saya/my_absensi_page.dart';
 // import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/pages/pengajar/absensi/absensi_screen.dart';
+import 'package:tahfidz/pages/pengajar/penilaian/penilaiann_Screen.dart';
 import 'package:tahfidz/pages/pengajar/profile/profile_screen.dart';
 
 // void main() {
@@ -235,7 +236,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: 0xffFED525),
                       ),
                       GestureDetector(
-                        onTap: () => {print('ok')},
+                        onTap: () => Get.to(PenilaiainScreen(),
+                            popGesture: true, transition: Transition.fadeIn),
                         child: ItemMenu(
                             title: 'Penilaian',
                             icon: Icons.book_online_outlined,

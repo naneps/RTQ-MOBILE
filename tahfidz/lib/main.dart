@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      // theme: ThemeData(appBarTheme: ),
       debugShowCheckedModeBanner: false,
       home: (SpUtil.getBool('status') != true)
           ? const LoginPage()

@@ -7,8 +7,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tahfidz/components/constants.dart';
-import 'package:tahfidz/pages/pengajar/absen_saya/camera_screen.dart';
-import 'package:tahfidz/pages/pengajar/absen_saya/components/buttons.dart';
 
 class MyAbsen extends StatefulWidget {
   const MyAbsen({Key? key}) : super(key: key);
@@ -135,8 +133,8 @@ class _MyAbsenState extends State<MyAbsen> {
                           ),
                         ),
                         child: SizedBox(
-                          height: 60,
-                          width: 60,
+                          height: 50,
+                          width: 50,
                           child: Icon(
                             Icons.camera,
                             size: 40,
@@ -148,9 +146,7 @@ class _MyAbsenState extends State<MyAbsen> {
               ),
             ),
             SizedBox(height: 30),
-            Center(
-              child: Text("${location}"),
-            ),
+
             Container(
               padding: EdgeInsets.all(10),
               margin: EdgeInsets.all(20),
@@ -250,9 +246,7 @@ class _MyAbsenState extends State<MyAbsen> {
                         ),
                       ),
                       onPressed: () {
-                        setState(() {
-                          isAbsen = true;
-                        });
+                        print(imageFile!);
                       },
                     ),
                   )
