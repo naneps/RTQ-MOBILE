@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/search_box.dart';
 import 'package:tahfidz/components/splashScreen.dart';
 import 'package:tahfidz/pages/pengajar/penilaian/components/item_jenjang.dart';
+import 'package:tahfidz/pages/pengajar/penilaian/pelajara_screen.dart';
 
 class PenilaianScreen extends StatefulWidget {
   const PenilaianScreen({Key? key}) : super(key: key);
@@ -12,6 +14,7 @@ class PenilaianScreen extends StatefulWidget {
 }
 
 class _PenilaianScreenState extends State<PenilaianScreen> {
+  List<String> _listJenjang = List.generate(8, (index) => "Jenjang $index");
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -33,7 +36,7 @@ class _PenilaianScreenState extends State<PenilaianScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              margin: EdgeInsets.all(20),
+              margin: EdgeInsets.all(10),
               child: Text(
                 "Daftar Jenjang ",
                 style: TextStyle(
@@ -45,18 +48,24 @@ class _PenilaianScreenState extends State<PenilaianScreen> {
             SearchBox(
               labelText: "Cari Jenjang",
             ),
-            Container(
-              width: width,
-              height: 500,
-              child: ListView.builder(
-                itemCount: 8,
-                itemBuilder: (context, index) {
-                  return CardJenjang(
-                    onTap: () {
-                      print('$index');
-                    },
-                  );
-                },
+            Flexible(
+              child: Container(
+                width: width,
+                height: 500,
+                child: ListView.builder(
+                  itemCount: _listJenjang.length,
+                  itemBuilder: (context, index) {
+                    return CardJenjang(
+                      title: _listJenjang[index],
+                      onTap: () {
+                        // print('$index');
+                        Get.to(PelajaranScreen(
+                          id: '${_listJenjang[index]}',
+                        ));
+                      },
+                    );
+                  },
+                ),
               ),
             ),
           ],

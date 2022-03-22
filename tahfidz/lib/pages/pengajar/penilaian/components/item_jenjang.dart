@@ -4,8 +4,9 @@ import 'package:line_icons/line_icons.dart';
 import 'package:tahfidz/components/constants.dart';
 
 class CardJenjang extends StatelessWidget {
-  dynamic? onTap;
-  CardJenjang({this.onTap, Key? key}) : super(key: key);
+  dynamic onTap;
+  String? title;
+  CardJenjang({this.title, this.onTap, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +45,7 @@ class CardJenjang extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Kelas",
+                    "$title",
                     style: GoogleFonts.poppins(
                         fontSize: 20,
                         fontWeight: FontWeight.w700,

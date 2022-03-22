@@ -147,17 +147,19 @@ class _MyAbsenState extends State<MyAbsen> {
             ),
             SizedBox(height: 30),
 
-            Container(
-              padding: EdgeInsets.all(10),
-              margin: EdgeInsets.all(20),
-              width: MediaQuery.of(context).size.width / 1.2,
-              child: Text(
-                address!,
-                style: TextStyle(color: Colors.white, fontSize: 16),
-              ),
-              decoration: BoxDecoration(
-                color: mainColor,
-                borderRadius: BorderRadius.all(Radius.circular(20)),
+            Flexible(
+              child: Container(
+                padding: EdgeInsets.all(10),
+                margin: EdgeInsets.all(20),
+                width: MediaQuery.of(context).size.width / 1.2,
+                child: Text(
+                  address!,
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ),
+                decoration: BoxDecoration(
+                  color: mainColor,
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                ),
               ),
             ),
 
