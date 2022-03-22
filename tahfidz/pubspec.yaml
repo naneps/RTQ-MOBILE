@@ -40,6 +40,7 @@ dependencies:
   google_fonts: ^2.3.1
   http: ^0.13.4
   image_picker: ^0.8.4+11
+  line_icons: ^2.0.1
   lottie: ^1.2.2
   path_provider: ^2.0.9
   sp_util: null

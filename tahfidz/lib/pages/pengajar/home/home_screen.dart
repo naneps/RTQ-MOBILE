@@ -236,7 +236,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: 0xffFED525),
                       ),
                       GestureDetector(
-                        onTap: () => Get.to(PenilaiainScreen(),
+                        onTap: () => Get.to(PenilaianScreen(),
                             popGesture: true, transition: Transition.fadeIn),
                         child: ItemMenu(
                             title: 'Penilaian',
