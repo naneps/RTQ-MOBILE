@@ -6,6 +6,7 @@ import 'package:tahfidz/components/constants.dart';
 class CardJenjang extends StatelessWidget {
   dynamic onTap;
   String? title;
+
   CardJenjang({this.title, this.onTap, Key? key}) : super(key: key);
 
   @override
@@ -36,38 +37,53 @@ class CardJenjang extends StatelessWidget {
               ),
             ),
             Expanded(
-              // flex: 5,
-              child: Container(),
-            ),
-            Container(
-              margin: EdgeInsets.all(5),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "$title",
-                    style: GoogleFonts.poppins(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: greyColor),
-                  ),
-                  Text(
-                    "Pelajaran",
-                    style: GoogleFonts.poppins(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color: greyColor),
-                  )
-                ],
+              flex: 3,
+              child: Container(
+                // width: 400,
+                margin: EdgeInsets.all(5),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "$title",
+                      style: GoogleFonts.poppins(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          color: greyColor),
+                    ),
+                    Text(
+                      "Pelajaran",
+                      style: GoogleFonts.poppins(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: greyColor),
+                    )
+                  ],
+                ),
               ),
             ),
             Expanded(
-              flex: 10,
-              child: Container(),
+              flex: 4,
+              child: Container(
+                padding: EdgeInsets.only(left: 10, right: 10),
+                height: 30,
+                width: 100,
+                margin: EdgeInsets.only(left: 50, right: 10),
+                decoration: BoxDecoration(
+                    color: mainColor, borderRadius: BorderRadius.circular(30)),
+                child: Center(
+                    child: Text(
+                  "12 Santri",
+                  style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500),
+                )),
+              ),
             ),
             Container(
-              height: 50,
-              width: 50,
+              // height: 50,
+              // width: 50,
               child: GestureDetector(
                 onTap: onTap,
                 child: Icon(

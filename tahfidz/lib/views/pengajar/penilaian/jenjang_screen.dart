@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/search_box.dart';
 import 'package:tahfidz/components/splashScreen.dart';
-import 'package:tahfidz/pages/pengajar/penilaian/components/item_jenjang.dart';
-import 'package:tahfidz/pages/pengajar/penilaian/pelajara_screen.dart';
+import 'package:tahfidz/views/pengajar/penilaian/components/csrd_jenjang.dart';
+import 'package:tahfidz/views/pengajar/penilaian/pelajara_screen.dart';
 
 class PenilaianScreen extends StatefulWidget {
   const PenilaianScreen({Key? key}) : super(key: key);
@@ -51,7 +51,7 @@ class _PenilaianScreenState extends State<PenilaianScreen> {
             Flexible(
               child: Container(
                 width: width,
-                height: 500,
+                height: 400,
                 child: ListView.builder(
                   itemCount: _listJenjang.length,
                   itemBuilder: (context, index) {
