@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/search_box.dart';
 import 'package:tahfidz/components/splashScreen.dart';
+import 'package:tahfidz/controllers/jenjang_controllers.dart';
+import 'package:tahfidz/model/Jenjang.dart';
 import 'package:tahfidz/views/pengajar/penilaian/components/csrd_jenjang.dart';
 import 'package:tahfidz/views/pengajar/penilaian/pelajara_screen.dart';
 
@@ -15,6 +17,8 @@ class PenilaianScreen extends StatefulWidget {
 
 class _PenilaianScreenState extends State<PenilaianScreen> {
   List<String> _listJenjang = List.generate(8, (index) => "Jenjang $index");
+
+  final JenjangController jenjangController = Get.put(JenjangController());
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -52,20 +56,23 @@ class _PenilaianScreenState extends State<PenilaianScreen> {
               child: Container(
                 width: width,
                 height: 400,
-                child: ListView.builder(
-                  itemCount: _listJenjang.length,
-                  itemBuilder: (context, index) {
-                    return CardJenjang(
-                      title: _listJenjang[index],
-                      onTap: () {
-                        // print('$index');
-                        Get.to(PelajaranScreen(
-                          id: '${_listJenjang[index]}',
-                        ));
-                      },
+                child: Obx(() {
+                  if (jenjangController.isLoading.value) {
+                    return Center(
+                      child: CircularProgressIndicator(),
                     );
-                  },
-                ),
+                  } else
+                    return ListView.builder(
+                        itemCount: jenjangController.listJenjang.length,
+                        itemBuilder: (context, index) {
+                          return CardJenjang(
+                            onTap: Get.to(PelajaranScreen(
+                                // id: index.toString(),
+                                )),
+                            jenjang: jenjangController.listJenjang[index],
+                          );
+                        });
+                }),
               ),
             ),
           ],
@@ -74,3 +81,20 @@ class _PenilaianScreenState extends State<PenilaianScreen> {
     );
   }
 }
+
+
+
+// ListView.builder(
+//                   itemCount: _listJenjang.length,
+//                   itemBuilder: (context, index) {
+//                     return CardJenjang(
+//                       title: _listJenjang[index],
+//                       onTap: () {
+//                         // print('$index');
+//                         Get.to(PelajaranScreen(
+//                           id: '${_listJenjang[index]}',
+//                         ));
+//                       },
+//                     );
+//                   },
+//                 ),

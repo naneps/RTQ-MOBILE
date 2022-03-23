@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:tahfidz/components/constants.dart';
+import 'package:tahfidz/model/Jenjang.dart';
 
 class CardJenjang extends StatelessWidget {
-  dynamic onTap;
-  String? title;
-
-  CardJenjang({this.title, this.onTap, Key? key}) : super(key: key);
-
+  final Jenjang? jenjang;
+  dynamic? onTap;
+  CardJenjang({Key? key, this.jenjang, this.onTap}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -44,12 +44,14 @@ class CardJenjang extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "$title",
-                      style: GoogleFonts.poppins(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                          color: greyColor),
+                    Flexible(
+                      child: Text(
+                        "${jenjang!.namaKelas}",
+                        style: GoogleFonts.poppins(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            color: greyColor),
+                      ),
                     ),
                     Text(
                       "Pelajaran",
@@ -73,7 +75,7 @@ class CardJenjang extends StatelessWidget {
                     color: mainColor, borderRadius: BorderRadius.circular(30)),
                 child: Center(
                     child: Text(
-                  "12 Santri",
+                  "${jenjang!.countSantri}",
                   style: GoogleFonts.poppins(
                       color: Colors.white,
                       fontSize: 13,
