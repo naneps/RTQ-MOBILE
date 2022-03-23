@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sp_util/sp_util.dart';
-import 'package:tahfidz/pages/pengajar/profile/profile_screen.dart';
+import 'package:tahfidz/views/pengajar/profile/profile_screen.dart';
 
 class ProfilePicture extends StatelessWidget {
   // const ProfilePicture({Key? key}) : super(key: key);
