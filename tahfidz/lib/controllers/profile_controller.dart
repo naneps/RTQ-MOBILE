@@ -21,7 +21,7 @@ class ProfileController {
     final client = RetryClient(http.Client());
     try {
       var response = await client
-          .get(Uri.parse('http://rtq-freelance.my.id/api/info_profil/' + tlp));
+          .get(Uri.parse('http://nataysa.com/api-v1/info_profil/' + tlp));
 
       if (response.statusCode == 200) {
         var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;

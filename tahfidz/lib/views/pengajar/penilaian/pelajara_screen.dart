@@ -1,11 +1,32 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:tahfidz/components/constants.dart';
+import 'package:tahfidz/controllers/jenjang_controllers.dart';
+import 'package:tahfidz/model/Jenjang.dart';
 
-class PelajaranScreen extends StatelessWidget {
-  String? id;
-  PelajaranScreen({this.id, Key? key}) : super(key: key);
+class PelajaranScreen extends StatefulWidget {
+  // String? id;
+  final Jenjang? jenjang;
+
+  PelajaranScreen({this.jenjang, Key? key}) : super(key: key);
+
+  @override
+  State<PelajaranScreen> createState() => _PelajaranScreenState();
+}
+
+class _PelajaranScreenState extends State<PelajaranScreen> {
+  JenjangController jenjangController = Get.put(JenjangController());
+  @override
+  void setState(VoidCallback fn) {
+    // TODO: implement setState
+    super.setState(fn);
+    print("object");
+    print(widget.jenjang);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +36,7 @@ class PelajaranScreen extends StatelessWidget {
       appBar: AppBar(
         shadowColor: Colors.transparent,
         backgroundColor: mainColor,
-        title: Text("$id"),
+        title: Text("${widget.jenjang!.namaKelas}"),
         centerTitle: true,
       ),
       body: Container(
@@ -26,21 +47,12 @@ class PelajaranScreen extends StatelessWidget {
           children: [
             Container(
               width: width,
-              // height: 60,
-              // color: mainColor,
-              child: Text("Daftar Pelajaran",
-                  style: GoogleFonts.poppins(
-                      fontSize: 20,
-                      color: greyColor,
-                      fontWeight: FontWeight.bold)),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              width: width,
-              height: 500,
-              color: mainColor,
+              height: 200,
+              child: ListView.builder(
+                  itemCount: widget.jenjang!.pelajaran!.length,
+                  itemBuilder: (context, index) {
+                    return Text("${widget.jenjang!.pelajaran!.length}");
+                  }),
             )
           ],
         ),

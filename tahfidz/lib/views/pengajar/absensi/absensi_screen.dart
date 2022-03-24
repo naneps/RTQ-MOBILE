@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/profile_avatar.dart';
+import 'package:tahfidz/components/search_box.dart';
+import 'package:tahfidz/controllers/santri_controller.dart';
+import 'package:tahfidz/views/pengajar/absensi/components/card_absensi.dart';
+import 'package:tahfidz/views/pengajar/absensi/components/card_santri.dart';
 
 void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -16,14 +21,6 @@ class AbsensiScreen extends StatefulWidget {
 }
 
 class _AbsensiScreenState extends State<AbsensiScreen> {
-  final List users = List.generate(50, (index) {
-    return {
-      'id': index,
-      'name': "Hakim Asrori",
-      'avatar': "",
-    };
-  });
-
   bool _isAccepted = false;
   Color hadir = Colors.green;
   Color izin = Colors.blue;
@@ -32,11 +29,13 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
 
   Color? targetC;
   String selectAbsen = 'hadir';
+  final SantriController santriController = Get.put(SantriController());
   @override
   Widget build(BuildContext context) {
     final heightBody = MediaQuery.of(context).size.height;
     final widhtBody = MediaQuery.of(context).size.width;
     return Scaffold(
+      // backgroundColor: mainColor,
       appBar: AppBar(
         // shadowColor: Colors.transparent,
         elevation: 0,
@@ -53,12 +52,13 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
       body: Container(
         // physics: BouncingScrollPhysics(),s
         height: heightBody,
+
         // color: Colors.black,
 
         child: Column(
           children: [
             Container(
-              height: heightBody / 5,
+              height: heightBody / 6,
               width: widhtBody,
               // color: Colors.black,
               child: Stack(
@@ -85,171 +85,47 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
                     top: 0,
                     height: 150,
                     width: widhtBody / 1.2,
-                    child: Card(
-                      // color: mainColor,
-                      elevation: 1,
-                      shadowColor: Colors.transparent,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(30),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          // mainAxisSize: MainAxisSize.min,
-
-                          children: [
-                            Draggable(
-                              feedback: SizedBox(
-                                width: 40,
-                                height: 40,
-                                child: Material(
-                                  color: hadir.withOpacity(0.5),
-                                  shape: StadiumBorder(),
-                                  elevation: 4,
-                                ),
-                              ),
-                              data: hadir,
-                              child: SizedBox(
-                                width: 40,
-                                height: 40,
-                                child: Material(
-                                  color: hadir,
-                                  shape: StadiumBorder(),
-                                  elevation: 4,
-                                ),
-                              ),
-                            ),
-                            Draggable(
-                              feedback: SizedBox(
-                                width: 40,
-                                height: 40,
-                                child: Material(
-                                  color: izin.withOpacity(0.5),
-                                  shape: StadiumBorder(),
-                                  elevation: 4,
-                                ),
-                              ),
-                              data: izin,
-                              child: SizedBox(
-                                width: 40,
-                                height: 40,
-                                child: Material(
-                                  color: izin,
-                                  shape: StadiumBorder(),
-                                  elevation: 4,
-                                ),
-                              ),
-                            ),
-                            Draggable(
-                              feedback: SizedBox(
-                                width: 40,
-                                height: 40,
-                                child: Material(
-                                  color: sakit.withOpacity(0.5),
-                                  shape: StadiumBorder(),
-                                  elevation: 4,
-                                ),
-                              ),
-                              data: sakit,
-                              child: SizedBox(
-                                width: 40,
-                                height: 40,
-                                child: Material(
-                                  color: Colors.yellow,
-                                  shape: StadiumBorder(),
-                                  elevation: 4,
-                                ),
-                              ),
-                            ),
-                            Draggable(
-                              feedback: SizedBox(
-                                width: 40,
-                                height: 40,
-                                child: Material(
-                                  color: alpa.withOpacity(0.5),
-                                  shape: StadiumBorder(),
-                                  elevation: 4,
-                                ),
-                              ),
-                              data: alpa,
-                              child: SizedBox(
-                                width: 40,
-                                height: 40,
-                                child: Material(
-                                  color: alpa,
-                                  shape: StadiumBorder(),
-                                  elevation: 4,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    child: CardAbsensi(),
                   ),
                 ],
               ),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              height: heightBody / 16,
-              width: widhtBody / 1.4,
-              // color: Colors.black,
-              child: Card(
-                elevation: 5,
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: SearchBox(
+                labelText: "Cari Santri",
               ),
             ),
             SizedBox(
               height: 20,
             ),
-            Container(
-              height: heightBody / 2.2,
-              width: widhtBody,
-              // color: Colors.black,
-              padding: EdgeInsets.only(
-                left: 10,
-                right: 10,
-              ),
-              // color: Colors.green,
-              child: ListView.builder(
-                physics: BouncingScrollPhysics(),
-                itemCount: users.length,
-                itemBuilder: (context, index) {
-                  final user = users[index]['id'];
-                  return Card(
-                    key: ValueKey(user),
-                    elevation: 2,
-                    // shape: ShapeBorder,
-                    margin: EdgeInsets.all(10),
-                    child: ListTile(
-                      key: ValueKey(index),
-                      title: Text(
-                        "${users[index]['name']}",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w600),
-                      ),
-                      // contentPadding: EdgeInsets.all(5),
-                      trailing: GestureDetector(
-                        onTap: _onButtonPressed,
-                        child: InnerShadowBox(
-                          child: Text(''),
-                        ),
-                      ),
-
-                      leading: CircleAvatar(
-
-                          // child: Text("te"),
+            SingleChildScrollView(
+              child: Container(
+                  width: widhtBody,
+                  height: 500,
+                  // color: mainColor,
+                  child: Obx(
+                    () {
+                      if (santriController.isLoading.value) {
+                        return Center(
+                          child: CircularProgressIndicator(
+                            backgroundColor: Colors.yellow,
+                            strokeWidth: 10,
+                            // value: 1,
+                            color: mainColor,
                           ),
-                    ),
-                  );
-                  ;
-                },
-              ),
+                        );
+                      }
+                      return ListView.builder(
+                        itemCount: santriController.listSantri.length,
+                        itemBuilder: (context, index) {
+                          return CardSantri(
+                            santri: santriController.listSantri[index],
+                          );
+                        },
+                      );
+                    },
+                  )),
             ),
           ],
         ),
@@ -314,51 +190,6 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
           );
         });
   }
-
-  // Widget buildUser(int index, dynamic user) => Card(
-  //       key: ValueKey(user),
-  //       elevation: 2,
-  //       // shape: ShapeBorder,
-  //       margin: EdgeInsets.all(10),
-  //       child: ListTile(
-  //         key: ValueKey(index),
-  //         title: Text(
-  //           "${users[index]['name']}",
-  //           style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-  //         ),
-  //         // contentPadding: EdgeInsets.all(5),
-  //         trailing: InnerShadowBox(
-  //           child: DragTarget(
-  //             onAccept: (
-  //               value,
-  //             ) {
-  //               _isAccepted = true;
-  //               targetC = value as Color?;
-  //               // users[index];
-  //               print(user[index]['id']);
-  //             },
-  //             builder: (context, candidate, rejected) {
-  //               return (_isAccepted)
-  //                   ? SizedBox(
-  //                       width: 35,
-  //                       height: 35,
-  //                       child: Material(
-  //                         color: targetC,
-  //                         shape: StadiumBorder(),
-  //                         elevation: 1,
-  //                       ),
-  //                     )
-  //                   : Text('no');
-  //             },
-  //           ),
-  //         ),
-
-  //         leading: CircleAvatar(
-
-  //             // child: Text("te"),
-  //             ),
-  //       ),
-  //     );
 }
 
 class InnerShadowBox extends StatelessWidget {

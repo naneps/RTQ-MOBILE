@@ -66,9 +66,11 @@ class _PenilaianScreenState extends State<PenilaianScreen> {
                         itemCount: jenjangController.listJenjang.length,
                         itemBuilder: (context, index) {
                           return CardJenjang(
-                            onTap: Get.to(PelajaranScreen(
-                                // id: index.toString(),
-                                )),
+                            onTap: () async {
+                              await Get.to(PelajaranScreen(
+                                jenjang: jenjangController.listJenjang[index],
+                              ));
+                            },
                             jenjang: jenjangController.listJenjang[index],
                           );
                         });
@@ -81,20 +83,3 @@ class _PenilaianScreenState extends State<PenilaianScreen> {
     );
   }
 }
-
-
-
-// ListView.builder(
-//                   itemCount: _listJenjang.length,
-//                   itemBuilder: (context, index) {
-//                     return CardJenjang(
-//                       title: _listJenjang[index],
-//                       onTap: () {
-//                         // print('$index');
-//                         Get.to(PelajaranScreen(
-//                           id: '${_listJenjang[index]}',
-//                         ));
-//                       },
-//                     );
-//                   },
-//                 ),

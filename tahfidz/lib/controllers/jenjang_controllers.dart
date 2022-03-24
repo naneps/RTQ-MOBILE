@@ -24,4 +24,6 @@ class JenjangController extends GetxController {
       isLoading(false);
     }
   }
+
+  void fetchPelajaranFromJenjang() async {}
 }

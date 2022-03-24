@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:get/state_manager.dart';
 import 'package:tahfidz/model/santri.dart';
 import 'package:tahfidz/services/remote_services.dart';

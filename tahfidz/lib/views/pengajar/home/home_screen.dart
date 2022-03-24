@@ -161,7 +161,25 @@ class _HomeScreenState extends State<HomeScreen> {
                                     color: mainColor,
                                   ),
                                 );
-                              } else if (snapshot.hasData) {
+                              } else if (snapshot.data == null) {
+                                return Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      CircularProgressIndicator(
+                                        backgroundColor: Colors.yellow,
+                                        strokeWidth: 10,
+                                        // value: 1,
+                                        color: mainColor,
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text("Data Sedang Dalam Perjalanan")
+                                    ],
+                                  ),
+                                );
+                                // return CircularProgressIndicator();
                               } else if (snapshot.hasError) {
                                 return CircularProgressIndicator();
                               }
