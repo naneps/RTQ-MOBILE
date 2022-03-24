@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,7 +11,6 @@ import 'package:tahfidz/components/item-menu.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/profile_avatar.dart';
 import 'package:tahfidz/controllers/profile_controller.dart';
-import 'package:tahfidz/main.dart';
 import 'package:tahfidz/views/aurh/LoginPage.dart';
 import 'package:tahfidz/views/pengajar/absen_saya/my_absensi_page.dart';
 // import 'package:tahfidz/components/constants.dart';

@@ -210,49 +210,48 @@ class _MyAbsenState extends State<MyAbsen> {
               ),
             ),
 
-            (isAbsen == false)
-                ? Container(
-                    margin: EdgeInsets.only(top: 10, bottom: 10),
-                    child: ElevatedButton(
-                      child: Container(
-                        // color: mainColor,
-                        width: 120,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.save_as_sharp,
-                              size: 26,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              "Simpan !",
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w600),
-                            )
-                          ],
-                        ),
+            Container(
+              margin: EdgeInsets.only(top: 10, bottom: 10),
+              child: ElevatedButton(
+                child: Container(
+                  // color: mainColor,
+                  width: 120,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.save_as_sharp,
+                        size: 26,
                       ),
-                      style: ElevatedButton.styleFrom(
-                        elevation: 4,
-                        primary: greenColor,
-                        // onPrimary: mainColor,
-                        padding: EdgeInsets.all(10),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(20),
-                          ),
-                        ),
+                      SizedBox(
+                        width: 10,
                       ),
-                      onPressed: () {
-                        print(imageFile!);
-                      },
+                      Text(
+                        "Simpan !",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w600),
+                      )
+                    ],
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  elevation: 4,
+                  primary: greenColor,
+                  // onPrimary: mainColor,
+                  padding: EdgeInsets.all(10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
                     ),
-                  )
-                : Text("Sudah Absen"),
+                  ),
+                ),
+                onPressed: () {
+                  print(imageFile!);
+                },
+              ),
+            )
+
             // Container(child: MyButton())
           ],
         ),
@@ -260,23 +259,3 @@ class _MyAbsenState extends State<MyAbsen> {
     );
   }
 }
-
-// Container(
-//               margin: EdgeInsets.all(10),
-//               width: MediaQuery.of(context).size.width / 1.2,
-//               height: MediaQuery.of(context).size.width / 7.5,
-//               // color: mainColor,
-//               child: TextField(
-//                 readOnly: true,
-//                 // focusNode: FocusNode(),
-//                 scrollPadding: EdgeInsets.all(10),
-//                 decoration: InputDecoration(
-//                     border: OutlineInputBorder(
-//                       borderRadius: BorderRadius.circular(20),
-//                     ),
-//                     filled: true,
-//                     hintStyle: TextStyle(color: Colors.grey[800], fontSize: 16),
-//                     hintText: address,
-//                     fillColor: Colors.white),
-//               ),
-//             ),

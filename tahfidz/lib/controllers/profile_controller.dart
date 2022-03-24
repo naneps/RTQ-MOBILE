@@ -35,6 +35,7 @@ class ProfileController {
         return jsonResponse;
       } else {
         // dataFailed();
+        print("error");
       }
     } finally {
       client.close();

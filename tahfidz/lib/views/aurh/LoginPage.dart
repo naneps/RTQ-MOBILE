@@ -7,6 +7,7 @@ import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sp_util/sp_util.dart';
+import 'package:tahfidz/services/remote_services.dart';
 
 import 'package:tahfidz/views/pengajar/home/home_screen.dart';
 
@@ -20,52 +21,12 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  Dio dio = Dio();
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     TextEditingController _controllerTelepon = TextEditingController();
     TextEditingController _controllerPassword = TextEditingController();
-
-    Future<void> _loginProses() async {
-      try {
-        Response response;
-
-        // ProgressDialog? progressDialog = ProgressDialog(context);
-        // progressDialog.style(message: "Harap Tunggu...");
-        // progressDialog.show();
-
-        response = await dio.post(
-          "http://rtq-freelance.my.id/api/login",
-          data: FormData.fromMap(
-            {
-              "no_hp": "${_controllerTelepon.text}",
-              "password": "${_controllerPassword.text}",
-            },
-          ),
-        );
-
-        // progressDialog.hide();
-
-        if (response.data['status'] == true) {
-          SpUtil.putBool("status", response.data['status']);
-          SpUtil.putString("nama", response.data['data']['nama']);
-          SpUtil.putString("keterangan", response.data['data']['keterangan']);
-          SpUtil.putString("no_hp", response.data['data']['no_hp']);
-          setState(() {
-            _controllerTelepon.text = "";
-            _controllerPassword.text = "";
-          });
-
-          Get.off(HomeScreen(telepon: response.data['data']['no_hp']));
-        } else if (response.data['status'] == false) {
-          sendLoginFailed();
-        }
-      } on DioError catch (e) {
-        print(e);
-      }
-    }
 
     final fieldTelepon = TextFormField(
       controller: _controllerTelepon,
@@ -113,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
       onPressed: () {
         if (_formKey.currentState!.validate()) {
-          _loginProses();
+          RemoteServices.loginProses(_controllerTelepon, _controllerPassword);
         }
       },
       child: Text(
