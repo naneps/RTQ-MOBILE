@@ -3,23 +3,39 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/model/santri.dart';
+import 'package:tahfidz/views/pengajar/absensi/absensi_screen.dart';
 
 class CardSantri extends StatelessWidget {
   final Santri? santri;
-  CardSantri({this.santri, Key? key}) : super(key: key);
+  dynamic? onTap;
+  Color hadir = Colors.green;
+  Color izin = Colors.blue;
+  Color sakit = Colors.yellow;
+  Color alpa = Colors.red;
+  Color? absenIndikator;
+  CardSantri({this.absenIndikator, this.onTap, this.santri, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+      padding: const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
       child: Container(
           margin: EdgeInsets.only(top: 10),
           padding: EdgeInsets.only(left: 20, right: 20),
-          height: 85,
+          height: 70,
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(29))),
+              borderRadius: BorderRadius.all(
+                Radius.circular(29),
+              ),
+              boxShadow: [
+                BoxShadow(
+                    offset: Offset(2, 2),
+                    color: Colors.grey.withOpacity(0.3),
+                    blurRadius: 1)
+              ]),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -48,7 +64,7 @@ class CardSantri extends StatelessWidget {
                           "${santri!.name}",
                           style: GoogleFonts.poppins(
                               fontSize: 18,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w600,
                               color: greyColor),
                         ),
                       ),
@@ -64,16 +80,19 @@ class CardSantri extends StatelessWidget {
                 ),
               ),
               Container(
-                // height: 50,
-                // width: 50,
+                height: 30,
+                width: 30,
                 child: GestureDetector(
-                  // onTap: onTap,
-                  child: Icon(
-                    LineIcons.alternateLongArrowRight,
-                    color: Colors.black,
-                    size: 34,
-                  ),
-                ),
+                    onTap: onTap,
+                    child: InnerShadowBox(
+                        child: Container(
+                      height: 25,
+                      width: 25,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: absenIndikator,
+                      ),
+                    ))),
               ),
             ],
           )

@@ -27,7 +27,7 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
   Color sakit = Colors.yellow;
   Color alpa = Colors.red;
 
-  Color? targetC;
+  Color? absenColor;
   String selectAbsen = 'hadir';
   final SantriController santriController = Get.put(SantriController());
   @override
@@ -120,6 +120,8 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
                         itemCount: santriController.listSantri.length,
                         itemBuilder: (context, index) {
                           return CardSantri(
+                            absenIndikator: absenColor,
+                            onTap: () => _onButtonPressed(1),
                             santri: santriController.listSantri[index],
                           );
                         },
@@ -133,23 +135,27 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
     );
   }
 
-  void _onButtonPressed() {
+  void _onButtonPressed(int index) {
     showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return Container(
-            padding: EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-            ),
-            height: 200,
-            width: MediaQuery.of(context).size.width,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
+      // shape: RoundedRectangleBorder(),
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (context) {
+        return Container(
+          padding: EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(30),
+          ),
+          height: 150,
+          width: MediaQuery.of(context).size.width,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: () => selectedItem(hadir, index),
+                child: SizedBox(
                   width: 40,
                   height: 40,
                   child: Material(
@@ -158,54 +164,63 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
                     elevation: 4,
                   ),
                 ),
-                SizedBox(
-                  width: 40,
-                  height: 40,
-                  child: Material(
-                    color: izin,
-                    shape: StadiumBorder(),
-                    elevation: 4,
-                  ),
+              ),
+              SizedBox(
+                width: 40,
+                height: 40,
+                child: Material(
+                  color: izin,
+                  shape: StadiumBorder(),
+                  elevation: 4,
                 ),
-                SizedBox(
-                  width: 40,
-                  height: 40,
-                  child: Material(
-                    color: sakit,
-                    shape: StadiumBorder(),
-                    elevation: 4,
-                  ),
+              ),
+              SizedBox(
+                width: 40,
+                height: 40,
+                child: Material(
+                  color: sakit,
+                  shape: StadiumBorder(),
+                  elevation: 4,
                 ),
-                SizedBox(
-                  width: 40,
-                  height: 40,
-                  child: Material(
-                    color: alpa,
-                    shape: StadiumBorder(),
-                    elevation: 4,
-                  ),
+              ),
+              SizedBox(
+                width: 40,
+                height: 40,
+                child: Material(
+                  color: alpa,
+                  shape: StadiumBorder(),
+                  elevation: 4,
                 ),
-              ],
-            ),
-          );
-        });
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void selectedItem(Color color, int index) {
+    setState(() {
+      absenColor = color;
+    });
+    // dispose();
   }
 }
 
 class InnerShadowBox extends StatelessWidget {
-  final Widget child;
-  const InnerShadowBox({required this.child});
+  final Widget? child;
+  InnerShadowBox({this.child});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 35,
-      width: 35,
+      height: 30,
+      width: 30,
       decoration: BoxDecoration(
         boxShadow: [
           //CSS: inset 0px 4px 6px rgba(8, 56, 73, 0.5)
           BoxShadow(
-            color: Colors.grey, // shadow color
+            color: Colors.grey.withOpacity(0.5), // shadow color
             offset: Offset(4, 4),
           ),
           BoxShadow(
