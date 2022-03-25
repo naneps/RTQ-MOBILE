@@ -19,7 +19,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: (SpUtil.getBool('status') != true)
           ? const LoginPage()
-          : HomeScreen(telepon: SpUtil.getString('no_hp')!),
+          : HomeScreen(
+              telepon: SpUtil.getString('no_hp')!,
+              token: SpUtil.getString('token')!,
+            ),
     );
   }
 }

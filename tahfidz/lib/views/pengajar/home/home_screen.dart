@@ -10,7 +10,10 @@ import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/item-menu.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/profile_avatar.dart';
+import 'package:tahfidz/controllers/asatid_controller.dart';
 import 'package:tahfidz/controllers/profile_controller.dart';
+import 'package:tahfidz/model/asatidz.dart';
+import 'package:tahfidz/services/remote_services.dart';
 import 'package:tahfidz/views/aurh/LoginPage.dart';
 import 'package:tahfidz/views/pengajar/absen_saya/my_absensi_page.dart';
 // import 'package:tahfidz/components/constants.dart';
@@ -27,20 +30,25 @@ import 'package:tahfidz/views/pengajar/profile/profile_screen.dart';
 class HomeScreen extends StatefulWidget {
   // const HomeScreen({Key? key}) : super(key: key);
   final String telepon;
-  HomeScreen({required this.telepon});
+  final String token;
+
+  // final Asatid asatid;
+
+  HomeScreen({required this.telepon, required this.token});
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  ProfileController profileController = ProfileController();
-
+  // ProfileController profileController = ProfileController();
+  AsatidController asatidController = Get.put(AsatidController());
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    profileController.getProfil(widget.telepon);
+    RemoteServices.getUserInfo(SpUtil.getString('token')!);
+    // asatidController.getData();
+    // print(widget.telepon);
   }
 
   @override
@@ -146,9 +154,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Padding(
                           padding: EdgeInsets.all(20),
                           child: FutureBuilder(
-                            future: profileController.getProfil(widget.telepon),
+                            future: RemoteServices.getUserInfo(widget.token),
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
+                              // print(snapshot.data);
+
+                              Asatidz? asatidz = snapshot.data;
+
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
                                 return Center(
@@ -181,6 +193,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               } else if (snapshot.hasError) {
                                 return CircularProgressIndicator();
                               }
+                              // print(asatid.avatar);
+
                               return Column(
                                 // color: mainColor,
                                 children: [
@@ -188,12 +202,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                       sizeAvatar: 90,
                                       sizeIcon: 0,
                                       widthBtn: 0,
-                                      avatar: snapshot.data['data']['gambar']!),
+                                      avatar: asatidz!.gambar),
                                   SizedBox(
                                     height: 10,
                                   ),
                                   Text(
-                                    snapshot.data['data']['nama']!,
+                                    '${asatidz.nama}',
                                     style: GoogleFonts.poppins(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w600),
@@ -297,3 +311,78 @@ class _HomeScreenState extends State<HomeScreen> {
     ));
   }
 }
+
+
+
+
+// FutureBuilder(
+//                             future: RemoteServices.getUserInfo(
+//                                 SpUtil.getString('token')!),
+//                             builder:
+//                                 (BuildContext context, AsyncSnapshot snapshot) {
+//                               // print(snapshot.data);
+//                               var asatid = snapshot.data;
+//                               if (snapshot.connectionState ==
+//                                   ConnectionState.waiting) {
+//                                 return Center(
+//                                   child: CircularProgressIndicator(
+//                                     backgroundColor: Colors.yellow,
+//                                     strokeWidth: 10,
+//                                     // value: 1,
+//                                     color: mainColor,
+//                                   ),
+//                                 );
+//                               } else if (snapshot.data == null) {
+//                                 return Center(
+//                                   child: Column(
+//                                     mainAxisAlignment: MainAxisAlignment.center,
+//                                     children: [
+//                                       CircularProgressIndicator(
+//                                         backgroundColor: Colors.yellow,
+//                                         strokeWidth: 10,
+//                                         // value: 1,
+//                                         color: mainColor,
+//                                       ),
+//                                       SizedBox(
+//                                         height: 10,
+//                                       ),
+//                                       Text("Data Sedang Dalam Perjalanan")
+//                                     ],
+//                                   ),
+//                                 );
+//                                 // return CircularProgressIndicator();
+//                               } else if (snapshot.hasError) {
+//                                 return CircularProgressIndicator();
+//                               }
+//                               // print(asatid.avatar);
+
+//                               return Column(
+//                                 // color: mainColor,
+//                                 children: [
+//                                   ProfilePicture(
+//                                       sizeAvatar: 90,
+//                                       sizeIcon: 0,
+//                                       widthBtn: 0,
+//                                       avatar: asatid.avatar.toString()),
+//                                   SizedBox(
+//                                     height: 10,
+//                                   ),
+//                                   Text(
+//                                     asatid.name.toString(),
+//                                     style: GoogleFonts.poppins(
+//                                         fontSize: 18,
+//                                         fontWeight: FontWeight.w600),
+//                                   ),
+//                                   SizedBox(
+//                                     height: 5,
+//                                   ),
+//                                   Text(
+//                                     SpUtil.getString('keterangan')!,
+//                                     style: GoogleFonts.poppins(
+//                                         fontSize: 14,
+//                                         fontWeight: FontWeight.w500),
+//                                   ),
+//                                 ],
+//                               );
+//                             },
+//                           ),

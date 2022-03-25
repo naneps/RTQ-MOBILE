@@ -7,6 +7,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tahfidz/components/constants.dart';
+import 'package:tahfidz/services/remote_services.dart';
 
 class MyAbsen extends StatefulWidget {
   const MyAbsen({Key? key}) : super(key: key);
@@ -17,18 +18,24 @@ class MyAbsen extends StatefulWidget {
 
 class _MyAbsenState extends State<MyAbsen> {
   File? imageFile;
+  final _addFormKey = GlobalKey<FormState>();
+  final _titleController = TextEditingController();
+
+  final picker = ImagePicker();
 
   bool isAbsen = false;
   String? location = "Tekan Tombol";
   String? address = "";
 
-  final picker = ImagePicker();
+  // static String get s => null;
 
   Future getImageFromCanera() async {
     var pickImage = await picker.pickImage(source: ImageSource.camera);
     setState(() {
       if (pickImage != null) {
-        imageFile = File(pickImage.path);
+        setState(() {
+          imageFile = File(pickImage.path);
+        });
       } else {
         print("no image  selecter");
       }
@@ -63,10 +70,19 @@ class _MyAbsenState extends State<MyAbsen> {
     List<Placemark> placemarks =
         await placemarkFromCoordinates(position.latitude, position.longitude);
     Placemark place = placemarks[0];
-    address =
-        '${place.subAdministrativeArea} , ${place.locality} , ${place.subLocality} , ${place.postalCode} ';
-    setState(() {});
+
+    setState(() {
+      address =
+          '${place.subAdministrativeArea} , ${place.locality} , ${place.subLocality} , ${place.postalCode} ';
+    });
     print(placemarks);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    RemoteServices();
   }
 
   @override
@@ -247,7 +263,14 @@ class _MyAbsenState extends State<MyAbsen> {
                   ),
                 ),
                 onPressed: () {
-                  print(imageFile!);
+                  print(imageFile);
+                  print(address);
+                  // setState(() {});
+                  if (_addFormKey.currentState!.validate()) {
+                    _addFormKey.currentState!.save();
+                    Map<String, String> body = {'alamat': address!};
+                    RemoteServices.addImage(body, imageFile!.path);
+                  }
                 },
               ),
             )

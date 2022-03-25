@@ -1,59 +1,54 @@
-// To parse this JSON data, do
-//
-//     final asatid = asatidFromJson(jsonString);
-
 import 'dart:convert';
 
-List<Asatid> asatidFromJson(String str) =>
-    List<Asatid>.from(json.decode(str).map((x) => Asatid.fromJson(x)));
+Asatidz asatidzFromJson(String str) => Asatidz.fromJson(json.decode(str));
 
-String asatidToJson(List<Asatid> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String asatidzToJson(Asatidz data) => json.encode(data.toJson());
 
-class Asatid {
-  Asatid({
-    this.name,
-    this.avatar,
-    this.idRole,
-    this.alamat,
+class Asatidz {
+  // static Asatidz obs;
+
+  Asatidz({
+    this.nama,
     this.email,
-    this.noHp,
-    this.tanggalLahir,
+    this.alamat,
+    this.gambar,
     this.tempatLahir,
-    this.id,
+    this.tanggalLahir,
+    this.hakAkses,
+    this.token,
   });
 
-  String? name;
-  String? avatar;
-  int? idRole;
-  String? alamat;
+  String? nama;
   String? email;
-  String? noHp;
-  DateTime? tanggalLahir;
+  String? alamat;
+  String? gambar;
   String? tempatLahir;
-  String? id;
+  DateTime? tanggalLahir;
+  String? hakAkses;
+  String? token;
 
-  factory Asatid.fromJson(Map<String, dynamic> json) => Asatid(
-        name: json["name"],
-        avatar: json["avatar"],
-        idRole: json["id_role"],
-        alamat: json["alamat"],
+  factory Asatidz.fromJson(Map<String, dynamic> json) => Asatidz(
+        nama: json["nama"],
         email: json["email"],
-        noHp: json["no_hp"],
-        tanggalLahir: DateTime.parse(json["tanggal_lahir"]),
+        alamat: json["alamat"],
+        gambar: json["gambar"],
         tempatLahir: json["tempat_lahir"],
-        id: json["id"],
+        tanggalLahir: DateTime.parse(json["tanggal_lahir"]),
+        hakAkses: json["hak_akses"],
+        token: json["token"],
       );
 
+  set value(value) {}
+
   Map<String, dynamic> toJson() => {
-        "name": name,
-        "avatar": avatar,
-        "id_role": idRole,
-        "alamat": alamat,
+        "nama": nama,
         "email": email,
-        "no_hp": noHp,
-        "tanggal_lahir": tanggalLahir?.toIso8601String(),
+        "alamat": alamat,
+        "gambar": gambar,
         "tempat_lahir": tempatLahir,
-        "id": id,
+        "tanggal_lahir":
+            "${tanggalLahir!.year.toString().padLeft(4, '0')}-${tanggalLahir!.month.toString().padLeft(2, '0')}-${tanggalLahir!.day.toString().padLeft(2, '0')}",
+        "hak_akses": hakAkses,
+        "token": token,
       };
 }
