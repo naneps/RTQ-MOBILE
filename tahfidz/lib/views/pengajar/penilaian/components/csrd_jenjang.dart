@@ -75,7 +75,7 @@ class CardJenjang extends StatelessWidget {
                     color: mainColor, borderRadius: BorderRadius.circular(30)),
                 child: Center(
                     child: Text(
-                  "${jenjang!.countSantri!.length.toString()} Santri",
+                  "${jenjang!.countSantri!.toString()} Santri",
                   style: GoogleFonts.poppins(
                       color: Colors.white,
                       fontSize: 13,

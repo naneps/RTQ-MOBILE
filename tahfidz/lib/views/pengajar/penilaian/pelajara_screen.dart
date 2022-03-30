@@ -39,51 +39,39 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(15),
-        child: SingleChildScrollView(
-          child: Container(
-            width: width,
-            // child:
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: width,
-                  height: 400,
-                  padding: EdgeInsets.all(10),
-                  // color: mainColor,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Daftar Santri ",
-                        style: GoogleFonts.poppins(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: greyColor),
-                      ),
-                      Container(
-                        height: height,
-                        width: width,
-                        child: ListView.builder(
-                          itemCount: 2,
-                          itemBuilder: (context, index) {
-                            return ListSantri(
-                                namaSantri: widget.jenjang!.namaKelas![index]);
-                          },
-                        ),
-                      )
-                    ],
-                  ),
+        child: Container(
+          width: width,
+          height: height,
+          // padding: EdgeInsets.all(10),
+          // color: mainColor,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Text(
+                  "Daftar Santri ",
+                  style: GoogleFonts.poppins(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: greyColor),
                 ),
-                Container(
-                  child: Text(
-                    "Hafalan",
-                    style: GoogleFonts.poppins(
-                        fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                )
-              ],
-            ),
+              ),
+              Container(
+                height: height / 2 - 50,
+                width: width,
+                // color: Colors.white,
+                child: ListView.builder(
+                  itemCount: widget.jenjang!.countSantri!.length,
+                  itemBuilder: (context, index) {
+                    return ListSantri(
+                        id: widget.jenjang!.countSantri![index].toString(),
+                        namaSantri:
+                            widget.jenjang!.countSantri![index].toString());
+                  },
+                ),
+              )
+            ],
           ),
         ),
       ),

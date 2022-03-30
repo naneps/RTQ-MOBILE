@@ -266,8 +266,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: 0xffFED525),
                       ),
                       GestureDetector(
-                        onTap: () => Get.to(PenilaianScreen(),
-                            popGesture: true, transition: Transition.fadeIn),
+                        onTap: () {
+                          Get.to(PenilaianScreen(),
+                              popGesture: true, transition: Transition.fadeIn);
+                        },
                         child: ItemMenu(
                             title: 'Penilaian',
                             icon: Icons.book_online_outlined,
@@ -311,78 +313,3 @@ class _HomeScreenState extends State<HomeScreen> {
     ));
   }
 }
-
-
-
-
-// FutureBuilder(
-//                             future: RemoteServices.getUserInfo(
-//                                 SpUtil.getString('token')!),
-//                             builder:
-//                                 (BuildContext context, AsyncSnapshot snapshot) {
-//                               // print(snapshot.data);
-//                               var asatid = snapshot.data;
-//                               if (snapshot.connectionState ==
-//                                   ConnectionState.waiting) {
-//                                 return Center(
-//                                   child: CircularProgressIndicator(
-//                                     backgroundColor: Colors.yellow,
-//                                     strokeWidth: 10,
-//                                     // value: 1,
-//                                     color: mainColor,
-//                                   ),
-//                                 );
-//                               } else if (snapshot.data == null) {
-//                                 return Center(
-//                                   child: Column(
-//                                     mainAxisAlignment: MainAxisAlignment.center,
-//                                     children: [
-//                                       CircularProgressIndicator(
-//                                         backgroundColor: Colors.yellow,
-//                                         strokeWidth: 10,
-//                                         // value: 1,
-//                                         color: mainColor,
-//                                       ),
-//                                       SizedBox(
-//                                         height: 10,
-//                                       ),
-//                                       Text("Data Sedang Dalam Perjalanan")
-//                                     ],
-//                                   ),
-//                                 );
-//                                 // return CircularProgressIndicator();
-//                               } else if (snapshot.hasError) {
-//                                 return CircularProgressIndicator();
-//                               }
-//                               // print(asatid.avatar);
-
-//                               return Column(
-//                                 // color: mainColor,
-//                                 children: [
-//                                   ProfilePicture(
-//                                       sizeAvatar: 90,
-//                                       sizeIcon: 0,
-//                                       widthBtn: 0,
-//                                       avatar: asatid.avatar.toString()),
-//                                   SizedBox(
-//                                     height: 10,
-//                                   ),
-//                                   Text(
-//                                     asatid.name.toString(),
-//                                     style: GoogleFonts.poppins(
-//                                         fontSize: 18,
-//                                         fontWeight: FontWeight.w600),
-//                                   ),
-//                                   SizedBox(
-//                                     height: 5,
-//                                   ),
-//                                   Text(
-//                                     SpUtil.getString('keterangan')!,
-//                                     style: GoogleFonts.poppins(
-//                                         fontSize: 14,
-//                                         fontWeight: FontWeight.w500),
-//                                   ),
-//                                 ],
-//                               );
-//                             },
-//                           ),
