@@ -87,7 +87,7 @@ class CardAbsensi extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-                Text("Izin",
+                Text("Izn",
                     style: GoogleFonts.poppins(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
