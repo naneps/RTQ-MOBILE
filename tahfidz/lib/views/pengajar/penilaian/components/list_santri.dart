@@ -4,16 +4,11 @@ import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/model/santri.dart';
 import 'package:tahfidz/views/pengajar/absensi/absensi_screen.dart';
 
-class CardSantri extends StatelessWidget {
-  final Santri? santri;
+class ListSantri extends StatelessWidget {
+  final String? namaSantri;
   dynamic onTap;
-  Color hadir = Colors.green;
-  Color izin = Colors.blue;
-  Color sakit = Colors.yellow;
-  Color alpa = Colors.red;
-  Color? absenIndikator;
-  CardSantri({this.absenIndikator, this.onTap, this.santri, Key? key})
-      : super(key: key);
+
+  ListSantri({this.onTap, this.namaSantri, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +48,8 @@ class CardSantri extends StatelessWidget {
                     borderRadius: BorderRadius.circular(50),
                   ),
                   child: CircleAvatar(
-                    backgroundImage: NetworkImage("${santri!.avatar}"),
-                  )),
+                      // backgroundImage: NetworkImage("${santri!.avatar}"),
+                      )),
               SizedBox(width: 20),
               Expanded(
                 flex: 4,
@@ -67,20 +62,20 @@ class CardSantri extends StatelessWidget {
                     children: [
                       Flexible(
                         child: Text(
-                          "${santri!.name}",
+                          "$namaSantri",
                           style: GoogleFonts.poppins(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
                               color: greyColor),
                         ),
                       ),
-                      Text(
-                        "${santri!.jenjang}",
-                        style: GoogleFonts.poppins(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            color: greyColor),
-                      )
+                      // Text(
+                      //   // "${santri!.jenjang}",
+                      //   style: GoogleFonts.poppins(
+                      //       fontSize: 12,
+                      //       fontWeight: FontWeight.w500,
+                      //       color: greyColor),
+                      // )
                     ],
                   ),
                 ),
@@ -88,19 +83,6 @@ class CardSantri extends StatelessWidget {
               Container(
                 height: 30,
                 width: 30,
-                child: GestureDetector(
-                  onTap: onTap,
-                  child: InnerShadowBox(
-                    child: Container(
-                      height: 25,
-                      width: 25,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: absenIndikator,
-                      ),
-                    ),
-                  ),
-                ),
               ),
             ],
           )

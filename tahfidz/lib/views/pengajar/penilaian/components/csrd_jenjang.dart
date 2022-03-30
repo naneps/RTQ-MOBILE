@@ -7,7 +7,7 @@ import 'package:tahfidz/model/Jenjang.dart';
 
 class CardJenjang extends StatelessWidget {
   final Jenjang? jenjang;
-  dynamic? onTap;
+  dynamic onTap;
   CardJenjang({Key? key, this.jenjang, this.onTap}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -75,7 +75,7 @@ class CardJenjang extends StatelessWidget {
                     color: mainColor, borderRadius: BorderRadius.circular(30)),
                 child: Center(
                     child: Text(
-                  "${jenjang!.countSantri} Santri",
+                  "${jenjang!.countSantri!.length.toString()} Santri",
                   style: GoogleFonts.poppins(
                       color: Colors.white,
                       fontSize: 13,

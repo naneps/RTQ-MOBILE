@@ -5,7 +5,7 @@ import 'package:tahfidz/components/constants.dart';
 
 import 'package:tahfidz/components/search_box.dart';
 import 'package:tahfidz/controllers/santri_controller.dart';
-import 'package:tahfidz/views/pengajar/absensi/components/card_absensi.dart';
+import 'package:tahfidz/views/pengajar/absensi/components/indicator_absensi.dart';
 import 'package:tahfidz/views/pengajar/absensi/components/card_santri.dart';
 
 void main() => runApp(MaterialApp(
@@ -49,60 +49,55 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
       // floatingActionButton: FloatingActionButton(
       //   onPressed: () {},
       // ),
-      body: Container(
-        // physics: BouncingScrollPhysics(),s
-        height: heightBody,
-
-        // color: Colors.black,
-
-        child: Column(
-          children: [
-            Container(
-              height: heightBody / 6,
-              width: widhtBody,
-              // color: Colors.black,
-              child: Stack(
-                // fit: StackFit.expand,
-                // clipBehavior: Clip.antiAliasWithSaveLayer,
-                alignment: Alignment.center,
-                children: [
-                  Positioned(
-                    top: 0,
-                    height: 100,
-                    width: widhtBody,
-                    child: Container(
-                      // color: mainColor,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(90),
-                            bottomRight: Radius.circular(90),
-                          ),
-                          color: mainColor),
-                      // width: widhtBody,
-                    ),
+      body: Column(
+        children: [
+          Container(
+            height: heightBody / 6,
+            width: widhtBody,
+            // color: Colors.black,
+            child: Stack(
+              // fit: StackFit.expand,
+              // clipBehavior: Clip.antiAliasWithSaveLayer,
+              alignment: Alignment.center,
+              children: [
+                Positioned(
+                  top: 0,
+                  height: 100,
+                  width: widhtBody,
+                  child: Container(
+                    // color: mainColor,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(90),
+                          bottomRight: Radius.circular(90),
+                        ),
+                        color: mainColor),
+                    // width: widhtBody,
                   ),
-                  Positioned(
-                    top: 0,
-                    height: 150,
-                    width: widhtBody / 1.2,
-                    child: CardAbsensi(),
-                  ),
-                ],
-              ),
+                ),
+                Positioned(
+                  top: 0,
+                  height: 150,
+                  width: widhtBody / 1.2,
+                  child: CardAbsensi(),
+                ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: SearchBox(
-                labelText: "Cari Santri",
-              ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: SearchBox(
+              labelText: "Cari Santri",
             ),
-            SizedBox(
-              height: 20,
-            ),
-            SingleChildScrollView(
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Flexible(
+            child: SingleChildScrollView(
               child: Container(
                   width: widhtBody,
-                  height: 500,
+                  height: heightBody / 2,
                   // color: mainColor,
                   child: Obx(
                     () {
@@ -117,6 +112,7 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
                         );
                       }
                       return ListView.builder(
+                        physics: BouncingScrollPhysics(),
                         itemCount: santriController.listSantri.length,
                         itemBuilder: (context, index) {
                           return CardSantri(
@@ -129,8 +125,8 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
                     },
                   )),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
