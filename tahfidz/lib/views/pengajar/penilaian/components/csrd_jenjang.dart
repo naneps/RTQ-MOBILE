@@ -7,10 +7,14 @@ import 'package:tahfidz/model/Jenjang.dart';
 
 class CardJenjang extends StatelessWidget {
   final Jenjang? jenjang;
+  final int? nomor;
   dynamic onTap;
-  CardJenjang({Key? key, this.jenjang, this.onTap}) : super(key: key);
+
+  CardJenjang({Key? key, this.jenjang, this.nomor, this.onTap})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
+    int count = 1;
     return Container(
         margin: EdgeInsets.only(top: 10),
         padding: EdgeInsets.all(10),
@@ -30,10 +34,21 @@ class CardJenjang extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(50),
               ),
-              child: Icon(
-                LineIcons.bookOpen,
-                size: 34,
-                color: mainColor,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Image.asset(
+                    'assets/nomor.png',
+                    width: 45,
+                    height: 45,
+                    fit: BoxFit.cover,
+                  ),
+                  Text(
+                    "${count + nomor!}",
+                    style: GoogleFonts.poppins(
+                        fontSize: 16, fontWeight: FontWeight.bold),
+                  )
+                ],
               ),
             ),
             Expanded(

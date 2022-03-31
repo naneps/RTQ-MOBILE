@@ -97,13 +97,14 @@ class ListSantri extends StatelessWidget {
 
   Widget buildBtnPenilaianTadribat(BuildContext context, index) {
     final size = MediaQuery.of(context).size;
+    int count = 1;
     return TextButton(
       onPressed: () {
         Get.defaultDialog(
             content: Container(
               width: size.width,
               height: size.height / 2,
-              color: mainColor,
+              // color: mainColor,
               child: ListView.builder(
                 itemCount: 10,
                 itemBuilder: (context, index) {
@@ -112,15 +113,28 @@ class ListSantri extends StatelessWidget {
                     trailing: Container(
                       width: 60,
                       height: 40,
-                      color: Colors.white,
+                      // color: Colors.white,
+                      child: Center(
+                        child: Text("80"),
+                      ),
                     ), // trailing: TextField(),
 
-                    leading: CircleAvatar(
-                      child: Center(
-                        child: Text("$index"),
-                      ),
+                    leading: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/nomor.png',
+                          width: 40,
+                          height: 40,
+                          fit: BoxFit.cover,
+                        ),
+                        Text(
+                          "${count + index}",
+                          style: GoogleFonts.poppins(fontSize: 14),
+                        )
+                      ],
                     ),
-                    title: Text("Pelajaran $index"),
+                    title: Text("Pelajaran ${count + index}"),
                   );
                 },
               ),

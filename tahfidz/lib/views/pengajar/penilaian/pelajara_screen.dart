@@ -5,7 +5,6 @@ import 'package:line_icons/line_icons.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/controllers/jenjang_controllers.dart';
 import 'package:tahfidz/model/Jenjang.dart';
-import 'package:tahfidz/model/santri.dart';
 import 'package:tahfidz/views/pengajar/penilaian/components/list_santri.dart';
 
 class PelajaranScreen extends StatefulWidget {
@@ -31,6 +30,7 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
+      backgroundColor: mainColor,
       appBar: AppBar(
         shadowColor: Colors.transparent,
         backgroundColor: mainColor,
@@ -54,7 +54,7 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
                   style: GoogleFonts.poppins(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: greyColor),
+                      color: Colors.white),
                 ),
               ),
               Flexible(

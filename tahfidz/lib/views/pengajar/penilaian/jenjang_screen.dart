@@ -64,6 +64,7 @@ class _PenilaianScreenState extends State<PenilaianScreen> {
                         itemCount: jenjangController.listJenjang.length,
                         itemBuilder: (context, index) {
                           return CardJenjang(
+                            nomor: index,
                             onTap: () async {
                               await Get.to(PelajaranScreen(
                                 jenjang: jenjangController.listJenjang[index],

@@ -36,7 +36,7 @@ class RemoteServices {
 
       if (response.statusCode == 200) {
         var user = userFromJson(response.body);
-
+        print(user.idRole);
         if (int.parse(user.idRole!) == 2) {
           // print(response.headers['authorization']);
           Get.off(HomeScreen(
@@ -86,7 +86,7 @@ class RemoteServices {
     final response = await http.get(
         Uri.parse('http://api.rtq-freelance.my.id/api-v1/profil/user/detail'),
         headers: {HttpHeaders.authorizationHeader: token});
-    // print(response.body);
+    print(response.statusCode);
 
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
