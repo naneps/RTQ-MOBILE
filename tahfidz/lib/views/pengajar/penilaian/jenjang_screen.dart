@@ -16,8 +16,6 @@ class PenilaianScreen extends StatefulWidget {
 }
 
 class _PenilaianScreenState extends State<PenilaianScreen> {
-  List<String> _listJenjang = List.generate(8, (index) => "Jenjang $index");
-
   final JenjangController jenjangController = Get.put(JenjangController());
   @override
   Widget build(BuildContext context) {
@@ -55,7 +53,7 @@ class _PenilaianScreenState extends State<PenilaianScreen> {
             Flexible(
               child: Container(
                 width: width,
-                height: 400,
+                height: height,
                 child: Obx(() {
                   if (jenjangController.isLoading.value) {
                     return Center(

@@ -18,7 +18,7 @@ class CardJenjang extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(29))),
+            borderRadius: BorderRadius.all(Radius.circular(35))),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -75,7 +75,7 @@ class CardJenjang extends StatelessWidget {
                     color: mainColor, borderRadius: BorderRadius.circular(30)),
                 child: Center(
                     child: Text(
-                  "${jenjang!.countSantri!.toString()} Santri",
+                  "${jenjang!.countSantri!.length.toString()} Santri",
                   style: GoogleFonts.poppins(
                       color: Colors.white,
                       fontSize: 13,

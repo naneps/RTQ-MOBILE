@@ -20,10 +20,10 @@ class JenjangController extends GetxController {
         listJenjang.value = classes;
       }
     } finally {
-      // print(e);
+      print("Error");
       isLoading(false);
     }
   }
 
-  void fetchPelajaranFromJenjang() async {}
+  // void fetchPelajaranFromJenjang() async {}
 }

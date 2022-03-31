@@ -57,18 +57,20 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
                       color: greyColor),
                 ),
               ),
-              Container(
-                height: height / 2 - 50,
-                width: width,
-                // color: Colors.white,
-                child: ListView.builder(
-                  itemCount: widget.jenjang!.countSantri!.length,
-                  itemBuilder: (context, index) {
-                    return ListSantri(
-                        id: widget.jenjang!.countSantri![index].toString(),
-                        namaSantri:
-                            widget.jenjang!.countSantri![index].toString());
-                  },
+              Flexible(
+                child: Container(
+                  height: height,
+                  width: width,
+                  // color: Colors.white,
+                  child: ListView.builder(
+                    itemCount: widget.jenjang!.countSantri!.length,
+                    itemBuilder: (context, index) {
+                      return ListSantri(
+                          id: widget.jenjang!.countSantri![index].toString(),
+                          namaSantri:
+                              widget.jenjang!.countSantri![index].toString());
+                    },
+                  ),
                 ),
               )
             ],

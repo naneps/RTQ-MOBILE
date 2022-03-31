@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
-import 'package:tahfidz/model/santri.dart';
-import 'package:tahfidz/views/pengajar/absensi/absensi_screen.dart';
 
 class ListSantri extends StatelessWidget {
   final String? namaSantri;
@@ -14,6 +14,7 @@ class ListSantri extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Container(
       margin: EdgeInsets.only(top: 15),
       padding: EdgeInsets.only(
@@ -65,7 +66,7 @@ class ListSantri extends StatelessWidget {
                     child: Text(
                       "$namaSantri",
                       style: GoogleFonts.poppins(
-                          fontSize: 16,
+                          fontSize: 14,
                           fontWeight: FontWeight.w500,
                           color: greyColor),
                     ),
@@ -75,12 +76,18 @@ class ListSantri extends StatelessWidget {
             ),
           ),
           Expanded(
-            flex: 1,
+            flex: -1,
             child: Container(
               height: 50,
               // width: 30,
               // color: Colors.black,
-              child: buildBtnPenilaian(context, id),
+              child: Column(
+                // crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  buildBtnPenilaianTadribat(context, id),
+                  // buildBtnPenilaianTadribat(context, id)
+                ],
+              ),
             ),
           ),
         ],
@@ -88,11 +95,46 @@ class ListSantri extends StatelessWidget {
     );
   }
 
-  Widget buildBtnPenilaian(BuildContext context, index) {
-    return IconButton(
-        onPressed: () {
-          print(index);
-        },
-        icon: Icon(Icons.abc_outlined));
+  Widget buildBtnPenilaianTadribat(BuildContext context, index) {
+    final size = MediaQuery.of(context).size;
+    return TextButton(
+      onPressed: () {
+        Get.defaultDialog(
+            content: Container(
+              width: size.width,
+              height: size.height / 2,
+              color: mainColor,
+              child: ListView.builder(
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    dense: true,
+                    trailing: Container(
+                      width: 60,
+                      height: 40,
+                      color: Colors.white,
+                    ), // trailing: TextField(),
+
+                    leading: CircleAvatar(
+                      child: Center(
+                        child: Text("$index"),
+                      ),
+                    ),
+                    title: Text("Pelajaran $index"),
+                  );
+                },
+              ),
+            ),
+            title: "Tadribat",
+            barrierDismissible: false,
+            cancel: IconButton(
+                onPressed: () => Get.back(), icon: Icon(Icons.close)));
+      },
+      child: Text(
+        "Tadribat",
+        style: GoogleFonts.poppins(color: mainColor),
+      ),
+      // icon: Icon(Icons.abc_outlined),
+    );
   }
 }

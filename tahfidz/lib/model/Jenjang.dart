@@ -21,20 +21,20 @@ class Jenjang {
   });
 
   String? namaKelas;
-  List<Santri>? countSantri;
+  List<dynamic>? countSantri;
   List<dynamic>? pelajaran;
   String? id;
 
   factory Jenjang.fromJson(Map<String, dynamic> json) => Jenjang(
         namaKelas: json["nama_kelas"],
-        countSantri: List<Santri>.from(json["count_santri"].map((x) => x)),
+        countSantri: List<dynamic>.from(json["count_santri"].map((x) => x)),
         pelajaran: List<dynamic>.from(json["pelajaran"].map((x) => x)),
         id: json["id"],
       );
 
   Map<String, dynamic> toJson() => {
         "nama_kelas": namaKelas,
-        "count_santri": List<Santri>.from(countSantri!.map((x) => x)),
+        "count_santri": List<dynamic>.from(countSantri!.map((x) => x)),
         "pelajaran": List<dynamic>.from(pelajaran!.map((x) => x)),
         "id": id,
       };
