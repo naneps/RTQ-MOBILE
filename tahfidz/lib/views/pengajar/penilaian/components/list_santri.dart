@@ -81,10 +81,11 @@ class ListSantri extends StatelessWidget {
               height: 50,
               // width: 30,
               // color: Colors.black,
-              child: Column(
+              child: Row(
                 // crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   buildBtnPenilaianTadribat(context, id),
+                  buildBtnHaflan(context, id)
                   // buildBtnPenilaianTadribat(context, id)
                 ],
               ),
@@ -139,7 +140,7 @@ class ListSantri extends StatelessWidget {
                 },
               ),
             ),
-            title: "Tadribat",
+            title: "Penilaian Tadribat",
             barrierDismissible: false,
             cancel: IconButton(
                 onPressed: () => Get.back(), icon: Icon(Icons.close)));
@@ -149,6 +150,59 @@ class ListSantri extends StatelessWidget {
         style: GoogleFonts.poppins(color: mainColor),
       ),
       // icon: Icon(Icons.abc_outlined),
+    );
+  }
+
+  Widget buildBtnHaflan(BuildContext context, id) {
+    final size = MediaQuery.of(context).size;
+    int count = 1;
+    return TextButton(
+      onPressed: () {
+        Get.defaultDialog(
+            content: Container(
+              width: size.width,
+              height: size.height / 2,
+              // color: mainColor,
+              child: ListView.builder(
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    dense: true,
+                    trailing: Container(
+                      width: 60,
+                      height: 40,
+                      // color: Colors.white,
+                      child: Center(
+                        child: Text("80"),
+                      ),
+                    ), // trailing: TextField(),
+
+                    leading: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/nomor.png',
+                          width: 40,
+                          height: 40,
+                          fit: BoxFit.cover,
+                        ),
+                        Text(
+                          "${count + index}",
+                          style: GoogleFonts.poppins(fontSize: 14),
+                        )
+                      ],
+                    ),
+                    title: Text("Hafalan ${count + index}"),
+                  );
+                },
+              ),
+            ),
+            title: "Penilaian Hafalan",
+            barrierDismissible: false,
+            cancel: IconButton(
+                onPressed: () => Get.back(), icon: Icon(Icons.close)));
+      },
+      child: Text("Hafalan"),
     );
   }
 }

@@ -10,23 +10,18 @@ import 'package:http/http.dart' as http;
 // import 'package:progress_dialog/progress_dialog.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/profile_avatar.dart';
+import 'package:tahfidz/controllers/asatid_controller.dart';
 import 'package:tahfidz/controllers/profile_controller.dart';
+import 'package:tahfidz/model/asatidz.dart';
 
 import 'package:tahfidz/model/profil.dart';
-
-// void main(List<String> args) {
-//   runApp(MaterialApp(
-//     home: ProfileScreen(
-//       telepon: '',
-//     ),
-//   ));
-// }
-enum Gender { lakiLaki, perempuan }
+import 'package:tahfidz/services/remote_services.dart';
 
 class ProfileScreen extends StatefulWidget {
   final String? telepon;
+  final String? token;
 
-  ProfileScreen({this.telepon});
+  ProfileScreen({this.telepon, this.token});
   // const ProfileScreen({Key? key}) : super(key: key);
 
   @override
@@ -35,16 +30,14 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   bool showPassword = false;
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
-  DateTime dataTiru = DateTime.utc(2022, 10, 10);
-  ProfileController profileController = ProfileController();
+  Asatidz? asatidz;
+
+  AsatidController asatidController = Get.put(AsatidController());
   // final tahun_lahir = dataTiru.year;
-  DateTime tanggal_lahir = DateTime.utc(2022, 10, 10);
+
   String? avatar;
 
-  final List<String> _jenisKelamin = <String>['Laki-laki', 'Perempuan'];
-
-  Gender _gender = Gender.lakiLaki;
+  // Gender _gender = Gender.lakiLaki;
   @override
   void initState() {
     super.initState();
@@ -104,11 +97,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Positioned(
                       bottom: 50,
                       child: FutureBuilder(
-                        future: profileController.getProfil(widget.telepon!),
+                        future: RemoteServices.getUserInfo(widget.token!),
                         builder:
                             (BuildContext context, AsyncSnapshot snapshot) {
+                          asatidz = snapshot.data;
+
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
+                            // print(snapshot.data);
+                            return Center(
+                              child: CircularProgressIndicator(
+                                backgroundColor: Colors.yellow,
+                                strokeWidth: 10,
+                                // value: 1,
+                                color: mainColor,
+                              ),
+                            );
+                          } else if (snapshot.hasError) {
                             return Center(
                               child: CircularProgressIndicator(
                                 backgroundColor: Colors.yellow,
@@ -122,10 +127,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             elevation: 5,
                             shape: const CircleBorder(),
                             child: ProfilePicture(
-                              sizeAvatar: 150,
-                              avatar: snapshot.data['data']['gambar'],
-                              // sizeBtn: 0,
-                            ),
+                                sizeAvatar: 150, avatar: asatidz!.gambar
+                                // sizeBtn: 0,
+                                ),
                           );
                         },
                       ),
@@ -146,8 +150,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     padding: const EdgeInsets.all(10),
                     child: Column(
                       children: [
-                        buildTextField("Nama", ProfileController.nama.text,
-                            false, false, ProfileController.nama),
+                        // buildTextField("Nama", asatidz!.nama.toString(), false,
+                        //     false, ProfileController.nama),
                         buildTextField(
                             "Telepon",
                             ProfileController.telepon.text,
@@ -199,39 +203,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       ),
-    );
-  }
-
-  buildRadioGender() {
-    return Wrap(
-      alignment: WrapAlignment.center,
-      clipBehavior: Clip.none,
-      children: <Widget>[
-        ListTile(
-          title: const Text('Laki-Laki'),
-          leading: Radio<Gender>(
-            value: Gender.lakiLaki,
-            groupValue: _gender,
-            onChanged: (Gender? value) {
-              setState(() {
-                _gender = value!;
-              });
-            },
-          ),
-        ),
-        ListTile(
-          title: const Text('Perempuan'),
-          leading: Radio<Gender>(
-            value: Gender.perempuan,
-            groupValue: _gender,
-            onChanged: (Gender? value) {
-              setState(() {
-                _gender = value!;
-              });
-            },
-          ),
-        ),
-      ],
     );
   }
 

@@ -37,7 +37,7 @@ class RemoteServices {
       if (response.statusCode == 200) {
         var user = userFromJson(response.body);
         print(user.idRole);
-        if (int.parse(user.idRole!) == 2) {
+        if (int.parse(user.idRole!) == 3) {
           // print(response.headers['authorization']);
           Get.off(HomeScreen(
             telepon: user.noHp.toString(),
@@ -48,7 +48,7 @@ class RemoteServices {
           SpUtil.putString("keterangan", user.keterangan.toString());
           SpUtil.putString("no_hp", user.noHp.toString());
           SpUtil.putString("token", user.token.toString());
-        } else if (user.idRole == 4) {
+        } else if (int.parse(user.idRole!) == 4) {
           print(user.idRole);
         }
 
@@ -63,6 +63,7 @@ class RemoteServices {
   static Future<List<Jenjang>?> fetchJenjang() async {
     var resposne = await client.get(Uri.parse(
         "https://623aa9b8b5292b8bfcb807ee.mockapi.io/rtq/api/jenjang"));
+    print(resposne.statusCode);
     if (resposne.statusCode == 200) {
       var jsonString = resposne.body;
       return jenjangFromJson(jsonString);

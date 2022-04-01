@@ -297,7 +297,10 @@ class _HomeScreenState extends State<HomeScreen> {
   void onSelected(BuildContext context, int item) {
     switch (item) {
       case 0:
-        Get.to(ProfileScreen(telepon: SpUtil.getString('no_hp')));
+        Get.to(ProfileScreen(
+          telepon: SpUtil.getString('no_hp'),
+          token: widget.token,
+        ));
         break;
       case 1:
         SpUtil.clear();
