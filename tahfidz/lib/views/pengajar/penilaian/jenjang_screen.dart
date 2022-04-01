@@ -6,7 +6,7 @@ import 'package:tahfidz/components/splashScreen.dart';
 import 'package:tahfidz/controllers/jenjang_controllers.dart';
 import 'package:tahfidz/model/Jenjang.dart';
 import 'package:tahfidz/views/pengajar/penilaian/components/csrd_jenjang.dart';
-import 'package:tahfidz/views/pengajar/penilaian/pelajara_screen.dart';
+import 'package:tahfidz/views/pengajar/penilaian/santri_in_jenjang_screen.dart';
 
 class PenilaianScreen extends StatefulWidget {
   const PenilaianScreen({Key? key}) : super(key: key);
