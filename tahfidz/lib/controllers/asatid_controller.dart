@@ -22,8 +22,6 @@ class AsatidController extends GetxController {
       if (asatid != null) {
         // List<Asatid> Asatide;
         dataAsatid.value = asatid;
-        // print(dataAsatid);
-        return dataAsatid;
 
         // return dataAsatid.token;
       }

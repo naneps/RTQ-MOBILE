@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/retry.dart';
 import 'package:http/http.dart' as http;
+import 'package:sp_util/sp_util.dart';
 // import 'package:progress_dialog/progress_dialog.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/profile_avatar.dart';
@@ -14,7 +15,6 @@ import 'package:tahfidz/controllers/asatid_controller.dart';
 import 'package:tahfidz/controllers/profile_controller.dart';
 import 'package:tahfidz/model/asatidz.dart';
 
-import 'package:tahfidz/model/profil.dart';
 import 'package:tahfidz/services/remote_services.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -30,9 +30,9 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   bool showPassword = false;
-  Asatidz? asatidz;
 
   AsatidController asatidController = Get.put(AsatidController());
+  Asatidz? asatidz;
   // final tahun_lahir = dataTiru.year;
 
   String? avatar;
@@ -41,6 +41,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
+    RemoteServices.getUserInfo(SpUtil.getString('token')!);
+    // asatidz = asatidController.dataAsatid;
     // getUser();
     // profileController.getProfil(widget.telepon!);
   }
@@ -133,7 +135,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           );
                         },
                       ),
-                    ),
+                    )
                   ],
                 ),
               ),
@@ -307,3 +309,69 @@ class ButtonSave extends StatelessWidget {
     );
   }
 }
+
+
+// FutureBuilder(
+//                         future: RemoteServices.getUserInfo(widget.token!),
+//                         builder:
+//                             (BuildContext context, AsyncSnapshot snapshot) {
+//                           asatidz = snapshot.data;
+
+//                           if (snapshot.connectionState ==
+//                               ConnectionState.waiting) {
+//                             // print(snapshot.data);
+//                             return Center(
+//                               child: CircularProgressIndicator(
+//                                 backgroundColor: Colors.yellow,
+//                                 strokeWidth: 10,
+//                                 // value: 1,
+//                                 color: mainColor,
+//                               ),
+//                             );
+//                           } else if (snapshot.hasError) {
+//                             return Center(
+//                               child: CircularProgressIndicator(
+//                                 backgroundColor: Colors.yellow,
+//                                 strokeWidth: 10,
+//                                 // value: 1,
+//                                 color: mainColor,
+//                               ),
+//                             );
+//                           }
+//                           return Card(
+//                             elevation: 5,
+//                             shape: const CircleBorder(),
+//                             child: ProfilePicture(
+//                                 sizeAvatar: 150, avatar: asatidz!.gambar
+//                                 // sizeBtn: 0,
+//                                 ),
+//                           );
+//                         },
+//                       ),
+
+
+
+
+// Obx(
+//                           () {
+//                             // asatidz = asatidController.dataAsatid;
+
+//                             if (asatidController.isLoading.value) {
+//                               return Center(
+//                                 child: CircularProgressIndicator(
+//                                   backgroundColor: Colors.yellow,
+//                                   strokeWidth: 10,
+//                                   // value: 1,
+//                                   color: mainColor,
+//                                 ),
+//                               );
+//                             }
+//                             return Card(
+//                                 elevation: 5,
+//                                 shape: const CircleBorder(),
+//                                 child: ProfilePicture(
+//                                   avatar: asatidController.dataAsatid.gambar
+//                                       .toString(),
+//                                 ));
+//                           },
+//                         )),

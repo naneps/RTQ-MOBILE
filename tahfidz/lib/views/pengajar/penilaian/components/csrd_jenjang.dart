@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:tahfidz/components/constants.dart';
@@ -80,11 +79,11 @@ class CardJenjang extends StatelessWidget {
               ),
             ),
             Expanded(
-              flex: 4,
+              flex: 5,
               child: Container(
                 padding: EdgeInsets.only(left: 10, right: 10),
                 height: 30,
-                width: 100,
+                width: 150,
                 margin: EdgeInsets.only(left: 50, right: 10),
                 decoration: BoxDecoration(
                     color: mainColor, borderRadius: BorderRadius.circular(30)),

@@ -49,7 +49,7 @@ class RemoteServices {
           SpUtil.putString("no_hp", user.noHp.toString());
           SpUtil.putString("token", user.token.toString());
         } else if (int.parse(user.idRole!) == 4) {
-          print(user.idRole);
+          // print(user.idRole);
         }
 
         // Get.off(HomeScreen(telepon: response.data['data']['no_hp']));

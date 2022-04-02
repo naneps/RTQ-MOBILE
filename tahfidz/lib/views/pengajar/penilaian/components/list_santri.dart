@@ -109,33 +109,36 @@ class ListSantri extends StatelessWidget {
               child: ListView.builder(
                 itemCount: 10,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    dense: true,
-                    trailing: Container(
-                      width: 60,
-                      height: 40,
-                      // color: Colors.white,
-                      child: Center(
-                        child: Text("80"),
-                      ),
-                    ), // trailing: TextField(),
-
-                    leading: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/nomor.png',
-                          width: 40,
-                          height: 40,
-                          fit: BoxFit.cover,
+                  return Container(
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: ListTile(
+                      dense: true,
+                      trailing: Container(
+                        width: 60,
+                        height: 40,
+                        // color: Colors.white,
+                        child: Center(
+                          child: Text("80"),
                         ),
-                        Text(
-                          "${count + index}",
-                          style: GoogleFonts.poppins(fontSize: 14),
-                        )
-                      ],
+                      ), // trailing: TextField(),
+
+                      leading: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/nomor.png',
+                            width: 40,
+                            height: 40,
+                            fit: BoxFit.cover,
+                          ),
+                          Text(
+                            "${count + index}",
+                            style: GoogleFonts.poppins(fontSize: 14),
+                          )
+                        ],
+                      ),
+                      title: Text("Pelajaran ${count + index}"),
                     ),
-                    title: Text("Pelajaran ${count + index}"),
                   );
                 },
               ),
@@ -159,15 +162,17 @@ class ListSantri extends StatelessWidget {
     return TextButton(
       onPressed: () {
         Get.defaultDialog(
-            content: Container(
-              width: size.width,
-              height: size.height / 2,
-              // color: mainColor,
-              child: ListView.builder(
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    dense: true,
+          content: Container(
+            width: size.width,
+            height: size.height / 2,
+            // color: mainColor,
+            child: ListView.builder(
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                return Container(
+                  margin: EdgeInsets.only(bottom: 10),
+                  child: ListTile(
+                    // dense: true,
                     trailing: Container(
                       width: 60,
                       height: 40,
@@ -193,14 +198,20 @@ class ListSantri extends StatelessWidget {
                       ],
                     ),
                     title: Text("Hafalan ${count + index}"),
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             ),
-            title: "Penilaian Hafalan",
-            barrierDismissible: false,
-            cancel: IconButton(
-                onPressed: () => Get.back(), icon: Icon(Icons.close)));
+          ),
+          title: "Penilaian Hafalan",
+          barrierDismissible: false,
+          confirm:
+              IconButton(onPressed: () => Get.back(), icon: Icon(Icons.save)),
+          cancel: IconButton(
+            onPressed: () => Get.back(),
+            icon: Icon(Icons.close),
+          ),
+        );
       },
       child: Text("Hafalan"),
     );

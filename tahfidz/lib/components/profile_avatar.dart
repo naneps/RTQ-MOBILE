@@ -33,7 +33,7 @@ class ProfilePicture extends StatelessWidget {
           // CircleAvatar(
           //   backgroundImage: Image.network('${avatar}'),
           // ),
-          Image.network(this.avatar!),
+          Image.network(avatar!),
           Positioned(
             right: 3,
             bottom: 3,

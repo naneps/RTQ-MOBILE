@@ -13,7 +13,7 @@ class SearchBox extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(10),
       child: Container(
-        padding: EdgeInsets.only(left: 20, right: 20),
+        padding: EdgeInsets.only(left: 15, right: 15),
         height: 55,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
