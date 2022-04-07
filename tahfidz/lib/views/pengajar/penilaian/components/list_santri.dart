@@ -4,12 +4,12 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
 
-class ListSantri extends StatelessWidget {
+class CardPenilaianSantri extends StatelessWidget {
   final String? namaSantri;
   final String? id;
   dynamic onTap;
 
-  ListSantri({this.onTap, this.namaSantri, this.id, Key? key})
+  CardPenilaianSantri({this.onTap, this.namaSantri, this.id, Key? key})
       : super(key: key);
 
   @override

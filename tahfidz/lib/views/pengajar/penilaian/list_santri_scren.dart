@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:line_icons/line_icons.dart';
+// import 'package:line_icons/line_icons.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/controllers/jenjang_controllers.dart';
 import 'package:tahfidz/model/Jenjang.dart';
+import 'package:tahfidz/views/pengajar/penilaian/components/drop_down_cabang.dart';
 import 'package:tahfidz/views/pengajar/penilaian/components/list_santri.dart';
 
-class PelajaranScreen extends StatefulWidget {
+class ListSantriScreen extends StatefulWidget {
   // String? id;
   final Jenjang? jenjang;
 
-  PelajaranScreen({this.jenjang, Key? key}) : super(key: key);
+  ListSantriScreen({this.jenjang, Key? key}) : super(key: key);
 
   @override
-  State<PelajaranScreen> createState() => _PelajaranScreenState();
+  State<ListSantriScreen> createState() => _ListSantriScreenState();
 }
 
-class _PelajaranScreenState extends State<PelajaranScreen> {
+class _ListSantriScreenState extends State<ListSantriScreen> {
   JenjangController jenjangController = Get.put(JenjangController());
   @override
   void initState() {
@@ -43,10 +44,20 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
           width: width,
           height: height,
           // padding: EdgeInsets.all(10),
-          // color: mainColor,
+          // color: Colors.black,
+
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Container(
+                width: width,
+                height: 60,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white,
+                ),
+                child: DropwDownCabang(),
+              ),
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: Text(
@@ -57,22 +68,21 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
                       color: Colors.white),
                 ),
               ),
-              Flexible(
-                child: Container(
-                  height: height,
-                  width: width,
-                  // color: Colors.white,
-                  child: ListView.builder(
-                    itemCount: widget.jenjang!.countSantri!.length,
-                    itemBuilder: (context, index) {
-                      return ListSantri(
-                          id: widget.jenjang!.countSantri![index].toString(),
-                          namaSantri:
-                              widget.jenjang!.countSantri![index].toString());
-                    },
-                  ),
+              Container(
+                height: height / 2,
+                width: width,
+                // color: Colors.white,
+                child: ListView.builder(
+                  physics: BouncingScrollPhysics(),
+                  itemCount: widget.jenjang!.countSantri!.length,
+                  itemBuilder: (context, index) {
+                    return CardPenilaianSantri(
+                        id: widget.jenjang!.countSantri![index].toString(),
+                        namaSantri:
+                            widget.jenjang!.countSantri![index].toString());
+                  },
                 ),
-              )
+              ),
             ],
           ),
         ),

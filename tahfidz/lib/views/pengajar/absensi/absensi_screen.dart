@@ -5,13 +5,9 @@ import 'package:tahfidz/components/constants.dart';
 
 import 'package:tahfidz/components/search_box.dart';
 import 'package:tahfidz/controllers/santri_controller.dart';
+import 'package:tahfidz/model/santri.dart';
 import 'package:tahfidz/views/pengajar/absensi/components/indicator_absensi.dart';
 import 'package:tahfidz/views/pengajar/absensi/components/card_santri.dart';
-
-void main() => runApp(MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: AbsensiScreen(),
-    ));
 
 class AbsensiScreen extends StatefulWidget {
   const AbsensiScreen({Key? key}) : super(key: key);
@@ -30,6 +26,7 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
   Color? absenColor;
   String selectAbsen = 'hadir';
   final SantriController santriController = Get.put(SantriController());
+  final _formkey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     final heightBody = MediaQuery.of(context).size.height;
@@ -116,8 +113,11 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
                         itemCount: santriController.listSantri.length,
                         itemBuilder: (context, index) {
                           return CardSantri(
+                            key: ObjectKey(
+                                santriController.listSantri[index].id),
                             absenIndikator: absenColor,
-                            onTap: () => _onButtonPressed(1),
+                            onTap: () => _onButtonPressed(
+                                santriController.listSantri[index]),
                             santri: santriController.listSantri[index],
                           );
                         },
@@ -131,7 +131,7 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
     );
   }
 
-  void _onButtonPressed(int index) {
+  void _onButtonPressed(Santri santri) {
     showModalBottomSheet(
       // shape: RoundedRectangleBorder(),
       backgroundColor: Colors.transparent,
@@ -150,7 +150,7 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               GestureDetector(
-                onTap: () => selectedItem(hadir, index),
+                onTap: () => selectedItem(hadir, santri),
                 child: SizedBox(
                   width: 40,
                   height: 40,
@@ -195,7 +195,7 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
     );
   }
 
-  void selectedItem(Color color, int index) {
+  void selectedItem(Color color, Santri santri) {
     setState(() {
       absenColor = color;
     });

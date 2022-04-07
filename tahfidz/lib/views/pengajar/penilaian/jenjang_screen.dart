@@ -6,7 +6,7 @@ import 'package:tahfidz/components/splashScreen.dart';
 import 'package:tahfidz/controllers/jenjang_controllers.dart';
 import 'package:tahfidz/model/Jenjang.dart';
 import 'package:tahfidz/views/pengajar/penilaian/components/csrd_jenjang.dart';
-import 'package:tahfidz/views/pengajar/penilaian/santri_in_jenjang_screen.dart';
+import 'package:tahfidz/views/pengajar/penilaian/list_santri_scren.dart';
 
 class PenilaianScreen extends StatefulWidget {
   const PenilaianScreen({Key? key}) : super(key: key);
@@ -66,7 +66,7 @@ class _PenilaianScreenState extends State<PenilaianScreen> {
                           return CardJenjang(
                             nomor: index,
                             onTap: () async {
-                              await Get.to(PelajaranScreen(
+                              await Get.to(ListSantriScreen(
                                 jenjang: jenjangController.listJenjang[index],
                               ));
                             },
