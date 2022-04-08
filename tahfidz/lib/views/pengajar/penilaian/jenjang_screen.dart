@@ -6,6 +6,7 @@ import 'package:tahfidz/components/splashScreen.dart';
 import 'package:tahfidz/controllers/jenjang_controllers.dart';
 import 'package:tahfidz/model/Jenjang.dart';
 import 'package:tahfidz/views/pengajar/penilaian/components/csrd_jenjang.dart';
+import 'package:tahfidz/views/pengajar/penilaian/components/drop_down_cabang.dart';
 import 'package:tahfidz/views/pengajar/penilaian/list_santri_scren.dart';
 
 class PenilaianScreen extends StatefulWidget {
@@ -38,6 +39,18 @@ class _PenilaianScreenState extends State<PenilaianScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
+              width: width,
+              height: 60,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                color: Colors.white,
+              ),
+              child: DropwDownCabang(),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Container(
               margin: EdgeInsets.all(10),
               child: Text(
                 "Daftar Jenjang ",
@@ -47,8 +60,8 @@ class _PenilaianScreenState extends State<PenilaianScreen> {
                     color: Colors.white),
               ),
             ),
-            SearchBox(
-              labelText: "Cari Jenjang",
+            SizedBox(
+              height: 15,
             ),
             Flexible(
               child: Container(

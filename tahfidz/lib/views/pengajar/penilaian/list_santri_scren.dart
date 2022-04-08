@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 // import 'package:line_icons/line_icons.dart';
 import 'package:tahfidz/components/constants.dart';
+import 'package:tahfidz/components/search_box.dart';
 import 'package:tahfidz/controllers/jenjang_controllers.dart';
 import 'package:tahfidz/model/Jenjang.dart';
-import 'package:tahfidz/views/pengajar/penilaian/components/drop_down_cabang.dart';
 import 'package:tahfidz/views/pengajar/penilaian/components/list_santri.dart';
 
 class ListSantriScreen extends StatefulWidget {
@@ -49,14 +49,8 @@ class _ListSantriScreenState extends State<ListSantriScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: width,
-                height: 60,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.white,
-                ),
-                child: DropwDownCabang(),
+              SearchBox(
+                labelText: "Cari Santri",
               ),
               Padding(
                 padding: const EdgeInsets.all(10),
@@ -68,19 +62,21 @@ class _ListSantriScreenState extends State<ListSantriScreen> {
                       color: Colors.white),
                 ),
               ),
-              Container(
-                height: height / 2,
-                width: width,
-                // color: Colors.white,
-                child: ListView.builder(
-                  physics: BouncingScrollPhysics(),
-                  itemCount: widget.jenjang!.countSantri!.length,
-                  itemBuilder: (context, index) {
-                    return CardPenilaianSantri(
-                        id: widget.jenjang!.countSantri![index].toString(),
-                        namaSantri:
-                            widget.jenjang!.countSantri![index].toString());
-                  },
+              Flexible(
+                child: Container(
+                  height: height,
+                  width: width,
+                  // color: Colors.white,
+                  child: ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    itemCount: widget.jenjang!.countSantri!.length,
+                    itemBuilder: (context, index) {
+                      return CardPenilaianSantri(
+                          id: widget.jenjang!.countSantri![index].toString(),
+                          namaSantri:
+                              widget.jenjang!.countSantri![index].toString());
+                    },
+                  ),
                 ),
               ),
             ],

@@ -19,7 +19,7 @@ class _DropwDownCabangState extends State<DropwDownCabang> {
     return DropdownSearch(
         dropdownSearchDecoration: InputDecoration(
             hintText: "Pilih Cabang",
-            contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             border: InputBorder.none),
         mode: Mode.MENU,
         // showSelectedItem: true,
