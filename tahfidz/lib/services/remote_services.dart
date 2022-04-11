@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -20,14 +18,7 @@ class RemoteServices {
 
   static Future<void> loginProses(TextEditingController controllerTelepon,
       TextEditingController controllerPassword) async {
-    Dio dio = Dio();
     try {
-      // var response;
-
-      // ProgressDialog? progressDalog = ProgressDialog(context);
-      // progressDialog.style(message: "Harap Tunggu...");
-      // progressDialog.show();
-
       var response = await http.post(
           Uri.parse("http://api.rtq-freelance.my.id/api-v1/login"),
           body: {
@@ -37,7 +28,6 @@ class RemoteServices {
 
       if (response.statusCode == 200) {
         var user = userFromJson(response.body);
-        print(user.idRole);
         if (int.parse(user.idRole!) == 3) {
           Get.off(HomeScreen(
             telepon: user.noHp.toString(),
@@ -59,9 +49,6 @@ class RemoteServices {
           SpUtil.putString("no_hp", user.noHp.toString());
           SpUtil.putString("token", user.token.toString());
         }
-
-        // Get.off(HomeScreen(telepon: response.data['data']['no_hp']));
-        print(user.nama);
       }
     } catch (e) {
       print(e);

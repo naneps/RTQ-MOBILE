@@ -1,31 +1,15 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-// import 'package:http/retry.dart';
-import 'package:http/http.dart' as http;
-// import 'package:progress_dialog/progress_dialog.dart';
 import 'package:sp_util/sp_util.dart';
-import 'package:tahfidz/components/item-menu.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/profile_avatar.dart';
 import 'package:tahfidz/controllers/asatid_controller.dart';
-import 'package:tahfidz/controllers/profile_controller.dart';
 import 'package:tahfidz/model/asatidz.dart';
 import 'package:tahfidz/services/remote_services.dart';
 import 'package:tahfidz/views/aurh/LoginPage.dart';
-import 'package:tahfidz/views/pengajar/absen_saya/my_absensi_page.dart';
-// import 'package:tahfidz/components/constants.dart';
-import 'package:tahfidz/views/pengajar/absensi/absensi_screen.dart';
-import 'package:tahfidz/views/pengajar/penilaian/jenjang_screen.dart';
+import 'package:tahfidz/views/pengajar/home/components/section_menu.dart';
 import 'package:tahfidz/views/pengajar/profile/profile_screen.dart';
-
-// void main() {
-//   runApp(GetMaterialApp(
-//     home: HomeScreen(),
-//   ));
-// }
 
 class HomeScreen extends StatefulWidget {
   // const HomeScreen({Key? key}) : super(key: key);
@@ -182,16 +166,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                         // value: 1,
                                         color: mainColor,
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 10,
                                       ),
-                                      Text("Data Sedang Dalam Perjalanan")
+                                      const Text("Data Sedang Dalam Perjalanan")
                                     ],
                                   ),
                                 );
                                 // return CircularProgressIndicator();
                               } else if (snapshot.hasError) {
-                                return CircularProgressIndicator();
+                                return const CircularProgressIndicator();
                               }
                               // print(asatid.avatar);
 
@@ -203,7 +187,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       sizeIcon: 0,
                                       widthBtn: 0,
                                       avatar: asatidz!.gambar),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 10,
                                   ),
                                   Text(
@@ -212,7 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         fontSize: 18,
                                         fontWeight: FontWeight.w600),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 5,
                                   ),
                                   Text(
@@ -234,59 +218,7 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 height: 10,
               ),
-              Container(
-                margin: EdgeInsets.only(top: 50),
-                width: widhtBody,
-                // color: Colors.black,
-                height: heightBody / 2.5,
-                padding: EdgeInsets.all(20),
-                child: Container(
-                  // color: Colors.white,
-                  height: heightBody,
-                  width: widhtBody,
-                  child: Wrap(
-                    alignment: WrapAlignment.center,
-                    spacing: 6,
-                    runSpacing: 6,
-                    children: [
-                      GestureDetector(
-                          onTap: () => {print('ok')},
-                          child: ItemMenu(
-                              title: 'Dashboard',
-                              icon: Icons.dashboard_customize,
-                              color: 0xff7585F6)),
-                      GestureDetector(
-                        onTap: () => {
-                          Get.to(AbsensiScreen(),
-                              transition: Transition.circularReveal)
-                        },
-                        child: ItemMenu(
-                            title: 'Absensi',
-                            icon: Icons.book,
-                            color: 0xffFED525),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Get.to(PenilaianScreen(),
-                              popGesture: true, transition: Transition.fadeIn);
-                        },
-                        child: ItemMenu(
-                            title: 'Penilaian',
-                            icon: Icons.book_online_outlined,
-                            color: 0xffFD637B),
-                      ),
-                      GestureDetector(
-                        onTap: () => Get.to(MyAbsen(),
-                            transition: Transition.circularReveal),
-                        child: ItemMenu(
-                            title: 'Absensi Saya',
-                            icon: Icons.report_off_rounded,
-                            color: 0xff21CDFF),
-                      ),
-                    ],
-                  ),
-                ),
-              )
+              SectionMenuAsatidz()
             ],
           ),
         ),
@@ -308,11 +240,5 @@ class _HomeScreenState extends State<HomeScreen> {
         break;
       default:
     }
-  }
-
-  void goToProfileScreen() {
-    Get.to(ProfileScreen(
-      telepon: SpUtil.getString('no_hp'),
-    ));
   }
 }
