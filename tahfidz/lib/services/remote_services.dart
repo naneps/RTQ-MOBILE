@@ -39,7 +39,6 @@ class RemoteServices {
         var user = userFromJson(response.body);
         print(user.idRole);
         if (int.parse(user.idRole!) == 3) {
-          // print(response.headers['authorization']);
           Get.off(HomeScreen(
             telepon: user.noHp.toString(),
             token: user.token.toString(),
@@ -50,7 +49,15 @@ class RemoteServices {
           SpUtil.putString("no_hp", user.noHp.toString());
           SpUtil.putString("token", user.token.toString());
         } else if (int.parse(user.idRole!) == 4) {
-          // print(user.idRole);
+          Get.off(HomeScreen(
+            telepon: user.noHp.toString(),
+            token: user.token.toString(),
+          ));
+          SpUtil.putBool('status', true);
+          SpUtil.putString("nama", user.nama.toString());
+          SpUtil.putString("keterangan", user.keterangan.toString());
+          SpUtil.putString("no_hp", user.noHp.toString());
+          SpUtil.putString("token", user.token.toString());
         }
 
         // Get.off(HomeScreen(telepon: response.data['data']['no_hp']));
@@ -102,7 +109,7 @@ class RemoteServices {
   static Future<bool> addImage(
       Map<String, String> body, String filepath) async {
     String addimageUrl =
-        'http://api.rtq-freelance.my.id/api-v1/api-v1/absensi/pengajar';
+        'http://api.rtq-freelance.my.id/api-v1/absensi/pengajar';
     Map<String, String> headers = {
       'Content-Type': 'multipart/form-data',
     };
@@ -111,13 +118,9 @@ class RemoteServices {
       ..headers.addAll(headers)
       ..files.add(await http.MultipartFile.fromPath('image', filepath));
     var response = await request.send();
-    if (response.statusCode == 201) {
-      print(response.statusCode);
-      return true;
-    } else {
-      print(response.statusCode);
-      return false;
-    }
+
+    print(' stats code : ${response.statusCode}');
+    return true;
   }
 
 // Lokasi

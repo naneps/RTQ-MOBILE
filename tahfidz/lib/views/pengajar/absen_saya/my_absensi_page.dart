@@ -24,7 +24,8 @@ class _MyAbsenState extends State<MyAbsen> {
 
   bool isAbsen = false;
   String? location = "Tekan Tombol";
-  String? address = "";
+  String? address = "alamat";
+  Map<String, String> body = {'alamat': 'alamat'};
 
   // static String get s => null;
 
@@ -44,7 +45,8 @@ class _MyAbsenState extends State<MyAbsen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    RemoteServices();
+    print("ddimage");
+    RemoteServices.addImage(body, 'image');
   }
 
   @override
@@ -168,15 +170,15 @@ class _MyAbsenState extends State<MyAbsen> {
                     ),
                   ),
                 ),
-                onPressed: () {
-                  print(imageFile);
-                  print(address);
+                onPressed: () async {
+                  // print(imageFile);
+                  // print(address);
                   // setState(() {});
-                  if (_addFormKey.currentState!.validate()) {
-                    _addFormKey.currentState!.save();
-                    Map<String, String> body = {'alamat': address!};
-                    RemoteServices.addImage(body, imageFile!.path);
-                  }
+                  await RemoteServices.addImage(body, 'image.png');
+                  // if (_addFormKey.currentState!.validate()) {
+                  //   _addFormKey.currentState!.save();
+                  //   // Map<String, String> body = {'alamat': address!};
+                  // }
                 },
               ),
             )
