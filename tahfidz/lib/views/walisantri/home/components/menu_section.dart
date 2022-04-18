@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tahfidz/components/item-menu.dart';
 import 'package:tahfidz/views/pengajar/absensi/absensi_screen.dart';
+import 'package:tahfidz/views/walisantri/iuran/iuran_screen.dart';
+import 'package:tahfidz/views/walisantri/prestasi/prestasi_scres.dart';
 
 class SectionMenuSantri extends StatelessWidget {
   const SectionMenuSantri({Key? key}) : super(key: key);
@@ -38,14 +40,14 @@ class SectionMenuSantri extends StatelessWidget {
               icon: Icons.book,
               color: 0xffFED525,
               onTap: () => {
-                Get.to(AbsensiScreen(), transition: Transition.circularReveal)
+                Get.to(IuranScreen(), transition: Transition.circularReveal)
               },
             ),
             ItemMenu(
               title: 'Prestasi',
               icon: Icons.book_online_outlined,
               color: 0xffFD637B,
-              onTap: () {},
+              onTap: () => Get.to(PrestasiScreen()),
             ),
             ItemMenu(
                 onTap: () {},
