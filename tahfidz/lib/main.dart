@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/views/aurh/LoginPage.dart';
 import 'package:tahfidz/views/pengajar/home/home_screen.dart';
@@ -15,6 +16,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      theme: ThemeData(
+        textTheme: TextTheme(bodyText1: GoogleFonts.poppins()),
+      ),
       title: "RTQ",
       // theme: ThemeData(appBarTheme: ),
       debugShowCheckedModeBanner: false,

@@ -4,11 +4,6 @@ import 'package:lottie/lottie.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:tahfidz/main.dart';
 
-void main() => runApp(MaterialApp(
-      home: Splash(),
-      debugShowCheckedModeBanner: false,
-    ));
-
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 

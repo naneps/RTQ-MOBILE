@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:tahfidz/components/constants.dart';
-import 'package:tahfidz/components/splashScreen.dart';
 
 class SearchBox extends StatelessWidget {
   String? labelText;
@@ -43,7 +41,7 @@ class SearchBox extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                print("ok");
+                // print("ok");
               },
               child: Icon(
                 LineIcons.search,
