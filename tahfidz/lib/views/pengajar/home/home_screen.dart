@@ -8,7 +8,7 @@ import 'package:tahfidz/controllers/asatid_controller.dart';
 import 'package:tahfidz/model/asatidz.dart';
 import 'package:tahfidz/services/remote_services.dart';
 import 'package:tahfidz/views/aurh/LoginPage.dart';
-import 'package:tahfidz/views/pengajar/home/components/section_menu.dart';
+import 'package:tahfidz/views/pengajar/home/components/asatidz_menu.dart';
 import 'package:tahfidz/views/pengajar/profile/profile_screen.dart';
 import 'package:tahfidz/views/walisantri/components/menu_section.dart';
 
