@@ -1,10 +1,4 @@
-// To parse this JSON data, do
-//
-//     final jenjang = jenjangFromJson(jsonString);
-
 import 'dart:convert';
-
-import 'package:tahfidz/model/santri.dart';
 
 List<Jenjang> jenjangFromJson(String str) =>
     List<Jenjang>.from(json.decode(str).map((x) => Jenjang.fromJson(x)));
