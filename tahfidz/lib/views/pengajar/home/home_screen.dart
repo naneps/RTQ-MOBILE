@@ -10,6 +10,7 @@ import 'package:tahfidz/services/remote_services.dart';
 import 'package:tahfidz/views/aurh/LoginPage.dart';
 import 'package:tahfidz/views/pengajar/home/components/section_menu.dart';
 import 'package:tahfidz/views/pengajar/profile/profile_screen.dart';
+import 'package:tahfidz/views/walisantri/components/menu_section.dart';
 
 class HomeScreen extends StatefulWidget {
   // const HomeScreen({Key? key}) : super(key: key);
@@ -54,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   value: 0,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
+                    children: const [
                       Icon(
                         Icons.edit,
                         color: Colors.black,
@@ -192,6 +193,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   Text(
                                     '${asatidz.nama}',
+                                    // SpUtil.getString('id_role')!,
                                     style: GoogleFonts.poppins(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w600),
@@ -200,7 +202,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     height: 5,
                                   ),
                                   Text(
-                                    SpUtil.getString('keterangan')!,
+                                    asatidz.hakAkses!,
                                     style: GoogleFonts.poppins(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w500),
@@ -218,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 height: 10,
               ),
-              SectionMenuAsatidz()
+              showMenu(int.parse(SpUtil.getString('id_role')!))
             ],
           ),
         ),
@@ -240,5 +242,15 @@ class _HomeScreenState extends State<HomeScreen> {
         break;
       default:
     }
+  }
+
+  Widget showMenu(int idRole) {
+    var menu;
+    if (idRole == 3) {
+      menu = SectionMenuAsatidz();
+    } else if (idRole == 4) {
+      menu = SectionMenuSantri();
+    }
+    return menu;
   }
 }

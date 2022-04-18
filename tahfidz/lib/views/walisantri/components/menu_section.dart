@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tahfidz/components/item-menu.dart';
-import 'package:tahfidz/views/pengajar/absen_saya/my_absensi_page.dart';
 import 'package:tahfidz/views/pengajar/absensi/absensi_screen.dart';
-import 'package:tahfidz/views/pengajar/penilaian/jenjang_screen.dart';
 
-class SectionMenuAsatidz extends StatelessWidget {
-  const SectionMenuAsatidz({Key? key}) : super(key: key);
+class SectionMenuSantri extends StatelessWidget {
+  const SectionMenuSantri({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,27 +29,29 @@ class SectionMenuAsatidz extends StatelessWidget {
               title: 'Dashboard',
               icon: Icons.dashboard_customize,
               color: 0xff7585F6,
+              onTap: () {
+                print("object");
+              },
+            ),
+            ItemMenu(
+              title: 'Iuran',
+              icon: Icons.book,
+              color: 0xffFED525,
+              onTap: () => {
+                Get.to(AbsensiScreen(), transition: Transition.circularReveal)
+              },
+            ),
+            ItemMenu(
+              title: 'Prestasi',
+              icon: Icons.book_online_outlined,
+              color: 0xffFD637B,
               onTap: () {},
             ),
             ItemMenu(
-                title: 'Absensi',
-                icon: Icons.book,
-                color: 0xffFED525,
-                onTap: () => Get.to(AbsensiScreen(),
-                    transition: Transition.circularReveal)),
-            ItemMenu(
-                title: 'Penilaian',
-                icon: Icons.book_online_outlined,
-                color: 0xffFD637B,
-                onTap: () => Get.to(PenilaianScreen(),
-                    popGesture: true, transition: Transition.fadeIn)),
-            ItemMenu(
-              title: 'Absensi Saya',
-              icon: Icons.report_off_rounded,
-              color: 0xff21CDFF,
-              onTap: () =>
-                  Get.to(MyAbsen(), transition: Transition.circularReveal),
-            ),
+                onTap: () {},
+                title: 'Santri',
+                icon: Icons.person,
+                color: 0xff21CDFF),
           ],
         ),
       ),

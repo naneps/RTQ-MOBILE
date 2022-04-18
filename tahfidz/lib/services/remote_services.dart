@@ -38,6 +38,7 @@ class RemoteServices {
           SpUtil.putString("keterangan", user.keterangan.toString());
           SpUtil.putString("no_hp", user.noHp.toString());
           SpUtil.putString("token", user.token.toString());
+          SpUtil.putString("id_role", user.idRole.toString());
         } else if (int.parse(user.idRole!) == 4) {
           Get.off(HomeScreen(
             telepon: user.noHp.toString(),
@@ -48,6 +49,8 @@ class RemoteServices {
           SpUtil.putString("keterangan", user.keterangan.toString());
           SpUtil.putString("no_hp", user.noHp.toString());
           SpUtil.putString("token", user.token.toString());
+          SpUtil.putString("id_role", user.idRole.toString());
+          // print(SpUtil.getString('id_role'));
         }
       }
     } catch (e) {
