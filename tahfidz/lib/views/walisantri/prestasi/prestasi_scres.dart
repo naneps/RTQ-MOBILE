@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tahfidz/components/constants.dart';
 // import 'package:tahfidz/components/constants.dart';
 
 class PrestasiScreen extends StatelessWidget {
@@ -11,11 +12,19 @@ class PrestasiScreen extends StatelessWidget {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: mainColor,
           bottom: const TabBar(
             tabs: [
-              Tab(icon: Icon(Icons.directions_car)),
-              Tab(icon: Icon(Icons.directions_transit)),
-              Tab(icon: Icon(Icons.directions_bike)),
+              Tab(
+                text: "Tadribat",
+                // child: Container(),
+              ),
+              Tab(
+                text: "Hafalan",
+              ),
+              Tab(
+                text: "Adab",
+              ),
             ],
           ),
           title: const Text('Prestasi'),

@@ -23,30 +23,15 @@ class _MyAbsenState extends State<MyAbsen> {
   final _titleController = TextEditingController();
 
   bool isAbsen = false;
-  String? location = "Tekan Tombol";
-  String? address = "alamat";
+
   Map<String, String> body = {'alamat': 'alamat'};
 
   // static String get s => null;
-
-  Future<void> getAddress(Position position) async {
-    List<Placemark> placemarks =
-        await placemarkFromCoordinates(position.latitude, position.longitude);
-    Placemark place = placemarks[0];
-
-    setState(() {
-      address =
-          '${place.subAdministrativeArea} , ${place.locality} , ${place.subLocality} , ${place.postalCode} ';
-    });
-    print(placemarks);
-  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    print("ddimage");
-    RemoteServices.addImage(body, 'image');
   }
 
   @override
@@ -71,117 +56,21 @@ class _MyAbsenState extends State<MyAbsen> {
             ),
             SizedBox(height: 30),
 
-            Flexible(
-              child: Container(
-                padding: EdgeInsets.all(10),
-                margin: EdgeInsets.all(20),
-                width: MediaQuery.of(context).size.width / 1.2,
-                child: Text(
-                  address!,
-                  style: TextStyle(color: Colors.white, fontSize: 16),
-                ),
-                decoration: BoxDecoration(
-                  color: mainColor,
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                ),
-              ),
-            ),
-
-            Container(
-              margin: EdgeInsets.only(top: 10, bottom: 10),
-              child: ElevatedButton(
-                child: Container(
-                  // color: mainColor,
-                  width: 120,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.location_on,
-                        size: 26,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        "Lokasi",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w600),
-                      )
-                    ],
-                  ),
-                ),
-                style: ElevatedButton.styleFrom(
-                  elevation: 4,
-                  primary: mainColor,
-                  // onPrimary: mainColor,
-                  padding: EdgeInsets.all(10),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(20),
-                    ),
-                  ),
-                ),
-                onPressed: () async {
-                  Position position = await RemoteServices.determinePosition();
-                  location =
-                      'Lat : ${position.latitude} , Long : ${position.longitude}';
-                  // print(position.latitude);
-                  getAddress(position);
-                  setState(() {});
-                },
-              ),
-            ),
-
-            Container(
-              margin: EdgeInsets.only(top: 10, bottom: 10),
-              child: ElevatedButton(
-                child: Container(
-                  // color: mainColor,
-                  width: 120,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.save_as_sharp,
-                        size: 26,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        "Simpan !",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w600),
-                      )
-                    ],
-                  ),
-                ),
-                style: ElevatedButton.styleFrom(
-                  elevation: 4,
-                  primary: greenColor,
-                  // onPrimary: mainColor,
-                  padding: EdgeInsets.all(10),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(20),
-                    ),
-                  ),
-                ),
-                onPressed: () async {
-                  // print(imageFile);
-                  // print(address);
-                  // setState(() {});
-                  await RemoteServices.addImage(body, 'image.png');
-                  // if (_addFormKey.currentState!.validate()) {
-                  //   _addFormKey.currentState!.save();
-                  //   // Map<String, String> body = {'alamat': address!};
-                  // }
-                },
-              ),
-            )
+            // Flexible(
+            //   child: Container(
+            //     padding: EdgeInsets.all(10),
+            //     margin: EdgeInsets.all(20),
+            //     width: MediaQuery.of(context).size.width / 1.2,
+            //     child: Text(
+            //       'Ok',
+            //       style: TextStyle(color: Colors.white, fontSize: 16),
+            //     ),
+            //     decoration: BoxDecoration(
+            //       color: mainColor,
+            //       borderRadius: BorderRadius.all(Radius.circular(20)),
+            //     ),
+            //   ),
+            // ),
 
             // Container(child: MyButton())
           ],

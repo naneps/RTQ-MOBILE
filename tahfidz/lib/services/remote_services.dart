@@ -14,13 +14,15 @@ import 'package:tahfidz/views/pengajar/home/home_screen.dart';
 
 class RemoteServices {
   static var client = http.Client();
-  static var baseUrl = "http://rtq-freelance.my.id/api/";
+  // static var baseUrl = "http://10.0.112.110:3000/";
+  static var baseUrl = "http://api.rtq-freelance.my.id/api-v1/";
 
   static Future<void> loginProses(TextEditingController controllerTelepon,
       TextEditingController controllerPassword) async {
     try {
       var response = await http.post(
           Uri.parse("http://api.rtq-freelance.my.id/api-v1/login"),
+          // Uri.parse(baseUrl + 'api-v1/login'),
           body: {
             'no_hp': controllerTelepon.text,
             'password': controllerPassword.text
@@ -35,6 +37,7 @@ class RemoteServices {
           ));
           SpUtil.putBool('status', true);
           SpUtil.putString("nama", user.nama.toString());
+          SpUtil.putString("id", user.id.toString());
           SpUtil.putString("keterangan", user.keterangan.toString());
           SpUtil.putString("no_hp", user.noHp.toString());
           SpUtil.putString("token", user.token.toString());
@@ -95,21 +98,27 @@ class RemoteServices {
     }
   }
 
-  static Future<bool> addImage(
-      Map<String, String> body, String filepath) async {
-    String addimageUrl =
-        'http://api.rtq-freelance.my.id/api-v1/absensi/pengajar';
-    Map<String, String> headers = {
-      'Content-Type': 'multipart/form-data',
-    };
-    var request = http.MultipartRequest('POST', Uri.parse(addimageUrl))
-      ..fields.addAll(body)
-      ..headers.addAll(headers)
-      ..files.add(await http.MultipartFile.fromPath('image', filepath));
-    var response = await request.send();
+  static Future<bool?> addImage(Map<String, String> body, File filepath) async {
+    try {
+      String addimageUrl = baseUrl + '/api-v1/absensi/asatidz';
+      Map<String, String> headers = {
+        'Content-Type': 'multipart/form-data',
+      };
+      var request = http.MultipartRequest('POST', Uri.parse(addimageUrl))
+        ..fields.addAll(body)
+        ..headers.addAll(headers)
+        ..files.add(await http.MultipartFile.fromPath('image', filepath.path));
+      var response = await request.send();
 
-    print(' stats code : ${response.statusCode}');
-    return true;
+      // print(response.statusCode);
+      if (response.statusCode == 201) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print("Add image $e");
+    }
   }
 
 // Lokasi
