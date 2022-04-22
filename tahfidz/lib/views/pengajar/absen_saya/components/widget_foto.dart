@@ -8,7 +8,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/services/remote_services.dart';
-import 'package:http/http.dart' as http;
 import 'package:tahfidz/views/pengajar/home/home_screen.dart';
 
 class WidgetFoto extends StatefulWidget {
@@ -25,7 +24,6 @@ class _WidgetFotoState extends State<WidgetFoto> {
   final picker = ImagePicker();
   @override
   Widget build(BuildContext context) {
-    var mainColor;
     return Container(
       // height: MediaQuery.of(context).size.height / 2.5,
       height: 600,
@@ -53,7 +51,10 @@ class _WidgetFotoState extends State<WidgetFoto> {
                     width: 350,
                     height: 350,
                     child: (widget.fileImage != null)
-                        ? Image.file(widget.fileImage!)
+                        ? Image.file(
+                            widget.fileImage!,
+                            fit: BoxFit.cover,
+                          )
                         : SizedBox(
                             width: 300,
                             height: 300,
@@ -103,9 +104,8 @@ class _WidgetFotoState extends State<WidgetFoto> {
             margin: EdgeInsets.all(20),
             width: MediaQuery.of(context).size.width / 1.2,
             child: Text(
-              '$address' + SpUtil.getString('id')!,
-              style:
-                  TextStyle(color: Color.fromARGB(255, 0, 0, 0), fontSize: 16),
+              '$address',
+              style: TextStyle(color: Colors.white, fontSize: 16),
             ),
             decoration: BoxDecoration(
               color: mainColor,
@@ -156,10 +156,13 @@ class _WidgetFotoState extends State<WidgetFoto> {
                 };
 
                 RemoteServices.addImage(data, widget.fileImage!).then((value) {
+                  print(value);
                   if (value!) {
-                    Get.off(HomeScreen(
-                        telepon: SpUtil.getString('no_hp')!,
-                        token: SpUtil.getString('token')!));
+                    Get.off(
+                      HomeScreen(
+                          telepon: SpUtil.getString('no_hp')!,
+                          token: SpUtil.getString('token')!),
+                    );
                   }
                 });
               },

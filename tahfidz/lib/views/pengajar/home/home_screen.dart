@@ -29,11 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   AsatidController asatidController = Get.put(AsatidController());
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
     RemoteServices.getUserInfo(SpUtil.getString('token')!);
-    // asatidController.getData();
-    // print(widget.telepon);
   }
 
   @override

@@ -8,14 +8,15 @@ import 'package:http/http.dart' as http;
 import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/model/Jenjang.dart';
 import 'package:tahfidz/model/asatidz.dart';
+import 'package:tahfidz/model/cabang.dart';
 import 'package:tahfidz/model/santri.dart';
 import 'package:tahfidz/model/user.dart';
 import 'package:tahfidz/views/pengajar/home/home_screen.dart';
 
 class RemoteServices {
-  static var client = http.Client();
+  // static var client = http.Client();
   // static var baseUrl = "http://10.0.112.110:3000/";
-  static var baseUrl = "http://api.rtq-freelance.my.id/api-v1/";
+  static var baseUrl = "http://api.rtq-freelance.my.id/api-v1";
 
   static Future<void> loginProses(TextEditingController controllerTelepon,
       TextEditingController controllerPassword) async {
@@ -61,7 +62,7 @@ class RemoteServices {
   }
 
   static Future<List<Jenjang>?> fetchJenjang() async {
-    var resposne = await client.get(Uri.parse(
+    var resposne = await http.get(Uri.parse(
         "https://623aa9b8b5292b8bfcb807ee.mockapi.io/rtq/api/jenjang"));
     print(resposne.statusCode);
     if (resposne.statusCode == 200) {
@@ -72,29 +73,51 @@ class RemoteServices {
     }
   }
 
+  static Future<List<Cabang>?> fetchCabang() async {
+    try {
+      var url = Uri.parse('$baseUrl/cabang/view/all');
+      var resposne = await http.get(url);
+      print("Status Code Fetch Cabang : ${resposne.statusCode}");
+      if (resposne.statusCode == 200) {
+        var jsonString = resposne.body;
+        return cabangsFromJson(jsonString);
+      }
+    } catch (e) {
+      print("Catch FetchCabang : $e");
+    }
+    // return cabangsFromJson(jsonString);
+  }
+
   static Future<List<Santri>?> fetchSantri() async {
-    var resposne = await client.get(Uri.parse(
-        "https://623aa9b8b5292b8bfcb807ee.mockapi.io/rtq/api/santri"));
-    if (resposne.statusCode == 200) {
-      var jsonString = resposne.body;
-      return santriFromJson(jsonString);
-    } else {
-      return null;
+    try {
+      var url = Uri.parse('$baseUrl/santri/view/all');
+      var resposne = await http.get(url);
+      print("StatusCode Fetch Santri : ${resposne.statusCode}");
+      if (resposne.statusCode == 200) {
+        var jsonString = resposne.body;
+        return santriFromJson(jsonString);
+      }
+    } catch (e) {
+      print("Catch FetchSantri : $e");
     }
   }
 
-  static Future<Asatidz> getUserInfo(String token) async {
-    final response = await http.get(
-        Uri.parse('http://api.rtq-freelance.my.id/api-v1/profil/user/detail'),
-        headers: {HttpHeaders.authorizationHeader: token});
-    print(response.statusCode);
+  static Future<Asatidz?> getUserInfo(String token) async {
+    try {
+      var url = Uri.parse('$baseUrl/profil/user/detail');
+      var response = await http
+          .get(url, headers: {HttpHeaders.authorizationHeader: token});
+      print("StatusCode getUserInfo : ${response.statusCode}");
 
-    if (response.statusCode == 200) {
-      final jsonResponse = json.decode(response.body);
+      if (response.statusCode == 200) {
+        final jsonResponse = json.decode(response.body);
 
-      return Asatidz.fromJson(jsonResponse);
-    } else {
-      throw Exception('Failed to load data!');
+        return Asatidz.fromJson(jsonResponse);
+      } else {
+        throw Exception('Failed to load data!');
+      }
+    } catch (e) {
+      print("Catch GetUserInfo ; $e");
     }
   }
 
@@ -119,6 +142,7 @@ class RemoteServices {
     } catch (e) {
       print("Add image $e");
     }
+    // return null;
   }
 
 // Lokasi

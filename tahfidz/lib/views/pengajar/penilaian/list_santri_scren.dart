@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-// import 'package:line_icons/line_icons.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/search_box.dart';
 import 'package:tahfidz/controllers/jenjang_controllers.dart';
@@ -20,11 +19,6 @@ class ListSantriScreen extends StatefulWidget {
 
 class _ListSantriScreenState extends State<ListSantriScreen> {
   JenjangController jenjangController = Get.put(JenjangController());
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

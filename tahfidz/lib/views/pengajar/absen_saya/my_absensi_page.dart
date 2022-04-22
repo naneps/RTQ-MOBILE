@@ -2,12 +2,8 @@ import 'dart:io';
 
 // import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:tahfidz/components/constants.dart';
-import 'package:tahfidz/services/remote_services.dart';
 import 'package:tahfidz/views/pengajar/absen_saya/components/widget_foto.dart';
 
 class MyAbsen extends StatefulWidget {
