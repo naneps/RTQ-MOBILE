@@ -62,8 +62,8 @@ class RemoteServices {
   }
 
   static Future<List<Jenjang>?> fetchJenjang() async {
-    var resposne = await http.get(Uri.parse(
-        "https://623aa9b8b5292b8bfcb807ee.mockapi.io/rtq/api/jenjang"));
+    var url = Uri.parse('$baseUrl/jenjang/view/all');
+    var resposne = await http.get(url);
     print(resposne.statusCode);
     if (resposne.statusCode == 200) {
       var jsonString = resposne.body;
@@ -73,11 +73,13 @@ class RemoteServices {
     }
   }
 
-  static Future<List<Cabang>?> fetchCabang() async {
+  static Future<List<Cabang>?> fetchCabang(String token) async {
     try {
       var url = Uri.parse('$baseUrl/cabang/view/all');
-      var resposne = await http.get(url);
+      var resposne = await http
+          .get(url, headers: {HttpHeaders.authorizationHeader: token});
       print("Status Code Fetch Cabang : ${resposne.statusCode}");
+      print("Body Fetch Cabang : ${resposne.body}");
       if (resposne.statusCode == 200) {
         var jsonString = resposne.body;
         return cabangsFromJson(jsonString);
