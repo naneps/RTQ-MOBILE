@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:tahfidz/components/item-menu.dart';
 import 'package:tahfidz/views/pengajar/absen_saya/my_absensi_page.dart';
 import 'package:tahfidz/views/pengajar/absensi/absensi_screen.dart';
-import 'package:tahfidz/views/pengajar/penilaian/jenjang_screen.dart';
+import 'package:tahfidz/views/pengajar/penilaian/penilaian_screen.dart';
 
 class SectionMenuAsatidz extends StatelessWidget {
   const SectionMenuAsatidz({Key? key}) : super(key: key);

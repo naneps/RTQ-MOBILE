@@ -29,7 +29,7 @@ class _ListSantriScreenState extends State<ListSantriScreen> {
       appBar: AppBar(
         shadowColor: Colors.transparent,
         backgroundColor: mainColor,
-        title: Text("${widget.jenjang!.namaKelas}"),
+        title: Text(''),
         centerTitle: true,
       ),
       body: Padding(
@@ -61,16 +61,16 @@ class _ListSantriScreenState extends State<ListSantriScreen> {
                   height: height,
                   width: width,
                   // color: Colors.white,
-                  child: ListView.builder(
-                    physics: BouncingScrollPhysics(),
-                    itemCount: widget.jenjang!.countSantri!.length,
-                    itemBuilder: (context, index) {
-                      return CardPenilaianSantri(
-                          id: widget.jenjang!.countSantri![index].toString(),
-                          namaSantri:
-                              widget.jenjang!.countSantri![index].toString());
-                    },
-                  ),
+                  // child: ListView.builder(
+                  //   physics: BouncingScrollPhysics(),
+                  //   itemCount: widget.jenjang!.countSantri!.length,
+                  //   itemBuilder: (context, index) {
+                  //     return CardPenilaianSantri(
+                  //         // id: widget.jenjang!.countSantri![index].toString(),
+                  //         namaSantri:
+                  //             widget.jenjang!.countSantri![index].toString());
+                  //   },
+                  // ),
                 ),
               ),
             ],

@@ -1,4 +1,5 @@
 import 'package:get/state_manager.dart';
+import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/model/santri.dart';
 import 'package:tahfidz/services/remote_services.dart';
 
@@ -15,7 +16,8 @@ class SantriController extends GetxController {
   void fetchSantri() async {
     try {
       isLoading(true);
-      var santries = await RemoteServices.fetchSantri();
+      var santries =
+          await RemoteServices.fetchSantri(SpUtil.getString('token')!);
       if (santries != null) {
         // List<Santri> santrie;
         listSantri.value = santries;

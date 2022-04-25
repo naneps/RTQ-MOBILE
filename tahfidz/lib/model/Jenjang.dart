@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final jenjang = jenjangFromJson(jsonString);
+
 import 'dart:convert';
 
 List<Jenjang> jenjangFromJson(String str) =>
@@ -8,28 +12,28 @@ String jenjangToJson(List<Jenjang> data) =>
 
 class Jenjang {
   Jenjang({
-    this.namaKelas,
-    this.countSantri,
-    this.pelajaran,
     this.id,
+    this.jenjang,
+    this.createdAt,
+    this.updatedAt,
   });
 
-  String? namaKelas;
-  List<dynamic>? countSantri;
-  List<dynamic>? pelajaran;
-  String? id;
+  int? id;
+  String? jenjang;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   factory Jenjang.fromJson(Map<String, dynamic> json) => Jenjang(
-        namaKelas: json["nama_kelas"],
-        countSantri: List<dynamic>.from(json["count_santri"].map((x) => x)),
-        pelajaran: List<dynamic>.from(json["pelajaran"].map((x) => x)),
         id: json["id"],
+        jenjang: json["jenjang"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "nama_kelas": namaKelas,
-        "count_santri": List<dynamic>.from(countSantri!.map((x) => x)),
-        "pelajaran": List<dynamic>.from(pelajaran!.map((x) => x)),
         "id": id,
+        "jenjang": jenjang,
+        "created_at": createdAt!.toIso8601String(),
+        "updated_at": updatedAt!.toIso8601String(),
       };
 }

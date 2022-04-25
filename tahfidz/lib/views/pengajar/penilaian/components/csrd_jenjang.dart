@@ -57,12 +57,13 @@ class CardJenjang extends StatelessWidget {
                 margin: EdgeInsets.all(5),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Flexible(
                       child: Text(
-                        "${jenjang!.namaKelas}",
+                        "${jenjang!.jenjang}",
                         style: GoogleFonts.poppins(
-                            fontSize: 18,
+                            fontSize: 16,
                             fontWeight: FontWeight.w700,
                             color: greyColor),
                       ),
@@ -89,7 +90,7 @@ class CardJenjang extends StatelessWidget {
                     color: mainColor, borderRadius: BorderRadius.circular(30)),
                 child: Center(
                     child: Text(
-                  "${jenjang!.countSantri!.length.toString()} Santri",
+                  "",
                   style: GoogleFonts.poppins(
                       color: Colors.white,
                       fontSize: 13,

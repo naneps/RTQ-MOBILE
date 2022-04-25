@@ -48,8 +48,8 @@ class _PenilaianScreenState extends State<PenilaianScreen> {
               height: 15,
             ),
             Container(
-              margin: EdgeInsets.all(10),
-              child: Text(
+              margin: const EdgeInsets.all(10),
+              child: const Text(
                 "Daftar Jenjang ",
                 style: TextStyle(
                     fontSize: 24,
@@ -57,20 +57,21 @@ class _PenilaianScreenState extends State<PenilaianScreen> {
                     color: Colors.white),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             Flexible(
               child: Container(
                 width: width,
                 height: height,
-                child: Obx(() {
-                  if (jenjangController.isLoading.value) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else
-                    return ListView.builder(
+                child: Obx(
+                  () {
+                    if (jenjangController.isLoading.value) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else {
+                      return ListView.builder(
                         itemCount: jenjangController.listJenjang.length,
                         itemBuilder: (context, index) {
                           return CardJenjang(
@@ -82,8 +83,11 @@ class _PenilaianScreenState extends State<PenilaianScreen> {
                             },
                             jenjang: jenjangController.listJenjang[index],
                           );
-                        });
-                }),
+                        },
+                      );
+                    }
+                  },
+                ),
               ),
             ),
           ],

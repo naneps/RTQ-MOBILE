@@ -61,15 +61,21 @@ class RemoteServices {
     }
   }
 
-  static Future<List<Jenjang>?> fetchJenjang() async {
-    var url = Uri.parse('$baseUrl/jenjang/view/all');
-    var resposne = await http.get(url);
-    print(resposne.statusCode);
-    if (resposne.statusCode == 200) {
-      var jsonString = resposne.body;
-      return jenjangFromJson(jsonString);
-    } else {
-      return null;
+  static Future<List<Jenjang>?> fetchJenjang(String token) async {
+    try {
+      var url = Uri.parse('$baseUrl/jenjang/view/all');
+      var resposne = await http
+          .get(url, headers: {HttpHeaders.authorizationHeader: token});
+      print(resposne.statusCode);
+      if (resposne.statusCode == 200) {
+        var jsonString = resposne.body;
+        return jenjangFromJson(jsonString);
+      } else {
+        return null;
+      }
+    } on Exception catch (e) {
+      // TODO
+      print("Fetch jenjang :$e");
     }
   }
 
@@ -90,10 +96,11 @@ class RemoteServices {
     // return cabangsFromJson(jsonString);
   }
 
-  static Future<List<Santri>?> fetchSantri() async {
+  static Future<List<Santri>?> fetchSantri(String token) async {
     try {
       var url = Uri.parse('$baseUrl/santri/view/all');
-      var resposne = await http.get(url);
+      var resposne = await http
+          .get(url, headers: {HttpHeaders.authorizationHeader: token});
       print("StatusCode Fetch Santri : ${resposne.statusCode}");
       if (resposne.statusCode == 200) {
         var jsonString = resposne.body;

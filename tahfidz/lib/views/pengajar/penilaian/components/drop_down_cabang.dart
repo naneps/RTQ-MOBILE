@@ -24,6 +24,7 @@ class _DropwDownCabangState extends State<DropwDownCabang> {
   Cabang cb1 = Cabang(namaCabang: "Lohbener");
   Cabang cb2 = Cabang(namaCabang: "Lohb");
   Cabang cb3 = Cabang(namaCabang: "Lbener");
+  // List<Cabang> listcabang = [];
 
   @override
   void initState() {
@@ -34,16 +35,20 @@ class _DropwDownCabangState extends State<DropwDownCabang> {
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      // listcabang = cabangController.listCabang.value;
+    });
+
     return DropdownSearch<String>(
       mode: Mode.BOTTOM_SHEET,
-      items: [],
+      items: cabangController.listCabang,
       dropdownSearchDecoration: InputDecoration(
         // labelText: "Custom BottomShet mode",
         contentPadding: EdgeInsets.fromLTRB(12, 12, 0, 0),
         border: OutlineInputBorder(borderSide: BorderSide.none),
       ),
       onChanged: print,
-      selectedItem: cb1.namaCabang,
+      // selectedItem: cb1,
       showSearchBox: true,
       searchFieldProps: TextFieldProps(
         decoration: InputDecoration(
