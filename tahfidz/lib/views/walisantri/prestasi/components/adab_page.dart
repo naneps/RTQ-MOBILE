@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tahfidz/views/walisantri/prestasi/components/widget_pelajaran.dart';
 
-class TadribatPage extends StatelessWidget {
-  const TadribatPage({Key? key}) : super(key: key);
+class AdabPage extends StatelessWidget {
+  const AdabPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

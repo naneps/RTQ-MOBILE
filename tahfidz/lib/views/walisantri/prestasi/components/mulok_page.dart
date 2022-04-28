@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tahfidz/views/walisantri/prestasi/components/widget_pelajaran.dart';
 
-class HafalanPage extends StatelessWidget {
-  const HafalanPage({Key? key}) : super(key: key);
+class MuloktPage extends StatelessWidget {
+  const MuloktPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class HafalanPage extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(left: 10),
             child: Text(
-              "Hasil Penilaian Hafalan",
+              "Hasil Penilaian Mulok",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
             ),
           ),

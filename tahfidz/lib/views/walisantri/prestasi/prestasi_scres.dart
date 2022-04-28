@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tahfidz/components/constants.dart';
+import 'package:tahfidz/views/walisantri/prestasi/components/adab_page.dart';
+import 'package:tahfidz/views/walisantri/prestasi/components/hafalan_page.dart';
+import 'package:tahfidz/views/walisantri/prestasi/components/imla_page.dart';
+import 'package:tahfidz/views/walisantri/prestasi/components/mulok_page.dart';
 import 'package:tahfidz/views/walisantri/prestasi/components/tadribat_page.dart';
 // import 'package:tahfidz/components/constants.dart';
 
@@ -58,10 +62,10 @@ class _PrestasiScreenState extends State<PrestasiScreen>
         body: const TabBarView(
           children: [
             TadribatPage(),
-            Icon(Icons.directions_transit),
-            Icon(Icons.directions_bike),
-            Icon(Icons.directions_bike),
-            Icon(Icons.directions_bike),
+            HafalanPage(),
+            AdabPage(),
+            ImlaPage(),
+            MuloktPage()
           ],
         ),
       ),
