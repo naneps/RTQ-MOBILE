@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tahfidz/components/item-menu.dart';
-import 'package:tahfidz/views/pengajar/absensi/absensi_screen.dart';
 import 'package:tahfidz/views/walisantri/iuran/iuran_screen.dart';
 import 'package:tahfidz/views/walisantri/prestasi/prestasi_scres.dart';
+import 'package:tahfidz/views/walisantri/profile_santri/profile_santri._screen.dart';
 
 class SectionMenuSantri extends StatelessWidget {
   const SectionMenuSantri({Key? key}) : super(key: key);
@@ -50,7 +50,8 @@ class SectionMenuSantri extends StatelessWidget {
               onTap: () => Get.to(PrestasiScreen()),
             ),
             ItemMenu(
-                onTap: () {},
+                onTap: () => Get.to(ProfileAnakScreen(),
+                    transition: Transition.circularReveal),
                 title: 'Santri',
                 icon: Icons.person,
                 color: 0xff21CDFF),

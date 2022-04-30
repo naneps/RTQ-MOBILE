@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:tahfidz/components/constants.dart';
+
 import 'package:tahfidz/views/walisantri/prestasi/components/widget_pelajaran.dart';
 
 class TadribatPage extends StatelessWidget {
@@ -33,7 +32,7 @@ class TadribatPage extends StatelessWidget {
               itemCount: 7,
               itemBuilder: (context, index) {
                 return WidgetPelajaran(
-                  size: size,
+                  width: size.width,
                   nomor: "${1 + index}",
                   pelajaran: "Pelajaran",
                   nilai: "100",

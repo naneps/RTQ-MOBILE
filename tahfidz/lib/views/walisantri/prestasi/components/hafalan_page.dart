@@ -31,7 +31,7 @@ class HafalanPage extends StatelessWidget {
               itemCount: 7,
               itemBuilder: (context, index) {
                 return WidgetPelajaran(
-                  size: size,
+                  width: size.width,
                   nomor: "${1 + index}",
                   pelajaran: "Pelajaran",
                   nilai: "100",

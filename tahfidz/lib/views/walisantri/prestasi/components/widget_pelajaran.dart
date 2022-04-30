@@ -4,10 +4,10 @@ import 'package:tahfidz/components/constants.dart';
 
 class WidgetPelajaran extends StatelessWidget {
   WidgetPelajaran(
-      {Key? key, required this.size, this.pelajaran, this.nilai, this.nomor})
+      {Key? key, required this.width, this.pelajaran, this.nilai, this.nomor})
       : super(key: key);
 
-  final Size size;
+  double? width;
   String? pelajaran;
   String? nilai;
   String? nomor;
@@ -17,7 +17,7 @@ class WidgetPelajaran extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 10),
       margin: EdgeInsets.symmetric(vertical: 5),
       height: 60,
-      width: size.width,
+      width: width,
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
