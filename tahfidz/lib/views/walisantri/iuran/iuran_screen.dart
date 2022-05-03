@@ -1,15 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:line_icons/line_icon.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:tahfidz/components/constants.dart';
+import 'package:tahfidz/model/iuran.dart';
+import 'package:tahfidz/services/remote_services.dart';
+import 'package:tahfidz/views/walisantri/iuran/components/card_iuran.dart';
 
-class IuranScreen extends StatelessWidget {
+class IuranScreen extends StatefulWidget {
   const IuranScreen({Key? key}) : super(key: key);
+
+  @override
+  State<IuranScreen> createState() => _IuranScreenState();
+}
+
+class _IuranScreenState extends State<IuranScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    RemoteServices.fetchIuran();
+  }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    List<Iuran> listIuran = [];
+    listIuran.add(
+      Iuran(
+          status: "Sudah Diterima",
+          uang: "50000",
+          id: '1',
+          tglIuran: "20 Oktober 2002"),
+    );
+    listIuran.add(
+      Iuran(
+          status: "Sudah Diterima",
+          uang: "80000",
+          id: '1',
+          tglIuran: "20 Oktober 2022"),
+    );
+    listIuran.add(
+      Iuran(
+          status: "Belum di terima",
+          uang: "20000",
+          id: '1',
+          tglIuran: "20 Oktober 2002"),
+    );
     return Scaffold(
       backgroundColor: Color.fromARGB(228, 255, 255, 255),
       appBar: AppBar(
@@ -36,7 +71,27 @@ class IuranScreen extends StatelessWidget {
                         fontSize: 18, fontWeight: FontWeight.w600),
                   ),
                 ),
-                CardIuran(size: size),
+                FutureBuilder(
+                  future: RemoteServices.fetchIuran(),
+                  builder: (context, snapshot) {
+                    // Object? listIuran = snapshot.data;
+                    // AsyncSnapshot<List<Iuran>?> listIuran = snapshot.data
+                    print(snapshot.runtimeType);
+                    return Container(
+                      width: size.width,
+                      height: 500,
+                      child: ListView.builder(
+                        itemCount: listIuran.length,
+                        itemBuilder: (context, index) {
+                          return CardIuran(
+                            size: size,
+                            iuran: listIuran[index],
+                          );
+                        },
+                      ),
+                    );
+                  },
+                )
               ],
             ),
           ),
@@ -46,70 +101,4 @@ class IuranScreen extends StatelessWidget {
   }
 }
 
-class CardIuran extends StatelessWidget {
-  const CardIuran({
-    Key? key,
-    required this.size,
-  }) : super(key: key);
-
-  final Size size;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      padding: EdgeInsets.all(10),
-      width: size.width,
-      height: 60,
-      color: Colors.white,
-      child: Row(
-        children: [
-          Container(
-            width: 40,
-            height: 40,
-            color: Colors.blueAccent,
-            child: LineIcon.alternateMoneyBill(
-              color: Colors.white,
-              size: 30,
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 20),
-            child: Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "10 Oktober 2002 ",
-                    style: GoogleFonts.poppins(
-                        fontSize: 14, fontWeight: FontWeight.w600),
-                  ),
-                  Text(
-                    "Sudah di terima",
-                    style: GoogleFonts.poppins(
-                        fontSize: 12, fontWeight: FontWeight.w400),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 20),
-            child: Text(
-              "Rp.50000 ",
-              style: GoogleFonts.poppins(
-                  fontSize: 14, fontWeight: FontWeight.w600),
-            ),
-          ),
-          Container(
-            child: Icon(
-              LineIcons.checkSquareAlt,
-              size: 25,
-              color: Colors.green,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+final List<Map<dynamic, Iuran>> data = [];

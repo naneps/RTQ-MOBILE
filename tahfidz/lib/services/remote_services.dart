@@ -9,6 +9,7 @@ import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/model/Jenjang.dart';
 import 'package:tahfidz/model/asatidz.dart';
 import 'package:tahfidz/model/cabang.dart';
+import 'package:tahfidz/model/iuran.dart';
 import 'package:tahfidz/model/santri.dart';
 import 'package:tahfidz/model/user.dart';
 import 'package:tahfidz/views/pengajar/home/home_screen.dart';
@@ -108,6 +109,23 @@ class RemoteServices {
       }
     } catch (e) {
       print("Catch FetchSantri : $e");
+    }
+  }
+
+  static Future<List<Iuran>?> fetchIuran() async {
+    try {
+      var url = Uri.parse(
+          'https://623aa9b8b5292b8bfcb807ee.mockapi.io/rtq/api/authors');
+      var resposne = await http.get(
+        url,
+      );
+      print("StatusCode Fetch Iuran : ${resposne.statusCode}");
+      if (resposne.statusCode == 200) {
+        var jsonString = resposne.body;
+        return iuranFromJson(jsonString);
+      }
+    } catch (e) {
+      print("Catch Fetch Iuran : $e");
     }
   }
 
