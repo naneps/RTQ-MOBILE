@@ -27,6 +27,7 @@ class _WidgetFotoState extends State<WidgetFoto> {
     return Container(
       // height: MediaQuery.of(context).size.height / 2.5,
       height: 600,
+
       width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.all(10),
       // clipBehavior: Clip.none,
@@ -174,7 +175,8 @@ class _WidgetFotoState extends State<WidgetFoto> {
   }
 
   Future getImageFromCanera() async {
-    var pickImage = await picker.pickImage(source: ImageSource.camera);
+    var pickImage =
+        await picker.pickImage(source: ImageSource.camera, imageQuality: 60);
     setState(() {
       if (pickImage != null) {
         setState(() {

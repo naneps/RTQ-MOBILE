@@ -19,7 +19,7 @@ class RemoteServices {
   // static var baseUrl = "http://10.0.112.110:3000/";
   static var baseUrl = "http://api.rtq-freelance.my.id/api-v1";
 
-  static Future<void> loginProses(TextEditingController controllerTelepon,
+  static Future<bool?> loginProses(TextEditingController controllerTelepon,
       TextEditingController controllerPassword) async {
     try {
       var response = await http.post(
@@ -32,6 +32,7 @@ class RemoteServices {
 
       if (response.statusCode == 200) {
         var user = userFromJson(response.body);
+
         if (int.parse(user.idRole!) == 3) {
           Get.off(HomeScreen(
             telepon: user.noHp.toString(),
@@ -56,6 +57,9 @@ class RemoteServices {
           SpUtil.putString("token", user.token.toString());
           SpUtil.putString("id_role", user.idRole.toString());
         }
+        return true;
+      } else {
+        return false;
       }
     } catch (e) {
       print('Error Login Proses : $e.');
@@ -150,6 +154,8 @@ class RemoteServices {
 
   static Future<bool?> addImage(Map<String, String> body, File filepath) async {
     try {
+      DateTime date = DateTime.now();
+      File fileRename = filepath.rename("$date") as File;
       String addimageUrl = baseUrl + '/api-v1/absensi/asatidz';
       Map<String, String> headers = {
         'Content-Type': 'multipart/form-data',
@@ -157,7 +163,8 @@ class RemoteServices {
       var request = http.MultipartRequest('POST', Uri.parse(addimageUrl))
         ..fields.addAll(body)
         ..headers.addAll(headers)
-        ..files.add(await http.MultipartFile.fromPath('image', filepath.path));
+        ..files
+            .add(await http.MultipartFile.fromPath('image', fileRename.path));
       var response = await request.send();
 
       // print(response.statusCode);

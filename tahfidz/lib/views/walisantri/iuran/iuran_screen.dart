@@ -100,5 +100,3 @@ class _IuranScreenState extends State<IuranScreen> {
     );
   }
 }
-
-final List<Map<dynamic, Iuran>> data = [];

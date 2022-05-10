@@ -7,12 +7,12 @@ import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/controllers/cabang_controller.dart';
 import 'package:tahfidz/controllers/jenjang_controllers.dart';
-import 'package:tahfidz/model/cabang.dart';
 import 'package:tahfidz/services/remote_services.dart';
 
 class DropwDownCabang extends StatefulWidget {
   DropwDownCabang({Key? key}) : super(key: key);
   final userToken = SpUtil.getString('token');
+  static String? selectedCabang = "";
   @override
   State<DropwDownCabang> createState() => _DropwDownCabangState();
 }
@@ -21,10 +21,8 @@ class _DropwDownCabangState extends State<DropwDownCabang> {
   CabangController cabangController = Get.put(CabangController());
   JenjangController jenjangController = Get.put(JenjangController());
 
-  Cabang cb1 = Cabang(namaCabang: "Lohbener");
-  Cabang cb2 = Cabang(namaCabang: "Lohb");
-  Cabang cb3 = Cabang(namaCabang: "Lbener");
-  // List<Cabang> listcabang = [];
+  // get selectedCabang => widget.sel;
+  // String selectedCabang = "";
 
   @override
   void initState() {
@@ -42,16 +40,21 @@ class _DropwDownCabangState extends State<DropwDownCabang> {
     return DropdownSearch<String>(
       mode: Mode.BOTTOM_SHEET,
       items: cabangController.listCabang,
-      dropdownSearchDecoration: InputDecoration(
+      dropdownSearchDecoration: const InputDecoration(
         // labelText: "Custom BottomShet mode",
         contentPadding: EdgeInsets.fromLTRB(12, 12, 0, 0),
         border: OutlineInputBorder(borderSide: BorderSide.none),
       ),
-      onChanged: print,
+      onChanged: (value) {
+        print(value);
+        setState(() {
+          DropwDownCabang.selectedCabang = value;
+        });
+      },
       // selectedItem: cb1,
       showSearchBox: true,
       searchFieldProps: TextFieldProps(
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           border: OutlineInputBorder(),
           contentPadding: EdgeInsets.fromLTRB(12, 12, 8, 0),
           labelText: "Pilih Cabang",
@@ -61,12 +64,12 @@ class _DropwDownCabangState extends State<DropwDownCabang> {
         height: 50,
         decoration: BoxDecoration(
           color: mainColor,
-          borderRadius: BorderRadius.only(
+          borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(20),
             topRight: Radius.circular(20),
           ),
         ),
-        child: Center(
+        child: const Center(
           child: Text(
             'Country',
             style: TextStyle(
@@ -77,7 +80,7 @@ class _DropwDownCabangState extends State<DropwDownCabang> {
           ),
         ),
       ),
-      popupShape: RoundedRectangleBorder(
+      popupShape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(24),
           topRight: Radius.circular(24),

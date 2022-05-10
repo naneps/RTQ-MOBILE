@@ -64,7 +64,7 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
                   child: Container(
                     // color: mainColor,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           bottomLeft: Radius.circular(90),
                           bottomRight: Radius.circular(90),
                         ),
@@ -87,7 +87,7 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
               labelText: "Cari Santri",
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Flexible(

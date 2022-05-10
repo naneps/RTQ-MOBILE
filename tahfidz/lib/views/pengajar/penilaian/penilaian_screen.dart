@@ -16,6 +16,20 @@ class PenilaianScreen extends StatefulWidget {
 class _PenilaianScreenState extends State<PenilaianScreen> {
   final JenjangController jenjangController = Get.put(JenjangController());
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    DropwDownCabang.selectedCabang;
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    DropwDownCabang.selectedCabang;
+  }
+
+  @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
@@ -44,6 +58,10 @@ class _PenilaianScreenState extends State<PenilaianScreen> {
               ),
               child: DropwDownCabang(),
             ),
+            SizedBox(
+              height: 15,
+            ),
+            Text(DropwDownCabang.selectedCabang.toString()),
             SizedBox(
               height: 15,
             ),

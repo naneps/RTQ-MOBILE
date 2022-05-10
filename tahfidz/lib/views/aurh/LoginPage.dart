@@ -1,15 +1,12 @@
 // ignore_for_file: deprecated_member_use
 
-import 'package:dio/dio.dart';
+import 'package:advance_notification/advance_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:lottie/lottie.dart';
-import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/services/remote_services.dart';
-
-import 'package:tahfidz/views/pengajar/home/home_screen.dart';
 
 import '../../components/constants.dart';
 
@@ -74,7 +71,31 @@ class _LoginPageState extends State<LoginPage> {
       ),
       onPressed: () {
         if (_formKey.currentState!.validate()) {
-          RemoteServices.loginProses(_controllerTelepon, _controllerPassword);
+          RemoteServices.loginProses(_controllerTelepon, _controllerPassword)
+              .then((value) {
+            if (value == true) {
+              const AdvanceSnackBar(
+                      message: "Notification Message",
+                      mode: Mode.ADVANCE,
+                      duration: Duration(seconds: 5),
+                      type: sType.SUCCESS,
+                      textSize: 20,
+                      isIcon: true,
+                      iconColor: Colors.white)
+                  .show(context);
+            } else {
+              const AdvanceSnackBar(
+                message: "Notification Message",
+                mode: Mode.ADVANCE,
+                duration: Duration(seconds: 5),
+                type: sType.ERROR,
+                textSize: 20,
+                icon: Icon(LineIcons.exclamationCircle),
+                iconColor: Colors.white,
+                isIcon: true,
+              ).show(context);
+            }
+          });
         }
       },
       child: Text(
