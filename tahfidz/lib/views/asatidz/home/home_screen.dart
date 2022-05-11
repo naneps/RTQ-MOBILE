@@ -8,8 +8,8 @@ import 'package:tahfidz/controllers/asatid_controller.dart';
 import 'package:tahfidz/model/asatidz.dart';
 import 'package:tahfidz/services/remote_services.dart';
 import 'package:tahfidz/views/aurh/LoginPage.dart';
-import 'package:tahfidz/views/pengajar/home/components/asatidz_menu.dart';
-import 'package:tahfidz/views/pengajar/profile/profile_screen.dart';
+import 'package:tahfidz/views/asatidz/home/components/asatidz_menu.dart';
+import 'package:tahfidz/views/asatidz/profile/profile_screen.dart';
 import 'package:tahfidz/views/walisantri/home/components/menu_section.dart';
 
 class HomeScreen extends StatefulWidget {

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tahfidz/components/item-menu.dart';
-import 'package:tahfidz/views/pengajar/absen_saya/my_absensi_page.dart';
-import 'package:tahfidz/views/pengajar/absensi/absensi_screen.dart';
-import 'package:tahfidz/views/pengajar/penilaian/penilaian_screen.dart';
+import 'package:tahfidz/views/asatidz/absen_saya/my_absensi_page.dart';
+import 'package:tahfidz/views/asatidz/absensi/absensi_screen.dart';
+import 'package:tahfidz/views/asatidz/iuran_santri/iuran_santri._screen.dart';
+import 'package:tahfidz/views/asatidz/penilaian/penilaian_screen.dart';
 
 class SectionMenuAsatidz extends StatelessWidget {
   const SectionMenuAsatidz({Key? key}) : super(key: key);
@@ -28,10 +29,11 @@ class SectionMenuAsatidz extends StatelessWidget {
           runSpacing: 6,
           children: [
             ItemMenu(
-              title: 'Dashboard',
+              title: 'Iuran Santri',
               icon: Icons.dashboard_customize,
               color: 0xff7585F6,
-              onTap: () {},
+              onTap: () => Get.to(IuranSantriScreen(),
+                  transition: Transition.circularReveal),
             ),
             ItemMenu(
                 title: 'Absensi',

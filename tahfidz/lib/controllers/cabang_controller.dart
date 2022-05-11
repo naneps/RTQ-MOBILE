@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:sp_util/sp_util.dart';
-import 'package:tahfidz/model/cabang.dart';
 // import 'package:tahfidz/model/cabang.dart';
 import 'package:tahfidz/services/remote_services.dart';
 

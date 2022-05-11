@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/model/santri.dart';
-import 'package:tahfidz/views/pengajar/absensi/absensi_screen.dart';
+import 'package:tahfidz/views/asatidz/absensi/absensi_screen.dart';
 
 class CardSantri extends StatelessWidget {
   final Santri? santri;

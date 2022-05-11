@@ -6,8 +6,8 @@ import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/search_box.dart';
 import 'package:tahfidz/controllers/santri_controller.dart';
 import 'package:tahfidz/model/santri.dart';
-import 'package:tahfidz/views/pengajar/absensi/components/indicator_absensi.dart';
-import 'package:tahfidz/views/pengajar/absensi/components/card_santri.dart';
+import 'package:tahfidz/views/asatidz/absensi/components/indicator_absensi.dart';
+import 'package:tahfidz/views/asatidz/absensi/components/card_santri.dart';
 
 class AbsensiScreen extends StatefulWidget {
   const AbsensiScreen({Key? key}) : super(key: key);

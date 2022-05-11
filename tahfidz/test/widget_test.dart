@@ -1,31 +1,13 @@
-// // This is a basic Flutter widget test.
-// //
-// // To perform an interaction with a widget in your test, use the WidgetTester
-// // utility that Flutter provides. For example, you can send tap and scroll
-// // gestures. You can also use WidgetTester to find child widgets in the widget
-// // tree, read text, and verify that the values of widget properties are correct.
+import 'dart:convert';
+import 'dart:io';
 
-// import 'package:flutter/material.dart';
-// import 'package:flutter_test/flutter_test.dart';
-// import 'package:tahfidz/views/aurh/LoginPage.dart';
+import 'package:http/http.dart' as http;
+import 'package:tahfidz/model/halaqoh.dart';
+import 'package:tahfidz/services/remote_services.dart';
 
-// import 'package:tahfidz/main.dart';
+void main() async {
+  String token =
+      "a95c1ac365bcc71a1bb6304edc8dbfc678ea0e165a9cf519abef46cb83b87b6bc7e337c01ba5b3ad";
 
-// void main() {
-//   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-//     // Build our app and trigger a frame.
-//     await tester.pumpWidget(const LoginPage());
-
-//     // Verify that our counter starts at 0.
-//     expect(find.text('0'), findsOneWidget);
-//     expect(find.text('1'), findsNothing);
-
-//     // Tap the '+' icon and trigger a frame.
-//     await tester.tap(find.byIcon(Icons.add));
-//     await tester.pump();
-
-//     // Verify that our counter has incremented.
-//     expect(find.text('0'), findsNothing);
-//     expect(find.text('1'), findsOneWidget);
-//   });
-// }
+  RemoteServices.fetchHalaqoh(token).then((value) => print(value));
+}

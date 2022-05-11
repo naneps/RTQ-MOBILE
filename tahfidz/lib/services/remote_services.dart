@@ -9,10 +9,11 @@ import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/model/Jenjang.dart';
 import 'package:tahfidz/model/asatidz.dart';
 import 'package:tahfidz/model/cabang.dart';
+import 'package:tahfidz/model/halaqoh.dart';
 import 'package:tahfidz/model/iuran.dart';
 import 'package:tahfidz/model/santri.dart';
 import 'package:tahfidz/model/user.dart';
-import 'package:tahfidz/views/pengajar/home/home_screen.dart';
+import 'package:tahfidz/views/asatidz/home/home_screen.dart';
 
 class RemoteServices {
   // static var client = http.Client();
@@ -130,6 +131,21 @@ class RemoteServices {
       }
     } catch (e) {
       print("Catch Fetch Iuran : $e");
+    }
+  }
+
+  static Future<List<Halaqoh>?> fetchHalaqoh(String token) async {
+    try {
+      var url = Uri.parse('$baseUrl/santri/cabang/all');
+      var resposne = await http
+          .get(url, headers: {HttpHeaders.authorizationHeader: token});
+      print("StatusCode Fetch Santri : ${resposne.statusCode}");
+      if (resposne.statusCode == 200) {
+        var jsonString = resposne.body;
+        return halaqohFromJson(jsonString);
+      }
+    } catch (e) {
+      print("Catch Fetch Halaqoh : $e");
     }
   }
 

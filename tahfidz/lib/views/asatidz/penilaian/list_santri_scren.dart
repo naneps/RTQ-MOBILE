@@ -5,7 +5,7 @@ import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/search_box.dart';
 import 'package:tahfidz/controllers/jenjang_controllers.dart';
 import 'package:tahfidz/model/Jenjang.dart';
-import 'package:tahfidz/views/pengajar/penilaian/components/list_santri.dart';
+import 'package:tahfidz/views/asatidz/penilaian/components/list_santri.dart';
 
 class ListSantriScreen extends StatefulWidget {
   // String? id;

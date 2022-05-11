@@ -8,7 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/services/remote_services.dart';
-import 'package:tahfidz/views/pengajar/home/home_screen.dart';
+import 'package:tahfidz/views/asatidz/home/home_screen.dart';
 
 class WidgetFoto extends StatefulWidget {
   File? fileImage;
