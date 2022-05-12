@@ -19,14 +19,19 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
+  @override
+  // void dispose() {
+  //   // TODO: implement dispose
+  //   build(context);
+  // }
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController _controllerTelepon = TextEditingController();
-    TextEditingController _controllerPassword = TextEditingController();
+    TextEditingController controllerTelepon = TextEditingController();
+    TextEditingController controllerPassword = TextEditingController();
 
     final fieldTelepon = TextFormField(
-      controller: _controllerTelepon,
+      controller: controllerTelepon,
       keyboardType: TextInputType.phone,
       decoration: InputDecoration(
         hintText: "Telepon",
@@ -41,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
       },
     );
     final fieldPassword = TextFormField(
-      controller: _controllerPassword,
+      controller: controllerPassword,
       obscureText: true,
       decoration: InputDecoration(
         hintText: "Password",
@@ -71,31 +76,31 @@ class _LoginPageState extends State<LoginPage> {
       ),
       onPressed: () {
         if (_formKey.currentState!.validate()) {
-          RemoteServices.loginProses(_controllerTelepon, _controllerPassword)
-              .then((value) {
-            if (value == true) {
-              const AdvanceSnackBar(
-                      message: "Notification Message",
-                      mode: Mode.ADVANCE,
-                      duration: Duration(seconds: 5),
-                      type: sType.SUCCESS,
-                      textSize: 20,
-                      isIcon: true,
-                      iconColor: Colors.white)
-                  .show(context);
-            } else {
-              const AdvanceSnackBar(
-                message: "Notification Message",
-                mode: Mode.ADVANCE,
-                duration: Duration(seconds: 5),
-                type: sType.ERROR,
-                textSize: 20,
-                icon: Icon(LineIcons.exclamationCircle),
-                iconColor: Colors.white,
-                isIcon: true,
-              ).show(context);
-            }
-          });
+          RemoteServices.loginProses(controllerTelepon, controllerPassword);
+          //     .then((value) {
+          //   if (value == true) {
+          //     const AdvanceSnackBar(
+          //             message: "Notification Message",
+          //             mode: Mode.ADVANCE,
+          //             duration: Duration(seconds: 5),
+          //             type: sType.SUCCESS,
+          //             textSize: 20,
+          //             isIcon: true,
+          //             iconColor: Colors.white)
+          //         .show(context);
+          //   } else {
+          //     const AdvanceSnackBar(
+          //       message: "Notification Message",
+          //       mode: Mode.ADVANCE,
+          //       duration: Duration(seconds: 5),
+          //       type: sType.ERROR,
+          //       textSize: 20,
+          //       icon: Icon(LineIcons.exclamationCircle),
+          //       iconColor: Colors.white,
+          //       isIcon: true,
+          //     ).show(context);
+          //   }
+          // });
         }
       },
       child: Text(

@@ -15,19 +15,6 @@ class PenilaianScreen extends StatefulWidget {
 
 class _PenilaianScreenState extends State<PenilaianScreen> {
   final JenjangController jenjangController = Get.put(JenjangController());
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    DropwDownCabang.selectedCabang;
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    DropwDownCabang.selectedCabang;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +37,9 @@ class _PenilaianScreenState extends State<PenilaianScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
+              // alignment: Alignment.center,
               width: width,
-              height: 60,
+              // height: 60,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
                 color: Colors.white,
@@ -61,7 +49,6 @@ class _PenilaianScreenState extends State<PenilaianScreen> {
             SizedBox(
               height: 15,
             ),
-            Text(DropwDownCabang.selectedCabang.toString()),
             SizedBox(
               height: 15,
             ),

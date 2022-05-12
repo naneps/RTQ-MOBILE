@@ -134,19 +134,22 @@ class RemoteServices {
     }
   }
 
-  static Future<List<Halaqoh>?> fetchHalaqoh(String token) async {
+  static Future<List<Halaqoh>> fetchHalaqoh(String token, filter) async {
     try {
-      var url = Uri.parse('$baseUrl/santri/cabang/all');
+      var url = Uri.parse('$baseUrl/cabang/view/all');
       var resposne = await http
           .get(url, headers: {HttpHeaders.authorizationHeader: token});
-      print("StatusCode Fetch Santri : ${resposne.statusCode}");
+      print("StatusCode Fetch Halaqoh : ${resposne.statusCode}");
       if (resposne.statusCode == 200) {
         var jsonString = resposne.body;
+        print("respone body halqoh : $jsonString");
         return halaqohFromJson(jsonString);
       }
+      return [];
     } catch (e) {
       print("Catch Fetch Halaqoh : $e");
     }
+    return [];
   }
 
   static Future<Asatidz?> getUserInfo(String token) async {

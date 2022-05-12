@@ -5,54 +5,44 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/constants.dart';
-import 'package:tahfidz/controllers/cabang_controller.dart';
+import 'package:tahfidz/controllers/halaqoh_controllers.dart';
 import 'package:tahfidz/controllers/jenjang_controllers.dart';
 import 'package:tahfidz/services/remote_services.dart';
+
+import '../../../../model/halaqoh.dart';
 
 class DropwDownCabang extends StatefulWidget {
   DropwDownCabang({Key? key}) : super(key: key);
   final userToken = SpUtil.getString('token');
-  static String? selectedCabang = "";
   @override
   State<DropwDownCabang> createState() => _DropwDownCabangState();
 }
 
 class _DropwDownCabangState extends State<DropwDownCabang> {
-  CabangController cabangController = Get.put(CabangController());
   JenjangController jenjangController = Get.put(JenjangController());
-
-  // get selectedCabang => widget.sel;
-  // String selectedCabang = "";
-
-  @override
-  void initState() {
-    // cabangController.getAllCabang();
-    RemoteServices.fetchCabang(SpUtil.getString('token')!);
-    cabangController.getAllCabang();
-  }
-
+  HalaqohController halaqohController = Get.put(HalaqohController());
+  Halaqoh? selectedHalaqoh;
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      // listcabang = cabangController.listCabang.value;
-    });
-
-    return DropdownSearch<String>(
-      mode: Mode.BOTTOM_SHEET,
-      items: cabangController.listCabang,
-      dropdownSearchDecoration: const InputDecoration(
-        // labelText: "Custom BottomShet mode",
-        contentPadding: EdgeInsets.fromLTRB(12, 12, 0, 0),
-        border: OutlineInputBorder(borderSide: BorderSide.none),
-      ),
-      onChanged: (value) {
-        print(value);
-        setState(() {
-          DropwDownCabang.selectedCabang = value;
-        });
-      },
-      // selectedItem: cb1,
+    return DropdownSearch<Halaqoh>(
       showSearchBox: true,
+      showSelectedItems: true,
+      compareFn: (i, s) => i?.isEqual(s!) ?? false,
+      mode: Mode.BOTTOM_SHEET,
+      dropdownSearchDecoration: InputDecoration(
+          // labelText: "Cabang",
+          // labelText: "Custom BottomShet mode",
+          contentPadding: EdgeInsets.fromLTRB(12, 12, 12, 12),
+          border: OutlineInputBorder(borderSide: BorderSide.none)),
+      onFind: (String? filter) {
+        return RemoteServices.fetchHalaqoh(widget.userToken!, filter);
+      },
+      onChanged: (data) {
+        setState(() {});
+        print("selected cabang : ${data!.kodeHalaqah}");
+      },
+      dropdownBuilder: _customDropDownExample,
+      popupItemBuilder: _customPopupItemBuilderExample2,
       searchFieldProps: TextFieldProps(
         decoration: const InputDecoration(
           border: OutlineInputBorder(),
@@ -71,7 +61,7 @@ class _DropwDownCabangState extends State<DropwDownCabang> {
         ),
         child: const Center(
           child: Text(
-            'Country',
+            'Cabang',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -86,6 +76,62 @@ class _DropwDownCabangState extends State<DropwDownCabang> {
           topRight: Radius.circular(24),
         ),
       ),
+    );
+  }
+
+  Widget _customDropDownExample(BuildContext context, Halaqoh? halaqoh) {
+    if (halaqoh == null) {
+      return Container();
+    }
+
+    return Container(
+      child: (halaqoh.kodeHalaqah == null)
+          ? const ListTile(
+              contentPadding: EdgeInsets.all(0),
+              leading: CircleAvatar(),
+              title: Text("No item selected"),
+            )
+          : ListTile(
+              contentPadding: EdgeInsets.all(0),
+              leading: CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  child: Icon(
+                    Icons.location_on_rounded,
+                    color: mainColor,
+                    size: 40,
+                  )),
+              title: Text(halaqoh.namaTempat!),
+              subtitle: Text(
+                halaqoh.namaDaerah.toString(),
+              ),
+            ),
+    );
+  }
+
+  Widget _customPopupItemBuilderExample2(
+      BuildContext context, Halaqoh? item, bool isSelected) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 8),
+      decoration: !isSelected
+          ? null
+          : BoxDecoration(
+              border: Border.all(color: Theme.of(context).primaryColor),
+              borderRadius: BorderRadius.circular(5),
+              color: Colors.white,
+            ),
+      child: ListTile(
+          selectedTileColor: mainColor,
+          selectedColor: mainColor,
+          selected: isSelected,
+          title: Text(item!.namaTempat ?? ''),
+          subtitle: Text(item.namaDaerah.toString()),
+          leading: CircleAvatar(
+              backgroundColor: Colors.transparent,
+              child: Icon(
+                Icons.location_on_rounded,
+                size: 40,
+                color: mainColor,
+              ))),
     );
   }
 }

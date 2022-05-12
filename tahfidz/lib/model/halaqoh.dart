@@ -13,23 +13,26 @@ String halaqohToJson(List<Halaqoh> data) =>
 class Halaqoh {
   Halaqoh({
     this.kodeHalaqah,
-    this.namaHalaqah,
-    this.lokasiRt,
+    this.namaTempat,
+    this.namaDaerah,
   });
 
   String? kodeHalaqah;
-  String? namaHalaqah;
-  String? lokasiRt;
+  String? namaTempat;
+  String? namaDaerah;
 
   factory Halaqoh.fromJson(Map<String, dynamic> json) => Halaqoh(
         kodeHalaqah: json["kode_halaqah"],
-        namaHalaqah: json["nama_halaqah"],
-        lokasiRt: json["lokasi_rt"],
+        namaTempat: json["nama_tempat"],
+        namaDaerah: json["nama_daerah"],
       );
 
   Map<String, dynamic> toJson() => {
         "kode_halaqah": kodeHalaqah,
-        "nama_halaqah": namaHalaqah,
-        "lokasi_rt": lokasiRt,
+        "nama_tempat": namaTempat,
+        "nama_daerah": namaDaerah,
       };
+  bool isEqual(Halaqoh model) {
+    return kodeHalaqah == model.kodeHalaqah;
+  }
 }
