@@ -7,13 +7,13 @@ class HalaqohController extends GetxController {
   var listHalaqoh = <Halaqoh>[].obs;
   var isLoading = true.obs;
 
-  Halaqoh? selectedHalaqoh;
+  Halaqoh? _selectedHalaqoh;
 
   @override
   void onInit() {
     // TODO: implement onInit
-    super.onInit();
     getAllHalaqoh(null);
+    super.onInit();
   }
 
   void getAllHalaqoh(filter) async {
@@ -33,9 +33,10 @@ class HalaqohController extends GetxController {
     }
   }
 
-  Halaqoh getSelectedHalaqoh(Halaqoh halaqoh) {
-    selectedHalaqoh = halaqoh;
+  Halaqoh getSelectedHalaqoh() => _selectedHalaqoh!;
+
+  void setSelectedHalaqoh(Halaqoh halaqoh) {
+    _selectedHalaqoh = halaqoh;
     update();
-    return selectedHalaqoh!;
   }
 }

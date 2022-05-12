@@ -3,14 +3,11 @@ import 'package:get/get.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
+import 'package:tahfidz/model/santri_by.dart';
 
 class CardPenilaianSantri extends StatelessWidget {
-  final String? namaSantri;
-  final String? id;
-  dynamic onTap;
-
-  CardPenilaianSantri({this.onTap, this.namaSantri, this.id, Key? key})
-      : super(key: key);
+  SantriBy santri;
+  CardPenilaianSantri({required this.santri, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -63,12 +60,25 @@ class CardPenilaianSantri extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Flexible(
-                    child: Text(
-                      "$namaSantri",
-                      style: GoogleFonts.poppins(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: greyColor),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${santri.namaLengkap}",
+                          style: GoogleFonts.poppins(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: greyColor),
+                        ),
+                        Text(
+                          "${santri.jenjang}",
+                          style: GoogleFonts.poppins(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: greyColor),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -84,9 +94,9 @@ class CardPenilaianSantri extends StatelessWidget {
               child: Row(
                 // crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  buildBtnPenilaianTadribat(context, id),
-                  buildBtnHaflan(context, id)
-                  // buildBtnPenilaianTadribat(context, id)
+                  // buildBtnPenilaianTadribat(context, id),
+                  // buildBtnHaflan(context, )
+                  // // buildBtnPenilaianTadribat(context, id)
                 ],
               ),
             ),

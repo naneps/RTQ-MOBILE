@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tahfidz/components/constants.dart';
+import 'package:tahfidz/controllers/halaqoh_controllers.dart';
 import 'package:tahfidz/controllers/jenjang_controllers.dart';
 import 'package:tahfidz/views/asatidz/penilaian/components/csrd_jenjang.dart';
 import 'package:tahfidz/views/asatidz/penilaian/components/drop_down_cabang.dart';
@@ -15,7 +16,7 @@ class PenilaianScreen extends StatefulWidget {
 
 class _PenilaianScreenState extends State<PenilaianScreen> {
   final JenjangController jenjangController = Get.put(JenjangController());
-
+  HalaqohController halaqohController = Get.put(HalaqohController());
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -49,6 +50,7 @@ class _PenilaianScreenState extends State<PenilaianScreen> {
             SizedBox(
               height: 15,
             ),
+            // Text("${halaqohController.getSelectedHalaqoh().namaDaerah}"),
             SizedBox(
               height: 15,
             ),
@@ -83,7 +85,12 @@ class _PenilaianScreenState extends State<PenilaianScreen> {
                             nomor: index,
                             onTap: () async {
                               await Get.to(ListSantriScreen(
-                                jenjang: jenjangController.listJenjang[index],
+                                idJenjang: jenjangController
+                                    .listJenjang[index].id
+                                    .toString(),
+                                kodeHalaqoh: halaqohController
+                                    .getSelectedHalaqoh()
+                                    .kodeHalaqah,
                               ));
                             },
                             jenjang: jenjangController.listJenjang[index],

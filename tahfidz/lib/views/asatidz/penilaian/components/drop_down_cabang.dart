@@ -21,9 +21,11 @@ class DropwDownCabang extends StatefulWidget {
 class _DropwDownCabangState extends State<DropwDownCabang> {
   JenjangController jenjangController = Get.put(JenjangController());
   HalaqohController halaqohController = Get.put(HalaqohController());
-  Halaqoh? selectedHalaqoh;
+  // Halaqoh? selectedHalaqoh;
   @override
   Widget build(BuildContext context) {
+    print("BUild Dropdown");
+
     return DropdownSearch<Halaqoh>(
       showSearchBox: true,
       showSelectedItems: true,
@@ -38,7 +40,12 @@ class _DropwDownCabangState extends State<DropwDownCabang> {
         return RemoteServices.fetchHalaqoh(widget.userToken!, filter);
       },
       onChanged: (data) {
-        setState(() {});
+        setState(() {
+          // selectedHalaqoh = data;
+          halaqohController.setSelectedHalaqoh(data!);
+        });
+        print(
+            "selected halqoh ${halaqohController.getSelectedHalaqoh().namaTempat}");
         print("selected cabang : ${data!.kodeHalaqah}");
       },
       dropdownBuilder: _customDropDownExample,

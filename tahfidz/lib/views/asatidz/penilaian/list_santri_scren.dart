@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/search_box.dart';
 import 'package:tahfidz/controllers/jenjang_controllers.dart';
-import 'package:tahfidz/model/Jenjang.dart';
-import 'package:tahfidz/views/asatidz/penilaian/components/list_santri.dart';
+import 'package:tahfidz/services/remote_services.dart';
+import 'package:tahfidz/views/asatidz/penilaian/components/card_santri.dart';
 
 class ListSantriScreen extends StatefulWidget {
   // String? id;
-  final Jenjang? jenjang;
-
-  ListSantriScreen({this.jenjang, Key? key}) : super(key: key);
+  final String? idJenjang;
+  final String? kodeHalaqoh;
+  ListSantriScreen({this.idJenjang, this.kodeHalaqoh, Key? key})
+      : super(key: key);
 
   @override
   State<ListSantriScreen> createState() => _ListSantriScreenState();
@@ -19,6 +21,14 @@ class ListSantriScreen extends StatefulWidget {
 
 class _ListSantriScreenState extends State<ListSantriScreen> {
   JenjangController jenjangController = Get.put(JenjangController());
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    RemoteServices.filterhSantri(
+        SpUtil.getString('token')!, widget.kodeHalaqoh, widget.idJenjang);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,23 +66,25 @@ class _ListSantriScreenState extends State<ListSantriScreen> {
                       color: Colors.white),
                 ),
               ),
-              Flexible(
-                child: Container(
-                  height: height,
-                  width: width,
-                  // color: Colors.white,
-                  // child: ListView.builder(
-                  //   physics: BouncingScrollPhysics(),
-                  //   itemCount: widget.jenjang!.countSantri!.length,
-                  //   itemBuilder: (context, index) {
-                  //     return CardPenilaianSantri(
-                  //         // id: widget.jenjang!.countSantri![index].toString(),
-                  //         namaSantri:
-                  //             widget.jenjang!.countSantri![index].toString());
-                  //   },
-                  // ),
-                ),
+              // Text("${widget.idJenjang}"),
+              // Text("${widget.kodeHalaqoh}"),
+              FutureBuilder(
+                future: RemoteServices.filterhSantri(SpUtil.getString('token')!,
+                    widget.kodeHalaqoh, widget.idJenjang),
+                builder: (context, AsyncSnapshot snapshot) {
+                  return Container(
+                    width: width,
+                    height: height / 2,
+                    child: ListView.builder(
+                      itemBuilder: (context, index) {
+                        return CardPenilaianSantri(
+                            santri: snapshot.data[index]);
+                      },
+                    ),
+                  );
+                },
               ),
+              //
             ],
           ),
         ),

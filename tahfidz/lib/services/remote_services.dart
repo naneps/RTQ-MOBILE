@@ -12,6 +12,7 @@ import 'package:tahfidz/model/cabang.dart';
 import 'package:tahfidz/model/halaqoh.dart';
 import 'package:tahfidz/model/iuran.dart';
 import 'package:tahfidz/model/santri.dart';
+import 'package:tahfidz/model/santri_by.dart';
 import 'package:tahfidz/model/user.dart';
 import 'package:tahfidz/views/asatidz/home/home_screen.dart';
 
@@ -114,6 +115,23 @@ class RemoteServices {
       }
     } catch (e) {
       print("Catch FetchSantri : $e");
+    }
+  }
+
+  static Future<List<SantriBy>?> filterhSantri(
+      String token, String? kdHalaqoh, String? idJenjang) async {
+    try {
+      var url = Uri.parse('$baseUrl/santri/view/$kdHalaqoh/$idJenjang');
+      var resposne = await http
+          .get(url, headers: {HttpHeaders.authorizationHeader: token});
+      print("StatusCode Filter Santri : ${resposne.statusCode}");
+      if (resposne.statusCode == 200) {
+        var jsonString = resposne.body;
+        print(resposne.body);
+        return santriByFromJson(jsonString);
+      }
+    } catch (e) {
+      print("Catch Filter Santri Santri : $e");
     }
   }
 
