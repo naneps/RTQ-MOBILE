@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/controllers/halaqoh_controllers.dart';
 import 'package:tahfidz/controllers/jenjang_controllers.dart';
-import 'package:tahfidz/views/asatidz/penilaian/components/csrd_jenjang.dart';
+import 'package:tahfidz/views/asatidz/penilaian/components/card_jenjang.dart';
 import 'package:tahfidz/views/asatidz/penilaian/components/drop_down_cabang.dart';
 import 'package:tahfidz/views/asatidz/penilaian/list_santri_scren.dart';
 
@@ -17,6 +17,7 @@ class PenilaianScreen extends StatefulWidget {
 class _PenilaianScreenState extends State<PenilaianScreen> {
   final JenjangController jenjangController = Get.put(JenjangController());
   HalaqohController halaqohController = Get.put(HalaqohController());
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -81,6 +82,7 @@ class _PenilaianScreenState extends State<PenilaianScreen> {
                       return ListView.builder(
                         itemCount: jenjangController.listJenjang.length,
                         itemBuilder: (context, index) {
+                          print(jenjangController.listJenjang[index].jenjang);
                           return CardJenjang(
                             nomor: index,
                             onTap: () async {

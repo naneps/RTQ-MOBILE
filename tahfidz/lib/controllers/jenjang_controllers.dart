@@ -20,6 +20,7 @@ class JenjangController extends GetxController {
           await RemoteServices.fetchJenjang(SpUtil.getString('token')!);
       if (classes != null) {
         listJenjang.value = classes;
+        // print(listJenjang);
       }
     } catch (e) {
       print('catch fetch jenjang controller $e');

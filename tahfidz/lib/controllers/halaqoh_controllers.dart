@@ -7,7 +7,7 @@ class HalaqohController extends GetxController {
   var listHalaqoh = <Halaqoh>[].obs;
   var isLoading = true.obs;
 
-  Halaqoh? _selectedHalaqoh;
+  Halaqoh? _selectedHalaqoh = Halaqoh();
 
   @override
   void onInit() {

@@ -18,12 +18,12 @@ class CardPenilaianSantri extends StatelessWidget {
         left: 20,
         right: 20,
       ),
-      height: 80,
+      height: MediaQuery.of(context).size.height * 0.15,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(
-            Radius.circular(35),
+            Radius.circular(20),
           ),
           boxShadow: [
             BoxShadow(
@@ -45,10 +45,10 @@ class CardPenilaianSantri extends StatelessWidget {
                   borderRadius: BorderRadius.circular(50),
                 ),
                 child: CircleAvatar(
-                    // backgroundImage: NetworkImage("${santri!.avatar}"),
+                    // backgroundImage: NetworkImage("${santri.foto}", scale: 1),
                     )),
           ),
-          SizedBox(width: 15),
+          SizedBox(width: 10),
           Expanded(
             flex: 2,
             child: Container(
@@ -71,12 +71,30 @@ class CardPenilaianSantri extends StatelessWidget {
                               fontWeight: FontWeight.w600,
                               color: greyColor),
                         ),
-                        Text(
-                          "${santri.jenjang}",
-                          style: GoogleFonts.poppins(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              color: greyColor),
+                        Row(
+                          children: [
+                            Text(
+                              "${santri.jenjang}",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                  color: greyColor),
+                            ),
+                            Text(
+                              " | ",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w800,
+                                  color: mainColor),
+                            ),
+                            Text(
+                              "${santri.namaHalaqah}",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                  color: greyColor),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -88,15 +106,23 @@ class CardPenilaianSantri extends StatelessWidget {
           Expanded(
             flex: -1,
             child: Container(
-              height: 50,
+              // height: 50,
               // width: 30,
               // color: Colors.black,
               child: Row(
-                // crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // buildBtnPenilaianTadribat(context, id),
-                  // buildBtnHaflan(context, )
-                  // // buildBtnPenilaianTadribat(context, id)
+                  Container(
+                    height: 50,
+                    width: 100,
+                    child: ListView(
+                      children: [
+                        buildBtnPenilaianTadribat(context, santri.nis),
+                        buildBtnHaflan(context, santri.nis),
+                        buildBtnPenilaianTadribat(context, santri.nis),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),
@@ -108,6 +134,7 @@ class CardPenilaianSantri extends StatelessWidget {
 
   Widget buildBtnPenilaianTadribat(BuildContext context, index) {
     final size = MediaQuery.of(context).size;
+    double nilai = 0;
     int count = 1;
     return TextButton(
       onPressed: () {
@@ -124,11 +151,24 @@ class CardPenilaianSantri extends StatelessWidget {
                     child: ListTile(
                       dense: true,
                       trailing: Container(
-                        width: 60,
-                        height: 40,
-                        // color: Colors.white,
+                        width: 100,
+                        height: 90,
+                        // color: Colors.black,
                         child: Center(
-                          child: Text("80"),
+                          child: Column(
+                            children: [
+                              Slider(
+                                  min: 0,
+                                  max: 100,
+                                  value: nilai,
+                                  // divisions: 4,
+                                  label: "$nilai",
+                                  onChanged: (value) {
+                                    nilai = value;
+                                  }),
+                              Text("$nilai"),
+                            ],
+                          ),
                         ),
                       ), // trailing: TextField(),
 

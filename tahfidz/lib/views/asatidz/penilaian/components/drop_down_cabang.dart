@@ -19,14 +19,15 @@ class DropwDownCabang extends StatefulWidget {
 }
 
 class _DropwDownCabangState extends State<DropwDownCabang> {
-  JenjangController jenjangController = Get.put(JenjangController());
+  // JenjangController jenjangController = Get.put(JenjangController());
   HalaqohController halaqohController = Get.put(HalaqohController());
   // Halaqoh? selectedHalaqoh;
   @override
   Widget build(BuildContext context) {
-    print("BUild Dropdown");
-
+    // print("BUild Dropdown");
+    // print(halaqohController.listHalaqoh.value);
     return DropdownSearch<Halaqoh>(
+      selectedItem: halaqohController.getSelectedHalaqoh(),
       showSearchBox: true,
       showSelectedItems: true,
       compareFn: (i, s) => i?.isEqual(s!) ?? false,
@@ -36,7 +37,7 @@ class _DropwDownCabangState extends State<DropwDownCabang> {
           // labelText: "Custom BottomShet mode",
           contentPadding: EdgeInsets.fromLTRB(12, 12, 12, 12),
           border: OutlineInputBorder(borderSide: BorderSide.none)),
-      onFind: (String? filter) {
+      onFind: (filter) {
         return RemoteServices.fetchHalaqoh(widget.userToken!, filter);
       },
       onChanged: (data) {
@@ -44,9 +45,9 @@ class _DropwDownCabangState extends State<DropwDownCabang> {
           // selectedHalaqoh = data;
           halaqohController.setSelectedHalaqoh(data!);
         });
-        print(
-            "selected halqoh ${halaqohController.getSelectedHalaqoh().namaTempat}");
-        print("selected cabang : ${data!.kodeHalaqah}");
+        // print(
+        //     "selected halqoh ${halaqohController.getSelectedHalaqoh().namaTempat}");
+        // print("selected cabang : ${data!.kodeHalaqah}");
       },
       dropdownBuilder: _customDropDownExample,
       popupItemBuilder: _customPopupItemBuilderExample2,
@@ -93,10 +94,16 @@ class _DropwDownCabangState extends State<DropwDownCabang> {
 
     return Container(
       child: (halaqoh.kodeHalaqah == null)
-          ? const ListTile(
+          ? ListTile(
               contentPadding: EdgeInsets.all(0),
-              leading: CircleAvatar(),
-              title: Text("No item selected"),
+              leading: CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  child: Icon(
+                    Icons.location_on_rounded,
+                    color: mainColor,
+                    size: 40,
+                  )),
+              title: Text("Pilih Cabang"),
             )
           : ListTile(
               contentPadding: EdgeInsets.all(0),

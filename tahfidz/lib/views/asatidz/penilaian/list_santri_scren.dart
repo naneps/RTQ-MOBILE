@@ -72,10 +72,28 @@ class _ListSantriScreenState extends State<ListSantriScreen> {
                 future: RemoteServices.filterhSantri(SpUtil.getString('token')!,
                     widget.kodeHalaqoh, widget.idJenjang),
                 builder: (context, AsyncSnapshot snapshot) {
+                  print(snapshot.data);
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.yellow,
+                        strokeWidth: 10,
+                        // value: 1,
+                        color: mainColor,
+                      ),
+                    );
+                  } else if (snapshot.data == []) {
+                    return Center(
+                      child: Text("Data Kosong",
+                          style: GoogleFonts.poppins(
+                              fontSize: 32, color: Colors.white)),
+                    );
+                  }
                   return Container(
                     width: width,
-                    height: height / 2,
+                    height: height / 1.4,
                     child: ListView.builder(
+                      itemCount: snapshot.data.length,
                       itemBuilder: (context, index) {
                         return CardPenilaianSantri(
                             santri: snapshot.data[index]);

@@ -73,7 +73,7 @@ class RemoteServices {
       var url = Uri.parse('$baseUrl/jenjang/view/all');
       var resposne = await http
           .get(url, headers: {HttpHeaders.authorizationHeader: token});
-      print(resposne.statusCode);
+      print("fetch jenjang code ${resposne.body}");
       if (resposne.statusCode == 200) {
         var jsonString = resposne.body;
         return jenjangFromJson(jsonString);
