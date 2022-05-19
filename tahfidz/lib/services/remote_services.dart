@@ -11,6 +11,8 @@ import 'package:tahfidz/model/asatidz.dart';
 import 'package:tahfidz/model/cabang.dart';
 import 'package:tahfidz/model/halaqoh.dart';
 import 'package:tahfidz/model/iuran.dart';
+import 'package:tahfidz/model/kategori_penilaian.dart';
+import 'package:tahfidz/model/pelajaran.dart';
 import 'package:tahfidz/model/santri.dart';
 import 'package:tahfidz/model/santri_by.dart';
 import 'package:tahfidz/model/user.dart';
@@ -239,5 +241,38 @@ class RemoteServices {
           'Location permissions are permanently denied, we cannot request permissions.');
     }
     return await Geolocator.getCurrentPosition();
+  }
+
+  static Future<List<Pelajaran>?> fetchPelajaran() async {
+    try {
+      var url = Uri.parse(
+          'https://623aa9b8b5292b8bfcb807ee.mockapi.io/rtq/api/pelajaran');
+      var resposne = await http.get(url);
+      print("StatusCode Fetch Pelajaran : ${resposne.statusCode}");
+      if (resposne.statusCode == 200) {
+        var jsonString = resposne.body;
+        return pelajaranFromJson(jsonString);
+      }
+    } catch (e) {
+      print("Catch Fetch Pelajaran : $e");
+    }
+  }
+
+  static Future<List<KategoriPenilaian>> fetchKategoriPenilaian(
+      String token) async {
+    try {
+      var url = Uri.parse(
+          'http://api.rtq-freelance.my.id/api-v1/kategori_penilaian/view/all');
+      var resposne = await http
+          .get(url, headers: {HttpHeaders.authorizationHeader: token});
+      print("StatusCode Fetch Kategori Penilaian : ${resposne.statusCode}");
+      if (resposne.statusCode == 200) {
+        var jsonString = resposne.body;
+        return kategoriPenilaianFromJson(jsonString);
+      }
+    } catch (e) {
+      print("Catch Fetch Kategori Penilaian : $e");
+    }
+    return [];
   }
 }

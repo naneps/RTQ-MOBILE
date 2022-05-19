@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/constants.dart';
+import 'package:tahfidz/data/dumy+data.dart';
+import 'package:tahfidz/model/kategori_penilaian.dart';
 import 'package:tahfidz/model/santri_by.dart';
+import 'package:tahfidz/services/remote_services.dart';
 import 'package:tahfidz/views/asatidz/penilaian/pelajaran_screen.dart';
 
 class CardPenilaianSantri extends StatelessWidget {
@@ -116,30 +120,36 @@ class CardPenilaianSantri extends StatelessWidget {
                   Container(
                     height: 50,
                     width: 100,
-                    child: ListView(
-                      children: [
-                        TextButton(
-                            onPressed: () {
-                              Get.to(PelajaranScreen());
-                            },
-                            child: Text("Tadribat")),
-                        TextButton(
-                            onPressed: () {
-                              Get.to(PelajaranScreen());
-                            },
-                            child: Text("data")),
-                        TextButton(
-                            onPressed: () {
-                              Get.to(PelajaranScreen());
-                            },
-                            child: Text("Hafalan")),
-                        TextButton(
-                            onPressed: () {
-                              Get.to(PelajaranScreen());
-                            },
-                            child: Text("Imla")),
-                      ],
-                    ),
+                    child: FutureBuilder(
+                        future: RemoteServices.fetchKategoriPenilaian(
+                            SpUtil.getString('token')!),
+                        builder: (context, AsyncSnapshot snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Container();
+                          }
+                          // print(snapshot.data);
+                          return ListView.builder(
+                              itemCount: snapshot.data.length!,
+                              itemBuilder: (context, index) {
+                                KategoriPenilaian kategori =
+                                    snapshot.data[index];
+                                print(kategori);
+                                return TextButton(
+                                  onPressed: () {
+                                    Get.to(PelajaranScreen(),
+                                        arguments: kategori);
+                                  },
+                                  child: Text(
+                                    "${kategori.kategoriPenilaian}",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        color: Color.fromARGB(255, 42, 231, 0)),
+                                  ),
+                                );
+                              });
+                        }),
                   )
                 ],
               ),

@@ -27,10 +27,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   // ProfileController profileController = ProfileController();
   AsatidController asatidController = Get.put(AsatidController());
-  @override
-  void initState() {
-    // RemoteServices.getUserInfo(SpUtil.getString('token')!);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -127,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         // color: mainColor,
                         elevation: 4,
                         // shadowColor: Colors.transparent,
-                        shape: RoundedRectangleBorder(
+                        shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(
                             Radius.circular(30),
                           ),

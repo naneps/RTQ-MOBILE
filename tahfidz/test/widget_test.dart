@@ -1,28 +1,22 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:http/http.dart' as http;
-import 'package:tahfidz/model/halaqoh.dart';
+import 'package:tahfidz/model/pelajaran.dart';
 
 void main() async {
-  try {
-    String token =
-        "a95c1ac365bcc71a1bb6304edc8dbfc678ea0e165a9cf519abef46cb83b87b6bc7e337c01ba5b3ad";
-    String? kodeHalaqoh;
-    String? idJenjang;
+  Future<List<Pelajaran>?> fetchPelajaran() async {
+    var url = Uri.parse(
+        'https://623aa9b8b5292b8bfcb807ee.mockapi.io/rtq/api/pelajaran');
+    // print(url);
+    var resposne = await http.get(url);
 
-    String baseUrl = "http://api.rtq-freelance.my.id/api-v1";
-    Uri urlHalaqoh = Uri.parse("$baseUrl/cabang/view/all");
-    // Uri urlHalaqoh = Uri.parse("$baseUrl/cabang/view/all");
-    Uri urlSantri = Uri.parse("$baseUrl/santri/view/$kodeHalaqoh/$idJenjang");
-    var resHalaqoh = await http
-        .get(urlHalaqoh, headers: {HttpHeaders.authorizationHeader: token});
-    var resSantri = await http
-        .get(urlHalaqoh, headers: {HttpHeaders.authorizationHeader: token});
+    print("StatusCode Fetch Pelajaran : ${resposne.statusCode}");
+    if (resposne.statusCode == 200) {
+      var jsonString = resposne.body;
+      // print(pelajaranFromJson(jsonString));
+      return pelajaranFromJson(jsonString);
+    }
 
-    List<Halaqoh> listHalaqoh = halaqohFromJson(resHalaqoh.body);
-  } on Exception catch (e) {
-    // TODO
-    print(e);
+    return [];
   }
+
+  await fetchPelajaran();
 }
