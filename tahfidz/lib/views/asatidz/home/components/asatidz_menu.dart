@@ -4,7 +4,7 @@ import 'package:tahfidz/components/item-menu.dart';
 import 'package:tahfidz/views/asatidz/absen_saya/my_absensi_page.dart';
 import 'package:tahfidz/views/asatidz/absensi/absensi_screen.dart';
 import 'package:tahfidz/views/asatidz/iuran_santri/iuran_santri._screen.dart';
-import 'package:tahfidz/views/asatidz/penilaian/penilaian_screen.dart';
+import 'package:tahfidz/views/asatidz/penilaian/list_jenjang_screen.dart';
 
 class SectionMenuAsatidz extends StatelessWidget {
   const SectionMenuAsatidz({Key? key}) : super(key: key);
@@ -45,7 +45,7 @@ class SectionMenuAsatidz extends StatelessWidget {
                 title: 'Penilaian',
                 icon: Icons.book_online_outlined,
                 color: 0xffFD637B,
-                onTap: () => Get.to(PenilaianScreen(),
+                onTap: () => Get.to(JenjangScreen(),
                     popGesture: true, transition: Transition.fadeIn)),
             ItemMenu(
               title: 'Absensi Saya',

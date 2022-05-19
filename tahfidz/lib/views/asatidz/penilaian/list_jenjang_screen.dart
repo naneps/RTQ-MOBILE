@@ -7,14 +7,14 @@ import 'package:tahfidz/views/asatidz/penilaian/components/card_jenjang.dart';
 import 'package:tahfidz/views/asatidz/penilaian/components/drop_down_cabang.dart';
 import 'package:tahfidz/views/asatidz/penilaian/list_santri_scren.dart';
 
-class PenilaianScreen extends StatefulWidget {
-  const PenilaianScreen({Key? key}) : super(key: key);
+class JenjangScreen extends StatefulWidget {
+  const JenjangScreen({Key? key}) : super(key: key);
 
   @override
-  State<PenilaianScreen> createState() => _PenilaianScreenState();
+  State<JenjangScreen> createState() => _JenjangScreenState();
 }
 
-class _PenilaianScreenState extends State<PenilaianScreen> {
+class _JenjangScreenState extends State<JenjangScreen> {
   final JenjangController jenjangController = Get.put(JenjangController());
   HalaqohController halaqohController = Get.put(HalaqohController());
 

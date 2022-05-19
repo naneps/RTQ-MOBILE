@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tahfidz/components/constants.dart';
-import 'package:tahfidz/components/widget_number.dart';
 import 'package:tahfidz/model/kategori_penilaian.dart';
 import 'package:tahfidz/model/pelajaran.dart';
 import 'package:tahfidz/services/remote_services.dart';
@@ -42,8 +40,8 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
               child: FutureBuilder<List<Pelajaran>?>(
                   future: RemoteServices.fetchPelajaran(),
                   builder: (context, AsyncSnapshot snapshot) {
-                    print(snapshot.data);
-
+                    // print(snapshot.data);
+//
                     if (snapshot.connectionState == ConnectionState.waiting) {}
                     return ListView.builder(
                       itemCount: snapshot.data?.length ?? 0,

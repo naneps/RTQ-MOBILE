@@ -23,14 +23,6 @@ class _ListSantriScreenState extends State<ListSantriScreen> {
   JenjangController jenjangController = Get.put(JenjangController());
 
   @override
-  void initState() {
-    // TODO: implement initState
-    RemoteServices.filterhSantri(
-        SpUtil.getString('token')!, widget.kodeHalaqoh, widget.idJenjang);
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;

@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/controllers/halaqoh_controllers.dart';
-import 'package:tahfidz/controllers/jenjang_controllers.dart';
 import 'package:tahfidz/services/remote_services.dart';
 
 import '../../../../model/halaqoh.dart';
@@ -32,7 +31,7 @@ class _DropwDownCabangState extends State<DropwDownCabang> {
       showSelectedItems: true,
       compareFn: (i, s) => i?.isEqual(s!) ?? false,
       mode: Mode.BOTTOM_SHEET,
-      dropdownSearchDecoration: InputDecoration(
+      dropdownSearchDecoration: const InputDecoration(
           // labelText: "Cabang",
           // labelText: "Custom BottomShet mode",
           contentPadding: EdgeInsets.fromLTRB(12, 12, 12, 12),
@@ -69,7 +68,7 @@ class _DropwDownCabangState extends State<DropwDownCabang> {
         ),
         child: const Center(
           child: Text(
-            'Cabang',
+            'Halaqoh',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
