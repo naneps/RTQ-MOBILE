@@ -38,7 +38,7 @@ class _CardPelajaranState extends State<CardPelajaran> {
             // color: Colors.blueAccent,
             margin: EdgeInsets.only(left: 10),
             child: Text(
-              widget.pelajaran!.namaPelajaran!,
+              widget.pelajaran!.pelajaran!,
               style: GoogleFonts.poppins(
                   fontSize: 12, fontWeight: FontWeight.w500),
             ),
@@ -63,7 +63,7 @@ class _CardPelajaranState extends State<CardPelajaran> {
                     max: 100,
                     label: "${widget.nilai}",
                     value: widget.nilai!,
-                    // divisions: 1,
+                    divisions: 100,
                     onChanged: (value) {
                       setState(() {
                         widget.nilai = value;

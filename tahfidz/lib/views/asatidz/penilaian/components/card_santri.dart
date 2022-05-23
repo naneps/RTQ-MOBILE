@@ -20,10 +20,10 @@ class CardPenilaianSantri extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(top: 15),
       padding: EdgeInsets.only(
-        left: 20,
-        right: 20,
+        left: 15,
+        right: 15,
       ),
-      height: MediaQuery.of(context).size.height * 0.15,
+      height: MediaQuery.of(context).size.height / 4,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
           color: Colors.white,
@@ -37,74 +37,60 @@ class CardPenilaianSantri extends StatelessWidget {
                 blurRadius: 1)
           ]),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        // mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Expanded(
-            flex: -2,
-            child: Container(
-                height: 50,
-                width: 50,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child: CircleAvatar(
-                    // backgroundImage: NetworkImage("${santri.foto}", scale: 1),
-                    )),
-          ),
           SizedBox(width: 10),
           Expanded(
             flex: 2,
             child: Container(
+              height: size.height,
               // color: mainColor,
-              // width: 400,
+              width: size.width,
               margin: EdgeInsets.all(5),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Flexible(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "${santri.namaLengkap}",
-                          style: GoogleFonts.poppins(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: greyColor),
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              "${santri.jenjang}",
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "${santri.namaLengkap}",
+                        style: GoogleFonts.poppins(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: greyColor),
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            "${santri.jenjang}",
+                            style: GoogleFonts.poppins(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w500,
+                                color: greyColor),
+                          ),
+                          Text(
+                            " | ",
+                            style: GoogleFonts.poppins(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w800,
+                                color: mainColor),
+                          ),
+                          Flexible(
+                            child: Text(
+                              "${santri.namaHalaqah}",
                               style: GoogleFonts.poppins(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w500,
                                   color: greyColor),
                             ),
-                            Text(
-                              " | ",
-                              style: GoogleFonts.poppins(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w800,
-                                  color: mainColor),
-                            ),
-                            Flexible(
-                              child: Text(
-                                "${santri.namaHalaqah}",
-                                style: GoogleFonts.poppins(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w500,
-                                    color: greyColor),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -126,9 +112,17 @@ class CardPenilaianSantri extends StatelessWidget {
                         future: RemoteServices.fetchKategoriPenilaian(
                             SpUtil.getString('token')!),
                         builder: (context, AsyncSnapshot snapshot) {
+                          // double value = snapshot.data.length!;
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return Container();
+                            return Center(
+                              child: CircularProgressIndicator(
+                                  // value: double.parse(snapshot.data.length!),
+
+                                  backgroundColor: Colors.white,
+                                  valueColor:
+                                      AlwaysStoppedAnimation<Color>(mainColor)),
+                            );
                           }
                           // print(snapshot.data);
                           return ListView.builder(
@@ -136,7 +130,7 @@ class CardPenilaianSantri extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 KategoriPenilaian kategori =
                                     snapshot.data[index];
-                                print(kategori);
+                                // print(kategori);
                                 return TextButton(
                                   onPressed: () {
                                     Get.to(PelajaranScreen(),

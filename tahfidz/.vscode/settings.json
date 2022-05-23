@@ -1,4 +1,7 @@
-// {
+{
+    "background.filepath": "D:\\Icon\\pokemon.png",
+    "background.opacity": 1
+} // {
 //     "dart.flutterAdditionalArgs": [
 //         "--no-sound-null-safety"
 //     ],

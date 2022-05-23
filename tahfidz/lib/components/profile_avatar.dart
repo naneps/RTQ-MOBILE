@@ -27,8 +27,7 @@ class ProfilePicture extends StatelessWidget {
         // fit: StackFit.expand,
         // clipBehavior: Clip.none,
         children: [
-          // CircleAvatar(
-          //   backgroundImage: Image.network('${avatar}'),
+      
           // ),
           Image.network(avatar!),
           Positioned(

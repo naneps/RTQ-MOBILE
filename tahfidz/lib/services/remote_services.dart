@@ -252,7 +252,7 @@ class RemoteServices {
       if (resposne.statusCode == 200) {
         var jsonString = resposne.body;
         return pelajaranFromJson(jsonString);
-      }
+      } 
     } catch (e) {
       print("Catch Fetch Pelajaran : $e");
     }
@@ -291,5 +291,9 @@ class RemoteServices {
     } catch (e) {
       print("Catch Filter Pelajaran : $e");
     }
+
   }
+
+  //creete function countPersent
+
 }

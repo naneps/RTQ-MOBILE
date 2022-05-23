@@ -1,22 +1,33 @@
 import 'package:http/http.dart' as http;
+import 'package:tahfidz/data/dumy+data.dart';
 import 'package:tahfidz/model/pelajaran.dart';
+import 'dart:convert';
 
 void main() async {
-  Future<List<Pelajaran>?> fetchPelajaran() async {
-    var url = Uri.parse(
-        'https://623aa9b8b5292b8bfcb807ee.mockapi.io/rtq/api/pelajaran');
-    // print(url);
-    var resposne = await http.get(url);
+  try {
+    List<Pelajaran> filterPelajaran(String idJenjang, String idkategori) {
+      List<Pelajaran> pelajaran = [];
+      for (var i = 0; i < dataPelajaran.length; i++) {
+        if (dataPelajaran[i]['id_jenjang'] == idJenjang &&
+            dataPelajaran[i]['id_kategori'] == idkategori) {
+          var json = jsonEncode(dataPelajaran[i]);
+          var hasilFiletr = jsonDecode(json);
+          pelajaran.add(Pelajaran.fromJson(hasilFiletr));
+          // print(" json :$json");
+          // print(" hasil filter :$hasilFiletr");
+          // print(pelajaran[i].pelajaran);
+        }
+      }
+      // print(pelajaran[0].pelajaran);
 
-    print("StatusCode Fetch Pelajaran : ${resposne.statusCode}");
-    if (resposne.statusCode == 200) {
-      var jsonString = resposne.body;
-      // print(pelajaranFromJson(jsonString));
-      return pelajaranFromJson(jsonString);
+      return pelajaran;
     }
 
-    return [];
+    filterPelajaran("2", "1").forEach((element) {
+      print(element.pelajaran);
+    });
+  } on Exception catch (e) {
+    // TODO
+    print(e);
   }
-
-  await fetchPelajaran();
 }

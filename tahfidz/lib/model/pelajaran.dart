@@ -12,20 +12,28 @@ String pelajaranToJson(List<Pelajaran> data) =>
 
 class Pelajaran {
   Pelajaran({
-    this.namaPelajaran,
     this.id,
+    this.idJenjang,
+    this.idKategori,
+    this.pelajaran,
   });
 
-  String? namaPelajaran;
   String? id;
+  String? idJenjang;
+  String? idKategori;
+  String? pelajaran;
 
   factory Pelajaran.fromJson(Map<String, dynamic> json) => Pelajaran(
-        namaPelajaran: json["nama_pelajaran"],
         id: json["id"],
+        idJenjang: json["id_jenjang"],
+        idKategori: json["id_kategori"],
+        pelajaran: json["pelajaran"],
       );
 
   Map<String, dynamic> toJson() => {
-        "nama_pelajaran": namaPelajaran,
         "id": id,
+        "id_jenjang": idJenjang,
+        "id_kategori": idKategori,
+        "pelajaran": pelajaran,
       };
 }

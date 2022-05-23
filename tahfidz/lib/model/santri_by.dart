@@ -42,6 +42,6 @@ class SantriBy {
         "nama_halaqah": namaHalaqah,
         "jenjang": jenjang,
         "alamat": alamat,
-        "foto": foto == null ? null : foto,
+        "foto": foto,
       };
 }

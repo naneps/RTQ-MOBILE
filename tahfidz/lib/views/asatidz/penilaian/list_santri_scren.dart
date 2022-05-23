@@ -111,7 +111,7 @@ class _ListSantriScreenState extends State<ListSantriScreen> {
                               fontSize: 32, color: Colors.white)),
                     );
                   }
-                  return Container(
+                  return SizedBox(
                     width: width,
                     height: height / 1.5,
                     child: ListView.builder(
