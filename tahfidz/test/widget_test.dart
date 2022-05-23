@@ -16,6 +16,9 @@ void main() async {
           // print(" json :$json");
           // print(" hasil filter :$hasilFiletr");
           // print(pelajaran[i].pelajaran);
+        } else if (dataPelajaran[i]['id_jenjang'] != idJenjang ||
+            dataPelajaran[i]['id_kategori'] != idkategori) {
+          print("Data Tidak Ada");
         }
       }
       // print(pelajaran[0].pelajaran);
@@ -23,7 +26,7 @@ void main() async {
       return pelajaran;
     }
 
-    filterPelajaran("2", "1").forEach((element) {
+    filterPelajaran("1", "1").forEach((element) {
       print(element.pelajaran);
     });
   } on Exception catch (e) {

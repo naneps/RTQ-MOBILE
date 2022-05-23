@@ -14,10 +14,11 @@ class PelajaranScreen extends StatefulWidget {
 }
 
 class _PelajaranScreenState extends State<PelajaranScreen> {
-  final KategoriPenilaian kategori = Get.arguments;
+  final args = Get.arguments;
   // var get = Get
   @override
   Widget build(BuildContext context) {
+    print("args $args");
     // print(kategori);
     return Scaffold(
       body: Padding(
@@ -27,7 +28,7 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Penilaian ${kategori.kategoriPenilaian}",
+              "Penilaian ${args[0].kategoriPenilaian}",
               style: GoogleFonts.poppins(
                   fontSize: 24, fontWeight: FontWeight.w500),
             ),
@@ -38,9 +39,10 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
               height: 500,
               width: double.infinity,
               child: FutureBuilder<List<Pelajaran>?>(
-                  future: RemoteServices.fetchPelajaran(),
+                  future: RemoteServices.filterPelajaran(
+                      args[1], args[0].id.toString()),
                   builder: (context, AsyncSnapshot snapshot) {
-                    // print(snapshot.data);
+                    print(snapshot.data);
 //
                     if (snapshot.connectionState == ConnectionState.waiting) {}
                     return ListView.builder(

@@ -10,10 +10,8 @@ import 'package:tahfidz/views/asatidz/penilaian/components/card_santri.dart';
 
 class ListSantriScreen extends StatefulWidget {
   // String? id;
-  final String? idJenjang;
-  final String? kodeHalaqoh;
-  ListSantriScreen({this.idJenjang, this.kodeHalaqoh, Key? key})
-      : super(key: key);
+
+  ListSantriScreen({Key? key}) : super(key: key);
 
   @override
   State<ListSantriScreen> createState() => _ListSantriScreenState();
@@ -118,7 +116,7 @@ class _ListSantriScreenState extends State<ListSantriScreen> {
                       itemCount: snapshot.data.length,
                       itemBuilder: (context, index) {
                         return CardPenilaianSantri(
-                            santri: snapshot.data[index]);
+                            idJenjang: args[0], santri: snapshot.data[index]);
                       },
                     ),
                   );

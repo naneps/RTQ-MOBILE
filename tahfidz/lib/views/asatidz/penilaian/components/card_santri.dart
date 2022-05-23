@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/data/dumy+data.dart';
+import 'package:tahfidz/model/Jenjang.dart';
 import 'package:tahfidz/model/kategori_penilaian.dart';
 import 'package:tahfidz/model/santri_by.dart';
 import 'package:tahfidz/services/remote_services.dart';
@@ -12,7 +13,9 @@ import 'package:tahfidz/views/asatidz/penilaian/pelajaran_screen.dart';
 
 class CardPenilaianSantri extends StatelessWidget {
   SantriBy santri;
-  CardPenilaianSantri({required this.santri, Key? key}) : super(key: key);
+  String idJenjang;
+  CardPenilaianSantri({required this.santri, required this.idJenjang, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +137,7 @@ class CardPenilaianSantri extends StatelessWidget {
                                 return TextButton(
                                   onPressed: () {
                                     Get.to(PelajaranScreen(),
-                                        arguments: kategori);
+                                        arguments: [kategori, idJenjang]);
                                   },
                                   child: Text(
                                     "${kategori.kategoriPenilaian}",

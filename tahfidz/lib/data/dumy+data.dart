@@ -106,6 +106,9 @@ List<Pelajaran> filterPelajaran(String idJenjang, String idkategori) {
           idJenjang: dataPelajaran[i]['id_jenjang'],
           idKategori: dataPelajaran[i]['id_kategori'],
           pelajaran: dataPelajaran[i]['pelajaran']));
+    } else if (dataPelajaran[i]['id_jenjang'] != idJenjang &&
+        dataPelajaran[i]['id_kategori'] != idkategori) {
+      print("Data Tidak Ada");
     }
   }
   print(pelajaran);

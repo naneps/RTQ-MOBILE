@@ -6,6 +6,7 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/instance_manager.dart';
 import 'package:http/http.dart' as http;
 import 'package:sp_util/sp_util.dart';
+import 'package:tahfidz/data/dumy+data.dart';
 import 'package:tahfidz/model/Jenjang.dart';
 import 'package:tahfidz/model/asatidz.dart';
 import 'package:tahfidz/model/cabang.dart';
@@ -252,7 +253,7 @@ class RemoteServices {
       if (resposne.statusCode == 200) {
         var jsonString = resposne.body;
         return pelajaranFromJson(jsonString);
-      } 
+      }
     } catch (e) {
       print("Catch Fetch Pelajaran : $e");
     }
@@ -276,22 +277,24 @@ class RemoteServices {
     return [];
   }
 
-  static Future<List<SantriBy>?> filterPelajaran(
-      String token, String? kdHalaqoh, String? idJenjang) async {
-    try {
-      var url = Uri.parse('$baseUrl/pelajaran/view/$kdHalaqoh/$idJenjang');
-      var resposne = await http
-          .get(url, headers: {HttpHeaders.authorizationHeader: token});
-      print("StatusCode Filter pelajaran : ${resposne.statusCode}");
-      if (resposne.statusCode == 200) {
-        var jsonString = resposne.body;
-        print(resposne.body);
-        return santriByFromJson(jsonString);
+  static Future<List<Pelajaran>> filterPelajaran(
+      String idJenjang, String idkategori) async {
+    List<Pelajaran> pelajaran = [];
+    for (var i = 0; i < dataPelajaran.length; i++) {
+      if (dataPelajaran[i]['id_jenjang'] == idJenjang &&
+          dataPelajaran[i]['id_kategori'] == idkategori) {
+        var json = jsonEncode(dataPelajaran[i]);
+        var hasilFiletr = jsonDecode(json);
+        pelajaran.add(Pelajaran.fromJson(hasilFiletr));
+        // print(" json :$json");
+        // print(" hasil filter :$hasilFiletr");
+        // print(pelajaran[i].pelajaran);
+      } else if (dataPelajaran[i]['id_jenjang'] != idJenjang ||
+          dataPelajaran[i]['id_kategori'] != idkategori) {
+        print("Data Tidak Ada");
       }
-    } catch (e) {
-      print("Catch Filter Pelajaran : $e");
     }
-
+    return pelajaran;
   }
 
   //creete function countPersent
