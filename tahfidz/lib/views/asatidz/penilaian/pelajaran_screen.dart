@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tahfidz/model/kategori_penilaian.dart';
 import 'package:tahfidz/model/pelajaran.dart';
 import 'package:tahfidz/services/remote_services.dart';
 import 'package:tahfidz/views/asatidz/penilaian/components/card_pelajaran.dart';

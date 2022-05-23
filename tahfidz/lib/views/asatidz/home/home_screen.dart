@@ -184,7 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     height: 10,
                                   ),
                                   Text(
-                                    '${asatidz.nama}',
+                                    SpUtil.getString("nama")!,
                                     // SpUtil.getString('id_role')!,
                                     style: GoogleFonts.poppins(
                                         fontSize: 18,

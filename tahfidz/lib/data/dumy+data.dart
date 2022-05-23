@@ -96,6 +96,174 @@ List<Map<String, String>> dataPelajaran = [
   {"id": "16", "id_jenjang": "2", "id_kategori": "2", "pelajaran": "١١٠ النصر"},
 ];
 
+var dataNilai = [
+  // Ilham
+
+  {
+    "id": "1",
+    "id_pelajaran": "1",
+    "nis_santri": "29092002",
+    "nilai": 0,
+  },
+  {
+    "id": "2",
+    "id_pelajaran": "2",
+    "nis_santri": "29092002",
+    "nilai": 0,
+  },
+  {
+    "id": "3",
+    "id_pelajaran": "3",
+    "nis_santri": "29092002",
+    "nilai": 0,
+  },
+  {
+    "id": "4",
+    "id_pelajaran": "4",
+    "nis_santri": "29092002",
+    "nilai": 0,
+  },
+  {
+    "id": "5",
+    "id_pelajaran": "5",
+    "nis_santri": "29092002",
+    "nilai": 0,
+  },
+  {
+    "id": "6",
+    "id_pelajaran": "6",
+    "nis_santri": "29092002",
+    "nilai": 0,
+  },
+  {
+    "id": "7",
+    "id_pelajaran": "7",
+    "nis_santri": "29092002",
+    "nilai": 0,
+  },
+  {
+    "id": "8",
+    "id_pelajaran": "8",
+    "nis_santri": "29092002",
+    "nilai": 0,
+  },
+  {
+    "id": "9",
+    "id_pelajaran": "9",
+    "nis_santri": "29092002",
+    "nilai": 0,
+  },
+  {
+    "id": "10",
+    "id_pelajaran": "10",
+    "nis_santri": "29092002",
+    "nilai": 0,
+  },
+  {
+    "id": "11",
+    "id_pelajaran": "11",
+    "nis_santri": "29092002",
+    "nilai": 0,
+  },
+
+  // Budi
+  {
+    "id": "12",
+    "id_pelajaran": "1",
+    "nis_santri": "29092003",
+    "nilai": 0,
+  },
+  {
+    "id": "14",
+    "id_pelajaran": "2",
+    "nis_santri": "29092003",
+    "nilai": 0,
+  },
+  {
+    "id": "15",
+    "id_pelajaran": "3",
+    "nis_santri": "29092003",
+    "nilai": 0,
+  },
+  {
+    "id": "16",
+    "id_pelajaran": "4",
+    "nis_santri": "29092003",
+    "nilai": 0,
+  },
+  {
+    "id": "17",
+    "id_pelajaran": "5",
+    "nis_santri": "29092003",
+    "nilai": 0,
+  },
+  {
+    "id": "18",
+    "id_pelajaran": "6",
+    "nis_santri": "29092003",
+    "nilai": 0,
+  },
+  {
+    "id": "19",
+    "id_pelajaran": "6",
+    "nis_santri": "29092003",
+    "nilai": 0,
+  },
+  {
+    "id": "20",
+    "id_pelajaran": "7",
+    "nis_santri": "29092003",
+    "nilai": 0,
+  },
+  {
+    "id": "21",
+    "id_pelajaran": "8",
+    "nis_santri": "29092003",
+    "nilai": 0,
+  },
+  {
+    "id": "22",
+    "id_pelajaran": "9",
+    "nis_santri": "29092003",
+    "nilai": 0,
+  },
+  {
+    "id": "23",
+    "id_pelajaran": "10",
+    "nis_santri": "29092003",
+    "nilai": 0,
+  },
+  {
+    "id": "24",
+    "id_pelajaran": "11",
+    "nis_santri": "29092003",
+    "nilai": 0,
+  },
+  {
+    "id": "25",
+    "id_pelajaran": "12",
+    "nis_santri": "29092003",
+    "nilai": 0,
+  },
+  {
+    "id": "26",
+    "id_pelajaran": "17",
+    "nis_santri": "29092003",
+    "nilai": 0,
+  },
+];
+
+filterNilai(String idPelajaran, String nis) {
+  List<Map> list = [];
+  for (int i = 0; i < dataNilai.length; i++) {
+    if (dataNilai[i]['id_pelajaran'] == idPelajaran &&
+        dataNilai[i]['nis_santri'] == nis) {
+      list.add(dataNilai[i]);
+    }
+  }
+  return list;
+}
+
 List<Pelajaran> filterPelajaran(String idJenjang, String idkategori) {
   List<Pelajaran> pelajaran = [];
   for (var i = 0; i < dataPelajaran.length; i++) {

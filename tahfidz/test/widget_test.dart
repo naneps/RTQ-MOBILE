@@ -1,23 +1,22 @@
-import 'package:http/http.dart' as http;
 import 'package:tahfidz/data/dumy+data.dart';
-import 'package:tahfidz/model/pelajaran.dart';
+import 'package:tahfidz/model/nilai.dart';
 import 'dart:convert';
 
 void main() async {
   try {
-    List<Pelajaran> filterPelajaran(String idJenjang, String idkategori) {
-      List<Pelajaran> pelajaran = [];
-      for (var i = 0; i < dataPelajaran.length; i++) {
-        if (dataPelajaran[i]['id_jenjang'] == idJenjang &&
-            dataPelajaran[i]['id_kategori'] == idkategori) {
-          var json = jsonEncode(dataPelajaran[i]);
+    List<Nilai> filterNilai({String? idPelajaran, String? nis}) {
+      List<Nilai> pelajaran = [];
+      for (var i = 0; i < dataNilai.length; i++) {
+        if (dataNilai[i]['id_pelajaran'] == idPelajaran &&
+            dataNilai[i]['nis_santri'] == nis) {
+          var json = jsonEncode(dataNilai[i]);
           var hasilFiletr = jsonDecode(json);
-          pelajaran.add(Pelajaran.fromJson(hasilFiletr));
+          pelajaran.add(Nilai.fromJson(hasilFiletr));
           // print(" json :$json");
           // print(" hasil filter :$hasilFiletr");
           // print(pelajaran[i].pelajaran);
-        } else if (dataPelajaran[i]['id_jenjang'] != idJenjang ||
-            dataPelajaran[i]['id_kategori'] != idkategori) {
+        } else if (dataNilai[i]['id_pelajaran'] != idPelajaran ||
+            dataNilai[i]['nis_santri'] != nis) {
           print("Data Tidak Ada");
         }
       }
@@ -26,11 +25,34 @@ void main() async {
       return pelajaran;
     }
 
-    filterPelajaran("1", "1").forEach((element) {
-      print(element.pelajaran);
+    setNilai(String idNilai, int nilai) {
+      for (var i = 0; i < dataNilai.length; i++) {
+        if (dataNilai[i]['id'] == idNilai) {
+          dataNilai[i]['nilai'] = nilai;
+        }
+      }
+    }
+
+    filterNilai(idPelajaran: "2", nis: "29092002").forEach((element) {
+      print(element.id);
+      print(element.nilai);
+      print(element.nisSantri);
+      print(element.idPelajaran);
     });
+
+    setNilai("2", 60);
+
+    filterNilai(idPelajaran: "2", nis: "29092002").forEach((element) {
+      print(element.id);
+      print(element.nilai);
+      print(element.nisSantri);
+      print(element.idPelajaran);
+    });
+    // print(dataNilai[1]['nilai']);
   } on Exception catch (e) {
     // TODO
     print(e);
   }
+
+  //setNilai where id nilai
 }
