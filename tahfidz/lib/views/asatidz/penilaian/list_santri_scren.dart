@@ -21,7 +21,8 @@ class ListSantriScreen extends StatefulWidget {
 
 class _ListSantriScreenState extends State<ListSantriScreen> {
   JenjangController jenjangController = Get.put(JenjangController());
-
+  final args = Get.arguments;
+  // var idJenjang = args[0];
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -50,19 +51,48 @@ class _ListSantriScreenState extends State<ListSantriScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.all(10),
-                child: Text(
-                  "Daftar Santri ",
-                  style: GoogleFonts.poppins(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
+                child: Row(
+                  children: [
+                    Text(
+                      "Daftar Santri ",
+                      style: GoogleFonts.poppins(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
+                    Text(
+                      " | ",
+                      style: GoogleFonts.poppins(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
+                    // Text(
+                    //   " ${args[0]} ",
+                    //   style: GoogleFonts.poppins(
+                    //       fontSize: 18,
+                    //       fontWeight: FontWeight.bold,
+                    //       color: Colors.white),
+                    // ),
+                    // Text(
+                    //   " ${args[1]} ",
+                    //   style: GoogleFonts.poppins(
+                    //       fontSize: 18,
+                    //       fontWeight: FontWeight.bold,
+                    //       color: Colors.white),
+                    // ),
+                  ],
                 ),
               ),
+              // Text(args[1]),
               // Text("${widget.idJenjang}"),
               // Text("${widget.kodeHalaqoh}"),
               FutureBuilder(
-                future: RemoteServices.filterhSantri(SpUtil.getString('token')!,
-                    widget.kodeHalaqoh, widget.idJenjang),
+                future: RemoteServices.filterhSantri(
+                  SpUtil.getString('token')!,
+                  args[1],
+                  args[0],
+                ),
                 builder: (context, AsyncSnapshot snapshot) {
                   print(snapshot.data);
                   if (snapshot.connectionState == ConnectionState.waiting) {
@@ -83,7 +113,7 @@ class _ListSantriScreenState extends State<ListSantriScreen> {
                   }
                   return Container(
                     width: width,
-                    height: height / 1.4,
+                    height: height / 1.5,
                     child: ListView.builder(
                       itemCount: snapshot.data.length,
                       itemBuilder: (context, index) {

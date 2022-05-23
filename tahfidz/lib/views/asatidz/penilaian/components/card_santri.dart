@@ -28,7 +28,7 @@ class CardPenilaianSantri extends StatelessWidget {
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(
-            Radius.circular(20),
+            Radius.circular(15),
           ),
           boxShadow: [
             BoxShadow(
@@ -81,23 +81,25 @@ class CardPenilaianSantri extends StatelessWidget {
                             Text(
                               "${santri.jenjang}",
                               style: GoogleFonts.poppins(
-                                  fontSize: 12,
+                                  fontSize: 11,
                                   fontWeight: FontWeight.w500,
                                   color: greyColor),
                             ),
                             Text(
                               " | ",
                               style: GoogleFonts.poppins(
-                                  fontSize: 16,
+                                  fontSize: 12,
                                   fontWeight: FontWeight.w800,
                                   color: mainColor),
                             ),
-                            Text(
-                              "${santri.namaHalaqah}",
-                              style: GoogleFonts.poppins(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  color: greyColor),
+                            Flexible(
+                              child: Text(
+                                "${santri.namaHalaqah}",
+                                style: GoogleFonts.poppins(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w500,
+                                    color: greyColor),
+                              ),
                             ),
                           ],
                         ),

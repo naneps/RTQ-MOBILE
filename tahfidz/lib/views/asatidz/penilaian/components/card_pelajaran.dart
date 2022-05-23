@@ -20,33 +20,33 @@ class _CardPelajaranState extends State<CardPelajaran> {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 10),
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
       height: 100,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(35))),
       child: Row(
-        // mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           WidgetNumber(
             number: widget.nomor.toString(),
           ),
           Container(
-            width: 200,
+            width: 140,
             // color: Colors.blueAccent,
             margin: EdgeInsets.only(left: 10),
             child: Text(
               widget.pelajaran!.namaPelajaran!,
               style: GoogleFonts.poppins(
-                  fontSize: 12, fontWeight: FontWeight.bold),
+                  fontSize: 12, fontWeight: FontWeight.w500),
             ),
           ),
           Container(
             // color: Colors.blueAccent,
             // height: 90,
-            width: 100,
+            width: 150,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,

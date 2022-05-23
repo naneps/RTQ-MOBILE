@@ -275,4 +275,21 @@ class RemoteServices {
     }
     return [];
   }
+
+  static Future<List<SantriBy>?> filterPelajaran(
+      String token, String? kdHalaqoh, String? idJenjang) async {
+    try {
+      var url = Uri.parse('$baseUrl/pelajaran/view/$kdHalaqoh/$idJenjang');
+      var resposne = await http
+          .get(url, headers: {HttpHeaders.authorizationHeader: token});
+      print("StatusCode Filter pelajaran : ${resposne.statusCode}");
+      if (resposne.statusCode == 200) {
+        var jsonString = resposne.body;
+        print(resposne.body);
+        return santriByFromJson(jsonString);
+      }
+    } catch (e) {
+      print("Catch Filter Pelajaran : $e");
+    }
+  }
 }

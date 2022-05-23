@@ -52,9 +52,7 @@ class _JenjangScreenState extends State<JenjangScreen> {
               height: 15,
             ),
             // Text("${halaqohController.getSelectedHalaqoh().namaDaerah}"),
-            SizedBox(
-              height: 15,
-            ),
+
             Container(
               margin: const EdgeInsets.all(10),
               child: const Text(
@@ -86,14 +84,13 @@ class _JenjangScreenState extends State<JenjangScreen> {
                           return CardJenjang(
                             nomor: index,
                             onTap: () async {
-                              await Get.to(ListSantriScreen(
-                                idJenjang: jenjangController
-                                    .listJenjang[index].id
+                              await Get.to(ListSantriScreen(), arguments: [
+                                jenjangController.listJenjang[index].id
                                     .toString(),
-                                kodeHalaqoh: halaqohController
+                                halaqohController
                                     .getSelectedHalaqoh()
                                     .kodeHalaqah,
-                              ));
+                              ]);
                             },
                             jenjang: jenjangController.listJenjang[index],
                           );
