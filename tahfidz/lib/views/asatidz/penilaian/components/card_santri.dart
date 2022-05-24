@@ -136,8 +136,11 @@ class CardPenilaianSantri extends StatelessWidget {
                                 // print(kategori);
                                 return TextButton(
                                   onPressed: () {
-                                    Get.to(PelajaranScreen(),
-                                        arguments: [kategori, idJenjang]);
+                                    Get.to(PelajaranScreen(), arguments: [
+                                      kategori,
+                                      idJenjang,
+                                      santri
+                                    ]);
                                   },
                                   child: Text(
                                     "${kategori.kategoriPenilaian}",

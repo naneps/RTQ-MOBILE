@@ -92,7 +92,7 @@ class _ListSantriScreenState extends State<ListSantriScreen> {
                   args[0],
                 ),
                 builder: (context, AsyncSnapshot snapshot) {
-                  print(snapshot.data);
+                  // print(snapshot.data);
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(
                       child: CircularProgressIndicator(

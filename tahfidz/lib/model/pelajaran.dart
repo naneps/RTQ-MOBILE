@@ -15,25 +15,25 @@ class Pelajaran {
     this.id,
     this.idJenjang,
     this.idKategori,
-    this.pelajaran,
+    this.namaPelajaran,
   });
 
   String? id;
   String? idJenjang;
   String? idKategori;
-  String? pelajaran;
+  String? namaPelajaran;
 
   factory Pelajaran.fromJson(Map<String, dynamic> json) => Pelajaran(
-        id: json["id"],
-        idJenjang: json["id_jenjang"],
-        idKategori: json["id_kategori"],
-        pelajaran: json["pelajaran"],
+        id: json["id"].toString(),
+        idJenjang: json["id_jenjang"].toString(),
+        idKategori: json["id_kategori"].toString(),
+        namaPelajaran: json["nama_pelajaran"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "id_jenjang": idJenjang,
         "id_kategori": idKategori,
-        "pelajaran": pelajaran,
+        "nama_pelajaran": namaPelajaran,
       };
 }

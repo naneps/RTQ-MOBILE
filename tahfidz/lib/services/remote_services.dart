@@ -13,6 +13,7 @@ import 'package:tahfidz/model/cabang.dart';
 import 'package:tahfidz/model/halaqoh.dart';
 import 'package:tahfidz/model/iuran.dart';
 import 'package:tahfidz/model/kategori_penilaian.dart';
+import 'package:tahfidz/model/nilai.dart';
 import 'package:tahfidz/model/pelajaran.dart';
 import 'package:tahfidz/model/santri.dart';
 import 'package:tahfidz/model/santri_by.dart';
@@ -277,26 +278,51 @@ class RemoteServices {
     return [];
   }
 
-  static Future<List<Pelajaran>> filterPelajaran(
-      String idJenjang, String idkategori) async {
-    List<Pelajaran> pelajaran = [];
-    for (var i = 0; i < dataPelajaran.length; i++) {
-      if (dataPelajaran[i]['id_jenjang'] == idJenjang &&
-          dataPelajaran[i]['id_kategori'] == idkategori) {
-        var json = jsonEncode(dataPelajaran[i]);
+  static Future<List<Pelajaran>?> filterPelajaran(
+      String token, String? idJenjang, String? idKategoriPenilaian) async {
+    try {
+      var url =
+          Uri.parse('$baseUrl/pelajaran/view/$idJenjang/$idKategoriPenilaian');
+      var resposne = await http
+          .get(url, headers: {HttpHeaders.authorizationHeader: token});
+      print("StatusCode Filter Pelajaran : ${resposne.statusCode}");
+      if (resposne.statusCode == 200) {
+        var jsonString = resposne.body;
+        // print(jsonString);
+        return pelajaranFromJson(jsonString);
+      }
+    } catch (e) {
+      print("Catc.h Filter Pelajaran : $e");
+    }
+  }
+
+  static Future<Nilai> filterNilai({String? idPelajaran, String? nis}) async {
+    Nilai? nilai = Nilai();
+
+    for (var i = 0; i < dataNilai.length; i++) {
+      if (dataNilai[i]['id_pelajaran'] == idPelajaran &&
+          dataNilai[i]['nis_santri'] == nis) {
+        var json = jsonEncode(dataNilai[i]);
         var hasilFiletr = jsonDecode(json);
-        pelajaran.add(Pelajaran.fromJson(hasilFiletr));
+        // print(hasilFiletr);
+        nilai = Nilai.fromJson(hasilFiletr);
+        // print(nilai);
         // print(" json :$json");
         // print(" hasil filter :$hasilFiletr");
         // print(pelajaran[i].pelajaran);
-      } else if (dataPelajaran[i]['id_jenjang'] != idJenjang ||
-          dataPelajaran[i]['id_kategori'] != idkategori) {
-        print("Data Tidak Ada");
+        break;
       }
     }
-    return pelajaran;
+    // print(pelajaran[0].pelajaran);
+
+    return nilai!;
   }
 
-  //creete function countPersent
-
+  static setNilai(String idNilai, double nilai) {
+    for (var i = 0; i < dataNilai.length; i++) {
+      if (dataNilai[i]['id'] == idNilai) {
+        dataNilai[i]['nilai'] = nilai;
+      }
+    }
+  }
 }

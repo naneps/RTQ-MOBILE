@@ -21,13 +21,13 @@ class Nilai {
   String? id;
   String? idPelajaran;
   String? nisSantri;
-  int? nilai;
+  double? nilai;
 
   factory Nilai.fromJson(Map<String, dynamic> json) => Nilai(
         id: json["id"],
         idPelajaran: json["id_pelajaran"],
         nisSantri: json["nis_santri"],
-        nilai: json["nilai"],
+        nilai: json["nilai"].toDouble(),
       );
 
   Map<String, dynamic> toJson() => {

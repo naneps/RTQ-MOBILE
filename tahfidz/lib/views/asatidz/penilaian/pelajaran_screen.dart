@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/model/pelajaran.dart';
 import 'package:tahfidz/services/remote_services.dart';
 import 'package:tahfidz/views/asatidz/penilaian/components/card_pelajaran.dart';
@@ -39,7 +40,9 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
               width: double.infinity,
               child: FutureBuilder<List<Pelajaran>?>(
                   future: RemoteServices.filterPelajaran(
-                      args[1], args[0].id.toString()),
+                      SpUtil.getString('token')!,
+                      args[1].toString(),
+                      args[0].id.toString()),
                   builder: (context, AsyncSnapshot snapshot) {
                     print(snapshot.data);
 //
@@ -47,11 +50,22 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
                     return ListView.builder(
                       itemCount: snapshot.data?.length ?? 0,
                       itemBuilder: (context, index) {
-                        Pelajaran pelajaran = snapshot.data![index];
-                        return CardPelajaran(
-                          nilai: 0,
-                          pelajaran: pelajaran,
-                          nomor: index + 1,
+                        print(snapshot.data);
+                        if (snapshot.hasData) {
+                          Pelajaran pelajaran = snapshot.data![index];
+                          return CardPelajaran(
+                            pelajaran: pelajaran,
+                            nomor: index + 1,
+                          );
+                        } else if (!snapshot.hasData) {
+                          return const Center(
+                            child: Text("Data Kosong"),
+                          );
+                        } else {}
+                        return Container(
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
                         );
                       },
                     );

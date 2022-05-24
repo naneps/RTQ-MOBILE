@@ -103,19 +103,19 @@ var dataNilai = [
     "id": "1",
     "id_pelajaran": "1",
     "nis_santri": "29092002",
-    "nilai": 0,
+    "nilai": 100,
   },
   {
     "id": "2",
     "id_pelajaran": "2",
     "nis_santri": "29092002",
-    "nilai": 0,
+    "nilai": 100,
   },
   {
     "id": "3",
     "id_pelajaran": "3",
     "nis_santri": "29092002",
-    "nilai": 0,
+    "nilai": 100,
   },
   {
     "id": "4",
@@ -264,24 +264,24 @@ filterNilai(String idPelajaran, String nis) {
   return list;
 }
 
-List<Pelajaran> filterPelajaran(String idJenjang, String idkategori) {
-  List<Pelajaran> pelajaran = [];
-  for (var i = 0; i < dataPelajaran.length; i++) {
-    if (dataPelajaran[i]['id_jenjang'] == idJenjang &&
-        dataPelajaran[i]['id_kategori'] == idkategori) {
-      pelajaran.add(Pelajaran(
-          id: dataPelajaran[i]['id'],
-          idJenjang: dataPelajaran[i]['id_jenjang'],
-          idKategori: dataPelajaran[i]['id_kategori'],
-          pelajaran: dataPelajaran[i]['pelajaran']));
-    } else if (dataPelajaran[i]['id_jenjang'] != idJenjang &&
-        dataPelajaran[i]['id_kategori'] != idkategori) {
-      print("Data Tidak Ada");
-    }
-  }
-  print(pelajaran);
-  return pelajaran;
-}
+// List<Pelajaran> filterPelajaran(String idJenjang, String idkategori) {
+//   List<Pelajaran> pelajaran = [];
+//   for (var i = 0; i < dataPelajaran.length; i++) {
+//     if (dataPelajaran[i]['id_jenjang'] == idJenjang &&
+//         dataPelajaran[i]['id_kategori'] == idkategori) {
+//       pelajaran.add(Pelajaran(
+//           id: dataPelajaran[i]['id'],
+//           idJenjang: dataPelajaran[i]['id_jenjang'],
+//           idKategori: dataPelajaran[i]['id_kategori'],
+//           pelajaran: dataPelajaran[i]['pelajaran']));
+//     } else if (dataPelajaran[i]['id_jenjang'] != idJenjang &&
+//         dataPelajaran[i]['id_kategori'] != idkategori) {
+//       print("Data Tidak Ada");
+//     }
+//   }
+//   print(pelajaran);
+//   return pelajaran;
+// }
 
 
 // var dataNilai = [
