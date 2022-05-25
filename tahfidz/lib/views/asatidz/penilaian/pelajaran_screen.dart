@@ -1,3 +1,5 @@
+// ignore_for_file: unrelated_type_equality_checks
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,7 +24,7 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
     // print(kategori);
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Column(
           // crossAxisAlignment: CrossAxisAlignment.center
           mainAxisAlignment: MainAxisAlignment.center,
@@ -32,7 +34,7 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
               style: GoogleFonts.poppins(
                   fontSize: 24, fontWeight: FontWeight.w500),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Container(
@@ -44,32 +46,26 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
                       args[1].toString(),
                       args[0].id.toString()),
                   builder: (context, AsyncSnapshot snapshot) {
-                    print(snapshot.data);
-//
-                    if (snapshot.connectionState == ConnectionState.waiting) {}
-                    return ListView.builder(
-                      itemCount: snapshot.data?.length ?? 0,
-                      itemBuilder: (context, index) {
-                        print(snapshot.data);
-                        if (snapshot.hasData) {
-                          Pelajaran pelajaran = snapshot.data![index];
-                          return CardPelajaran(
-                            pelajaran: pelajaran,
-                            nomor: index + 1,
-                          );
-                        } else if (!snapshot.hasData) {
-                          return const Center(
-                            child: Text("Data Kosong"),
-                          );
-                        } else {}
-                        return Container(
-                          child: Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        );
-                      },
-                    );
-                  }),
+                    print("Data Pelajaran : ${snapshot.data}");
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (snapshot.hasData == []) {
+                      return Text(snapshot.data.toString());
+                    } else if (snapshot.hasError) {
+                      return const Center(
+                        child: Text("Terjadi Kesalahan"),
+                      );
+                    } else {
+                      return const Center(
+                        child: Text("Terjaddi Kesalahan"),
+                      );
+                    }
+                  }
+                  // print(snapshot.data);
+
+                  ),
             )
           ],
         ),

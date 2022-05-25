@@ -79,7 +79,7 @@ class CardPenilaianSantri extends StatelessWidget {
                             " | ",
                             style: GoogleFonts.poppins(
                                 fontSize: 12,
-                                fontWeight: FontWeight.w800,
+                                fontWeight: FontWeight.w600,
                                 color: mainColor),
                           ),
                           Flexible(
@@ -115,6 +115,7 @@ class CardPenilaianSantri extends StatelessWidget {
                         future: RemoteServices.fetchKategoriPenilaian(
                             SpUtil.getString('token')!),
                         builder: (context, AsyncSnapshot snapshot) {
+                          print('data kategori ${snapshot.data}');
                           // double value = snapshot.data.length!;
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
@@ -129,6 +130,7 @@ class CardPenilaianSantri extends StatelessWidget {
                           }
                           // print(snapshot.data);
                           return ListView.builder(
+                              // scrollDirection: Axis.horizontal,
                               itemCount: snapshot.data.length!,
                               itemBuilder: (context, index) {
                                 KategoriPenilaian kategori =

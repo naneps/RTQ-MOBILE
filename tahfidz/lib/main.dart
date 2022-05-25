@@ -22,12 +22,8 @@ class MyApp extends StatelessWidget {
       title: "RTQ",
       // theme: ThemeData(appBarTheme: ),
       debugShowCheckedModeBanner: false,
-      home: (SpUtil.getBool('status') != true)
-          ? const LoginPage()
-          : HomeScreen(
-              telepon: SpUtil.getString('no_hp')!,
-              token: SpUtil.getString('token')!,
-            ),
+      home:
+          (SpUtil.getBool('status') != true) ? const LoginPage() : HomeScreen(),
     );
   }
 }

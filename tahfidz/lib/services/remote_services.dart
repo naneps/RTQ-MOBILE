@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/instance_manager.dart';
@@ -40,10 +41,7 @@ class RemoteServices {
         var user = userFromJson(response.body);
 
         if (int.parse(user.idRole!) == 3) {
-          Get.off(HomeScreen(
-            telepon: user.noHp.toString(),
-            token: user.token.toString(),
-          ));
+          Get.off(HomeScreen());
           SpUtil.putBool('status', true);
           SpUtil.putString("nama", user.nama.toString());
           SpUtil.putString("id", user.id.toString());
@@ -52,10 +50,7 @@ class RemoteServices {
           SpUtil.putString("token", user.token.toString());
           SpUtil.putString("id_role", user.idRole.toString());
         } else if (int.parse(user.idRole!) == 4) {
-          Get.off(HomeScreen(
-            telepon: user.noHp.toString(),
-            token: user.token.toString(),
-          ));
+          Get.off(HomeScreen());
           SpUtil.putBool('status', true);
           SpUtil.putString("nama", user.nama.toString());
           SpUtil.putString("keterangan", user.keterangan.toString());
@@ -196,19 +191,18 @@ class RemoteServices {
   static Future<bool?> addImage(Map<String, String> body, File filepath) async {
     try {
       DateTime date = DateTime.now();
-      File fileRename = filepath.rename("$date") as File;
-      String addimageUrl = baseUrl + '/api-v1/absensi/asatidz';
+      ;
+      String addimageUrl = '/$baseUrl/absensi/asatidz';
       Map<String, String> headers = {
         'Content-Type': 'multipart/form-data',
       };
       var request = http.MultipartRequest('POST', Uri.parse(addimageUrl))
         ..fields.addAll(body)
         ..headers.addAll(headers)
-        ..files
-            .add(await http.MultipartFile.fromPath('image', fileRename.path));
+        ..files.add(await http.MultipartFile.fromPath('image', filepath.path));
       var response = await request.send();
 
-      // print(response.statusCode);
+      print(response.statusCode);
       if (response.statusCode == 201) {
         return true;
       } else {
@@ -264,7 +258,7 @@ class RemoteServices {
       String token) async {
     try {
       var url = Uri.parse(
-          'http://api.rtq-freelance.my.id/api-v1/kategori_penilaian/view/all');
+          'http://api.rtq-freelance.my.id/api-v1/kategori/pelajaran/view/all');
       var resposne = await http
           .get(url, headers: {HttpHeaders.authorizationHeader: token});
       print("StatusCode Fetch Kategori Penilaian : ${resposne.statusCode}");
@@ -273,7 +267,9 @@ class RemoteServices {
         return kategoriPenilaianFromJson(jsonString);
       }
     } catch (e) {
-      print("Catch Fetch Kategori Penilaian : $e");
+      if (kDebugMode) {
+        print("Catch Fetch Kategori Penilaian : $e");
+      }
     }
     return [];
   }

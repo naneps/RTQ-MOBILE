@@ -48,57 +48,68 @@ class _CardPelajaranState extends State<CardPelajaran> {
             ),
           ),
           Container(
-              // color: Colors.blueAccent,
-              // height: 90,
-              width: 120,
-              child: FutureBuilder<Nilai>(
-                future: RemoteServices.filterNilai(
-                    idPelajaran: widget.pelajaran!.id.toString(),
-                    nis: args[2].nis),
-                builder: (context, AsyncSnapshot snapshot) {
-                  print(snapshot.data.nilai);
-                  if (snapshot.hasData) {
-                    Nilai nilai = snapshot.data;
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(nilai.nilai!.toInt().toString(),
-                            style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w400,
-                            )),
-                        Slider(
-                            thumbColor: mainColor,
-                            activeColor: mainColor,
-                            inactiveColor: mainColor.withOpacity(0.2),
-                            min: 0,
-                            max: 100,
-                            label: "${nilai.nilai}",
-                            value: nilai.nilai!,
-                            divisions: 10,
-                            onChanged: (value) {
-                              setState(() {
-                                RemoteServices.setNilai(nilai.id!, value);
-                              });
-                            })
-                      ],
-                    );
-                  }
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else if (!snapshot.hasData) {
-                    return Center(
-                      child: Text("Belum ada penilaian"),
-                    );
-                  } else {
-                    return Center(
-                      child: Text("Error"),
-                    );
-                  }
-                },
-              ))
+            // color: Colors.blueAccent,
+            // height: 90,
+            width: 120,
+            child: FutureBuilder<Nilai>(
+              future: RemoteServices.filterNilai(
+                  idPelajaran: widget.pelajaran!.id.toString(),
+                  nis: args[2].nis),
+              builder: (context, AsyncSnapshot snapshot) {
+                print("data nilai ${snapshot.data}");
+                if (snapshot.hasData) {
+                  Nilai nilai = snapshot.data;
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(nilai.nilai!.toInt().toString(),
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w400,
+                          )),
+                      Slider(
+                        thumbColor: mainColor,
+                        activeColor: mainColor,
+                        inactiveColor: mainColor.withOpacity(0.2),
+                        min: 0,
+                        max: 100,
+                        label: "${nilai.nilai}",
+                        value: nilai.nilai!,
+                        divisions: 10,
+                        onChanged: (value) {
+                          setState(() {
+                            RemoteServices.setNilai(nilai.id!, value);
+                          });
+                        },
+                        onChangeEnd: (value) {
+                          setState(() {
+                            RemoteServices.setNilai(nilai.id!, value);
+                          });
+                        },
+                      )
+                    ],
+                  );
+                }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.hasError) {
+                  return const Center(
+                    child: Text("Error"),
+                  );
+                } else if (!snapshot.hasData) {
+                  return const Center(
+                    child: Text("Belum ada nilai"),
+                  );
+                } else {
+                  return Center(
+                    child: Text("Nilai Kosong"),
+                  );
+                }
+              },
+            ),
+          )
         ],
       ),
     );

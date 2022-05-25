@@ -14,12 +14,10 @@ import 'package:tahfidz/views/walisantri/home/components/menu_section.dart';
 
 class HomeScreen extends StatefulWidget {
   // const HomeScreen({Key? key}) : super(key: key);
-  final String telepon;
-  final String token;
 
   // final Asatid asatid;
 
-  HomeScreen({required this.telepon, required this.token});
+  HomeScreen();
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -131,7 +129,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Padding(
                           padding: EdgeInsets.all(20),
                           child: FutureBuilder(
-                            future: RemoteServices.getUserInfo(widget.token),
+                            future: RemoteServices.getUserInfo(
+                                SpUtil.getString('token')!),
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
                               // print(snapshot.data);
@@ -225,7 +224,7 @@ class _HomeScreenState extends State<HomeScreen> {
       case 0:
         Get.to(ProfileScreen(
           telepon: SpUtil.getString('no_hp'),
-          token: widget.token,
+          token: SpUtil.getString('token'),
         ));
         break;
       case 1:

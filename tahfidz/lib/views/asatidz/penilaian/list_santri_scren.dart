@@ -113,7 +113,7 @@ class _ListSantriScreenState extends State<ListSantriScreen> {
                     width: width,
                     height: height / 1.5,
                     child: ListView.builder(
-                      itemCount: snapshot.data.length,
+                      itemCount: snapshot.data.length ?? 0,
                       itemBuilder: (context, index) {
                         return CardPenilaianSantri(
                             idJenjang: args[0], santri: snapshot.data[index]);

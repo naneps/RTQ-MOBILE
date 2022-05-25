@@ -25,7 +25,6 @@ class _WidgetFotoState extends State<WidgetFoto> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // height: MediaQuery.of(context).size.height / 2.5,
       height: 600,
 
       width: MediaQuery.of(context).size.width,
@@ -81,7 +80,7 @@ class _WidgetFotoState extends State<WidgetFoto> {
                       style: ElevatedButton.styleFrom(
                         elevation: 5,
                         primary: Colors.white,
-                        shape: RoundedRectangleBorder(
+                        shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(
                             Radius.circular(100),
                           ),
@@ -101,28 +100,28 @@ class _WidgetFotoState extends State<WidgetFoto> {
             ),
           ),
           Container(
-            padding: EdgeInsets.all(10),
-            margin: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(10),
+            margin: const EdgeInsets.all(20),
             width: MediaQuery.of(context).size.width / 1.2,
             child: Text(
               '$address',
-              style: TextStyle(color: Colors.white, fontSize: 16),
+              style: const TextStyle(color: Colors.white, fontSize: 16),
             ),
             decoration: BoxDecoration(
               color: mainColor,
-              borderRadius: BorderRadius.all(Radius.circular(20)),
+              borderRadius: const BorderRadius.all(Radius.circular(20)),
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 10, bottom: 10),
+            margin: const EdgeInsets.only(top: 10, bottom: 10),
             child: ElevatedButton(
-              child: Container(
+              child: SizedBox(
                 // color: mainColor,
                 width: 120,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
+                  children: const [
                     Icon(
                       Icons.save_as_sharp,
                       size: 26,
@@ -142,8 +141,8 @@ class _WidgetFotoState extends State<WidgetFoto> {
                 elevation: 4,
                 primary: greenColor,
                 // onPrimary: mainColor,
-                padding: EdgeInsets.all(10),
-                shape: RoundedRectangleBorder(
+                padding: const EdgeInsets.all(10),
+                shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(20),
                   ),
@@ -156,13 +155,12 @@ class _WidgetFotoState extends State<WidgetFoto> {
                   'nama': SpUtil.getString('nama')!
                 };
 
-                RemoteServices.addImage(data, widget.fileImage!).then((value) {
+                await RemoteServices.addImage(data, widget.fileImage!)
+                    .then((value) {
                   print(value);
                   if (value!) {
                     Get.off(
-                      HomeScreen(
-                          telepon: SpUtil.getString('no_hp')!,
-                          token: SpUtil.getString('token')!),
+                      HomeScreen(),
                     );
                   }
                 });
@@ -195,7 +193,7 @@ class _WidgetFotoState extends State<WidgetFoto> {
 
     setState(() {
       address =
-          '${place.subAdministrativeArea} , ${place.locality} , ${place.subLocality} , ${place.postalCode} ';
+          '${place.subAdministrativeArea} , ${place.locality} , ${place.subLocality} ';
     });
     print(placemarks);
   }
