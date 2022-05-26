@@ -44,7 +44,7 @@ void main() async {
       }
     }
 
-    await updateNilai(idNilai: "1", idAsatidz: "1", nilai: "20");
+    await updateNilai(idNilai: "2", idAsatidz: "1", nilai: "40");
   } on Exception catch (e) {
     print(e);
   }

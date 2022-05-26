@@ -80,18 +80,21 @@ class _CardPelajaranState extends State<CardPelajaran> {
                         value: double.parse(nilai.nilai!),
                         divisions: 10,
                         onChanged: (value) async {
-                          print("nilai $value");
+                          // print("nilai $value");
+                          setState(() {
+                            nilai.nilai = value.toInt().toString();
+                          });
                           await RemoteServices.updateNilai(
-                            token: SpUtil.getString('token'),
-                            idNilai: nilai.id,
-                            nilai: "100",
-                          );
-                          setState(() {});
+                              token: SpUtil.getString('token'),
+                              idAsatidz: SpUtil.getString('id'),
+                              nilai: value,
+                              idNilai: nilai.id.toString());
                         },
-                        onChangeEnd: (value) {
-                          setState(
-                            () {},
-                          );
+                        onChangeEnd: (value) async {
+                          print("nilai $value");
+                          setState(() {
+                            nilai.nilai = value.toInt().toString();
+                          });
                         },
                       )
                     ],

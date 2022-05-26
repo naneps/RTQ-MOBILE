@@ -331,7 +331,7 @@ class RemoteServices {
       {String? token,
       String? idNilai,
       String? idAsatidz,
-      dynamic? nilai}) async {
+      dynamic nilai}) async {
     try {
       var body = {
         'nilai': nilai,
