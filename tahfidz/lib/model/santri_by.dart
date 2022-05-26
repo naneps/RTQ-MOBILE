@@ -12,6 +12,7 @@ String santriByToJson(List<SantriBy> data) =>
 
 class SantriBy {
   SantriBy({
+    this.id,
     this.nis,
     this.namaLengkap,
     this.namaHalaqah,
@@ -19,7 +20,7 @@ class SantriBy {
     this.alamat,
     this.foto,
   });
-
+  String? id;
   String? nis;
   String? namaLengkap;
   String? namaHalaqah;
@@ -28,6 +29,7 @@ class SantriBy {
   String? foto;
 
   factory SantriBy.fromJson(Map<String, dynamic> json) => SantriBy(
+        id: json['id'].toString(),
         nis: json["nis"],
         namaLengkap: json["nama_lengkap"],
         namaHalaqah: json["nama_halaqah"],
@@ -37,6 +39,7 @@ class SantriBy {
       );
 
   Map<String, dynamic> toJson() => {
+        "id": id,
         "nis": nis,
         "nama_lengkap": namaLengkap,
         "nama_halaqah": namaHalaqah,

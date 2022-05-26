@@ -56,7 +56,7 @@ class _CardPelajaranState extends State<CardPelajaran> {
               future: RemoteServices.filterNilai(
                   token: SpUtil.getString('token'),
                   idPelajaran: widget.pelajaran!.id.toString(),
-                  idSantri: args[2].nis),
+                  idSantri: args[2].id),
               builder: (context, AsyncSnapshot snapshot) {
                 print("data nilai ${snapshot.data}");
                 if (snapshot.hasData) {

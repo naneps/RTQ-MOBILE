@@ -12,7 +12,7 @@ String nilaiToJson(List<Nilai> data) =>
 
 class Nilai {
   Nilai({
-    // this.id,
+    this.id,
     this.idPelajaran,
     this.idSantri,
     this.idAsatidz,
@@ -20,7 +20,7 @@ class Nilai {
     this.nilai,
   });
 
-  // String? id;
+  String? id;
   String? idPelajaran;
   String? idKategori;
   String? idSantri;
@@ -37,7 +37,7 @@ class Nilai {
       );
 
   Map<String, dynamic> toJson() => {
-        // "id": id,
+        "id": id,
         "id_pelajaran": idPelajaran,
         "id_santri": idSantri,
         "id_asatidz": idAsatidz,
