@@ -13,34 +13,31 @@ void main() async {
   try {
     String baseUrl = "http://api.rtq-freelance.my.id/api-v1";
     String token =
-        "34b2260ed8c642594de369a045b705ffb174dd07a0c809d1df28525fb9a45c87c2c0cc8edd1bb765";
-    File file = File("C:\\Users\\msi_r\\Downloads\\IMG20220329083035.jpg");
+        "1cc15cb34479c552db57ab4171b4db0e2b3fe97bd6a86632349b546a799508732af83774b35f3794";
+    // File file = File("C:\\Users\\msi_r\\Downloads\\IMG20220329083035.jpg");
 
-    Future<bool?> addImage(Map<String, String> body, File filepath) async {
+    // crete function filterNilai By  id_santri , id_pelajaran
+    Future<Nilai> filterNilai(String idPelajaran, String idSantri) async {
+      Nilai? nilai;
       try {
-        String addimageUrl = '$baseUrl/absensi/asatidz';
-        Map<String, String> headers = {
-          'Content-Type': 'multipart/form-data',
-        };
-        var request = http.MultipartRequest('POST', Uri.parse(addimageUrl))
-          ..fields.addAll(body)
-          ..headers.addAll(headers)
-          ..files.add(await http.MultipartFile.fromPath('image', file.path));
-        var response = await request.send();
+        var url = Uri.parse('$baseUrl/penilaian/view/$idPelajaran/$idSantri');
+        var resposne = await http
+            .get(url, headers: {HttpHeaders.authorizationHeader: token});
+        print("StatusCode Filter Nilai : ${resposne.body}");
 
-        print(response.statusCode);
-        if (response.statusCode == 201) {
-          return true;
-        } else {
-          return false;
+        if (resposne.statusCode == 200) {
+          var json = jsonDecode(resposne.body);
+          print("json : $json");
+
+          nilai = Nilai.fromJson(json);
         }
       } catch (e) {
-        print("Add image $e");
+        print("Catc.h Filter Nilai : $e");
       }
-      // return null;
+      return nilai!;
     }
 
-    await addImage({"alamat": "Lohebener"}, file);
+    // print(await filterNilai("1", "1");
   } on Exception catch (e) {
     // ignore: avoid_print
     print(e);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/widget_number.dart';
 import 'package:tahfidz/model/nilai.dart';
@@ -53,8 +54,9 @@ class _CardPelajaranState extends State<CardPelajaran> {
             width: 120,
             child: FutureBuilder<Nilai>(
               future: RemoteServices.filterNilai(
+                  token: SpUtil.getString('token'),
                   idPelajaran: widget.pelajaran!.id.toString(),
-                  nis: args[2].nis),
+                  idSantri: args[2].nis),
               builder: (context, AsyncSnapshot snapshot) {
                 print("data nilai ${snapshot.data}");
                 if (snapshot.hasData) {
@@ -63,7 +65,7 @@ class _CardPelajaranState extends State<CardPelajaran> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(nilai.nilai!.toInt().toString(),
+                      Text(nilai.nilai!,
                           style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w400,
                           )),
@@ -74,16 +76,16 @@ class _CardPelajaranState extends State<CardPelajaran> {
                         min: 0,
                         max: 100,
                         label: "${nilai.nilai}",
-                        value: nilai.nilai ?? 0,
+                        value: double.parse(nilai.nilai!),
                         divisions: 10,
                         onChanged: (value) {
                           setState(() {
-                            RemoteServices.setNilai(nilai.id!, value);
+                            RemoteServices.setNilai(nilai.idPelajaran!, value);
                           });
                         },
                         onChangeEnd: (value) {
                           setState(() {
-                            RemoteServices.setNilai(nilai.id!, value);
+                            RemoteServices.setNilai(nilai.idPelajaran!, value);
                           });
                         },
                       )

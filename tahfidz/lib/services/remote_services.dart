@@ -117,7 +117,7 @@ class RemoteServices {
     }
   }
 
-  static Future<List<SantriBy>?> filterhSantri(
+  static Future<List<SantriBy>?> filterSantri(
       String token, String? kdHalaqoh, String? idJenjang) async {
     try {
       var url = Uri.parse('$baseUrl/santri/view/$kdHalaqoh/$idJenjang');
@@ -277,25 +277,46 @@ class RemoteServices {
     }
   }
 
-  static Future<Nilai> filterNilai({String? idPelajaran, String? nis}) async {
+  // static Future<Nilai> filterNilai({String? idPelajaran, String? nis}) async {
+  //   Nilai? nilai;
+
+  //   for (var i = 0; i < dataNilai.length; i++) {
+  //     if (dataNilai[i]['id_pelajaran'] == idPelajaran &&
+  //         dataNilai[i]['nis_santri'] == nis) {
+  //       var json = jsonEncode(dataNilai[i]);
+  //       var hasilFiletr = jsonDecode(json);
+  //       // print(hasilFiletr);
+  //       nilai = Nilai.fromJson(hasilFiletr);
+  //       // print(nilai);
+  //       // print(" json :$json");
+  //       // print(" hasil filter :$hasilFiletr");
+  //       // print(pelajaran[i].pelajaran);
+  //       break;
+  //     }
+  //   }
+  //   // print(pelajaran[0].pelajaran);
+
+  //   return nilai!;
+  // }
+
+  static Future<Nilai> filterNilai(
+      {String? token, String? idPelajaran, String? idSantri}) async {
     Nilai? nilai;
+    try {
+      var url = Uri.parse('$baseUrl/penilaian/view/$idPelajaran/$idSantri');
+      var resposne = await http
+          .get(url, headers: {HttpHeaders.authorizationHeader: token!});
+      print("StatusCode Filter Nilai : ${resposne.body}");
 
-    for (var i = 0; i < dataNilai.length; i++) {
-      if (dataNilai[i]['id_pelajaran'] == idPelajaran &&
-          dataNilai[i]['nis_santri'] == nis) {
-        var json = jsonEncode(dataNilai[i]);
-        var hasilFiletr = jsonDecode(json);
-        // print(hasilFiletr);
-        nilai = Nilai.fromJson(hasilFiletr);
-        // print(nilai);
-        // print(" json :$json");
-        // print(" hasil filter :$hasilFiletr");
-        // print(pelajaran[i].pelajaran);
-        break;
+      if (resposne.statusCode == 200) {
+        var json = jsonDecode(resposne.body);
+        print("json : $json");
+
+        nilai = Nilai.fromJson(json);
       }
+    } catch (e) {
+      print("Catc.h Filter Nilai : $e");
     }
-    // print(pelajaran[0].pelajaran);
-
     return nilai!;
   }
 

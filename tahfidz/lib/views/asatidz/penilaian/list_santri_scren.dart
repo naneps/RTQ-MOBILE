@@ -87,7 +87,7 @@ class _ListSantriScreenState extends State<ListSantriScreen> {
               // Text("${widget.idJenjang}"),
               // Text("${widget.kodeHalaqoh}"),
               FutureBuilder(
-                future: RemoteServices.filterhSantri(
+                future: RemoteServices.filterSantri(
                   SpUtil.getString('token')!,
                   args[1],
                   args[0],
