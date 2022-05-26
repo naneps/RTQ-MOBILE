@@ -33,7 +33,9 @@ void main() async {
             },
             body: json);
 
-        print("StatusCode update Nilai : ${response.statusCode}");
+        if (kDebugMode) {
+          print("StatusCode update Nilai : ${response.statusCode}");
+        }
         if (response.statusCode == 200) {
           print("Update Nilai Berhasil");
         } else {
