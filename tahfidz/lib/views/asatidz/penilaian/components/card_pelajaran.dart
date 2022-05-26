@@ -25,7 +25,7 @@ class _CardPelajaranState extends State<CardPelajaran> {
     print("args card pe;ajaran  $args");
     print(widget.pelajaran!.id);
     return Container(
-      margin: EdgeInsets.only(top: 10),
+      margin: EdgeInsets.only(top: 5),
       padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
       height: 100,
       width: MediaQuery.of(context).size.width,
@@ -84,14 +84,23 @@ class _CardPelajaranState extends State<CardPelajaran> {
                           setState(() {
                             nilai.nilai = value.toInt().toString();
                           });
+                        },
+                        onChangeStart: (value) {
+                          print("nilai $value");
+                          setState(() {
+                            nilai.nilai = value.toInt().toString();
+                          });
+                        },
+                        onChangeEnd: (value) async {
+                          print("nilai $value");
+                          setState(() {
+                            nilai.nilai = value.toInt().toString();
+                          });
                           await RemoteServices.updateNilai(
                               token: SpUtil.getString('token'),
                               idAsatidz: SpUtil.getString('id'),
                               nilai: value,
                               idNilai: nilai.id.toString());
-                        },
-                        onChangeEnd: (value) async {
-                          print("nilai $value");
                           setState(() {
                             nilai.nilai = value.toInt().toString();
                           });

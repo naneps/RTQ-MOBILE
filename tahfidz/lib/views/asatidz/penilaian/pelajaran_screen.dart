@@ -21,11 +21,17 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
     print("args $args");
     // print(kategori);
     return Scaffold(
+      // appBar: AppBar(
+      //   elevation: 0,
+      //   // title: Text("Pelajaran"),
+      //   backgroundColor: Colors.transparent,
+      //   centerTitle: true,
+      // ),
       body: Padding(
-        padding: EdgeInsets.all(20),
+        padding: EdgeInsets.only(top: 50, bottom: 10),
         child: Column(
           // crossAxisAlignment: CrossAxisAlignment.center
-          mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               "Penilaian ${args[0].kategoriPenilaian}",
@@ -33,10 +39,10 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
                   fontSize: 24, fontWeight: FontWeight.w500),
             ),
             SizedBox(
-              height: 20,
+              height: 40,
             ),
             Container(
-              height: 500,
+              height: MediaQuery.of(context).size.height / 1.5,
               width: double.infinity,
               child: FutureBuilder<List<Pelajaran>?>(
                   future: RemoteServices.filterPelajaran(
