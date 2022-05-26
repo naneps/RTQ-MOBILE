@@ -40,14 +40,14 @@ class _CardPelajaranState extends State<CardPelajaran> {
           Container(
             width: 140,
             // color: Colors.blueAccent,
-            margin: EdgeInsets.only(left: 10),
+            margin: const EdgeInsets.only(left: 10),
             child: Text(
               widget.pelajaran!.namaPelajaran!,
               style: GoogleFonts.poppins(
                   fontSize: 12, fontWeight: FontWeight.w500),
             ),
           ),
-          Container(
+          SizedBox(
             // color: Colors.blueAccent,
             // height: 90,
             width: 120,
