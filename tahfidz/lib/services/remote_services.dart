@@ -277,28 +277,6 @@ class RemoteServices {
     }
   }
 
-  // static Future<Nilai> filterNilai({String? idPelajaran, String? nis}) async {
-  //   Nilai? nilai;
-
-  //   for (var i = 0; i < dataNilai.length; i++) {
-  //     if (dataNilai[i]['id_pelajaran'] == idPelajaran &&
-  //         dataNilai[i]['nis_santri'] == nis) {
-  //       var json = jsonEncode(dataNilai[i]);
-  //       var hasilFiletr = jsonDecode(json);
-  //       // print(hasilFiletr);
-  //       nilai = Nilai.fromJson(hasilFiletr);
-  //       // print(nilai);
-  //       // print(" json :$json");
-  //       // print(" hasil filter :$hasilFiletr");
-  //       // print(pelajaran[i].pelajaran);
-  //       break;
-  //     }
-  //   }
-  //   // print(pelajaran[0].pelajaran);
-
-  //   return nilai!;
-  // }
-
   static Future<Nilai> filterNilai(
       {String? token, String? idPelajaran, String? idSantri}) async {
     Nilai? nilai;
@@ -328,12 +306,7 @@ class RemoteServices {
       String? idKategori,
       String? nilai}) async {
     var body = {
-      // 'id_asatidz': idAsatidz,
-      // 'id_santri': idSantri,
-      // 'id_kategori_pelajaran': idKategori,
-      // 'id_pelajaran': idPelajaran,
       'nilai': nilai,
-      // 'nilai' => $request->nilai,
     };
     var json = jsonEncode(body);
 
@@ -354,11 +327,35 @@ class RemoteServices {
     }
   }
 
-  static setNilai(String idNilai, double nilai) {
-    for (var i = 0; i < dataNilai.length; i++) {
-      if (dataNilai[i]['id'] == idNilai) {
-        dataNilai[i]['nilai'] = nilai;
+  static Future<bool?> updateNilai(
+      {String? token,
+      String? idNilai,
+      String? idAsatidz,
+      dynamic? nilai}) async {
+    try {
+      var body = {
+        'nilai': nilai,
+      };
+      var json = jsonEncode(body);
+      var url = Uri.parse('$baseUrl/penilaian/put/$idNilai/$idAsatidz');
+      var response = await http.put(url,
+          headers: {
+            HttpHeaders.authorizationHeader: token!,
+            // "Content-Type": "application/json",
+            HttpHeaders.contentTypeHeader: "application/json"
+          },
+          body: json);
+
+      print("StatusCode update Nilai : ${response.statusCode}");
+      if (response.statusCode == 200) {
+        print("Update Nilai Berhasil");
+        return true;
+      } else {
+        print("Update Nilai Gagal");
+        return false;
       }
+    } catch (e) {
+      print("Catc.h Create Nilai : $e");
     }
   }
 }
