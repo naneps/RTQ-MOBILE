@@ -48,6 +48,6 @@ void main() async {
 
     // await updateNilai(idNilai: "2", idAsatidz: "1", nilai: "40");
   } on Exception catch (e) {
-    print(e);
+    // print(e);
   }
 }
