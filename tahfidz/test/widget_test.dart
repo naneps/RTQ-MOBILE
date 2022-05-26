@@ -37,6 +37,23 @@ void main() async {
       return nilai!;
     }
 
+    Future<void> createNilia() async {
+      try {
+        var url = Uri.parse('$baseUrl/penilaian/create');
+        var response = await http.post(url, headers: {
+          HttpHeaders.authorizationHeader: token
+        }, body: {
+          "id_pelajaran": "1",
+          "id_santri": "1",
+          "nilai": "100",
+          "tanggal": "2020-03-29"
+        });
+        print("StatusCode Create Nilai : ${response.body}");
+      } catch (e) {
+        print("Catc.h Create Nilai : $e");
+      }
+    }
+
     // print(await filterNilai("1", "1");
   } on Exception catch (e) {
     // ignore: avoid_print
