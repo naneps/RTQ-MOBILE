@@ -23,6 +23,7 @@ class _CardPelajaranState extends State<CardPelajaran> {
   @override
   Widget build(BuildContext context) {
     print("args card pe;ajaran  $args");
+    print(widget.pelajaran!.id);
     return Container(
       margin: EdgeInsets.only(top: 10),
       padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
@@ -99,7 +100,18 @@ class _CardPelajaranState extends State<CardPelajaran> {
                 } else if (!snapshot.hasData) {
                   return Center(
                       child: TextButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      print(args);
+                      await RemoteServices.createNilai(
+                          idAsatidz: SpUtil.getString('id'),
+                          token: SpUtil.getString('token'),
+                          idPelajaran: widget.pelajaran!.id.toString(),
+                          idSantri: args[2].id,
+                          nilai: 0.toString());
+                      setState(() {});
+
+                      // print(snapshot.data);
+                    },
                     child: Text("Tambah Nilai"),
                   ));
                 } else if (snapshot.hasError) {

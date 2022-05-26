@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:tahfidz/data/dumy+data.dart';
 import 'package:tahfidz/model/nilai.dart';
 import 'dart:convert';
@@ -13,50 +14,48 @@ void main() async {
   try {
     String baseUrl = "http://api.rtq-freelance.my.id/api-v1";
     String token =
-        "1cc15cb34479c552db57ab4171b4db0e2b3fe97bd6a86632349b546a799508732af83774b35f3794";
-    // File file = File("C:\\Users\\msi_r\\Downloads\\IMG20220329083035.jpg");
+        "1ae2c666d5f81adfb376594d8e2366dc282c9c5c4b7996804d179415a2d6ed50405fb2987856ab80";
 
-    // crete function filterNilai By  id_santri , id_pelajaran
-    Future<Nilai> filterNilai(String idPelajaran, String idSantri) async {
-      Nilai? nilai;
+    Future<void> createNilai(
+        {String? idSantri,
+        String? idPelajaran,
+        String? idAsatidz,
+        String? idKategori,
+        String? nilai}) async {
+      var body = {
+        // 'id_asatidz': idAsatidz,
+        // 'id_santri': idSantri,
+        // 'id_kategori_pelajaran': idKategori,
+        // 'id_pelajaran': idPelajaran,
+        'nilai': nilai,
+        // 'nilai' => $request->nilai,
+      };
+      var json = jsonEncode(body);
+
       try {
-        var url = Uri.parse('$baseUrl/penilaian/view/$idPelajaran/$idSantri');
-        var resposne = await http
-            .get(url, headers: {HttpHeaders.authorizationHeader: token});
-        print("StatusCode Filter Nilai : ${resposne.body}");
+        var url = Uri.parse(
+            '$baseUrl/penilaian/store/$idPelajaran/$idSantri/$idKategori/$idAsatidz');
+        var response = await http.post(url,
+            headers: {
+              HttpHeaders.authorizationHeader: token,
+              // "Content-Type": "application/json",
+              HttpHeaders.contentTypeHeader: "application/json"
+            },
+            body: json);
 
-        if (resposne.statusCode == 200) {
-          var json = jsonDecode(resposne.body);
-          print("json : $json");
-
-          nilai = Nilai.fromJson(json);
-        }
-      } catch (e) {
-        print("Catc.h Filter Nilai : $e");
-      }
-      return nilai!;
-    }
-
-    Future<void> createNilia() async {
-      try {
-        var url = Uri.parse('$baseUrl/penilaian/create');
-        var response = await http.post(url, headers: {
-          HttpHeaders.authorizationHeader: token
-        }, body: {
-          "id_pelajaran": "1",
-          "id_santri": "1",
-          "nilai": "100",
-          "tanggal": "2020-03-29"
-        });
         print("StatusCode Create Nilai : ${response.body}");
       } catch (e) {
         print("Catc.h Create Nilai : $e");
       }
     }
 
-    // print(await filterNilai("1", "1");
+    await createNilai(
+        idAsatidz: '1',
+        idKategori: '1',
+        idPelajaran: '2',
+        idSantri: '1',
+        nilai: '100');
   } on Exception catch (e) {
-    // ignore: avoid_print
     print(e);
   }
 }

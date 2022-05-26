@@ -51,6 +51,10 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
                       );
                     }
                     if (snapshot.hasData) {
+                      // List<Pelajaran> list = snapshot.data;
+                      // list.forEach((element) {
+                      //   print(element.namaPelajaran);
+                      // });
                       return ListView.builder(
                         itemCount: snapshot.data!.length,
                         itemBuilder: (context, index) {

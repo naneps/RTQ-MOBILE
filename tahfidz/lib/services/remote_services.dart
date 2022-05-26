@@ -262,14 +262,14 @@ class RemoteServices {
   static Future<List<Pelajaran>?> filterPelajaran(
       String token, String? idJenjang, String? idKategoriPenilaian) async {
     try {
-      var url = Uri.parse(
-          '$baseUrl/kategori/pelajaran/view/$idJenjang/$idKategoriPenilaian');
+      var url =
+          Uri.parse('$baseUrl/pelajaran/view/$idKategoriPenilaian/$idJenjang');
       var resposne = await http
           .get(url, headers: {HttpHeaders.authorizationHeader: token});
       print("StatusCode Filter Pelajaran : ${resposne.statusCode}");
       if (resposne.statusCode == 200) {
         var jsonString = resposne.body;
-        // print(jsonString);
+        print(jsonString);
         return pelajaranFromJson(jsonString);
       }
     } catch (e) {
@@ -318,6 +318,40 @@ class RemoteServices {
       print("Catc.h Filter Nilai : $e");
     }
     return nilai!;
+  }
+
+  static Future<void> createNilai(
+      {String? token,
+      String? idSantri,
+      String? idPelajaran,
+      String? idAsatidz,
+      String? idKategori,
+      String? nilai}) async {
+    var body = {
+      // 'id_asatidz': idAsatidz,
+      // 'id_santri': idSantri,
+      // 'id_kategori_pelajaran': idKategori,
+      // 'id_pelajaran': idPelajaran,
+      'nilai': nilai,
+      // 'nilai' => $request->nilai,
+    };
+    var json = jsonEncode(body);
+
+    try {
+      var url = Uri.parse(
+          '$baseUrl/penilaian/store/$idPelajaran/$idSantri/$idKategori/$idAsatidz');
+      var response = await http.post(url,
+          headers: {
+            HttpHeaders.authorizationHeader: token!,
+            // "Content-Type": "application/json",
+            HttpHeaders.contentTypeHeader: "application/json"
+          },
+          body: json);
+
+      print("StatusCode Create Nilai : ${response.body}");
+    } catch (e) {
+      print("Catc.h Create Nilai : $e");
+    }
   }
 
   static setNilai(String idNilai, double nilai) {
