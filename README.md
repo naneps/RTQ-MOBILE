@@ -1,4 +1,5 @@
-# RTQ-MOBILE
+<p align="center"> Rumah Tahfidz Qur;an</p>
+# RTQ-MOBILE APP
 
 ## Dibangun Menggunakan Teknologi
 
