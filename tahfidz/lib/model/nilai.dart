@@ -20,7 +20,7 @@ class Nilai {
     this.nilai,
   });
 
-  String? id;
+  dynamic id;
   String? idPelajaran;
   String? idKategori;
   String? idSantri;
@@ -28,7 +28,7 @@ class Nilai {
   String? nilai;
 
   factory Nilai.fromJson(Map<String, dynamic> json) => Nilai(
-        // id: json["id"],
+        id: json["id"],
         idPelajaran: json["id_pelajaran"],
         idSantri: json["id_santri"],
         idAsatidz: json["id_asatidz"],

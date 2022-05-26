@@ -14,28 +14,18 @@ void main() async {
   try {
     String baseUrl = "http://api.rtq-freelance.my.id/api-v1";
     String token =
-        "1ae2c666d5f81adfb376594d8e2366dc282c9c5c4b7996804d179415a2d6ed50405fb2987856ab80";
+        "c48ea743e989a545fd9673bc26f0bddbd0766738deefb9c349bbe56e5725ce227dd1085f56d2ae6b";
 
-    Future<void> createNilai(
-        {String? idSantri,
-        String? idPelajaran,
-        String? idAsatidz,
-        String? idKategori,
-        String? nilai}) async {
+    Future<void> updateNilai(
+        {String? idNilai, String? idAsatidz, String? nilai}) async {
       var body = {
-        // 'id_asatidz': idAsatidz,
-        // 'id_santri': idSantri,
-        // 'id_kategori_pelajaran': idKategori,
-        // 'id_pelajaran': idPelajaran,
         'nilai': nilai,
-        // 'nilai' => $request->nilai,
       };
       var json = jsonEncode(body);
 
       try {
-        var url = Uri.parse(
-            '$baseUrl/penilaian/store/$idPelajaran/$idSantri/$idKategori/$idAsatidz');
-        var response = await http.post(url,
+        var url = Uri.parse('$baseUrl/penilaian/put/$idNilai/$idAsatidz');
+        var response = await http.put(url,
             headers: {
               HttpHeaders.authorizationHeader: token,
               // "Content-Type": "application/json",
@@ -43,18 +33,18 @@ void main() async {
             },
             body: json);
 
-        print("StatusCode Create Nilai : ${response.body}");
+        print("StatusCode update Nilai : ${response.statusCode}");
+        if (response.statusCode == 200) {
+          print("Update Nilai Berhasil");
+        } else {
+          print("Update Nilai Gagal");
+        }
       } catch (e) {
         print("Catc.h Create Nilai : $e");
       }
     }
 
-    await createNilai(
-        idAsatidz: '1',
-        idKategori: '1',
-        idPelajaran: '2',
-        idSantri: '1',
-        nilai: '100');
+    await updateNilai(idNilai: "1", idAsatidz: "1", nilai: "20");
   } on Exception catch (e) {
     print(e);
   }

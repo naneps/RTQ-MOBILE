@@ -79,15 +79,19 @@ class _CardPelajaranState extends State<CardPelajaran> {
                         label: "${nilai.nilai}",
                         value: double.parse(nilai.nilai!),
                         divisions: 10,
-                        onChanged: (value) {
-                          setState(() {
-                            RemoteServices.setNilai(nilai.idPelajaran!, value);
-                          });
+                        onChanged: (value) async {
+                          print("nilai $value");
+                          await RemoteServices.updateNilai(
+                            token: SpUtil.getString('token'),
+                            idNilai: nilai.id,
+                            nilai: "100",
+                          );
+                          setState(() {});
                         },
                         onChangeEnd: (value) {
-                          setState(() {
-                            RemoteServices.setNilai(nilai.idPelajaran!, value);
-                          });
+                          setState(
+                            () {},
+                          );
                         },
                       )
                     ],
