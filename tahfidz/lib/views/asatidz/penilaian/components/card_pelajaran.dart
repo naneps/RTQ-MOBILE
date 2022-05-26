@@ -105,7 +105,7 @@ class _CardPelajaranState extends State<CardPelajaran> {
                     child: Text("Error"),
                   );
                 } else {
-                  return Center(
+                  return const Center(
                     child: Text("Nilai Kosong"),
                   );
                 }
