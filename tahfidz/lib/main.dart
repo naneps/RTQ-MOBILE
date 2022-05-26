@@ -19,11 +19,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         textTheme: TextTheme(bodyText1: GoogleFonts.poppins()),
       ),
-      title: "RTQ",
+      title: "RTQ App",
       // theme: ThemeData(appBarTheme: ),
       debugShowCheckedModeBanner: false,
-      home:
-          (SpUtil.getBool('status') != true) ? const LoginPage() : HomeScreen(),
+      home: (SpUtil.getBool('isLogin') != true)
+          ? const LoginPage()
+          : HomeScreen(),
     );
   }
 }

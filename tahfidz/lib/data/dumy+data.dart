@@ -99,72 +99,72 @@ List<Map<String, String>> dataPelajaran = [
 var dataNilai = [
   // Ilham
 
-  {
-    "id": "1",
-    "id_pelajaran": "1",
-    "nis_santri": "29092002",
-    "nilai": 100,
-  },
-  {
-    "id": "2",
-    "id_pelajaran": "2",
-    "nis_santri": "29092002",
-    "nilai": 100,
-  },
-  {
-    "id": "3",
-    "id_pelajaran": "3",
-    "nis_santri": "29092002",
-    "nilai": 100,
-  },
-  {
-    "id": "4",
-    "id_pelajaran": "4",
-    "nis_santri": "29092002",
-    "nilai": 0,
-  },
-  {
-    "id": "5",
-    "id_pelajaran": "5",
-    "nis_santri": "29092002",
-    "nilai": 0,
-  },
-  {
-    "id": "6",
-    "id_pelajaran": "6",
-    "nis_santri": "29092002",
-    "nilai": 0,
-  },
-  {
-    "id": "7",
-    "id_pelajaran": "7",
-    "nis_santri": "29092002",
-    "nilai": 0,
-  },
-  {
-    "id": "8",
-    "id_pelajaran": "8",
-    "nis_santri": "29092002",
-    "nilai": 0,
-  },
-  {
-    "id": "9",
-    "id_pelajaran": "9",
-    "nis_santri": "29092002",
-    "nilai": 0,
-  },
-  {
-    "id": "10",
-    "id_pelajaran": "10",
-    "nis_santri": "29092002",
-    "nilai": 0,
-  },
-  {
-    "id": "11",
-    "id_pelajaran": "11",
-    "nis_santri": "29092002",
-    "nilai": 0,
-  },
+  // {
+  //   "id": "1",
+  //   "id_pelajaran": "1",
+  //   "nis_santri": "29092002",
+  //   "nilai": 100,
+  // },
+  // {
+  //   "id": "2",
+  //   "id_pelajaran": "2",
+  //   "nis_santri": "29092002",
+  //   "nilai": 100,
+  // },
+  // {
+  //   "id": "3",
+  //   "id_pelajaran": "3",
+  //   "nis_santri": "29092002",
+  //   "nilai": 100,
+  // },
+  // {
+  //   "id": "4",
+  //   "id_pelajaran": "4",
+  //   "nis_santri": "29092002",
+  //   "nilai": 0,
+  // },
+  // {
+  //   "id": "5",
+  //   "id_pelajaran": "5",
+  //   "nis_santri": "29092002",
+  //   "nilai": 0,
+  // },
+  // {
+  //   "id": "6",
+  //   "id_pelajaran": "6",
+  //   "nis_santri": "29092002",
+  //   "nilai": 0,
+  // },
+  // {
+  //   "id": "7",
+  //   "id_pelajaran": "7",
+  //   "nis_santri": "29092002",
+  //   "nilai": 0,
+  // },
+  // {
+  //   "id": "8",
+  //   "id_pelajaran": "8",
+  //   "nis_santri": "29092002",
+  //   "nilai": 0,
+  // },
+  // {
+  //   "id": "9",
+  //   "id_pelajaran": "9",
+  //   "nis_santri": "29092002",
+  //   "nilai": 0,
+  // },
+  // {
+  //   "id": "10",
+  //   "id_pelajaran": "10",
+  //   "nis_santri": "29092002",
+  //   "nilai": 0,
+  // },
+  // {
+  //   "id": "11",
+  //   "id_pelajaran": "11",
+  //   "nis_santri": "29092002",
+  //   "nilai": 0,
+  // },
 
   // Budi
   {

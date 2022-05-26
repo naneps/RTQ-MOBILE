@@ -42,7 +42,7 @@ class RemoteServices {
 
         if (int.parse(user.idRole!) == 3) {
           Get.off(HomeScreen());
-          SpUtil.putBool('status', true);
+          SpUtil.putBool('isLogin', true);
           SpUtil.putString("nama", user.nama.toString());
           SpUtil.putString("id", user.id.toString());
           SpUtil.putString("keterangan", user.keterangan.toString());
@@ -51,7 +51,7 @@ class RemoteServices {
           SpUtil.putString("id_role", user.idRole.toString());
         } else if (int.parse(user.idRole!) == 4) {
           Get.off(HomeScreen());
-          SpUtil.putBool('status', true);
+          SpUtil.putBool('isLogin', true);
           SpUtil.putString("nama", user.nama.toString());
           SpUtil.putString("keterangan", user.keterangan.toString());
           SpUtil.putString("no_hp", user.noHp.toString());
@@ -239,21 +239,6 @@ class RemoteServices {
     return await Geolocator.getCurrentPosition();
   }
 
-  static Future<List<Pelajaran>?> fetchPelajaran() async {
-    try {
-      var url = Uri.parse(
-          'https://623aa9b8b5292b8bfcb807ee.mockapi.io/rtq/api/pelajaran');
-      var resposne = await http.get(url);
-      print("StatusCode Fetch Pelajaran : ${resposne.statusCode}");
-      if (resposne.statusCode == 200) {
-        var jsonString = resposne.body;
-        return pelajaranFromJson(jsonString);
-      }
-    } catch (e) {
-      print("Catch Fetch Pelajaran : $e");
-    }
-  }
-
   static Future<List<KategoriPenilaian>> fetchKategoriPenilaian(
       String token) async {
     try {
@@ -277,8 +262,8 @@ class RemoteServices {
   static Future<List<Pelajaran>?> filterPelajaran(
       String token, String? idJenjang, String? idKategoriPenilaian) async {
     try {
-      var url =
-          Uri.parse('$baseUrl/pelajaran/view/$idJenjang/$idKategoriPenilaian');
+      var url = Uri.parse(
+          '$baseUrl/kategori/pelajaran/view/$idJenjang/$idKategoriPenilaian');
       var resposne = await http
           .get(url, headers: {HttpHeaders.authorizationHeader: token});
       print("StatusCode Filter Pelajaran : ${resposne.statusCode}");
@@ -293,7 +278,7 @@ class RemoteServices {
   }
 
   static Future<Nilai> filterNilai({String? idPelajaran, String? nis}) async {
-    Nilai? nilai = Nilai();
+    Nilai? nilai;
 
     for (var i = 0; i < dataNilai.length; i++) {
       if (dataNilai[i]['id_pelajaran'] == idPelajaran &&

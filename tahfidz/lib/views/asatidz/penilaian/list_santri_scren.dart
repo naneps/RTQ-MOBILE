@@ -42,6 +42,7 @@ class _ListSantriScreenState extends State<ListSantriScreen> {
           // color: Colors.black,
 
           child: Column(
+            // mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SearchBox(
@@ -102,11 +103,13 @@ class _ListSantriScreenState extends State<ListSantriScreen> {
                         color: mainColor,
                       ),
                     );
-                  } else if (snapshot.data == []) {
+                  } else if (!snapshot.hasData) {
                     return Center(
-                      child: Text("Data Kosong",
+                      child: Text("Data Santri Tidak Ada",
                           style: GoogleFonts.poppins(
-                              fontSize: 32, color: Colors.white)),
+                              fontSize: 16,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500)),
                     );
                   }
                   return SizedBox(

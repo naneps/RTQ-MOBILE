@@ -74,7 +74,7 @@ class _CardPelajaranState extends State<CardPelajaran> {
                         min: 0,
                         max: 100,
                         label: "${nilai.nilai}",
-                        value: nilai.nilai!,
+                        value: nilai.nilai ?? 0,
                         divisions: 10,
                         onChanged: (value) {
                           setState(() {
@@ -94,13 +94,15 @@ class _CardPelajaranState extends State<CardPelajaran> {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
+                } else if (!snapshot.hasData) {
+                  return Center(
+                      child: TextButton(
+                    onPressed: () {},
+                    child: Text("Tambah Nilai"),
+                  ));
                 } else if (snapshot.hasError) {
                   return const Center(
                     child: Text("Error"),
-                  );
-                } else if (!snapshot.hasData) {
-                  return const Center(
-                    child: Text("Belum ada nilai"),
                   );
                 } else {
                   return Center(
