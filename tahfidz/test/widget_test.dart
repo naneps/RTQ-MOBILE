@@ -37,7 +37,9 @@ void main() async {
           print("StatusCode update Nilai : ${response.statusCode}");
         }
         if (response.statusCode == 200) {
-          print("Update Nilai Berhasil");
+          if (kDebugMode) {
+            print("Update Nilai Berhasil");
+          }
         } else {
           print("Update Nilai Gagal");
         }

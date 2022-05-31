@@ -260,12 +260,12 @@ class RemoteServices {
   }
 
   static Future<List<Pelajaran>?> filterPelajaran(
-      String token, String? idJenjang, String? idKategoriPenilaian) async {
+      {String? token, String? idJenjang, String? idKategoriPenilaian}) async {
     try {
       var url =
           Uri.parse('$baseUrl/pelajaran/view/$idKategoriPenilaian/$idJenjang');
       var resposne = await http
-          .get(url, headers: {HttpHeaders.authorizationHeader: token});
+          .get(url, headers: {HttpHeaders.authorizationHeader: token!});
       print("StatusCode Filter Pelajaran : ${resposne.statusCode}");
       if (resposne.statusCode == 200) {
         var jsonString = resposne.body;
@@ -275,6 +275,7 @@ class RemoteServices {
     } catch (e) {
       print("Catc.h Filter Pelajaran : $e");
     }
+    return null;
   }
 
   static Future<Nilai> filterNilai(

@@ -80,17 +80,18 @@ class CardJenjang extends StatelessWidget {
               ),
             ),
             Expanded(
-              flex: 5,
+              flex: 4,
               child: Container(
                 padding: EdgeInsets.only(left: 10, right: 10),
                 height: 30,
                 width: 150,
                 margin: EdgeInsets.only(left: 50, right: 10),
                 decoration: BoxDecoration(
-                    color: mainColor, borderRadius: BorderRadius.circular(30)),
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(30)),
                 child: Center(
                     child: Text(
-                  "",
+                  "10 Santri }",
                   style: GoogleFonts.poppins(
                       color: Colors.white,
                       fontSize: 13,
@@ -101,11 +102,11 @@ class CardJenjang extends StatelessWidget {
             Container(
               // height: 50,
               // width: 50,
-              child: GestureDetector(
-                onTap: onTap,
-                child: Icon(
+              child: IconButton(
+                onPressed: onTap,
+                icon: Icon(
                   LineIcons.alternateLongArrowRight,
-                  color: Colors.black,
+                  color: Color.fromARGB(255, 0, 0, 0),
                   size: 34,
                 ),
               ),

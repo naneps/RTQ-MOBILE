@@ -122,7 +122,7 @@ class _CardPelajaranState extends State<CardPelajaran> {
                           idAsatidz: SpUtil.getString('id'),
                           token: SpUtil.getString('token'),
                           idPelajaran: widget.pelajaran!.id.toString(),
-                          idSantri: args[2].id,
+                          idSantri: args[1].id,
                           nilai: 0.toString());
                       setState(() {});
 

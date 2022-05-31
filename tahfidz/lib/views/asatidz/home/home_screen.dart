@@ -7,7 +7,7 @@ import 'package:tahfidz/components/profile_avatar.dart';
 import 'package:tahfidz/controllers/asatid_controller.dart';
 import 'package:tahfidz/model/asatidz.dart';
 import 'package:tahfidz/services/remote_services.dart';
-import 'package:tahfidz/views/aurh/LoginPage.dart';
+import 'package:tahfidz/views/aurh/login_page.dart';
 import 'package:tahfidz/views/asatidz/home/components/asatidz_menu.dart';
 import 'package:tahfidz/views/asatidz/profile/profile_screen.dart';
 import 'package:tahfidz/views/walisantri/home/components/menu_section.dart';
@@ -31,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final heightBody = MediaQuery.of(context).size.height;
     final widhtBody = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: kBackground,
       appBar: AppBar(
         // shadowColor: Colors.transparent,
         elevation: 0,
