@@ -14,28 +14,42 @@ class AuthController {
       var response = await http
           .post(Uri.parse("http://api.rtq-freelance.my.id/api-v1/login"),
               // Uri.parse(baseUrl + 'api-v1/login'),
-              body: {'no_hp': telepon, 'password': password});
+              body: {
+            'no_hp': telepon,
+            'password': password,
+          });
       print(response.statusCode);
       if (response.statusCode == 200) {
         var user = userFromJson(response.body);
 
-        if (int.parse(user.idRole!) == 3) {
+        if (user.idRole == 3) {
           Get.off(HomeScreen());
           SpUtil.putBool('isLogin', true);
-          SpUtil.putString("nama", user.nama.toString());
           SpUtil.putString("id", user.id.toString());
-          SpUtil.putString("keterangan", user.keterangan.toString());
-          SpUtil.putString("no_hp", user.noHp.toString());
-          SpUtil.putString("token", user.token.toString());
-          SpUtil.putString("id_role", user.idRole.toString());
-        } else if (int.parse(user.idRole!) == 4) {
-          Get.off(HomeScreen());
-          SpUtil.putBool('isLogin', true);
           SpUtil.putString("nama", user.nama.toString());
           SpUtil.putString("keterangan", user.keterangan.toString());
           SpUtil.putString("no_hp", user.noHp.toString());
           SpUtil.putString("token", user.token.toString());
           SpUtil.putString("id_role", user.idRole.toString());
+          SpUtil.putString('jenis_kelamin', user.jenisKelamin.toString());
+          SpUtil.putString('tempah_lahir', user.tempatLahir.toString());
+          SpUtil.putString('gambar', user.gambar.toString());
+          SpUtil.putString('tanggal_lahir', user.tanggalLahir.toString());
+          SpUtil.putString('alamat', user.alamat.toString());
+        } else if (user.idRole == 4) {
+          Get.off(HomeScreen());
+          SpUtil.putBool('isLogin', true);
+          SpUtil.putString("id", user.id.toString());
+          SpUtil.putString("nama", user.nama.toString());
+          SpUtil.putString("keterangan", user.keterangan.toString());
+          SpUtil.putString("no_hp", user.noHp.toString());
+          SpUtil.putString("token", user.token.toString());
+          SpUtil.putString("id_role", user.idRole.toString());
+          SpUtil.putString('jenis_kelamin', user.jenisKelamin.toString());
+          SpUtil.putString('tempah_lahir', user.tempatLahir.toString());
+          SpUtil.putString('gambar', user.gambar.toString());
+          SpUtil.putString('tanggal_lahir', user.tanggalLahir.toString());
+          SpUtil.putString('alamat', user.alamat.toString());
         }
         return true;
       } else {
