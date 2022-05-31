@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/controllers/halaqoh_controllers.dart';
 import 'package:tahfidz/controllers/jenjang_controllers.dart';
@@ -26,7 +27,14 @@ class _JenjangScreenState extends State<JenjangScreen> {
       appBar: AppBar(
         shadowColor: Colors.transparent,
         backgroundColor: mainColor,
-        title: Text(" Jenjang "),
+        title: Text(
+          "Jenjang",
+          style: GoogleFonts.poppins(
+              letterSpacing: 2,
+              fontSize: 16,
+              color: Colors.white,
+              fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
       ),
       body: Container(
@@ -80,7 +88,7 @@ class _JenjangScreenState extends State<JenjangScreen> {
                       return ListView.builder(
                         itemCount: jenjangController.listJenjang.length,
                         itemBuilder: (context, index) {
-                          print(jenjangController.listJenjang[index].jenjang);
+                          // print(jenjangController.listJenjang[index].jenjang);
                           return CardJenjang(
                             nomor: index,
                             onTap: () async {

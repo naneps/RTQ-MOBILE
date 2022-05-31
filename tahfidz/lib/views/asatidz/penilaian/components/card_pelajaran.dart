@@ -23,7 +23,7 @@ class _CardPelajaranState extends State<CardPelajaran> {
   @override
   Widget build(BuildContext context) {
     print("args card pe;ajaran  $args");
-    print(widget.pelajaran!.id);
+    // print(widget.pelajaran!.id);
     return Container(
       margin: EdgeInsets.only(top: 5),
       padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),

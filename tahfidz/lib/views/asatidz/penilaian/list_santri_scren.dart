@@ -66,20 +66,6 @@ class _ListSantriScreenState extends State<ListSantriScreen> {
                           fontWeight: FontWeight.bold,
                           color: Colors.white),
                     ),
-                    // Text(
-                    //   " ${args[0]} ",
-                    //   style: GoogleFonts.poppins(
-                    //       fontSize: 18,
-                    //       fontWeight: FontWeight.bold,
-                    //       color: Colors.white),
-                    // ),
-                    // Text(
-                    //   " ${args[1]} ",
-                    //   style: GoogleFonts.poppins(
-                    //       fontSize: 18,
-                    //       fontWeight: FontWeight.bold,
-                    //       color: Colors.white),
-                    // ),
                   ],
                 ),
               ),

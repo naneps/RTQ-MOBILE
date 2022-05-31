@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:tahfidz/model/pelajaran.dart';
 
 var dataKategoriPenilaian = [
@@ -283,7 +286,6 @@ filterNilai(String idPelajaran, String nis) {
 //   return pelajaran;
 // }
 
-
 // var dataNilai = [
 //   {
 //     "id_nilai": "1",
@@ -317,4 +319,52 @@ filterNilai(String idPelajaran, String nis) {
 //   }
 // ];
 
+List<Map<String, dynamic>> dataAbensi = [];
 
+Future<bool> sendAbsen(DateTime tanggal, File gambar, String alamat) async {
+  print("Absen dikirim");
+  dataAbensi.add({
+    'tanggal': tanggal.day.toString() +
+        '-' +
+        tanggal.month.toString() +
+        '-' +
+        tanggal.year.toString(),
+    'gambar': gambar,
+    'alamat': alamat,
+  });
+  return true;
+}
+
+Future<List<Map<String, dynamic>>> getAbensi() async {
+  print("Absen diterima");
+  return dataAbensi;
+}
+
+Future<bool> isAbsen() async {
+  return true;
+}
+
+Future<bool> isNotAbsen() async {
+  return false;
+}
+
+Future<void> chekcAbsen() async {
+  if (await isAbsen()) {
+    print("Absen diterima");
+  } else {
+    print("Absen ditolak");
+  }
+
+  Future<bool?> checkAbsenToday(DateTime date) async {
+    date = DateTime.now();
+    for (var tanggal in dataAbensi) {
+      if (tanggal['tanggal'] == date.toString()) {
+        print("hari ini Sudah Absen ");
+        return await isAbsen();
+      } else {
+        print("Absen hari ini");
+        return await isNotAbsen();
+      }
+    }
+  }
+}

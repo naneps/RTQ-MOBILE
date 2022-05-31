@@ -7,7 +7,6 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/instance_manager.dart';
 import 'package:http/http.dart' as http;
 import 'package:sp_util/sp_util.dart';
-import 'package:tahfidz/data/dumy+data.dart';
 import 'package:tahfidz/model/Jenjang.dart';
 import 'package:tahfidz/model/asatidz.dart';
 import 'package:tahfidz/model/cabang.dart';
@@ -26,53 +25,11 @@ class RemoteServices {
   // static var baseUrl = "http://10.0.112.110:3000/";
   static var baseUrl = "http://api.rtq-freelance.my.id/api-v1";
 
-  static Future<bool?> loginProses(TextEditingController controllerTelepon,
-      TextEditingController controllerPassword) async {
-    try {
-      var response = await http.post(
-          Uri.parse("http://api.rtq-freelance.my.id/api-v1/login"),
-          // Uri.parse(baseUrl + 'api-v1/login'),
-          body: {
-            'no_hp': controllerTelepon.text,
-            'password': controllerPassword.text
-          });
-
-      if (response.statusCode == 200) {
-        var user = userFromJson(response.body);
-
-        if (int.parse(user.idRole!) == 3) {
-          Get.off(HomeScreen());
-          SpUtil.putBool('isLogin', true);
-          SpUtil.putString("nama", user.nama.toString());
-          SpUtil.putString("id", user.id.toString());
-          SpUtil.putString("keterangan", user.keterangan.toString());
-          SpUtil.putString("no_hp", user.noHp.toString());
-          SpUtil.putString("token", user.token.toString());
-          SpUtil.putString("id_role", user.idRole.toString());
-        } else if (int.parse(user.idRole!) == 4) {
-          Get.off(HomeScreen());
-          SpUtil.putBool('isLogin', true);
-          SpUtil.putString("nama", user.nama.toString());
-          SpUtil.putString("keterangan", user.keterangan.toString());
-          SpUtil.putString("no_hp", user.noHp.toString());
-          SpUtil.putString("token", user.token.toString());
-          SpUtil.putString("id_role", user.idRole.toString());
-        }
-        return true;
-      } else {
-        return false;
-      }
-    } catch (e) {
-      print('Error Login Proses : $e.');
-    }
-  }
-
   static Future<List<Jenjang>?> fetchJenjang(String token) async {
     try {
       var url = Uri.parse('$baseUrl/jenjang/view/all');
       var resposne = await http
           .get(url, headers: {HttpHeaders.authorizationHeader: token});
-      print("fetch jenjang code ${resposne.body}");
       if (resposne.statusCode == 200) {
         var jsonString = resposne.body;
         return jenjangFromJson(jsonString);
@@ -91,7 +48,6 @@ class RemoteServices {
       var resposne = await http
           .get(url, headers: {HttpHeaders.authorizationHeader: token});
       print("Status Code Fetch Cabang : ${resposne.statusCode}");
-      print("Body Fetch Cabang : ${resposne.body}");
       if (resposne.statusCode == 200) {
         var jsonString = resposne.body;
         return cabangsFromJson(jsonString);
@@ -159,7 +115,6 @@ class RemoteServices {
       print("StatusCode Fetch Halaqoh : ${resposne.statusCode}");
       if (resposne.statusCode == 200) {
         var jsonString = resposne.body;
-        print("respone body halqoh : $jsonString");
         return halaqohFromJson(jsonString);
       }
       return [];
@@ -269,7 +224,7 @@ class RemoteServices {
       print("StatusCode Filter Pelajaran : ${resposne.statusCode}");
       if (resposne.statusCode == 200) {
         var jsonString = resposne.body;
-        print(jsonString);
+        // print(jsonString);
         return pelajaranFromJson(jsonString);
       }
     } catch (e) {

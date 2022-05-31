@@ -15,7 +15,7 @@ class AuthController {
           .post(Uri.parse("http://api.rtq-freelance.my.id/api-v1/login"),
               // Uri.parse(baseUrl + 'api-v1/login'),
               body: {'no_hp': telepon, 'password': password});
-
+      print(response.statusCode);
       if (response.statusCode == 200) {
         var user = userFromJson(response.body);
 
