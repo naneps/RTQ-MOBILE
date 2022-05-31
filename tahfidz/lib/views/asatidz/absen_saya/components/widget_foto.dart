@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/constants.dart';
+import 'package:tahfidz/data/dumy+data.dart';
 import 'package:tahfidz/services/remote_services.dart';
 import 'package:tahfidz/views/asatidz/home/home_screen.dart';
 
@@ -149,27 +150,56 @@ class _WidgetFotoState extends State<WidgetFoto> {
                 ),
               ),
               onPressed: () async {
-                Map<String, String> data = {
-                  'alamat': address!,
-                  'id_asatidz': SpUtil.getString('id')!,
-                  'nama': SpUtil.getString('nama')!
-                };
+                // Map<String, String> data = {
+                //   'alamat': address!,
+                //   'id_asatidz': SpUtil.getString('id')!,
+                //   'nama': SpUtil.getString('nama')!
+                // };
 
-                await RemoteServices.addImage(data, widget.fileImage!)
-                    .then((value) {
-                  print(value);
-                  if (value!) {
-                    Get.off(
-                      HomeScreen(),
-                    );
-                  }
-                });
+                // await RemoteServices.addImage(data, widget.fileImage!)
+                //     .then((value) {
+                //   print(value);
+                //   if (value!) {
+                //     Get.off(
+                //       HomeScreen(),
+                //     );
+                //   }
+                // });
+                await sendAbsen(
+                  DateTime.now(),
+                  widget.fileImage!,
+                  address!,
+                );
+                checkAbsenToday();
+
+                setState(() {});
+                Navigator.pop(context);
+                print(dataAbensi);
               },
             ),
           )
         ],
       ),
     );
+  }
+
+  Future<bool?> checkAbsenToday() async {
+    var date = DateTime.now().day.toString() +
+        '-' +
+        DateTime.now().month.toString() +
+        '-' +
+        DateTime.now().year.toString();
+    print(date);
+    for (var i = 0; i < dataAbensi.length; i++) {
+      if (dataAbensi[i]['tanggal'] == date) {
+        print('hari ini sudah absen');
+        return await isAbsen();
+      } else {
+        print(dataAbensi[i]['tanggal']);
+        print("hari Ini Belum Absen");
+        return await isNotAbsen();
+      }
+    }
   }
 
   Future getImageFromCanera() async {

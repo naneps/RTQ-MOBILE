@@ -20,12 +20,12 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
   // var get = Get
   @override
   Widget build(BuildContext context) {
-    print("args $args");
+    print("args pelajaran screen $args");
     // print(kategori);
     return Scaffold(
       backgroundColor: kBackground,
       body: Padding(
-        padding: EdgeInsets.only(top: 50, bottom: 10),
+        padding: const EdgeInsets.only(top: 50, bottom: 10),
         child: FutureBuilder<List<KategoriPenilaian>>(
           future:
               RemoteServices.fetchKategoriPenilaian(SpUtil.getString("token")!),
@@ -39,68 +39,22 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
                 child: Text("Tidak Ada Data"),
               );
             }
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  margin: const EdgeInsets.only(bottom: 10),
-                  padding: const EdgeInsets.all(10),
-                  height: 400,
-                  width: MediaQuery.of(context).size.width,
-                  // color: const Color.fromARGB(255, 145, 145, 145),
-                  child: Column(
-                    children: [
-                      Text(
-                          "Penilaian Pelajaran ${snapshot.data![index].kategoriPenilaian}",
-                          style: GoogleFonts.poppins(
-                              color: kFontColor,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold)),
-                      const SizedBox(height: 10),
-
-                      FutureBuilder<List<Pelajaran>?>(
-                        future: RemoteServices.filterPelajaran(
-                            token: SpUtil.getString("token")!,
-                            idJenjang: args[0].toString(),
-                            idKategoriPenilaian:
-                                snapshot.data![index].id.toString()),
-                        builder: ((context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return Center(
-                              child: CircularProgressIndicator(
-                                backgroundColor:
-                                    Color.fromARGB(255, 191, 191, 191),
-                                valueColor:
-                                    AlwaysStoppedAnimation<Color>(mainColor),
-                              ),
-                            );
-                          } else if (snapshot.hasData) {
-                            List<Pelajaran>? listPelajaran = snapshot.data;
-                            print('list pelajaran $listPelajaran $index');
-                            return SizedBox(
-                              height: 300,
-                              width: double.infinity,
-                              child: ListView.builder(
-                                itemCount: snapshot.data!.length,
-                                itemBuilder: (context, index) {
-                                  return CardPelajaran(
-                                    pelajaran: snapshot.data![index],
-                                  );
-                                },
-                              ),
-                            );
-                          } else {
-                            return Container();
-                          }
-                        }),
-                      )
-                      // buildListPelajara(
-                      //     idKategori: snapshot.data![index].id.toString())
-                    ],
-                  ),
-                );
-              },
+            return Container(
+              // color: Colors.amber,
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  return TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        snapshot.data![index].kategoriPenilaian!,
+                        style: GoogleFonts.poppins(),
+                      ));
+                },
+              ),
             );
           },
         ),
