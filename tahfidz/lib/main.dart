@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sp_util/sp_util.dart';
-import 'package:tahfidz/views/aurh/login_page.dart';
+import 'package:tahfidz/views/aurh/hak_akses_page.dart';
+
 import 'package:tahfidz/views/asatidz/home/home_screen.dart';
 
 void main() async {
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       // theme: ThemeData(appBarTheme: ),
       debugShowCheckedModeBanner: false,
       home: (SpUtil.getBool('isLogin') != true)
-          ? const LoginPage()
+          ? const HakAksesPage()
           : HomeScreen(),
     );
   }

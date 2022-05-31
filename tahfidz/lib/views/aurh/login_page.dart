@@ -1,5 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/custom_text_field.dart';
@@ -15,13 +16,19 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   bool showPass = true;
+  final argumen = Get.arguments;
   AuthController authController = AuthController();
   @override
   Widget build(BuildContext context) {
+    // print();
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+      ),
       backgroundColor: kBackground,
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -89,6 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                   // if (_formKey.currentState!.validate()) {
                   authController
                       .login(
+                          idRole: int.parse(argumen['id']),
                           telepon: authController.teleponeController.text,
                           password: authController.passwordController.text)
                       .then((value) {

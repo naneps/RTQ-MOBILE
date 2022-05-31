@@ -124,7 +124,7 @@ class RemoteServices {
     return [];
   }
 
-  static Future<Asatidz?> getUserInfo(String token) async {
+  static Future<User?> getUserInfo(String token) async {
     try {
       var url = Uri.parse('$baseUrl/profil/user/detail');
       var response = await http
@@ -134,7 +134,7 @@ class RemoteServices {
       if (response.statusCode == 200) {
         final jsonResponse = json.decode(response.body);
 
-        return Asatidz.fromJson(jsonResponse);
+        return User.fromJson(jsonResponse);
       } else {
         throw Exception('Failed to load data!');
       }

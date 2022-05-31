@@ -9,45 +9,34 @@ import 'dart:convert';
 
 import 'package:tahfidz/model/pelajaran.dart';
 import 'package:http/http.dart' as http;
+import 'package:tahfidz/model/user.dart';
 
 void main() async {
   try {
     String baseUrl = "http://api.rtq-freelance.my.id/api-v1";
     String token =
-        "c48ea743e989a545fd9673bc26f0bddbd0766738deefb9c349bbe56e5725ce227dd1085f56d2ae6b";
-
-    Future<void> updateNilai(
-        {String? idNilai, String? idAsatidz, String? nilai}) async {
-      var body = {
-        'nilai': nilai,
-      };
-      var json = jsonEncode(body);
-
+        "a133c37753670a3a5ff33c6bc9c203c2f6858eede5fe5f752ff15856f51c94ddc160035d2b785eb1";
+    String id = "1";
+    Future<User?> getUserInfo(String token) async {
       try {
-        var url = Uri.parse('$baseUrl/penilaian/put/$idNilai/$idAsatidz');
-        var response = await http.put(url,
-            headers: {
-              HttpHeaders.authorizationHeader: token,
-              // "Content-Type": "application/json",
-              HttpHeaders.contentTypeHeader: "application/json"
-            },
-            body: json);
+        var url = Uri.parse('$baseUrl/profil/user/detail');
+        var response = await http
+            .get(url, headers: {HttpHeaders.authorizationHeader: token});
+        print("StatusCode getUserInfo :m ${response.statusCode}");
 
-        if (kDebugMode) {
-          print("StatusCode update Nilai : ${response.statusCode}");
-        }
         if (response.statusCode == 200) {
-          if (kDebugMode) {
-            print("Update Nilai Berhasil");
-          }
+          final jsonResponse = json.decode(response.body);
+          print(User.fromJson(jsonResponse).id);
+          return User.fromJson(jsonResponse);
         } else {
-          print("Update Nilai Gagal");
+          throw Exception('Failed to load data!');
         }
       } catch (e) {
-        print("Catc.h Create Nilai : $e");
+        print("Catch GetUserInfo ; $e");
       }
     }
 
+    await getUserInfo(token);
     // await updateNilai(idNilai: "2", idAsatidz: "1", nilai: "40");
   } on Exception catch (e) {
     // print(e);

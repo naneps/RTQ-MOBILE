@@ -9,16 +9,23 @@ class AuthController {
   final TextEditingController teleponeController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  Future<bool?> login({String? telepon, String? password}) async {
+  Future<bool?> login({
+    int? idRole,
+    String? telepon,
+    String? password,
+  }) async {
+    var response = await http
+        .post(Uri.parse("http://api.rtq-freelance.my.id/api-v1/login"),
+            // .post(Uri.parse("http://192.168.43.108:8000/api-v1/login"),
+            // Uri.parse(baseUrl + 'api-v1/login'),
+            body: {
+          'no_hp': telepon,
+          'password': password,
+          'id_role': '3',
+        });
+    print(response.statusCode);
+
     try {
-      var response = await http
-          .post(Uri.parse("http://api.rtq-freelance.my.id/api-v1/login"),
-              // Uri.parse(baseUrl + 'api-v1/login'),
-              body: {
-            'no_hp': telepon,
-            'password': password,
-          });
-      print(response.statusCode);
       if (response.statusCode == 200) {
         var user = userFromJson(response.body);
 
@@ -55,8 +62,9 @@ class AuthController {
       } else {
         return false;
       }
-    } catch (e) {
-      print('Error Login Proses : $e.');
+    } on Exception catch (e) {
+      print(e);
+      // TODO
     }
   }
 }
