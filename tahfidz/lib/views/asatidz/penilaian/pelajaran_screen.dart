@@ -23,40 +23,88 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
     print("args pelajaran screen $args");
     // print(kategori);
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Penilaian",
+          style: GoogleFonts.poppins(
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: mainColor,
+        elevation: 0,
+      ),
       backgroundColor: kBackground,
       body: Padding(
-        padding: const EdgeInsets.only(top: 50, bottom: 10),
-        child: FutureBuilder<List<KategoriPenilaian>>(
-          future:
-              RemoteServices.fetchKategoriPenilaian(SpUtil.getString("token")!),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (!snapshot.hasData || snapshot.hasError) {
-              return const Center(
-                child: Text("Tidak Ada Data"),
-              );
-            }
-            return Container(
-              // color: Colors.amber,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: snapshot.data!.length,
-                itemBuilder: (context, index) {
-                  return TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        snapshot.data![index].kategoriPenilaian!,
-                        style: GoogleFonts.poppins(),
-                      ));
+        padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 10),
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.start,
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: Get.width,
+              height: 100,
+              alignment: Alignment.center,
+              // color: mainColor,
+              padding: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(35),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.4),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    blurStyle: BlurStyle.inner,
+                    offset: Offset(1, 3), // changes position of shadow
+                  ),
+                ],
+              ),
+              child: FutureBuilder<List<KategoriPenilaian>>(
+                future: RemoteServices.fetchKategoriPenilaian(
+                    SpUtil.getString("token")!),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (!snapshot.hasData || snapshot.hasError) {
+                    return const Center(
+                      child: Text("Tidak Ada Data"),
+                    );
+                  }
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {},
+                        child: Container(
+                          alignment: Alignment.center,
+                          width: Get.width / 5,
+                          height: 100,
+                          padding: EdgeInsets.all(10),
+                          // width: Get.width / 2.5,
+                          color: mainColor,
+
+                          margin: EdgeInsets.only(left: 5, right: 5),
+                          child: Text(
+                            snapshot.data![index].kategoriPenilaian!,
+                            style: GoogleFonts.poppins(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white),
+                          ),
+                        ),
+                      );
+                    },
+                  );
                 },
               ),
-            );
-          },
+            ),
+          ],
         ),
       ),
     );

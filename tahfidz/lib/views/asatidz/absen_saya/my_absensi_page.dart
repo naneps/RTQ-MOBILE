@@ -35,7 +35,7 @@ class _MyAbsenState extends State<MyAbsen> {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -57,7 +57,7 @@ class _MyAbsenState extends State<MyAbsen> {
                       // color: kMainColor,
                       child: Column(
                         children: [
-                          WidgetAttendance(),
+                          const WidgetAttendance(),
                           const SizedBox(
                             height: 20,
                           ),
@@ -126,7 +126,7 @@ class CardAttendance extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -136,17 +136,17 @@ class CardAttendance extends StatelessWidget {
             spreadRadius: 2,
             blurRadius: 5,
             blurStyle: BlurStyle.inner,
-            offset: Offset(1, 3), // changes position of shadow
+            offset: const Offset(1, 3), // changes position of shadow
           ),
         ],
       ),
       child: Row(
         children: [
-          CircleAvatar(
+          const CircleAvatar(
             radius: 30,
           ),
           Container(
-            margin: EdgeInsets.only(left: 20),
+            margin: const EdgeInsets.only(left: 20),
             width: 200,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
