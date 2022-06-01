@@ -7,10 +7,13 @@ import 'package:tahfidz/components/profile_avatar.dart';
 import 'package:tahfidz/controllers/asatid_controller.dart';
 import 'package:tahfidz/model/asatidz.dart';
 import 'package:tahfidz/services/remote_services.dart';
+import 'package:tahfidz/views/aurh/hak_akses_page.dart';
 import 'package:tahfidz/views/aurh/login_page.dart';
 import 'package:tahfidz/views/asatidz/home/components/asatidz_menu.dart';
 import 'package:tahfidz/views/asatidz/profile/profile_screen.dart';
 import 'package:tahfidz/views/walisantri/home/components/menu_section.dart';
+
+import '../../../model/user.dart';
 
 class HomeScreen extends StatefulWidget {
   // const HomeScreen({Key? key}) : super(key: key);
@@ -63,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   value: 1,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
+                    children: const [
                       Icon(
                         Icons.logout,
                         color: Colors.black,
@@ -95,8 +98,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: widhtBody,
                 // color: Colors.black,
                 child: Stack(
-                  // fit: StackFit.expand,
-                  // clipBehavior: Clip.antiAliasWithSaveLayer,
                   alignment: Alignment.center,
                   children: [
                     Positioned(
@@ -134,73 +135,42 @@ class _HomeScreenState extends State<HomeScreen> {
                                 SpUtil.getString('token')!),
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
-                              // print(snapshot.data);
-
-                              Asatidz? asatidz = snapshot.data;
-
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return Center(
-                                  child: CircularProgressIndicator(
-                                    backgroundColor: Colors.yellow,
-                                    strokeWidth: 10,
-                                    // value: 1,
-                                    color: mainColor,
-                                  ),
+                              print(snapshot.data);
+                              if (snapshot.hasData) {
+                                return Column(
+                                  // color: mainColor,
+                                  children: [
+                                    ProfilePicture(
+                                        sizeAvatar: 90,
+                                        sizeIcon: 0,
+                                        widthBtn: 0,
+                                        avatar: snapshot.data['gambar']),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      snapshot.data['nama'],
+                                      // SpUtil.getString('id_role')!,
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      snapshot.data['hak_akses']!,
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
                                 );
-                              } else if (snapshot.data == null) {
+                              } else {
                                 return Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      CircularProgressIndicator(
-                                        backgroundColor: Colors.yellow,
-                                        strokeWidth: 10,
-                                        // value: 1,
-                                        color: mainColor,
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      const Text("Data Sedang Dalam Perjalanan")
-                                    ],
-                                  ),
+                                  child: CircularProgressIndicator(),
                                 );
-                                // return CircularProgressIndicator();
-                              } else if (snapshot.hasError) {
-                                return const CircularProgressIndicator();
                               }
-                              // print(asatid.avatar);
-
-                              return Column(
-                                // color: mainColor,
-                                children: [
-                                  ProfilePicture(
-                                      sizeAvatar: 90,
-                                      sizeIcon: 0,
-                                      widthBtn: 0,
-                                      avatar: asatidz!.gambar),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    SpUtil.getString("nama")!,
-                                    // SpUtil.getString('id_role')!,
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    asatidz.hakAkses!,
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ],
-                              );
                             },
                           ),
                         ),
@@ -230,7 +200,7 @@ class _HomeScreenState extends State<HomeScreen> {
         break;
       case 1:
         SpUtil.clear();
-        Get.off(LoginPage());
+        Get.off(const HakAksesPage());
         break;
       default:
     }

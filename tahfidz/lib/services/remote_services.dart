@@ -124,17 +124,17 @@ class RemoteServices {
     return [];
   }
 
-  static Future<User?> getUserInfo(String token) async {
+  static Future getUserInfo(String token) async {
     try {
       var url = Uri.parse('$baseUrl/profil/user/detail');
       var response = await http
           .get(url, headers: {HttpHeaders.authorizationHeader: token});
-      print("StatusCode getUserInfo : ${response.statusCode}");
+      print("StatusCode getUserInfo :m ${response.statusCode}");
 
       if (response.statusCode == 200) {
         final jsonResponse = json.decode(response.body);
-
-        return User.fromJson(jsonResponse);
+        // print(User.fromJson(jsonResponse));
+        return jsonResponse;
       } else {
         throw Exception('Failed to load data!');
       }
