@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
+import 'package:tahfidz/views/asatidz/absen_saya/components/widget_attendance.dart';
 import 'package:tahfidz/views/asatidz/absen_saya/components/widget_foto.dart';
 
 import '../../../data/dumy+data.dart';
@@ -24,11 +25,12 @@ class _MyAbsenState extends State<MyAbsen> {
       backgroundColor: kBackground,
       appBar: AppBar(
         // shadowColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
         elevation: 0,
-        backgroundColor: mainColor,
+        // backgroundColor: mainColor,
         centerTitle: true,
         title: Text(
-          "Absen Asatidz",
+          "Absen Mandiri",
           style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.w600),
         ),
       ),
@@ -42,45 +44,35 @@ class _MyAbsenState extends State<MyAbsen> {
               builder: (context, snapshot) {
                 // print(dataAbensi);
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 } else if (snapshot.hasData) {
                   print('data cek absensi ${snapshot.data}');
 
                   if (snapshot.data == true) {
-                    return Container(
+                    return SizedBox(
                       width: MediaQuery.of(context).size.width,
                       // height: MediaQuery.of(context).size.height,
                       // color: kMainColor,
                       child: Column(
                         children: [
-                          Container(
-                            // color: Colors.redAccent,
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height / 2.8,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset('assets/images/checklist.png'),
-                                Text(
-                                  "Anda sudah absen hari ini",
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w600,
-                                    color: kFontColor,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                              ],
-                            ),
+                          WidgetAttendance(),
+                          const SizedBox(
+                            height: 20,
                           ),
                           Container(
-                            color: Colors.blueAccent,
+                            // color: Colors.blueAccent,
                             width: MediaQuery.of(context).size.width,
                             height: MediaQuery.of(context).size.height / 2.8,
+                            child: ListView.builder(
+                                itemCount: dataAbensi.length,
+                                itemBuilder: (context, index) {
+                                  return CardAttendance(
+                                    alamat: dataAbensi[index]['alamat'],
+                                    tanggal: dataAbensi[index]['tanggal'],
+                                  );
+                                }),
                           ),
                         ],
                       ),
@@ -117,5 +109,71 @@ class _MyAbsenState extends State<MyAbsen> {
         return await isNotAbsen();
       }
     }
+  }
+}
+
+class CardAttendance extends StatelessWidget {
+  CardAttendance({
+    this.alamat,
+    this.tanggal,
+    Key? key,
+  }) : super(key: key);
+
+  String? nama;
+  String? tanggal;
+  String? alamat;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.4),
+            spreadRadius: 2,
+            blurRadius: 5,
+            blurStyle: BlurStyle.inner,
+            offset: Offset(1, 3), // changes position of shadow
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 30,
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 20),
+            width: 200,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  tanggal!,
+                  style: GoogleFonts.poppins(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: kFontColor,
+                  ),
+                ),
+                Text(
+                  alamat!,
+                  maxLines: 3,
+                  style: GoogleFonts.poppins(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                    color: kFontColor,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
