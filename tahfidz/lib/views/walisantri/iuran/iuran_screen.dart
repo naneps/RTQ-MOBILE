@@ -46,7 +46,8 @@ class _IuranScreenState extends State<IuranScreen> {
           tglIuran: "20 Oktober 2002"),
     );
     return Scaffold(
-      backgroundColor: Color.fromARGB(228, 255, 255, 255),
+      backgroundColor: kBackground,
+      // backgroundColor: Color.fromARGB(228, 255, 255, 255),
       appBar: AppBar(
         title: const Text("Rekap Iuran"),
         centerTitle: true,

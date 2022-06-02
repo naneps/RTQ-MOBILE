@@ -43,12 +43,12 @@ class SectionMenuSantri extends StatelessWidget {
                 Get.to(IuranScreen(), transition: Transition.circularReveal)
               },
             ),
-            ItemMenu(
-              title: 'Prestasi',
-              icon: Icons.book_online_outlined,
-              color: 0xffFD637B,
-              onTap: () => Get.to(PrestasiScreen()),
-            ),
+            // ItemMenu(
+            //   title: 'Prestasi',
+            //   icon: Icons.book_online_outlined,
+            //   color: 0xffFD637B,
+            //   onTap: () => Get.to(PrestasiScreen()),
+            // ),
             ItemMenu(
                 onTap: () => Get.to(ProfileAnakScreen(),
                     transition: Transition.circularReveal),

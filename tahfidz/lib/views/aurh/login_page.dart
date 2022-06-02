@@ -31,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
         child: SingleChildScrollView(
           reverse: true,
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Container(
             height: MediaQuery.of(context).size.height / 1.5,
             width: MediaQuery.of(context).size.width,
@@ -112,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                           Get.snackbar(
                             'Autentikasi Gagal',
                             'Periksa Telepon dan Kata Sandi Anda',
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.error,
                               color: Colors.red,
                             ),
@@ -120,8 +120,8 @@ class _LoginPageState extends State<LoginPage> {
                             colorText: Colors.black,
                             borderRadius: 10,
                             snackPosition: SnackPosition.BOTTOM,
-                            margin: EdgeInsets.all(10),
-                            duration: Duration(seconds: 2),
+                            margin: const EdgeInsets.all(10),
+                            duration: const Duration(seconds: 2),
                           );
                         }
                       });

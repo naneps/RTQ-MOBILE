@@ -19,7 +19,7 @@ class CardIuran extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 10),
       padding: EdgeInsets.all(10),
       width: size.width,
-      height: 60,
+      height: 80,
       color: Colors.white,
       child: Row(
         children: [

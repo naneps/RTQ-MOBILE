@@ -76,7 +76,7 @@ class AuthController {
           Get.snackbar(
             'Berhasil',
             'Anda Berhasil Masuk Sebagai ${user.keterangan}',
-            icon: Icon(
+            icon: const Icon(
               Icons.check,
               color: Colors.green,
             ),
@@ -85,7 +85,7 @@ class AuthController {
             borderRadius: 10,
             snackPosition: SnackPosition.BOTTOM,
             margin: EdgeInsets.all(10),
-            duration: Duration(seconds: 2),
+            duration: const Duration(seconds: 2),
           );
         }
 

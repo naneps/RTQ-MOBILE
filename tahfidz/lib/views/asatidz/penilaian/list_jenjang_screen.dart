@@ -38,7 +38,7 @@ class _JenjangScreenState extends State<JenjangScreen> {
         centerTitle: true,
       ),
       body: Container(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         color: mainColor,
         height: height,
         width: width,
@@ -56,7 +56,7 @@ class _JenjangScreenState extends State<JenjangScreen> {
               ),
               child: DropwDownCabang(),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             // Text("${halaqohController.getSelectedHalaqoh().namaDaerah}"),
@@ -92,6 +92,9 @@ class _JenjangScreenState extends State<JenjangScreen> {
                           return CardJenjang(
                             nomor: index,
                             onTap: () async {
+                              // ignore: unnecessary_null_comparison
+                              if (halaqohController.getSelectedHalaqoh() ==
+                                  null) {}
                               await Get.to(ListSantriScreen(), arguments: [
                                 jenjangController.listJenjang[index].id
                                     .toString(),

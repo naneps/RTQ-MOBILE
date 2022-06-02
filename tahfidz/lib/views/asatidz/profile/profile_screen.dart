@@ -12,7 +12,6 @@ import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/profile_avatar.dart';
 import 'package:tahfidz/controllers/asatid_controller.dart';
-import 'package:tahfidz/controllers/profile_controller.dart';
 import 'package:tahfidz/model/asatidz.dart';
 
 import 'package:tahfidz/services/remote_services.dart';
@@ -151,52 +150,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Padding(
                     padding: const EdgeInsets.all(10),
                     child: Column(
-                      children: [
-                        // buildTextField("Nama", asatidz!.nama.toString(), false,
-                        //     false, ProfileController.nama),
-                        buildTextField(
-                            "Telepon",
-                            ProfileController.telepon.text,
-                            false,
-                            false,
-                            ProfileController.telepon),
-                        buildTextField("Alamat", ProfileController.alamat.text,
-                            false, false, ProfileController.alamat),
-                        buildTextField(
-                            "Tanggal Lahir",
-                            ProfileController.tanggalLahir.text,
-                            false,
-                            false,
-                            ProfileController.tanggalLahir),
-                        buildTextField(
-                            "Tempat Lahir",
-                            ProfileController.tempatLahir.text,
-                            false,
-                            false,
-                            ProfileController.tempatLahir),
-                        // buildRadioGender(),
-                        // example(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            OutlineButton(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 50),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                              onPressed: () {
-                                Get.back();
-                              },
-                              child: const Text("Batal",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      letterSpacing: 2.2,
-                                      color: Colors.black)),
-                            ),
-                            ButtonSave()
-                          ],
-                        ),
-                      ],
+                      children: [],
                     ),
                   ),
                 ),
@@ -310,7 +264,6 @@ class ButtonSave extends StatelessWidget {
   }
 }
 
-
 // FutureBuilder(
 //                         future: RemoteServices.getUserInfo(widget.token!),
 //                         builder:
@@ -348,9 +301,6 @@ class ButtonSave extends StatelessWidget {
 //                           );
 //                         },
 //                       ),
-
-
-
 
 // Obx(
 //                           () {
