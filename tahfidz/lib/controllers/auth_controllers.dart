@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sp_util/sp_util.dart';
@@ -21,16 +23,16 @@ class AuthController {
             body: {
           'no_hp': telepon,
           'password': password,
-          'id_role': '3',
+          'id_role': idRole.toString(),
         });
-    print(response.statusCode);
+    print(response.body);
 
     try {
       if (response.statusCode == 200) {
         var user = userFromJson(response.body);
 
         if (user.idRole == 3) {
-          Get.off(HomeScreen());
+          Get.offAll(HomeScreen());
           SpUtil.putBool('isLogin', true);
           SpUtil.putString("id", user.id.toString());
           SpUtil.putString("nama", user.nama.toString());
@@ -43,8 +45,22 @@ class AuthController {
           SpUtil.putString('gambar', user.gambar.toString());
           SpUtil.putString('tanggal_lahir', user.tanggalLahir.toString());
           SpUtil.putString('alamat', user.alamat.toString());
+          Get.snackbar(
+            'Berhasil',
+            'Anda Berhasil Masuk Sebagai ${user.keterangan}',
+            icon: Icon(
+              Icons.check,
+              color: Colors.green,
+            ),
+            backgroundColor: Colors.white,
+            colorText: Colors.black,
+            borderRadius: 10,
+            snackPosition: SnackPosition.BOTTOM,
+            margin: EdgeInsets.all(10),
+            duration: Duration(seconds: 2),
+          );
         } else if (user.idRole == 4) {
-          Get.off(HomeScreen());
+          Get.offAll(HomeScreen());
           SpUtil.putBool('isLogin', true);
           SpUtil.putString("id", user.id.toString());
           SpUtil.putString("nama", user.nama.toString());
@@ -57,7 +73,22 @@ class AuthController {
           SpUtil.putString('gambar', user.gambar.toString());
           SpUtil.putString('tanggal_lahir', user.tanggalLahir.toString());
           SpUtil.putString('alamat', user.alamat.toString());
+          Get.snackbar(
+            'Berhasil',
+            'Anda Berhasil Masuk Sebagai ${user.keterangan}',
+            icon: Icon(
+              Icons.check,
+              color: Colors.green,
+            ),
+            backgroundColor: Colors.white,
+            colorText: Colors.black,
+            borderRadius: 10,
+            snackPosition: SnackPosition.BOTTOM,
+            margin: EdgeInsets.all(10),
+            duration: Duration(seconds: 2),
+          );
         }
+
         return true;
       } else {
         return false;
@@ -66,5 +97,23 @@ class AuthController {
       print(e);
       // TODO
     }
+  }
+
+  Future<bool?> logOut({String? telepon, String? token}) async {
+    var response = await http.post(
+      Uri.parse(
+        "http://api.rtq-freelance.my.id/api-v1/logout/${SpUtil.getString('no_hp')}",
+      ),
+      headers: {HttpHeaders.authorizationHeader: SpUtil.getString('token')!},
+    );
+    print(response.body);
+    if (response.statusCode == 200) {
+      // SpUtil.clear();
+      return true;
+    } else {
+      return false;
+    }
+
+    // .post(Uri.parse("http://
   }
 }

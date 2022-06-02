@@ -20,7 +20,7 @@ class _LoginPageState extends State<LoginPage> {
   AuthController authController = AuthController();
   @override
   Widget build(BuildContext context) {
-    // print();
+    print(argumen['id']);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -99,8 +99,8 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 20),
                 TextButton(
                     onPressed: () {
-                      print(authController.teleponeController.text);
-                      print(authController.passwordController.text);
+                      // print(authController.teleponeController.text);
+                      // print(authController.passwordController.text);
                       // if (_formKey.currentState!.validate()) {
                       authController
                           .login(
@@ -108,8 +108,22 @@ class _LoginPageState extends State<LoginPage> {
                               telepon: authController.teleponeController.text,
                               password: authController.passwordController.text)
                           .then((value) {
-                        print(value);
-                        if (value!) {}
+                        if (!value!) {
+                          Get.snackbar(
+                            'Autentikasi Gagal',
+                            'Periksa Telepon dan Kata Sandi Anda',
+                            icon: Icon(
+                              Icons.error,
+                              color: Colors.red,
+                            ),
+                            backgroundColor: Colors.white,
+                            colorText: Colors.black,
+                            borderRadius: 10,
+                            snackPosition: SnackPosition.BOTTOM,
+                            margin: EdgeInsets.all(10),
+                            duration: Duration(seconds: 2),
+                          );
+                        }
                       });
                       // }
                       // print(authController.teleponeController.text);

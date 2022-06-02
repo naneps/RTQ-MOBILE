@@ -371,11 +371,13 @@ Future<void> chekcAbsen() async {
 
 List<Map<String, dynamic>> datahakAkses = [
   {
-    "hakAkses": 'Asatidz',
     "id": '3',
+    "hakAkses": 'Asatidz',
+    "gambar": 'assets/images/',
   },
   {
-    "hakAkses": 'Wali Santri',
     "id": '4',
+    "hakAkses": 'Wali Santri',
+    "gambar": 'assets/images/ ',
   },
 ];

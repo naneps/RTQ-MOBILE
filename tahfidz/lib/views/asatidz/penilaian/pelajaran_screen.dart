@@ -17,8 +17,21 @@ class PelajaranScreen extends StatefulWidget {
 
 class _PelajaranScreenState extends State<PelajaranScreen> {
   final args = Get.arguments;
+  int? selectedItem;
+  Future<List<KategoriPenilaian>>? listPelajaran;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    selectedItem;
+    listPelajaran =
+        RemoteServices.fetchKategoriPenilaian(SpUtil.getString('token')!);
+  }
+
   // var get = Get
   @override
+  String? selectedKategori;
   Widget build(BuildContext context) {
     print("args pelajaran screen $args");
     // print(kategori);
@@ -67,8 +80,8 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
-                      child: CircularProgressIndicator(),
-                    );
+                        // child: CircularProgressIndicator(),
+                        );
                   } else if (!snapshot.hasData || snapshot.hasError) {
                     return const Center(
                       child: Text("Tidak Ada Data"),
@@ -80,14 +93,35 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
                       return InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          setState(() {
+                            selectedItem = index;
+                            selectedKategori =
+                                snapshot.data![index].id.toString();
+                          });
+                        },
                         child: Container(
                           alignment: Alignment.center,
-                          width: Get.width / 5,
+                          // width: G,
                           height: 100,
                           padding: EdgeInsets.all(10),
                           // width: Get.width / 2.5,
-                          color: mainColor,
+                          decoration: BoxDecoration(
+                            color: index == selectedItem
+                                ? mainColor
+                                : Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.4),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                blurStyle: BlurStyle.inner,
+                                offset:
+                                    Offset(1, 3), // changes position of shadow
+                              ),
+                            ],
+                          ),
 
                           margin: EdgeInsets.only(left: 5, right: 5),
                           child: Text(
@@ -95,7 +129,7 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
                             style: GoogleFonts.poppins(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,
-                                color: Colors.white),
+                                color: kFontColor),
                           ),
                         ),
                       );
@@ -104,6 +138,10 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
                 },
               ),
             ),
+            SizedBox(
+              height: 40,
+            ),
+            buildListPelajara(idKategori: selectedKategori)
           ],
         ),
       ),
@@ -117,22 +155,25 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
           idJenjang: args[0].toString(),
           idKategoriPenilaian: idKategori),
       builder: ((context, snapshot) {
+        print(snapshot.data);
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
             child: CircularProgressIndicator(
-              backgroundColor: Color.fromARGB(255, 191, 191, 191),
+              backgroundColor: const Color.fromARGB(255, 191, 191, 191),
               valueColor: AlwaysStoppedAnimation<Color>(mainColor),
             ),
           );
         } else if (snapshot.hasData) {
           return SizedBox(
-            height: 200,
+            height: Get.height / 2,
             width: double.infinity,
             child: ListView.builder(
-              itemCount: snapshot.data!.length,
+              itemCount: snapshot.data?.length,
               itemBuilder: (context, index) {
+                Pelajaran pelajaran = snapshot.data![index];
                 return CardPelajaran(
-                  pelajaran: snapshot.data![index],
+                  nomor: index + 1,
+                  pelajaran: pelajaran,
                 );
               },
             ),

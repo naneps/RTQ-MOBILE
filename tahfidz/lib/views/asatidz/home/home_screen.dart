@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/profile_avatar.dart';
 import 'package:tahfidz/controllers/asatid_controller.dart';
+import 'package:tahfidz/controllers/auth_controllers.dart';
 import 'package:tahfidz/model/asatidz.dart';
 import 'package:tahfidz/services/remote_services.dart';
 import 'package:tahfidz/views/aurh/hak_akses_page.dart';
@@ -136,6 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
                               print(snapshot.data);
+                              print(SpUtil.getString('token'));
                               if (snapshot.hasData) {
                                 return Column(
                                   // color: mainColor,
@@ -190,7 +193,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void onSelected(BuildContext context, int item) {
+  void onSelected(BuildContext context, int item) async {
+    AuthController authController = AuthController();
     switch (item) {
       case 0:
         Get.to(ProfileScreen(
@@ -199,8 +203,16 @@ class _HomeScreenState extends State<HomeScreen> {
         ));
         break;
       case 1:
-        SpUtil.clear();
-        Get.off(const HakAksesPage());
+        await authController
+            .logOut(
+                telepon: SpUtil.getString('no_hp'),
+                token: SpUtil.getString('token'))
+            .then((value) {
+          if (value == true) {
+            SpUtil.clear();
+            Get.off(const HakAksesPage());
+          }
+        });
         break;
       default:
     }
@@ -209,9 +221,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget showMenu(int idRole) {
     var menu;
     if (idRole == 3) {
-      menu = SectionMenuAsatidz();
+      menu = const SectionMenuAsatidz();
     } else if (idRole == 4) {
-      menu = SectionMenuSantri();
+      menu = const SectionMenuSantri();
     }
     return menu;
   }

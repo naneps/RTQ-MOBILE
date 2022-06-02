@@ -29,7 +29,7 @@ class _CardPelajaranState extends State<CardPelajaran> {
       padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
       height: 100,
       width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(35))),
       child: Row(
@@ -57,7 +57,7 @@ class _CardPelajaranState extends State<CardPelajaran> {
               future: RemoteServices.filterNilai(
                   token: SpUtil.getString('token'),
                   idPelajaran: widget.pelajaran!.id.toString(),
-                  idSantri: args[2].id),
+                  idSantri: args[1].id),
               builder: (context, AsyncSnapshot snapshot) {
                 print("data nilai ${snapshot.data}");
                 if (snapshot.hasData) {

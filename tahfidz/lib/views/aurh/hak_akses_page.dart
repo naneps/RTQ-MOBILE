@@ -17,7 +17,8 @@ class _HakAksesPageState extends State<HakAksesPage> {
   // bool iSelected = false;
   int? selectedIndex;
   dynamic selectedHakAkses;
-
+  // final _formKey = GlobalKey<ElevatedB>();
+  bool isButtonActive = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,7 +116,28 @@ class _HakAksesPageState extends State<HakAksesPage> {
                   ),
                 ),
                 onPressed: () {
-                  Get.to(LoginPage(), arguments: selectedHakAkses);
+                  setState(() {
+                    isButtonActive = false;
+                  });
+
+                  if (selectedHakAkses == null) {
+                    Get.snackbar(
+                      'Peringatan',
+                      'Pilih Hak Akses Terlebih Dahulu',
+                      icon: Icon(
+                        Icons.error,
+                        color: Colors.red,
+                      ),
+                      backgroundColor: Colors.white,
+                      colorText: Colors.black,
+                      borderRadius: 10,
+                      snackPosition: SnackPosition.BOTTOM,
+                      margin: EdgeInsets.all(10),
+                      duration: Duration(seconds: 2),
+                    );
+                  } else {
+                    Get.to(LoginPage(), arguments: selectedHakAkses);
+                  }
                 },
                 child: SizedBox(
                     width: Get.width,
