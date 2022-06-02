@@ -68,7 +68,7 @@ class _DropwDownCabangState extends State<DropwDownCabang> {
         ),
         child: const Center(
           child: Text(
-            'Halaqoh',
+            'Halaq  oh',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
