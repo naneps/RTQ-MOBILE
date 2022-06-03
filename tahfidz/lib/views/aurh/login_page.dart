@@ -33,11 +33,11 @@ class _LoginPageState extends State<LoginPage> {
           reverse: true,
           physics: const BouncingScrollPhysics(),
           child: Container(
-            height: MediaQuery.of(context).size.height / 1.5,
+            // height: MediaQuery.of(context).size.height / 1,
             width: MediaQuery.of(context).size.width,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
                   height: 150,
@@ -49,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
                         'Selamat datang di Rumah Tahfidz Qur"an',
                         textStyle: GoogleFonts.poppins(
                           color: kFontColor,
-                          fontSize: 30,
+                          fontSize: 34,
                           fontWeight: FontWeight.bold,
                         ),
                         curve: Curves.linearToEaseOut,
@@ -62,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 //
-                const SizedBox(height: 50),
+                const SizedBox(height: 20),
                 Text(
                   "Masuk Sebagai ${argumen['hakAkses']}",
                   style: GoogleFonts.poppins(
@@ -95,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                   hintText: "Kata Sandi",
                   labelText: "Kata Sandi",
                 ),
-                const SizedBox(height: 30),
+
                 const SizedBox(height: 20),
                 TextButton(
                     onPressed: () {

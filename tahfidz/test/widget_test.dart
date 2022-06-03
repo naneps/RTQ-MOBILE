@@ -10,6 +10,7 @@ import 'dart:convert';
 import 'package:tahfidz/model/pelajaran.dart';
 import 'package:http/http.dart' as http;
 import 'package:tahfidz/model/user.dart';
+import 'dart:convert';
 
 void main() async {
   try {
@@ -19,6 +20,26 @@ void main() async {
     String id = "1";
 
     // await getUserInfo(token);
+    Future getSantriByWali() async {
+      final response = await http.get(
+        Uri.parse( 
+          "$baseUrl/santri/view/all/wali-santri",
+        ),
+        headers: {
+          "Authorization":
+              "62517d07eac3abe4f031f012f510f9feca63993110c4374fb90d39bc414726f5fbad95fc37a758e8",
+        },
+      );
+      if (response.statusCode == 200) {
+        var json = jsonDecode(response.body);
+        // var data = jsonDecode(json);
+        print(json);
+      } else {
+        print(response.statusCode);
+      }
+    }
+
+    await getSantriByWali();
     // await updateNilai(idNilai: "2", idAsatidz: "1", nilai: "40");
   } on Exception catch (e) {
     // print(e);

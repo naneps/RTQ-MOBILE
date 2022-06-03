@@ -25,7 +25,7 @@ class AuthController {
           'password': password,
           'id_role': idRole.toString(),
         });
-    print(response.body);
+    // print(response.body);
 
     try {
       if (response.statusCode == 200) {
