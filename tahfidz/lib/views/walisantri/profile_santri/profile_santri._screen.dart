@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/services/remote_services.dart';
 import 'package:tahfidz/views/walisantri/profile_santri/components/card_santri.dart';
@@ -29,6 +30,13 @@ class ProfileAnakScreen extends StatelessWidget {
                 future: RemoteServices.getSantriByWali(),
                 builder: (context, AsyncSnapshot snapshot) {
                   print(snapshot.data);
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    // return Center()
+                  }
                   return ListView.builder(
                     itemCount: snapshot.data.length ?? 0,
                     itemBuilder: (context, index) {
