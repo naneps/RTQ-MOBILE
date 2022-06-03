@@ -3,13 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/data/dumy+data.dart';
 import 'package:tahfidz/services/remote_services.dart';
-import 'package:tahfidz/views/asatidz/home/home_screen.dart';
 
 class WidgetFoto extends StatefulWidget {
   File? fileImage;
@@ -29,7 +26,7 @@ class _WidgetFotoState extends State<WidgetFoto> {
       height: 600,
 
       width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       // clipBehavior: Clip.none,
       // color: Colors.grey,
       child: Column(
@@ -44,11 +41,12 @@ class _WidgetFotoState extends State<WidgetFoto> {
                 Positioned(
                   top: 0,
                   child: Container(
-                    margin: EdgeInsets.all(10),
-                    padding: EdgeInsets.all(10),
+                    margin: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                         color: mainColor,
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20))),
                     width: 350,
                     height: 350,
                     child: (widget.fileImage != null)

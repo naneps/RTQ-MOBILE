@@ -39,8 +39,9 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  height: 150,
+                Container(
+                  alignment: Alignment.center,
+                  height: 290,
                   child: AnimatedTextKit(
                     // totalRepeatCount: 10,
                     repeatForever: true,
