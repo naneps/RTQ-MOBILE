@@ -110,20 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                               password: authController.passwordController.text)
                           .then((value) {
                         if (!value!) {
-                          Get.snackbar(
-                            'Autentikasi Gagal',
-                            'Periksa Telepon dan Kata Sandi Anda',
-                            icon: const Icon(
-                              Icons.error,
-                              color: Colors.red,
-                            ),
-                            backgroundColor: Colors.white,
-                            colorText: Colors.black,
-                            borderRadius: 10,
-                            snackPosition: SnackPosition.BOTTOM,
-                            margin: const EdgeInsets.all(10),
-                            duration: const Duration(seconds: 2),
-                          );
+                          validateAuth();
                         }
                       });
                       // }

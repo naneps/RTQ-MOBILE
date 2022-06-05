@@ -121,20 +121,7 @@ class _HakAksesPageState extends State<HakAksesPage> {
                   });
 
                   if (selectedHakAkses == null) {
-                    Get.snackbar(
-                      'Peringatan',
-                      'Pilih Hak Akses Terlebih Dahulu',
-                      icon: Icon(
-                        Icons.error,
-                        color: Colors.red,
-                      ),
-                      backgroundColor: Colors.white,
-                      colorText: Colors.black,
-                      borderRadius: 10,
-                      snackPosition: SnackPosition.TOP,
-                      margin: EdgeInsets.all(10),
-                      duration: Duration(seconds: 2),
-                    );
+                    validateHakakses();
                   } else {
                     Get.to(LoginPage(), arguments: selectedHakAkses);
                   }

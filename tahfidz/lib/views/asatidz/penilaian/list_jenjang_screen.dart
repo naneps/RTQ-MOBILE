@@ -105,8 +105,7 @@ class _JenjangScreenState extends State<JenjangScreen> {
                                     color: Colors.white,
                                   ),
                                   // snackStyle: SnackStyle.,
-                                  backgroundColor:
-                                      Color.fromARGB(255, 255, 95, 84),
+                                  backgroundColor: redColor,
                                   colorText: Colors.white,
                                   borderRadius: 10,
                                   snackPosition: SnackPosition.TOP,

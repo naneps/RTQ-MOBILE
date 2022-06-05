@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sp_util/sp_util.dart';
+import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/model/user.dart';
 import 'package:tahfidz/views/asatidz/home/home_screen.dart';
 import 'package:http/http.dart' as http;
@@ -45,20 +46,7 @@ class AuthController {
           SpUtil.putString('gambar', user.gambar.toString());
           SpUtil.putString('tanggal_lahir', user.tanggalLahir.toString());
           SpUtil.putString('alamat', user.alamat.toString());
-          Get.snackbar(
-            'Berhasil',
-            'Anda Berhasil Masuk Sebagai ${user.keterangan}',
-            icon: Icon(
-              Icons.check,
-              color: Colors.green,
-            ),
-            backgroundColor: Colors.white,
-            colorText: Colors.black,
-            borderRadius: 10,
-            snackPosition: SnackPosition.BOTTOM,
-            margin: EdgeInsets.all(10),
-            duration: Duration(seconds: 2),
-          );
+          showSuccessLogin(user.keterangan);
         } else if (user.idRole == 4) {
           Get.offAll(HomeScreen());
           SpUtil.putBool('isLogin', true);
@@ -73,20 +61,7 @@ class AuthController {
           SpUtil.putString('gambar', user.gambar.toString());
           SpUtil.putString('tanggal_lahir', user.tanggalLahir.toString());
           SpUtil.putString('alamat', user.alamat.toString());
-          Get.snackbar(
-            'Berhasil',
-            'Anda Berhasil Masuk Sebagai ${user.keterangan}',
-            icon: const Icon(
-              Icons.check,
-              color: Colors.green,
-            ),
-            backgroundColor: Colors.white,
-            colorText: Colors.black,
-            borderRadius: 10,
-            snackPosition: SnackPosition.BOTTOM,
-            margin: EdgeInsets.all(10),
-            duration: const Duration(seconds: 2),
-          );
+          showSuccessLogin(user.keterangan);
         }
 
         return true;
