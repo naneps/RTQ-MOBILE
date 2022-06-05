@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
+import 'package:tahfidz/views/walisantri/profile_santri/components/widget_button.dart';
 
 class CardSantri extends StatelessWidget {
   CardSantri(
@@ -24,7 +25,7 @@ class CardSantri extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 19),
       width: size.width,
       height: size.width - 60,
-      margin: EdgeInsets.only(top: 5, bottom: 5),
+      margin: const EdgeInsets.only(top: 5, bottom: 5),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(35),
@@ -73,34 +74,18 @@ class CardSantri extends StatelessWidget {
             height: 20,
           ),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextButton(
-                onPressed: () {},
-                child: Container(
-                  width: 100,
-                  height: 30,
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 23, 159, 255),
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: const [
-                      BoxShadow(
-                          offset: Offset(1, 3),
-                          blurRadius: 3,
-                          color: Color.fromRGBO(0, 0, 0, 0.25),
-                          spreadRadius: 2)
-                    ],
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Rekap Nilai",
-                      style: GoogleFonts.poppins(
-                          fontSize: 12,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                ),
-              )
+              WudgetButton(
+                label: "Rekap Nilai",
+                color: const Color.fromARGB(255, 82, 116, 251),
+              ),
+              WudgetButton(
+                label: "Sertifikat",
+                color: const Color.fromARGB(255, 0, 206, 185),
+              ),
+              // WudgetButton(),
             ],
           )
         ],

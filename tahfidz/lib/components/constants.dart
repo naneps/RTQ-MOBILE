@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 dynamic mainColor = Color.fromARGB(255, 255, 211, 105);
-dynamic greenColor = const Color.fromRGBO(67, 238, 135, 1);
+// dynamic greenColor = const Color.fromRGBO(67, 238, 135, 1);
 dynamic greyColor = const Color.fromARGB(255, 116, 116, 116);
 final kMainColor = Color.fromARGB(255, 255, 211, 105);
 final kFontColor = Color.fromARGB(255, 57, 62, 70);
 final kBackground = Color.fromARGB(255, 247, 247, 247);
 final redColor = Color.fromARGB(255, 255, 95, 84);
+final greenColor = Color.fromARGB(255, 107, 246, 121);
 
 validateHakakses() {
   return Get.snackbar(
@@ -49,12 +50,12 @@ showSuccessLogin(label) {
     'Anda Berhasil Masuk Sebagai $label',
     icon: Icon(
       Icons.check,
-      color: Colors.green,
+      color: Colors.white,
     ),
-    backgroundColor: Colors.white,
-    colorText: Colors.black,
+    backgroundColor: greenColor,
+    colorText: Colors.white,
     borderRadius: 10,
-    snackPosition: SnackPosition.BOTTOM,
+    snackPosition: SnackPosition.TOP,
     margin: EdgeInsets.all(10),
     duration: Duration(seconds: 2),
   );
