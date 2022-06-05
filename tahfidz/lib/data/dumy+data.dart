@@ -381,3 +381,37 @@ List<Map<String, dynamic>> datahakAkses = [
     "gambar": 'assets/images/ ',
   },
 ];
+
+List<Map<String, dynamic>> dataKeteranganAbsen = [
+  {
+    "id": '1',
+    "keterangan": 'Sakit',
+    "gambar": 'assets/images/',
+  },
+  {
+    "id": '2',
+    "keterangan": 'Izin',
+    "gambar": 'assets/images/',
+  },
+  {
+    "id": '3',
+    "keterangan": 'Alpha',
+    "gambar": 'assets/images/',
+  },
+  {
+    "id": '4',
+    "keterangan": 'Hadir',
+    "gambar": 'assets/images/',
+  },
+];
+
+List<Map<String, dynamic>> dataAbsenAantri = [
+  {
+    "id": '1',
+    "nis": '29092003',
+    "nama": 'Rizki',
+    "kelas": 'XI RPL 1',
+    "tanggal": '12-12-2020',
+    "keterangan": 'Hadir',
+  },
+];

@@ -131,7 +131,7 @@ class _HakAksesPageState extends State<HakAksesPage> {
                       backgroundColor: Colors.white,
                       colorText: Colors.black,
                       borderRadius: 10,
-                      snackPosition: SnackPosition.BOTTOM,
+                      snackPosition: SnackPosition.TOP,
                       margin: EdgeInsets.all(10),
                       duration: Duration(seconds: 2),
                     );

@@ -93,15 +93,34 @@ class _JenjangScreenState extends State<JenjangScreen> {
                             nomor: index,
                             onTap: () async {
                               // ignore: unnecessary_null_comparison
-                              if (halaqohController.getSelectedHalaqoh() ==
-                                  null) {}
-                              await Get.to(ListSantriScreen(), arguments: [
-                                jenjangController.listJenjang[index].id
-                                    .toString(),
-                                halaqohController
-                                    .getSelectedHalaqoh()
-                                    .kodeHalaqah,
-                              ]);
+                              if (halaqohController
+                                      .getSelectedHalaqoh()
+                                      .kodeHalaqah ==
+                                  null) {
+                                Get.snackbar(
+                                  "Peringatan",
+                                  "Pilih Cabang Dahulu",
+                                  icon: const Icon(
+                                    Icons.error,
+                                    color: Colors.white,
+                                  ),
+                                  // snackStyle: SnackStyle.,
+                                  backgroundColor:
+                                      Color.fromARGB(255, 255, 95, 84),
+                                  colorText: Colors.white,
+                                  borderRadius: 10,
+                                  snackPosition: SnackPosition.TOP,
+                                  duration: const Duration(seconds: 2),
+                                );
+                              } else {
+                                await Get.to(ListSantriScreen(), arguments: [
+                                  jenjangController.listJenjang[index].id
+                                      .toString(),
+                                  halaqohController
+                                      .getSelectedHalaqoh()
+                                      .kodeHalaqah,
+                                ]);
+                              }
                             },
                             jenjang: jenjangController.listJenjang[index],
                           );

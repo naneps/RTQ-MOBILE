@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/model/santri.dart';
 import 'package:tahfidz/views/asatidz/absensi/absensi_screen.dart';
+import 'package:tahfidz/views/asatidz/absensi/components/widget_indicator.dart';
 
 class CardSantri extends StatelessWidget {
   final Santri? santri;
