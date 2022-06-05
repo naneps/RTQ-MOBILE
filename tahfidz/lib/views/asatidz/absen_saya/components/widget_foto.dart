@@ -17,9 +17,16 @@ class WidgetFoto extends StatefulWidget {
 }
 
 class _WidgetFotoState extends State<WidgetFoto> {
-  String? location = "Tekan Tombol";
   String? address = "alamat";
+  Position? position;
   final picker = ImagePicker();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    checkAbsenToday();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -69,12 +76,10 @@ class _WidgetFotoState extends State<WidgetFoto> {
                     child: ElevatedButton(
                       onPressed: () async {
                         getImageFromCanera();
-                        Position position =
-                            await RemoteServices.determinePosition();
-                        location =
-                            'Lat : ${position.latitude} , Long : ${position.longitude}';
+                        position = await RemoteServices.determinePosition();
+
                         // print(position.latitude);
-                        getAddress(position);
+                        getAddress(position!);
                       },
                       style: ElevatedButton.styleFrom(
                         elevation: 5,
@@ -130,8 +135,10 @@ class _WidgetFotoState extends State<WidgetFoto> {
                     ),
                     Text(
                       "Simpan !",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white),
                     )
                   ],
                 ),
@@ -148,27 +155,11 @@ class _WidgetFotoState extends State<WidgetFoto> {
                 ),
               ),
               onPressed: () async {
-                // Map<String, String> data = {
-                //   'alamat': address!,
-                //   'id_asatidz': SpUtil.getString('id')!,
-                //   'nama': SpUtil.getString('nama')!
-                // };
-
-                // await RemoteServices.addImage(data, widget.fileImage!)
-                //     .then((value) {
-                //   print(value);
-                //   if (value!) {
-                //     Get.off(
-                //       HomeScreen(),
-                //     );
-                //   }
-                // });
                 await sendAbsen(
                   DateTime.now(),
                   widget.fileImage!,
                   address!,
                 );
-                checkAbsenToday();
 
                 setState(() {});
                 Navigator.pop(context);
@@ -214,7 +205,7 @@ class _WidgetFotoState extends State<WidgetFoto> {
     });
   }
 
-  Future<void> getAddress(Position position) async {
+  Future<String> getAddress(Position position) async {
     List<Placemark> placemarks =
         await placemarkFromCoordinates(position.latitude, position.longitude);
     Placemark place = placemarks[0];
@@ -223,6 +214,8 @@ class _WidgetFotoState extends State<WidgetFoto> {
       address =
           '${place.subAdministrativeArea} , ${place.locality} , ${place.subLocality} ';
     });
+
     print(placemarks);
+    return address!;
   }
 }

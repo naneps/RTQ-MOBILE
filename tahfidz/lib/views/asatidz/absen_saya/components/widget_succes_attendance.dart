@@ -26,7 +26,7 @@ class WidgetAttendance extends StatelessWidget {
       ),
 
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height / 2.8,
+      // height: MediaQuery.of(context).size.height / 2.8,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

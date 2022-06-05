@@ -36,7 +36,7 @@ class _MyAbsenState extends State<MyAbsen> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -52,20 +52,22 @@ class _MyAbsenState extends State<MyAbsen> {
                   print('data cek absensi ${snapshot.data}');
 
                   if (snapshot.data == true) {
-                    return SizedBox(
+                    return Container(
                       width: MediaQuery.of(context).size.width,
-                      // height: MediaQuery.of(context).size.height,
+                      height: MediaQuery.of(context).size.height * 0.8,
+                      // he
+                      // height: 650,
                       // color: kMainColor,
                       child: Column(
                         children: [
                           const WidgetAttendance(),
                           const SizedBox(
-                            height: 20,
+                            height: 10,
                           ),
                           Container(
                             // color: Colors.blueAccent,
                             width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height / 2.8,
+                            height: MediaQuery.of(context).size.height / 3,
                             child: ListView.builder(
                                 itemCount: dataAbensi.length,
                                 itemBuilder: (context, index) {

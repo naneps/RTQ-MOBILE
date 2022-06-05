@@ -32,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
         child: SingleChildScrollView(
           reverse: true,
           physics: const BouncingScrollPhysics(),
-          child: Container(
+          child: SizedBox(
             // height: MediaQuery.of(context).size.height / 1,
             width: MediaQuery.of(context).size.width,
             child: Column(
@@ -40,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  alignment: Alignment.center,
+                  alignment: Alignment.topCenter,
                   height: 290,
                   child: AnimatedTextKit(
                     // totalRepeatCount: 10,

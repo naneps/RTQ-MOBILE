@@ -32,7 +32,7 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
     final heightBody = MediaQuery.of(context).size.height;
     final widhtBody = MediaQuery.of(context).size.width;
     return Scaffold(
-      // backgroundColor: mainColor,
+      backgroundColor: kBackground,
       appBar: AppBar(
         // shadowColor: Colors.transparent,
         elevation: 0,
@@ -48,39 +48,7 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
       // ),
       body: Column(
         children: [
-          Container(
-            height: heightBody / 6,
-            width: widhtBody,
-            // color: Colors.black,
-            child: Stack(
-              // fit: StackFit.expand,
-              // clipBehavior: Clip.antiAliasWithSaveLayer,
-              alignment: Alignment.center,
-              children: [
-                Positioned(
-                  top: 0,
-                  height: 100,
-                  width: widhtBody,
-                  child: Container(
-                    // color: mainColor,
-                    decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          bottomLeft: Radius.circular(90),
-                          bottomRight: Radius.circular(90),
-                        ),
-                        color: mainColor),
-                    // width: widhtBody,
-                  ),
-                ),
-                Positioned(
-                  top: 0,
-                  height: 150,
-                  width: widhtBody / 1.2,
-                  child: CardAbsensi(),
-                ),
-              ],
-            ),
-          ),
+          SizedBox(height: 150, child: IndicatorAbsen(widhtBody: widhtBody)),
           Padding(
             padding: const EdgeInsets.all(10),
             child: SearchBox(
@@ -89,42 +57,6 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
           ),
           const SizedBox(
             height: 10,
-          ),
-          Flexible(
-            child: SingleChildScrollView(
-              child: Container(
-                  width: widhtBody,
-                  height: heightBody / 2,
-                  // color: mainColor,
-                  child: Obx(
-                    () {
-                      if (santriController.isLoading.value) {
-                        return Center(
-                          child: CircularProgressIndicator(
-                            backgroundColor: Colors.yellow,
-                            strokeWidth: 10,
-                            // value: 1,
-                            color: mainColor,
-                          ),
-                        );
-                      }
-                      return ListView.builder(
-                        physics: BouncingScrollPhysics(),
-                        itemCount: santriController.listSantri.length,
-                        itemBuilder: (context, index) {
-                          return CardSantri(
-                            key: ObjectKey(
-                                santriController.listSantri[index].id),
-                            absenIndikator: absenColor,
-                            onTap: () => _onButtonPressed(
-                                santriController.listSantri[index]),
-                            santri: santriController.listSantri[index],
-                          );
-                        },
-                      );
-                    },
-                  )),
-            ),
           ),
         ],
       ),
@@ -200,6 +132,52 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
       absenColor = color;
     });
     // dispose();
+  }
+}
+
+class IndicatorAbsen extends StatelessWidget {
+  const IndicatorAbsen({
+    Key? key,
+    required this.widhtBody,
+  }) : super(key: key);
+
+  final double widhtBody;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      // height: heightBody / 6,
+      width: widhtBody,
+      // color: Colors.black,
+      child: Stack(
+        // fit: StackFit.expand,
+        // clipBehavior: Clip.antiAliasWithSaveLayer,
+        alignment: Alignment.center,
+        children: [
+          Positioned(
+            top: 0,
+            height: 100,
+            width: widhtBody,
+            child: Container(
+              // color: mainColor,
+              decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(90),
+                    bottomRight: Radius.circular(90),
+                  ),
+                  color: mainColor),
+              // width: widhtBody,
+            ),
+          ),
+          Positioned(
+            top: 0,
+            height: 150,
+            width: widhtBody / 1.2,
+            child: CardAbsensi(),
+          ),
+        ],
+      ),
+    );
   }
 }
 
