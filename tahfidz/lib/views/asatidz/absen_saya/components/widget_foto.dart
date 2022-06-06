@@ -156,21 +156,21 @@ class _WidgetFotoState extends State<WidgetFoto> {
                 ),
               ),
               onPressed: () async {
-                // await sendAbsen(
-                //   DateTime.now(),
-                //   widget.fileImage!,
-                //   address!,
-                // );
+                await sendAbsen(
+                  DateTime.now(),
+                  widget.fileImage!,
+                  address!,
+                );
 
-                Map<String, String> body = {
-                  "id_asatidz": SpUtil.getString('id')!,
-                  'alamat': address!,
-                  // 'foto': widget.fileImage!.path,
-                };
-                await RemoteServices.addImage(body, widget.fileImage!);
+                // Map<String, String> body = {
+                //   "id_asatidz": SpUtil.getString('id')!,
+                //   'alamat': address!,
+                //   // 'foto': widget.fileImage!.path,
+                // };
+                // await RemoteServices.addImage(body, widget.fileImage!);
                 setState(() {});
-                // Navigator.pop(context);
-                // print(dataAbensi);
+                Navigator.pop(context);
+                print(dataAbensi);
               },
             ),
           )

@@ -36,12 +36,13 @@ class _LoginPageState extends State<LoginPage> {
             // height: MediaQuery.of(context).size.height / 1,
             width: MediaQuery.of(context).size.width,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
                   alignment: Alignment.topCenter,
-                  height: 290,
+                  height: MediaQuery.of(context).size.width * 0.5,
+                  // color: Colors.black,
                   child: AnimatedTextKit(
                     // totalRepeatCount: 10,
                     repeatForever: true,
@@ -63,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 //
-                const SizedBox(height: 20),
+                // const SizedBox(height: 20),
                 Text(
                   "Masuk Sebagai ${argumen['hakAkses']}",
                   style: GoogleFonts.poppins(

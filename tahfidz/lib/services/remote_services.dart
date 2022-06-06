@@ -5,6 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/model/Jenjang.dart';
+import 'package:tahfidz/model/absen.dart';
 import 'package:tahfidz/model/cabang.dart';
 import 'package:tahfidz/model/halaqoh.dart';
 import 'package:tahfidz/model/iuran.dart';
@@ -329,5 +330,33 @@ class RemoteServices {
     } else {
       print(response.statusCode);
     }
+  }
+
+  static Future<List<Abesn>?> fetchRekapAbsen() async {
+    try {
+      var url = Uri.parse('$baseUrl/absensi/asatidz/rekap');
+      var response = await http.get(url, headers: {
+        "Authorization": SpUtil.getString('id')!,
+        "Content-Type": "application/json",
+      });
+
+      // print(response.statusCode);
+      if (response.statusCode == 200) {
+        var jsonResponse = jsonDecode(response.body);
+
+        List<Abesn> abesn = [];
+        for (var i in jsonResponse) {
+          abesn.add(Abesn.fromJson(i));
+        }
+        return abesn;
+      } else {
+        if (kDebugMode) {
+          print("Error");
+        }
+      }
+    } catch (e) {
+      print(e);
+    }
+    return null;
   }
 }

@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:tahfidz/data/dumy+data.dart';
+import 'package:tahfidz/model/absen.dart';
 import 'package:tahfidz/model/nilai.dart';
 import 'dart:convert';
 
@@ -16,30 +17,40 @@ void main() async {
   try {
     String baseUrl = "http://api.rtq-freelance.my.id/api-v1";
     String token =
-        "a133c37753670a3a5ff33c6bc9c203c2f6858eede5fe5f752ff15856f51c94ddc160035d2b785eb1";
+        "93aa3b8bf4d495e941712c7e35d878f91197eb4122071474430d86bbb896a93648e86be44ce9c34e";
     String id = "1";
 
-    // await getUserInfo(token);
-    Future getSantriByWali() async {
-      final response = await http.get(
-        Uri.parse( 
-          "$baseUrl/santri/view/all/wali-santri",
-        ),
-        headers: {
-          "Authorization":
-              "62517d07eac3abe4f031f012f510f9feca63993110c4374fb90d39bc414726f5fbad95fc37a758e8",
-        },
-      );
-      if (response.statusCode == 200) {
-        var json = jsonDecode(response.body);
-        // var data = jsonDecode(json);
-        print(json);
-      } else {
-        print(response.statusCode);
+    Future<List<Abesn>?> fetchAbsen() async {
+      try {
+        var url = Uri.parse('$baseUrl/absensi/asatidz/rekap');
+        var response = await http.get(url, headers: {
+          "Authorization": token,
+          "Content-Type": "application/json",
+        });
+
+        // print(response.statusCode);
+        if (response.statusCode == 200) {
+          var jsonResponse = jsonDecode(response.body);
+
+          List<Abesn> abesn = [];
+          for (var i in jsonResponse) {
+            abesn.add(Abesn.fromJson(i));
+          }
+          return abesn;
+        } else {
+          if (kDebugMode) {
+            print("Error");
+          }
+        }
+      } catch (e) {
+        if (kDebugMode) {
+          print(e);
+        }
       }
+      return null;
     }
 
-    await getSantriByWali();
+    await fetchAbsen();
     // await updateNilai(idNilai: "2", idAsatidz: "1", nilai: "40");
   } on Exception catch (e) {
     // print(e);
