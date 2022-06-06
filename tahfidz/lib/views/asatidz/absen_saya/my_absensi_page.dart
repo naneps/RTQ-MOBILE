@@ -50,7 +50,7 @@ class _MyAbsenState extends State<MyAbsen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                height: Get.height / 2,
+                height: Get.height / 1.9,
                 width: Get.width,
                 // color: Colors.amber,
                 margin: EdgeInsets.only(bottom: 10),
@@ -68,9 +68,9 @@ class _MyAbsenState extends State<MyAbsen> {
                       );
                     }
                     if (snapshot.hasData) {
-                      return WidgetAttendance();
-                    } else {
                       return WidgetFoto(fileImage: imageFile);
+                    } else {
+                      return WidgetAttendance();
                     }
                   },
                 ),
@@ -92,34 +92,29 @@ class _MyAbsenState extends State<MyAbsen> {
                       ),
                     ),
                     const SizedBox(
-                      height: 10,
+                      height: 30,
                     ),
-                    SizedBox(
-                      // color: Colors.black,
-
-                      height: Get.height / 5,
-                      child: FutureBuilder<List<Abesn>?>(
-                        future: RemoteServices.fetchRekapAbsen(),
-                        builder: (context, AsyncSnapshot snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-
-                            // return Center(child: CircularProgressIndicator());
-                          } else {}
-                          return ListView.builder(
-                            itemCount: snapshot.data?.length ?? 0,
-                            itemBuilder: (context, index) {
-                              return CardAttendance(
-                                abesn: snapshot.data[index],
-                                // data: snapshot.data[index],
-                              );
-                            },
+                    FutureBuilder<Abesn?>(
+                      future: RemoteServices.getAbesnToday(),
+                      builder: (context, AsyncSnapshot snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
                           );
-                        },
-                      ),
+
+                          // return Center(child: CircularProgressIndicator());
+                        } else if (snapshot.hasData) {
+                          return CardAttendance(
+                            abesn: snapshot.data,
+                            // data: snapshot.data[index],
+                          );
+                        } else {
+                          return Center(
+                            child: Text("No Data"),
+                          );
+                        }
+                      },
                     ),
                   ],
                 ),

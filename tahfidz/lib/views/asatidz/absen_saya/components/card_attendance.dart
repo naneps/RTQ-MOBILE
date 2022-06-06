@@ -14,10 +14,11 @@ class CardAttendance extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
+      // height: 50,
       padding: const EdgeInsets.all(20),
-      margin: EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Color.fromARGB(255, 175, 255, 161),
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
@@ -30,6 +31,8 @@ class CardAttendance extends StatelessWidget {
         ],
       ),
       child: Row(
+        // mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           CircleAvatar(
             radius: 30,

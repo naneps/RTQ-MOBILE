@@ -144,7 +144,8 @@ class RemoteServices {
     }
   }
 
-  static Future<bool?> addImage(Map<String, String> body, File filepath) async {
+  static Future<bool?> createAbsen(
+      Map<String, String> body, File filepath) async {
     try {
       String addimageUrl = '$baseUrl/absensi/asatidz';
       Map<String, String> headers = {
@@ -157,13 +158,13 @@ class RemoteServices {
         ..files.add(await http.MultipartFile.fromPath('image', filepath.path));
       var response = await request.send();
 
-      print(response.statusCode);
+      // print(response.statusCode);
       if (response.statusCode == 201) {
         return true;
       } else {
         return false;
       }
-    } catch (e) {
+    } on Exception catch (e) {
       print("Catch Add image $e");
     }
     return null;
