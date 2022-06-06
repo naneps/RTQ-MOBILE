@@ -141,7 +141,7 @@ class _WidgetFotoState extends State<WidgetFoto> {
               };
               if (widget.fileImage == null) {
                 Get.snackbar("Peringatan", "Foto Terlebih Dahulu",
-                    backgroundColor: Color.fromARGB(255, 255, 222, 73),
+                    backgroundColor: Color.fromARGB(255, 255, 204, 0),
                     colorText: Colors.white,
                     icon: Icon(
                       Icons.error,

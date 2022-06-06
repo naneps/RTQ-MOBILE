@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tahfidz/components/item-menu.dart';
-import 'package:tahfidz/views/asatidz/absen_saya/my_absensi_page.dart';
+import 'package:tahfidz/views/asatidz/absen_mandiri/my_absensi_page.dart';
 import 'package:tahfidz/views/asatidz/absensi/absensi_screen.dart';
 import 'package:tahfidz/views/asatidz/iuran_santri/iuran_santri._screen.dart';
 import 'package:tahfidz/views/asatidz/penilaian/list_jenjang_screen.dart';

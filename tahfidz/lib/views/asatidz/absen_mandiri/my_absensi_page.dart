@@ -5,9 +5,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/model/absen.dart';
 import 'package:tahfidz/services/remote_services.dart';
-import 'package:tahfidz/views/asatidz/absen_saya/components/card_attendance.dart';
-import 'package:tahfidz/views/asatidz/absen_saya/components/widget_succes_attendance.dart';
-import 'package:tahfidz/views/asatidz/absen_saya/components/widget_foto.dart';
+import 'package:tahfidz/views/asatidz/absen_mandiri/components/card_attendance.dart';
+import 'package:tahfidz/views/asatidz/absen_mandiri/components/widget_succes_attendance.dart';
+import 'package:tahfidz/views/asatidz/absen_mandiri/components/widget_foto.dart';
+import 'package:tahfidz/views/asatidz/home/rekap_absensi_page.dart';
 
 import '../../../data/dumy+data.dart';
 
@@ -22,7 +23,6 @@ class _MyAbsenState extends State<MyAbsen> {
   File? imageFile;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     RemoteServices.getAbesnToday();
     RemoteServices.fetchRekapAbsen();
@@ -53,7 +53,7 @@ class _MyAbsenState extends State<MyAbsen> {
                 height: Get.height / 1.9,
                 width: Get.width,
                 // color: Colors.amber,
-                margin: EdgeInsets.only(bottom: 10),
+                margin: const EdgeInsets.only(bottom: 10),
                 child: FutureBuilder(
                   future: RemoteServices.getAbesnToday(),
                   builder: (context, snapshot) {
@@ -68,9 +68,9 @@ class _MyAbsenState extends State<MyAbsen> {
                       );
                     }
                     if (snapshot.hasData) {
-                      return WidgetFoto(fileImage: imageFile);
+                      return const WidgetAttendance();
                     } else {
-                      return WidgetAttendance();
+                      return WidgetFoto(fileImage: imageFile);
                     }
                   },
                 ),
@@ -83,13 +83,30 @@ class _MyAbsenState extends State<MyAbsen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Rekap Absensi ",
-                      style: GoogleFonts.poppins(
-                        fontSize: 18,
-                        color: kFontColor,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Absensi hari Ini ",
+                          style: GoogleFonts.poppins(
+                            fontSize: 18,
+                            color: kFontColor,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () => Get.to(const RekapAbsensiPage(),
+                              transition: Transition.leftToRight),
+                          child: Text(
+                            "Lihat Rekap ",
+                            style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              color: kFontColor,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                     const SizedBox(
                       height: 30,
@@ -107,11 +124,15 @@ class _MyAbsenState extends State<MyAbsen> {
                         } else if (snapshot.hasData) {
                           return CardAttendance(
                             abesn: snapshot.data,
-                            // data: snapshot.data[index],
                           );
                         } else {
                           return Center(
-                            child: Text("No Data"),
+                            child: Text(
+                              "Mari Absen Mandiri(Mandi Sendiri)",
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.poppins(
+                                  fontSize: 28, fontWeight: FontWeight.bold),
+                            ),
                           );
                         }
                       },
@@ -125,73 +146,4 @@ class _MyAbsenState extends State<MyAbsen> {
       ),
     );
   }
-
-  Future<bool?> checkAbsenToday() async {
-    var date = DateTime.now().day.toString() +
-        '-' +
-        DateTime.now().month.toString() +
-        '-' +
-        DateTime.now().year.toString();
-    print(date);
-    for (var i = 0; i < dataAbensi.length; i++) {
-      if (dataAbensi[i]['tanggal'] == date) {
-        print('hari ini sudah absen');
-        return await isAbsen();
-      } else {
-        print(dataAbensi[i]['tanggal']);
-        print("hari Ini Belum Absen");
-        return await isNotAbsen();
-      }
-    }
-  }
 }
-
-// FutureBuilder<bool?>(
-//               future: checkAbsenToday(),
-//               builder: (context, snapshot) {
-//                 // print(dataAbensi);
-//                 if (snapshot.connectionState == ConnectionState.waiting) {
-//                   return const Center(
-//                     child: CircularProgressIndicator(),
-//                   );
-//                 } else if (snapshot.hasData) {
-//                   print('data cek absensi ${snapshot.data}');
-
-//                   if (snapshot.data == true) {
-//                     return Container(
-//                       width: MediaQuery.of(context).size.width,
-//                       height: MediaQuery.of(context).size.height * 0.8,
-//                       // he
-//                       // height: 650,
-//                       // color: kMainColor,
-//                       child: Column(
-//                         children: [
-//                           const WidgetAttendance(),
-//                           const SizedBox(
-//                             height: 10,
-//                           ),
-//                           Container(
-//                             // color: Colors.blueAccent,
-//                             width: MediaQuery.of(context).size.width,
-//                             height: MediaQuery.of(context).size.height / 3,
-//                             child: ListView.builder(
-//                                 itemCount: dataAbensi.length,
-//                                 itemBuilder: (context, index) {
-//                                   return CardAttendance(
-//                                     alamat: dataAbensi[index]['alamat'],
-//                                     tanggal: dataAbensi[index]['tanggal'],
-//                                   );
-//                                 }),
-//                           ),
-//                         ],
-//                       ),
-//                     );
-//                   }
-//                 } else if (!snapshot.hasData) {
-//                   return WidgetFoto(
-//                     fileImage: imageFile,
-//                   );
-//                 } else {}
-//                 return Container();
-//               },
-//             ),
