@@ -142,10 +142,9 @@ class RemoteServices {
 
   static Future<bool?> addImage(Map<String, String> body, File filepath) async {
     try {
-      DateTime date = DateTime.now();
-      ;
-      String addimageUrl = '/$baseUrl/absensi/asatidz';
+      String addimageUrl = '$baseUrl/absensi/asatidz';
       Map<String, String> headers = {
+        'authorization': SpUtil.getString('token')!,
         'Content-Type': 'multipart/form-data',
       };
       var request = http.MultipartRequest('POST', Uri.parse(addimageUrl))
@@ -161,7 +160,7 @@ class RemoteServices {
         return false;
       }
     } catch (e) {
-      print("Add image $e");
+      print("Catch Add image $e");
     }
     // return null;
   }

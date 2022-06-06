@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/data/dumy+data.dart';
 import 'package:tahfidz/services/remote_services.dart';
@@ -155,15 +156,21 @@ class _WidgetFotoState extends State<WidgetFoto> {
                 ),
               ),
               onPressed: () async {
-                await sendAbsen(
-                  DateTime.now(),
-                  widget.fileImage!,
-                  address!,
-                );
+                // await sendAbsen(
+                //   DateTime.now(),
+                //   widget.fileImage!,
+                //   address!,
+                // );
 
+                Map<String, String> body = {
+                  "id_asatidz": SpUtil.getString('id')!,
+                  'alamat': address!,
+                  // 'foto': widget.fileImage!.path,
+                };
+                await RemoteServices.addImage(body, widget.fileImage!);
                 setState(() {});
-                Navigator.pop(context);
-                print(dataAbensi);
+                // Navigator.pop(context);
+                // print(dataAbensi);
               },
             ),
           )
