@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
+import 'package:tahfidz/model/absen.dart';
 
 class CardAttendance extends StatelessWidget {
   CardAttendance({
-    this.alamat,
-    this.tanggal,
+    this.abesn,
     Key? key,
   }) : super(key: key);
 
-  String? nama;
-  String? tanggal;
-  String? alamat;
+  Abesn? abesn;
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
+      margin: EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -32,8 +31,9 @@ class CardAttendance extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const CircleAvatar(
+          CircleAvatar(
             radius: 30,
+            backgroundImage: NetworkImage(abesn!.gambar!),
           ),
           Container(
             margin: const EdgeInsets.only(left: 20),
@@ -43,7 +43,7 @@ class CardAttendance extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  tanggal!,
+                  abesn!.tanggalAbsen.toString(),
                   style: GoogleFonts.poppins(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
@@ -51,7 +51,7 @@ class CardAttendance extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  alamat!,
+                  abesn!.alamat!,
                   maxLines: 3,
                   style: GoogleFonts.poppins(
                     fontSize: 12,

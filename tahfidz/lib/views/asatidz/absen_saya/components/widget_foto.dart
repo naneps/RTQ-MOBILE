@@ -21,12 +21,6 @@ class _WidgetFotoState extends State<WidgetFoto> {
   String? address = "alamat";
   Position? position;
   final picker = ImagePicker();
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    checkAbsenToday();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,75 +98,54 @@ class _WidgetFotoState extends State<WidgetFoto> {
               ],
             ),
           ),
-          Container(
-            padding: const EdgeInsets.all(10),
-            margin: const EdgeInsets.all(20),
-            width: MediaQuery.of(context).size.width / 1.2,
-            child: Text(
-              '$address',
-              style: const TextStyle(color: Colors.white, fontSize: 16),
-            ),
-            decoration: BoxDecoration(
-              color: mainColor,
-              borderRadius: const BorderRadius.all(Radius.circular(20)),
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 10, bottom: 10),
-            child: ElevatedButton(
-              child: SizedBox(
-                // color: mainColor,
-                width: 120,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const [
-                    Icon(
-                      Icons.save_as_sharp,
-                      size: 26,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      "Simpan !",
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white),
-                    )
-                  ],
-                ),
-              ),
-              style: ElevatedButton.styleFrom(
-                elevation: 4,
-                primary: greenColor,
-                // onPrimary: mainColor,
-                padding: const EdgeInsets.all(10),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(20),
+          ElevatedButton(
+            child: SizedBox(
+              // color: mainColor,
+              width: 120,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: const [
+                  Icon(
+                    Icons.save_as_sharp,
+                    size: 26,
+                    color: Colors.white,
                   ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    "Simpan !",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white),
+                  )
+                ],
+              ),
+            ),
+            style: ElevatedButton.styleFrom(
+              elevation: 4,
+              primary: greenColor,
+              // onPrimary: mainColor,
+              padding: const EdgeInsets.all(10),
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20),
                 ),
               ),
-              onPressed: () async {
-                await sendAbsen(
-                  DateTime.now(),
-                  widget.fileImage!,
-                  address!,
-                );
-
-                // Map<String, String> body = {
-                //   "id_asatidz": SpUtil.getString('id')!,
-                //   'alamat': address!,
-                //   // 'foto': widget.fileImage!.path,
-                // };
-                // await RemoteServices.addImage(body, widget.fileImage!);
-                setState(() {});
-                Navigator.pop(context);
-                print(dataAbensi);
-              },
             ),
+            onPressed: () async {
+              Map<String, String> body = {
+                "id_asatidz": SpUtil.getString('id')!,
+                'alamat': address!,
+                // 'foto': widget.fileImage!.path,
+              };
+              await RemoteServices.addImage(body, widget.fileImage!);
+              setState(() {});
+              Navigator.pop(context);
+              print(dataAbensi);
+            },
           )
         ],
       ),

@@ -16,8 +16,6 @@ import 'package:tahfidz/model/santri.dart';
 import 'package:tahfidz/model/santri_by.dart';
 
 class RemoteServices {
-  // static var client = http.Client();
-  // static var baseUrl = "http://10.0.112.110:3000/";
   static var baseUrl = "http://api.rtq-freelance.my.id/api-v1";
 
   static Future<List<Jenjang>?> fetchJenjang(String token) async {
@@ -35,6 +33,7 @@ class RemoteServices {
       // TODO
       print("Fetch jenjang :$e");
     }
+    return null;
   }
 
   static Future<List<Cabang>?> fetchCabang(String token) async {
@@ -52,6 +51,7 @@ class RemoteServices {
     } catch (e) {
       print("Catch FetchCabang : $e");
     }
+    return null;
     // return null;
     // return cabangsFromJson(jsonString);
   }
@@ -69,14 +69,15 @@ class RemoteServices {
     } catch (e) {
       print("Catch FetchSantri : $e");
     }
+    return null;
   }
 
   static Future<List<SantriBy>?> filterSantri(
-      String token, String? kdHalaqoh, String? idJenjang) async {
+      {String? token, String? kdHalaqoh, String? idJenjang}) async {
     try {
       var url = Uri.parse('$baseUrl/santri/view/$kdHalaqoh/$idJenjang');
       var resposne = await http
-          .get(url, headers: {HttpHeaders.authorizationHeader: token});
+          .get(url, headers: {HttpHeaders.authorizationHeader: token!});
       print("StatusCode Filter Santri : ${resposne.statusCode}");
       if (resposne.statusCode == 200) {
         var jsonString = resposne.body;
@@ -86,6 +87,7 @@ class RemoteServices {
     } catch (e) {
       print("Catch Filter Santri Santri : $e");
     }
+    return null;
   }
 
   static Future<List<Iuran>?> fetchIuran() async {
@@ -103,6 +105,7 @@ class RemoteServices {
     } catch (e) {
       print("Catch Fetch Iuran : $e");
     }
+    return null;
   }
 
   static Future<List<Halaqoh>> fetchHalaqoh(String token, filter) async {
@@ -163,6 +166,7 @@ class RemoteServices {
     } catch (e) {
       print("Catch Add image $e");
     }
+    return null;
     // return null;
   }
 
@@ -310,6 +314,7 @@ class RemoteServices {
     } catch (e) {
       print("Catc.h Create Nilai : $e");
     }
+    return null;
   }
 
   static Future getSantriByWali() async {
@@ -336,7 +341,7 @@ class RemoteServices {
     try {
       var url = Uri.parse('$baseUrl/absensi/asatidz/rekap');
       var response = await http.get(url, headers: {
-        "Authorization": SpUtil.getString('id')!,
+        "Authorization": SpUtil.getString('token')!,
         "Content-Type": "application/json",
       });
 
@@ -348,6 +353,7 @@ class RemoteServices {
         for (var i in jsonResponse) {
           abesn.add(Abesn.fromJson(i));
         }
+        print(abesn);
         return abesn;
       } else {
         if (kDebugMode) {
@@ -356,6 +362,34 @@ class RemoteServices {
       }
     } catch (e) {
       print(e);
+    }
+    return null;
+  }
+
+  static Future<Abesn?> getAbesnToday() async {
+    try {
+      var url = Uri.parse('$baseUrl/absensi/asatidz');
+      var response = await http.get(url, headers: {
+        HttpHeaders.authorizationHeader: SpUtil.getString('token')!,
+        HttpHeaders.contentTypeHeader: "application/json"
+      });
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        var data = json.decode(response.body);
+        return Abesn.fromJson(data);
+      } else {
+        print("Error");
+      }
+    } catch (e) {
+      if (e.toString().contains("SocketException")) {
+        if (kDebugMode) {
+          print("No Internet Connection");
+        }
+      } else {
+        if (kDebugMode) {
+          print(e);
+        }
+      }
     }
     return null;
   }

@@ -74,9 +74,9 @@ class _ListSantriScreenState extends State<ListSantriScreen> {
               // Text("${widget.kodeHalaqoh}"),
               FutureBuilder(
                 future: RemoteServices.filterSantri(
-                  SpUtil.getString('token')!,
-                  args[1],
-                  args[0],
+                  token: SpUtil.getString('token')!,
+                  kdHalaqoh: args[1],
+                  idJenjang: args[0],
                 ),
                 builder: (context, AsyncSnapshot snapshot) {
                   // print(snapshot.data);
