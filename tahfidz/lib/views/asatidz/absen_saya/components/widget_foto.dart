@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/constants.dart';
@@ -25,8 +26,6 @@ class _WidgetFotoState extends State<WidgetFoto> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 600,
-
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.all(10),
       // clipBehavior: Clip.none,
@@ -77,13 +76,9 @@ class _WidgetFotoState extends State<WidgetFoto> {
                         getAddress(position!);
                       },
                       style: ElevatedButton.styleFrom(
-                        elevation: 5,
+                        elevation: 2,
                         primary: Colors.white,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(100),
-                          ),
-                        ),
+                        shape: CircleBorder(),
                       ),
                       child: SizedBox(
                         height: 50,
@@ -91,12 +86,15 @@ class _WidgetFotoState extends State<WidgetFoto> {
                         child: Icon(
                           Icons.camera,
                           size: 40,
-                          color: mainColor,
+                          color: kFontColor,
                         ),
                       ),
                     ))
               ],
             ),
+          ),
+          SizedBox(
+            height: 20,
           ),
           ElevatedButton(
             child: SizedBox(
@@ -141,10 +139,45 @@ class _WidgetFotoState extends State<WidgetFoto> {
                 'alamat': address!,
                 // 'foto': widget.fileImage!.path,
               };
-              await RemoteServices.addImage(body, widget.fileImage!);
-              setState(() {});
-              Navigator.pop(context);
-              print(dataAbensi);
+              if (widget.fileImage == null) {
+                Get.snackbar("Peringatan", "Foto Terlebih Dahulu",
+                    backgroundColor: Color.fromARGB(255, 255, 222, 73),
+                    colorText: Colors.white,
+                    icon: Icon(
+                      Icons.error,
+                      color: Colors.white,
+                    ));
+              }
+              await RemoteServices.createAbsen(body, widget.fileImage!)
+                  .then((value) {
+                if (value!) {
+                  Get.snackbar(
+                    'Berhasil',
+                    'Absen berhasil disimpan',
+                    icon: const Icon(
+                      Icons.check,
+                      color: Colors.white,
+                    ),
+                    backgroundColor: greenColor,
+                    colorText: Colors.white,
+                    borderRadius: 10,
+                    snackPosition: SnackPosition.TOP,
+                    margin: const EdgeInsets.all(10),
+                    duration: const Duration(seconds: 2),
+                  );
+                  setState(() {});
+                  Navigator.pop(context);
+                } else {
+                  Get.snackbar('Gagal', 'Absen gagal',
+                      backgroundColor: redColor,
+                      colorText: Colors.white,
+                      icon: Icon(
+                        Icons.close,
+                        color: Color.fromARGB(255, 255, 255, 255),
+                      ));
+                }
+              });
+              // print(dataAbensi);
             },
           )
         ],
