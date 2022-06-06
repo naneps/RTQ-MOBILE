@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/services/remote_services.dart';
 import 'package:tahfidz/views/walisantri/profile_santri/components/card_santri.dart';
@@ -32,7 +31,11 @@ class ProfileAnakScreen extends StatelessWidget {
                   print(snapshot.data);
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          mainColor,
+                        ),
+                      ),
                     );
                   } else {
                     // return Center()

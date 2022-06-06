@@ -36,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
             // height: MediaQuery.of(context).size.height / 1,
             width: MediaQuery.of(context).size.width,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
