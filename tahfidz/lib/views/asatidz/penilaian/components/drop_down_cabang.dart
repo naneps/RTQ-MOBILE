@@ -32,8 +32,6 @@ class _DropwDownCabangState extends State<DropwDownCabang> {
       compareFn: (i, s) => i?.isEqual(s!) ?? false,
       mode: Mode.BOTTOM_SHEET,
       dropdownSearchDecoration: const InputDecoration(
-          // labelText: "Cabang",
-          // labelText: "Custom BottomShet mode",
           contentPadding: EdgeInsets.fromLTRB(12, 12, 12, 12),
           border: OutlineInputBorder(borderSide: BorderSide.none)),
       onFind: (filter) {
@@ -41,12 +39,8 @@ class _DropwDownCabangState extends State<DropwDownCabang> {
       },
       onChanged: (data) {
         setState(() {
-          // selectedHalaqoh = data;
           halaqohController.setSelectedHalaqoh(data!);
         });
-        // print(
-        //     "selected halqoh ${halaqohController.getSelectedHalaqoh().namaTempat}");
-        // print("selected cabang : ${data!.kodeHalaqah}");
       },
       dropdownBuilder: _customDropDownExample,
       popupItemBuilder: _customPopupItemBuilderExample2,
@@ -68,7 +62,7 @@ class _DropwDownCabangState extends State<DropwDownCabang> {
         ),
         child: const Center(
           child: Text(
-            'Halaq  oh',
+            'Halaqoh',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,

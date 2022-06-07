@@ -16,17 +16,19 @@ class CardAttendance extends StatelessWidget {
       width: double.infinity,
       // height: 50,
       padding: const EdgeInsets.all(20),
-      margin: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
+      margin: const EdgeInsets.only(
+        bottom: 10,
+      ),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.4),
-            spreadRadius: 2,
-            blurRadius: 5,
+            // spreadRadius: 2,
+            blurRadius: 10,
             blurStyle: BlurStyle.inner,
-            offset: const Offset(2, 1), // changes position of shadow
+            offset: const Offset(2, 2), // changes position of shadow
           ),
         ],
       ),

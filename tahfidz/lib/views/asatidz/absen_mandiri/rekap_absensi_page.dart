@@ -28,13 +28,25 @@ class _RekapAbsensiPageState extends State<RekapAbsensiPage> {
         width: Get.width,
         // color: kMainColor,
 
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         child: Column(children: [
           Expanded(
-            child: SizedBox(
+            child: Container(
               width: Get.width,
               height: Get.height / 2.5,
-              // color: Colors.amberAccent,
+              // color: Colors.white,
+              padding: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 10,
+                    offset: Offset(2, 2),
+                  ),
+                ],
+              ),
               child: TableCalendar(
                 // locale: 'id',
                 calendarFormat: CalendarFormat.month,
@@ -49,9 +61,13 @@ class _RekapAbsensiPageState extends State<RekapAbsensiPage> {
           Expanded(
               child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(
+                height: 10,
+              ),
               Text(
-                "data",
+                "Rekap Absensi",
                 style: GoogleFonts.poppins(
                     fontSize: 16, fontWeight: FontWeight.w600),
               ),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icon.dart';
 import 'package:tahfidz/components/constants.dart';
+import 'package:tahfidz/views/asatidz/penilaian/components/drop_down_cabang.dart';
 
 class IuranSantriScreen extends StatefulWidget {
   const IuranSantriScreen({Key? key}) : super(key: key);
@@ -29,6 +31,16 @@ class _IuranSantriScreenState extends State<IuranSantriScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
+              // alignment: Alignment.center,
+              width: Get.width,
+              // height: 60,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                color: Colors.white,
+              ),
+              child: DropwDownCabang(),
+            ),
+            Container(
               child: Text(
                 "Validasi Iuran Santri",
                 style: GoogleFonts.poppins(
@@ -41,7 +53,7 @@ class _IuranSantriScreenState extends State<IuranSantriScreen> {
               margin: EdgeInsets.symmetric(vertical: 10),
               padding: EdgeInsets.all(10),
               width: size.width,
-              height: 60,
+              // height: 60,
               color: Colors.white,
               child: Row(
                 children: [
