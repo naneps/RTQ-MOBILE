@@ -9,16 +9,16 @@ class CardAttendance extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  Abesn? abesn;
+  Absen? abesn;
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       // height: 50,
       padding: const EdgeInsets.all(20),
-      margin: const EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
       decoration: BoxDecoration(
-        color: Color.fromARGB(255, 175, 255, 161),
+        color: Colors.white,
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
@@ -26,7 +26,7 @@ class CardAttendance extends StatelessWidget {
             spreadRadius: 2,
             blurRadius: 5,
             blurStyle: BlurStyle.inner,
-            offset: const Offset(1, 3), // changes position of shadow
+            offset: const Offset(2, 1), // changes position of shadow
           ),
         ],
       ),

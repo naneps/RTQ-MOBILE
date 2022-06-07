@@ -1,17 +1,17 @@
 // To parse this JSON data, do
 //
-//     final abesn = abesnFromJson(jsonString);
+//     final Absen = AbsenFromJson(jsonString);
 
 import 'dart:convert';
 
-List<Abesn> abesnFromJson(String str) =>
-    List<Abesn>.from(json.decode(str).map((x) => Abesn.fromJson(x)));
+List<Absen> absenFromJson(String str) =>
+    List<Absen>.from(json.decode(str).map((x) => Absen.fromJson(x)));
 
-String abesnToJson(List<Abesn> data) =>
+String absenToJson(List<Absen> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class Abesn {
-  Abesn({
+class Absen {
+  Absen({
     this.id,
     this.gambar,
     this.alamat,
@@ -23,7 +23,7 @@ class Abesn {
   String? alamat;
   DateTime? tanggalAbsen;
 
-  factory Abesn.fromJson(Map<String, dynamic> json) => Abesn(
+  factory Absen.fromJson(Map<String, dynamic> json) => Absen(
         id: json["id"],
         gambar: json["gambar"],
         alamat: json["alamat"],

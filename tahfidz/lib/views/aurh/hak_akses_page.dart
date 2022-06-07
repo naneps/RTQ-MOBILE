@@ -79,12 +79,9 @@ class _HakAksesPageState extends State<HakAksesPage> {
               width: MediaQuery.of(context).size.width,
               height: 200,
               // color: Colors.amber,
-              child: ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: datahakAkses.length,
-                itemBuilder: (context, index) {
-                  datahakAkses[index]['id'];
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: List.generate(datahakAkses.length, (index) {
                   return WidgetHakAkses(
                     isSelected: selectedIndex == index ? true : false,
                     onTap: () {
@@ -98,7 +95,7 @@ class _HakAksesPageState extends State<HakAksesPage> {
                     id: datahakAkses[index]['id'].toString(),
                     title: datahakAkses[index]['hakAkses'],
                   );
-                },
+                }),
               ),
             ),
 

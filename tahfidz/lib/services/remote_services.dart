@@ -338,7 +338,7 @@ class RemoteServices {
     }
   }
 
-  static Future<List<Abesn>?> fetchRekapAbsen() async {
+  static Future<List<Absen>?> fetchRekapAbsen() async {
     try {
       var url = Uri.parse('$baseUrl/absensi/asatidz/rekap');
       var response = await http.get(url, headers: {
@@ -350,9 +350,9 @@ class RemoteServices {
       if (response.statusCode == 200) {
         var jsonResponse = jsonDecode(response.body);
 
-        List<Abesn> abesn = [];
+        List<Absen> abesn = [];
         for (var i in jsonResponse) {
-          abesn.add(Abesn.fromJson(i));
+          abesn.add(Absen.fromJson(i));
         }
         print(abesn);
         return abesn;
@@ -367,7 +367,7 @@ class RemoteServices {
     return null;
   }
 
-  static Future<Abesn?> getAbesnToday() async {
+  static Future<Absen?> getAbesnToday() async {
     try {
       var url = Uri.parse('$baseUrl/absensi/asatidz');
       var response = await http.get(url, headers: {
@@ -377,7 +377,7 @@ class RemoteServices {
       print(response.statusCode);
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
-        return Abesn.fromJson(data);
+        return Absen.fromJson(data);
       } else {
         print("Error");
       }

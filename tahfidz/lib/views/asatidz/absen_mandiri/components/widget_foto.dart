@@ -19,7 +19,7 @@ class WidgetFoto extends StatefulWidget {
 }
 
 class _WidgetFotoState extends State<WidgetFoto> {
-  String? address = "alamat";
+  String? address = '';
   Position? position;
   final picker = ImagePicker();
 
@@ -32,7 +32,7 @@ class _WidgetFotoState extends State<WidgetFoto> {
       // color: Colors.grey,
       child: Column(
         children: [
-          Container(
+          SizedBox(
             // color: Colors.black,
             width: double.infinity,
             height: 380,
@@ -78,7 +78,7 @@ class _WidgetFotoState extends State<WidgetFoto> {
                       style: ElevatedButton.styleFrom(
                         elevation: 2,
                         primary: Colors.white,
-                        shape: CircleBorder(),
+                        shape: const CircleBorder(),
                       ),
                       child: SizedBox(
                         height: 50,
@@ -93,8 +93,11 @@ class _WidgetFotoState extends State<WidgetFoto> {
               ],
             ),
           ),
-          SizedBox(
-            height: 20,
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            "Alamat: ${address == '' ? '' : '$address'}",
           ),
           ElevatedButton(
             child: SizedBox(
@@ -139,44 +142,46 @@ class _WidgetFotoState extends State<WidgetFoto> {
                 'alamat': address!,
                 // 'foto': widget.fileImage!.path,
               };
-              if (widget.fileImage == null) {
+              if (widget.fileImage == null || position == null) {
                 Get.snackbar("Peringatan", "Foto Terlebih Dahulu",
-                    backgroundColor: Color.fromARGB(255, 255, 204, 0),
+                    backgroundColor: const Color.fromARGB(255, 255, 204, 0),
                     colorText: Colors.white,
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.error,
                       color: Colors.white,
                     ));
-              }
-              await RemoteServices.createAbsen(body, widget.fileImage!)
-                  .then((value) {
-                if (value!) {
-                  Get.snackbar(
-                    'Berhasil',
-                    'Absen berhasil disimpan',
-                    icon: const Icon(
-                      Icons.check,
-                      color: Colors.white,
-                    ),
-                    backgroundColor: greenColor,
-                    colorText: Colors.white,
-                    borderRadius: 10,
-                    snackPosition: SnackPosition.TOP,
-                    margin: const EdgeInsets.all(10),
-                    duration: const Duration(seconds: 2),
-                  );
-                  setState(() {});
-                  Navigator.pop(context);
-                } else {
-                  Get.snackbar('Gagal', 'Absen gagal',
-                      backgroundColor: redColor,
+              } else {
+                await RemoteServices.createAbsen(body, widget.fileImage!)
+                    .then((value) {
+                  if (value!) {
+                    Get.snackbar(
+                      'Berhasil',
+                      'Absen berhasil disimpan',
+                      icon: const Icon(
+                        Icons.check,
+                        color: Colors.white,
+                      ),
+                      backgroundColor: greenColor,
                       colorText: Colors.white,
-                      icon: Icon(
-                        Icons.close,
-                        color: Color.fromARGB(255, 255, 255, 255),
-                      ));
-                }
-              });
+                      borderRadius: 10,
+                      snackPosition: SnackPosition.TOP,
+                      margin: const EdgeInsets.all(10),
+                      duration: const Duration(seconds: 2),
+                    );
+                    setState(() {});
+                    Navigator.pop(context);
+                  } else {
+                    Get.snackbar('Gagal', 'Absen gagal',
+                        backgroundColor: redColor,
+                        colorText: Colors.white,
+                        icon: const Icon(
+                          Icons.close,
+                          color: Color.fromARGB(255, 255, 255, 255),
+                        ));
+                  }
+                });
+              }
+
               // print(dataAbensi);
             },
           )
