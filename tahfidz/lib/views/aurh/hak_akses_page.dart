@@ -80,7 +80,8 @@ class _HakAksesPageState extends State<HakAksesPage> {
               height: 200,
               // color: Colors.amber,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: List.generate(datahakAkses.length, (index) {
                   return WidgetHakAkses(
                     isSelected: selectedIndex == index ? true : false,

@@ -21,11 +21,9 @@ class HalaqohController extends GetxController {
       isLoading(true);
       var dataHalaqoh =
           await RemoteServices.fetchHalaqoh(SpUtil.getString("token")!, filter);
-      if (dataHalaqoh != null) {
-        listHalaqoh.value = dataHalaqoh;
+      listHalaqoh.value = dataHalaqoh;
 
-        print("List Halaqoh $listHalaqoh");
-      }
+      print("List Halaqoh ${listHalaqoh.first.kodeHalaqah}");
     } catch (e) {
       print("Catch getAllHalaqoh $e");
     } finally {

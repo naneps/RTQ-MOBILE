@@ -74,60 +74,56 @@ class _JenjangScreenState extends State<JenjangScreen> {
             const SizedBox(
               height: 15,
             ),
-            Flexible(
-              child: Container(
-                width: width,
-                height: height,
-                child: Obx(
-                  () {
-                    if (jenjangController.isLoading.value) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else {
-                      return ListView.builder(
-                        itemCount: jenjangController.listJenjang.length,
-                        itemBuilder: (context, index) {
-                          // print(jenjangController.listJenjang[index].jenjang);
-                          return CardJenjang(
-                            nomor: index,
-                            onTap: () async {
-                              // ignore: unnecessary_null_comparison
-                              if (halaqohController
-                                      .getSelectedHalaqoh()
-                                      .kodeHalaqah ==
-                                  null) {
-                                Get.snackbar(
-                                  "Peringatan",
-                                  "Pilih Cabang Dahulu",
-                                  icon: const Icon(
-                                    Icons.error,
-                                    color: Colors.white,
-                                  ),
-                                  // snackStyle: SnackStyle.,
-                                  backgroundColor: redColor,
-                                  colorText: Colors.white,
-                                  borderRadius: 10,
-                                  snackPosition: SnackPosition.TOP,
-                                  duration: const Duration(seconds: 2),
-                                );
-                              } else {
-                                await Get.to(ListSantriScreen(), arguments: [
-                                  jenjangController.listJenjang[index].id
-                                      .toString(),
-                                  halaqohController
-                                      .getSelectedHalaqoh()
-                                      .kodeHalaqah,
-                                ]);
-                              }
-                            },
-                            jenjang: jenjangController.listJenjang[index],
-                          );
-                        },
-                      );
-                    }
-                  },
-                ),
+            Expanded(
+              child: Obx(
+                () {
+                  if (jenjangController.isLoading.value) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    return ListView.builder(
+                      itemCount: jenjangController.listJenjang.length,
+                      itemBuilder: (context, index) {
+                        // print(jenjangController.listJenjang[index].jenjang);
+                        return CardJenjang(
+                          nomor: index,
+                          onTap: () async {
+                            // ignore: unnecessary_null_comparison
+                            if (halaqohController
+                                    .getSelectedHalaqoh()
+                                    .kodeHalaqah ==
+                                null) {
+                              Get.snackbar(
+                                "Peringatan",
+                                "Pilih Cabang Dahulu",
+                                icon: const Icon(
+                                  Icons.error,
+                                  color: Colors.white,
+                                ),
+                                // snackStyle: SnackStyle.,
+                                backgroundColor: redColor,
+                                colorText: Colors.white,
+                                borderRadius: 10,
+                                snackPosition: SnackPosition.TOP,
+                                duration: const Duration(seconds: 2),
+                              );
+                            } else {
+                              await Get.to(ListSantriScreen(), arguments: [
+                                jenjangController.listJenjang[index].id
+                                    .toString(),
+                                halaqohController
+                                    .getSelectedHalaqoh()
+                                    .kodeHalaqah,
+                              ]);
+                            }
+                          },
+                          jenjang: jenjangController.listJenjang[index],
+                        );
+                      },
+                    );
+                  }
+                },
               ),
             ),
           ],
