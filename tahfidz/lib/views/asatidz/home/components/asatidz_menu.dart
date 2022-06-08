@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/item-menu.dart';
 import 'package:tahfidz/views/asatidz/absen_mandiri/my_absensi_page.dart';
 import 'package:tahfidz/views/asatidz/absensi/absensi_screen.dart';
@@ -29,28 +31,64 @@ class SectionMenuAsatidz extends StatelessWidget {
           runSpacing: 6,
           children: [
             ItemMenu(
-              title: 'Iuran Santri',
-              icon: Icons.dashboard_customize,
-              color: 0xff7585F6,
+              title: Text(
+                'Iuran Santri',
+                style: GoogleFonts.poppins(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white),
+              ),
+              icon: Icon(
+                Icons.dashboard_customize,
+                color: Colors.white,
+              ),
+              color: kMainColor,
               onTap: () => Get.to(IuranSantriScreen(),
                   transition: Transition.circularReveal),
             ),
             ItemMenu(
-                title: 'Absensi',
-                icon: Icons.book,
-                color: 0xffFED525,
+                title: Text(
+                  'Absensi',
+                  style: GoogleFonts.poppins(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: kMainColor),
+                ),
+                icon: Icon(
+                  Icons.book,
+                  color: kMainColor,
+                ),
+                color: Colors.white,
                 onTap: () => Get.to(AbsensiScreen(),
                     transition: Transition.circularReveal)),
             ItemMenu(
-                title: 'Penilaian',
-                icon: Icons.book_online_outlined,
-                color: 0xffFD637B,
+                title: Text(
+                  'Penilaian',
+                  style: GoogleFonts.poppins(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: kMainColor),
+                ),
+                icon: Icon(
+                  Icons.book_online_outlined,
+                  color: kMainColor,
+                ),
+                color: Colors.white,
                 onTap: () => Get.to(JenjangScreen(),
                     popGesture: true, transition: Transition.fadeIn)),
             ItemMenu(
-              title: 'Absensi Saya',
-              icon: Icons.report_off_rounded,
-              color: 0xff21CDFF,
+              title: Text(
+                'Absensi Saya',
+                style: GoogleFonts.poppins(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white),
+              ),
+              icon: Icon(
+                Icons.report_off_rounded,
+                color: Colors.white,
+              ),
+              color: kMainColor,
               onTap: () =>
                   Get.to(MyAbsen(), transition: Transition.circularReveal),
             ),
