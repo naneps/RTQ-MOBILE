@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 
 class ItemMenu extends StatelessWidget {
-  final String? title;
-  final dynamic icon;
-  final dynamic color;
+  final Text? title;
+  final Icon? icon;
+  final Color? color;
   final dynamic onTap;
   ItemMenu({this.onTap, this.title, this.icon, this.color});
   @override
@@ -20,27 +20,16 @@ class ItemMenu extends StatelessWidget {
           height: (screenWidth - 40 - 17 - 30) / 2.8,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.0),
-            color: Color(color),
+            color: color,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                child: Icon(
-                  icon,
-                  size: 40,
-                  color: Colors.white,
-                ),
+                child: icon,
                 margin: EdgeInsets.only(bottom: 10),
               ),
-              Text(
-                title!,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              title!,
             ],
           ),
         ),
