@@ -417,4 +417,43 @@ class RemoteServices {
       return false;
     }
   }
+
+  static Future getIuranSantri({String? idSantri}) async {
+    var url = Uri.parse("$baseUrl/iuran/detail/$idSantri");
+    var response = await http.get(
+      url,
+      headers: {
+        HttpHeaders.authorizationHeader: SpUtil.getString('token')!,
+      },
+    );
+    print("StatusCode Get Iuran : ${response.statusCode}");
+    if (response.statusCode == 200) {
+      print(jsonDecode(response.body));
+
+      return jsonDecode(response.body);
+      // print(response.body);
+      // return Iuran.fromJson(json.decode(response.body));
+    } else {
+      return null;
+    }
+  }
+
+  static Future getNominalIuran(String? idIuran) async {
+    var url = Uri.parse("$baseUrl/iuran/cek/nominal/$idIuran");
+    var response = await http.get(
+      url,
+      headers: {
+        HttpHeaders.authorizationHeader: SpUtil.getString('token')!,
+      },
+    );
+    print("StatusCode Get nominal Iuran : ${response.statusCode}");
+    print(response.body);
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+      // print(response.body);
+      // return Iuran.fromJson(json.decode(response.body));
+    } else {
+      return null;
+    }
+  }
 }
