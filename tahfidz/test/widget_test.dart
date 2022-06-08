@@ -4,9 +4,11 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/data/dumy+data.dart';
 import 'package:tahfidz/model/absen.dart';
+import 'package:tahfidz/model/iuran.dart';
 import 'package:tahfidz/model/nilai.dart';
 import 'dart:convert';
 
@@ -24,25 +26,8 @@ void main() async {
 
     // print(await getAbesnToday());
     // await updateNilai(idNilai: "2", idAsatidz: "1", nilai: "40");
-    Future<bool?> storeIuran({String? idSantri, String? nominal}) async {
-      var url = Uri.parse("$baseUrl/iuran/store");
 
-      var response = await http.post(
-        url,
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": SpUtil.getString('token')!
-        },
-        body: json.encode({
-          "id_asatidz": SpUtil.getString('id'),
-          "id_santri": idSantri,
-          "nominal": nominal,
-        }),
-      );
-      print(response.body);
-    }
-
-    await storeIuran(idSantri: "1", nominal: "1000");
+    // await storeIuran(idSantri: "1", nominal: "1000");
   } on Exception catch (e) {
     // print(e);
   }

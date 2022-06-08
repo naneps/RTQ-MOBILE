@@ -394,4 +394,27 @@ class RemoteServices {
     }
     return null;
   }
+
+  static Future<bool?> storeIuran({String? idSantri, String? nominal}) async {
+    print("Store Iuran");
+    var url = Uri.parse("$baseUrl/iuran/store");
+    var response = await http.post(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": SpUtil.getString('token')!
+      },
+      body: json.encode({
+        "id_asatidz": SpUtil.getString('id'),
+        "id_santri": idSantri,
+        "nominal": nominal,
+      }),
+    );
+    print("StatusCode Store Iuran : ${response.statusCode}");
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

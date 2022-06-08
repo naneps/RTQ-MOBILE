@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/custom_text_field.dart';
+import 'package:tahfidz/controllers/iuran_controller.dart';
 import 'package:tahfidz/services/remote_services.dart';
 
 class ListIuranSantri extends StatelessWidget {
@@ -11,6 +12,7 @@ class ListIuranSantri extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var argumen = Get.arguments;
+    IuranController controller = Get.put(IuranController());
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -83,14 +85,70 @@ class ListIuranSantri extends StatelessWidget {
                                     ],
                                   ),
                                   // Text("${snapshot.data[index].namaLengkap}"),
-                                  SizedBox(
-                                    width: 100,
-                                    child: CustomTextField(
-                                      // hintText: "Nominal",
-                                      labelText: "Nominal",
-                                      inputType: TextInputType.number,
-                                    ),
-                                  )
+                                  TextButton(
+                                      onPressed: () {
+                                        Get.bottomSheet(
+                                          Container(
+                                            padding: EdgeInsets.all(15),
+                                            height: Get.height / 4,
+                                            color: Colors.white,
+                                            child: Column(
+                                              children: [
+                                                Text("Tambah Iuran"),
+                                                CustomTextField(
+                                                  hintText: "Nominal",
+                                                  labelText: "Nominal",
+                                                  controller: controller
+                                                      .iuranController,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    ElevatedButton(
+                                                        onPressed: () {
+                                                          Get.back();
+                                                        },
+                                                        child: Text("Batal")),
+                                                    ElevatedButton(
+                                                        onPressed: () async {
+                                                          await RemoteServices
+                                                              .storeIuran(
+                                                            idSantri: snapshot
+                                                                .data[index].id,
+                                                            nominal: controller
+                                                                .iuranController
+                                                                .text,
+                                                          ).then(
+                                                            (value) {
+                                                              print(value);
+                                                              if (value ==
+                                                                  true) {
+                                                                Get.back();
+                                                                Get.snackbar(
+                                                                    "Berhasil",
+                                                                    "Berhasil menambahkan iuran",
+                                                                    backgroundColor:
+                                                                        Colors
+                                                                            .green);
+                                                              }
+                                                            },
+                                                          );
+                                                        },
+                                                        child: Text("Simpan")),
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: Container(
+                                        child: Row(
+                                          children: [
+                                            Icon(Icons.add),
+                                            Text("Tambah Iuran")
+                                          ],
+                                        ),
+                                      ))
                                   // Text("${snapshot.data[index].namaLengkap}"),
                                 ],
                               ));
@@ -104,7 +162,7 @@ class ListIuranSantri extends StatelessWidget {
                         ),
                       );
               },
-            ))
+            )),
           ],
         ),
       ),

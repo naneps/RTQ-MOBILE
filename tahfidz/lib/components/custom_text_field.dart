@@ -12,8 +12,8 @@ class CustomTextField extends StatelessWidget {
   bool? obscureText;
   bool? readOnly;
   TextInputType? inputType;
-  dynamic? validator;
-
+  dynamic validator;
+  // Void onchanged;
   CustomTextField({
     Key? key,
     this.validator,
@@ -39,6 +39,7 @@ class CustomTextField extends StatelessWidget {
         fontSize: 16,
       ),
       validator: validator,
+      // onChanged: onchanged,
       // selectionControls: TextSelectionControls(),
       decoration: InputDecoration(
         // border: OutlineInputBorder(borderRadius: BorderRadius.circular(25)),

@@ -112,7 +112,7 @@ class CardPenilaianSantri extends StatelessWidget {
                     onPressed: () {
                       Get.to(PelajaranScreen(), arguments: [idJenjang, santri]);
                     },
-                    child: Text(
+                    child: const Text(
                       "Penilaian",
                       textAlign: TextAlign.center,
                       style: TextStyle(
