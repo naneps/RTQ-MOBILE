@@ -28,17 +28,19 @@ class SectionMenuSantri extends StatelessWidget {
           runSpacing: 6,
           children: [
             ItemMenu(
-              title: 'Dashboard',
-              icon: Icons.dashboard_customize,
-              color: 0xff7585F6,
+              title: Text("Dashboard"),
+              icon: Icon(
+                Icons.dashboard_customize,
+              ),
+              color: Colors.white,
               onTap: () {
                 print("object");
               },
             ),
             ItemMenu(
-              title: 'Iuran',
-              icon: Icons.book,
-              color: 0xffFED525,
+              title: Text('Iuran'),
+              icon: Icon(Icons.book),
+              color: Colors.white,
               onTap: () => {
                 Get.to(IuranScreen(), transition: Transition.circularReveal)
               },
@@ -52,9 +54,11 @@ class SectionMenuSantri extends StatelessWidget {
             ItemMenu(
                 onTap: () => Get.to(ProfileAnakScreen(),
                     transition: Transition.circularReveal),
-                title: 'Santri',
-                icon: Icons.person,
-                color: 0xff21CDFF),
+                title: Text('Santri'),
+                icon: Icon(
+                  Icons.person,
+                ),
+                color: Colors.white),
           ],
         ),
       ),
