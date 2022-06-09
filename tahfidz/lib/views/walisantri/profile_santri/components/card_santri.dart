@@ -56,17 +56,17 @@ class CardSantri extends StatelessWidget {
             height: 10,
           ),
           Text(
-            nama!,
+            nama ?? "",
             style: GoogleFonts.poppins(
                 fontSize: 16, fontWeight: FontWeight.w600, color: kFontColor),
           ),
           Text(
-            nis!,
+            nis ?? "",
             style: GoogleFonts.poppins(
                 fontSize: 16, fontWeight: FontWeight.w600, color: kFontColor),
           ),
           Text(
-            jenjang!,
+            jenjang ?? "",
             style: GoogleFonts.poppins(
                 fontSize: 12, fontWeight: FontWeight.w500, color: kFontColor),
           ),
@@ -84,6 +84,10 @@ class CardSantri extends StatelessWidget {
               WudgetButton(
                 label: "Sertifikat",
                 color: const Color.fromARGB(255, 0, 206, 185),
+              ),
+              WudgetButton(
+                label: "Rekap Iuran",
+                color: Color.fromARGB(255, 0, 206, 27),
               ),
               // WudgetButton(),
             ],
