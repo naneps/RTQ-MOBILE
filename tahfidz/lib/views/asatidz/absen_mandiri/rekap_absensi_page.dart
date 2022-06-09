@@ -33,9 +33,9 @@ class _RekapAbsensiPageState extends State<RekapAbsensiPage> {
           Expanded(
             child: Container(
               width: Get.width,
-              height: Get.height / 2.5,
+              // height: Get.height / 2.5,
               // color: Colors.white,
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(15),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
@@ -48,7 +48,27 @@ class _RekapAbsensiPageState extends State<RekapAbsensiPage> {
                 ],
               ),
               child: TableCalendar(
+                // enabledDayPredicate: (day) {
+                //   return day.day == 10 || day.day == 20;
+                // },
                 // locale: 'id',
+                // eventLoader: (day) => _loadEvents(day),?
+                calendarStyle: CalendarStyle(
+                  canMarkersOverflow: true,
+                  todayDecoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                headerStyle: HeaderStyle(
+                  // centerHeaderTitle: true,
+                  formatButtonDecoration: BoxDecoration(
+                    color: Colors.orange,
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  formatButtonTextStyle: const TextStyle(color: Colors.white),
+                  formatButtonShowsNext: false,
+                ),
                 calendarFormat: CalendarFormat.month,
                 focusedDay: DateTime.now(),
                 firstDay: DateTime.utc(2019),
@@ -63,7 +83,7 @@ class _RekapAbsensiPageState extends State<RekapAbsensiPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text(
@@ -99,5 +119,9 @@ class _RekapAbsensiPageState extends State<RekapAbsensiPage> {
         ]),
       ),
     );
+  }
+
+  _loadEvents(day) {
+    return RemoteServices.fetchRekapAbsen();
   }
 }

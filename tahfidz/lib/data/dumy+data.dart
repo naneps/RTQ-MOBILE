@@ -422,3 +422,32 @@ String formatRupiah(int number) {
       number.toString().replaceAllMapped(
           RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.');
 }
+
+// creat function formatTanggal untuk mengubah tanggal ke format yang bisa dibaca
+String formatTanggal(DateTime tanggal) {
+  return tanggal.day.toString() +
+      '-' +
+      tanggal.month.toString() +
+      '-' +
+      tanggal.year.toString();
+}
+
+// format tanggal and time id
+String formatTanggalTimeId(DateTime tanggal) {
+  return tanggal.day.toString() +
+      '-' +
+      tanggal.month.toString() +
+      '-' +
+      tanggal.year.toString() +
+      '-' +
+      tanggal.hour.toString() +
+      '-' +
+      tanggal.minute.toString() +
+      '-' +
+      tanggal.second.toString();
+}
+
+//  time indonesia
+String formatTimeIndonesia(DateTime tanggal) {
+  return tanggal.hour.toString() + ':' + tanggal.minute.toString() + ':';
+}

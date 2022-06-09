@@ -50,99 +50,53 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
       ),
       backgroundColor: kBackground,
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 10),
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.start,
-          // crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: Get.width,
-              height: 100,
-              alignment: Alignment.center,
-              // color: mainColor,
-              padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(35),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.4),
-                    spreadRadius: 2,
-                    blurRadius: 5,
-                    blurStyle: BlurStyle.inner,
-                    offset: Offset(1, 3), // changes position of shadow
-                  ),
-                ],
-              ),
-              child: FutureBuilder<List<KategoriPenilaian>>(
-                future: RemoteServices.fetchKategoriPenilaian(
-                    SpUtil.getString("token")!),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                        // child: CircularProgressIndicator(),
-                        );
-                  } else if (!snapshot.hasData || snapshot.hasError) {
-                    return const Center(
-                      child: Text("Tidak Ada Data"),
-                    );
-                  }
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          setState(() {
-                            selectedItem = index;
-                            selectedKategori =
-                                snapshot.data![index].id.toString();
-                          });
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          // width: G,
-                          height: 100,
-                          padding: EdgeInsets.all(10),
-                          // width: Get.width / 2.5,
-                          decoration: BoxDecoration(
-                            color: index == selectedItem
-                                ? mainColor
-                                : Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.4),
-                                spreadRadius: 2,
-                                blurRadius: 5,
-                                blurStyle: BlurStyle.inner,
-                                offset:
-                                    Offset(1, 3), // changes position of shadow
-                              ),
-                            ],
-                          ),
-
-                          margin: EdgeInsets.only(left: 5, right: 5),
-                          child: Text(
-                            snapshot.data![index].kategoriPenilaian!,
-                            style: GoogleFonts.poppins(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                color: kFontColor),
-                          ),
+        padding: const EdgeInsets.symmetric(
+          vertical: 15,
+          horizontal: 15,
+        ),
+        child: FutureBuilder<List<KategoriPenilaian>>(
+          future:
+              RemoteServices.fetchKategoriPenilaian(SpUtil.getString("token")!),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                  // child: CircularProgressIndicator(),
+                  );
+            } else if (!snapshot.hasData || snapshot.hasError) {
+              return const Center(
+                child: Text("Tidak Ada Data"),
+              );
+            }
+            return Container(
+              height: Get.height,
+              // color: Colors.white,
+              child: ListView.builder(
+                shrinkWrap: true,
+                // scrollDirection: Axis.horizontal,
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Penilaian " + snapshot.data![index].kategoriPenilaian!,
+                        style: GoogleFonts.poppins(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
                         ),
-                      );
-                    },
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      buildListPelajara(
+                          idKategori: snapshot.data![index].id.toString())
+                    ],
                   );
                 },
               ),
-            ),
-            SizedBox(
-              height: 40,
-            ),
-            buildListPelajara(idKategori: selectedKategori)
-          ],
+            );
+          },
         ),
       ),
     );
@@ -164,7 +118,8 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
             ),
           );
         } else if (snapshot.hasData) {
-          return SizedBox(
+          return Container(
+            // color: Colors.amberAccent,
             height: Get.height / 2,
             width: double.infinity,
             child: ListView.builder(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
+import 'package:tahfidz/data/dumy+data.dart';
 import 'package:tahfidz/model/absen.dart';
 
 class CardAttendance extends StatelessWidget {
@@ -48,7 +49,7 @@ class CardAttendance extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  abesn!.tanggalAbsen.toString(),
+                  formatTanggal(abesn!.tanggalAbsen!),
                   style: GoogleFonts.poppins(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
