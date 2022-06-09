@@ -90,7 +90,10 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
                         height: 10,
                       ),
                       buildListPelajara(
-                          idKategori: snapshot.data![index].id.toString())
+                          idKategori: snapshot.data![index].id.toString()),
+                      SizedBox(
+                        height: 10,
+                      ),
                     ],
                   );
                 },
@@ -118,9 +121,9 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
             ),
           );
         } else if (snapshot.hasData) {
-          return Container(
+          return SizedBox(
             // color: Colors.amberAccent,
-            height: Get.height / 2,
+            height: Get.height / 3,
             width: double.infinity,
             child: ListView.builder(
               itemCount: snapshot.data?.length,
@@ -134,7 +137,20 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
             ),
           );
         } else {
-          return Container();
+          return Container(
+            padding: EdgeInsets.all(10),
+            color: Color.fromARGB(255, 234, 96, 87),
+            // height: 200,
+            width: Get.width,
+            child: Text(
+              "Data Pelajaran La",
+              textAlign: TextAlign.center,
+              style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                  color: Colors.white),
+            ),
+          );
         }
       }),
     );
