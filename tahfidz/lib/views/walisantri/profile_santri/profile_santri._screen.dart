@@ -41,7 +41,7 @@ class ProfileAnakScreen extends StatelessWidget {
                     // return Center()
                   }
                   return ListView.builder(
-                    itemCount: snapshot.data.length ?? 0,
+                    itemCount: snapshot.data.length,
                     itemBuilder: (context, index) {
                       return CardSantri(
                         size: size,
