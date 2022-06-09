@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/item-menu.dart';
 import 'package:tahfidz/views/walisantri/iuran/iuran_screen.dart';
 import 'package:tahfidz/views/walisantri/prestasi/prestasi_scres.dart';
@@ -58,7 +59,7 @@ class SectionMenuSantri extends StatelessWidget {
                 icon: Icon(
                   Icons.person,
                 ),
-                color: Colors.white),
+                color: kMainColor),
           ],
         ),
       ),
