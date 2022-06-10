@@ -1,24 +1,33 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
+import 'package:tahfidz/views/walisantri/prestasi/rekap_nilai.dart';
 import 'package:tahfidz/views/walisantri/profile_santri/components/widget_button.dart';
 
 class CardSantri extends StatelessWidget {
-  CardSantri(
-      {Key? key,
-      required this.size,
-      this.nama,
-      this.nis,
-      this.halaqoh,
-      this.jenjang})
-      : super(key: key);
+  CardSantri({
+    Key? key,
+    this.id,
+    required this.size,
+    this.nama,
+    this.nis,
+    this.halaqoh,
+    // this.onTap,
+    this.jenjang,
+  }) : super(key: key);
 
   final Size size;
+  String? id;
   String? nama;
   String? jenjang;
   String? halaqoh;
   String? foto;
   String? nis;
+
+  // VoidCallback? onTap;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -78,16 +87,25 @@ class CardSantri extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               WudgetButton(
+                ontap: () {
+                  Get.to(const RekapNilaiScreen(), arguments: {'id': id});
+                },
                 label: "Rekap Nilai",
                 color: const Color.fromARGB(255, 82, 116, 251),
               ),
               WudgetButton(
+                ontap: () {
+                  print(nama);
+                },
                 label: "Sertifikat",
                 color: const Color.fromARGB(255, 0, 206, 185),
               ),
               WudgetButton(
+                ontap: () {
+                  print(nama);
+                },
                 label: "Rekap Iuran",
-                color: Color.fromARGB(255, 0, 206, 27),
+                color: const Color.fromARGB(255, 0, 206, 27),
               ),
               // WudgetButton(),
             ],
