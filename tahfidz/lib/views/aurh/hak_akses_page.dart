@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
-import 'package:tahfidz/data/dumy+data.dart';
+import 'package:tahfidz/data/helper.dart';
 import 'package:tahfidz/views/aurh/components/wodget_hal_akses.dart';
 import 'package:tahfidz/views/aurh/login_page.dart';
 

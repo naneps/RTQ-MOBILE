@@ -53,6 +53,7 @@ class ProfileAnakScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return CardSantri(
                         size: size,
+                        id: snapshot.data[index]['id'].toString(),
                         nama: snapshot.data[index]['nama'],
                         nis: snapshot.data[index]['nis'],
                         jenjang: snapshot.data[index]['jenjang'],

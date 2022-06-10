@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/constants.dart';
-import 'package:tahfidz/data/dumy+data.dart';
+import 'package:tahfidz/data/helper.dart';
 import 'package:tahfidz/model/Jenjang.dart';
 import 'package:tahfidz/model/kategori_penilaian.dart';
 import 'package:tahfidz/model/santri_by.dart';

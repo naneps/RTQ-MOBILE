@@ -451,3 +451,14 @@ String formatTanggalTimeId(DateTime tanggal) {
 String formatTimeIndonesia(DateTime tanggal) {
   return tanggal.hour.toString() + ':' + tanggal.minute.toString() + ':';
 }
+
+List<Map<String, dynamic>> hasilPenilaian = [
+  {
+    "id": "1",
+    "nilai": "0",
+    "keterangan": "",
+    "id_pelajaran": "1",
+    "id_santri": "1",
+    "Pelajaran": "Pelajaran 1",
+  },
+];

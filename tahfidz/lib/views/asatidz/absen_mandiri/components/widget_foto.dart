@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/constants.dart';
-import 'package:tahfidz/data/dumy+data.dart';
+import 'package:tahfidz/data/helper.dart';
 import 'package:tahfidz/services/remote_services.dart';
 
 class WidgetFoto extends StatefulWidget {

@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sp_util/sp_util.dart';
-import 'package:tahfidz/data/dumy+data.dart';
+import 'package:tahfidz/data/helper.dart';
 import 'package:tahfidz/model/absen.dart';
 import 'package:tahfidz/model/iuran.dart';
 import 'package:tahfidz/model/nilai.dart';
