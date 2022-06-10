@@ -7,14 +7,14 @@ import 'package:tahfidz/views/walisantri/prestasi/components/mulok_page.dart';
 import 'package:tahfidz/views/walisantri/prestasi/components/tadribat_page.dart';
 // import 'package:tahfidz/components/constants.dart';
 
-class PrestasiScreen extends StatefulWidget {
-  const PrestasiScreen({Key? key}) : super(key: key);
+class RekapNilaiScreen extends StatefulWidget {
+  const RekapNilaiScreen({Key? key}) : super(key: key);
 
   @override
-  State<PrestasiScreen> createState() => _PrestasiScreenState();
+  State<RekapNilaiScreen> createState() => _RekapNilaiScreenState();
 }
 
-class _PrestasiScreenState extends State<PrestasiScreen>
+class _RekapNilaiScreenState extends State<RekapNilaiScreen>
     with SingleTickerProviderStateMixin {
   late TabController tabbarController;
 
