@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/item-menu.dart';
 import 'package:tahfidz/views/walisantri/iuran/iuran_screen.dart';
-import 'package:tahfidz/views/walisantri/prestasi/prestasi_scres.dart';
 import 'package:tahfidz/views/walisantri/profile_santri/profile_santri._screen.dart';
 
 class SectionMenuSantri extends StatelessWidget {
@@ -38,19 +37,19 @@ class SectionMenuSantri extends StatelessWidget {
                 print("object");
               },
             ),
-            ItemMenu(
-              title: Text('Iuran'),
-              icon: Icon(Icons.book),
-              color: Colors.white,
-              onTap: () => {
-                Get.to(IuranScreen(), transition: Transition.circularReveal)
-              },
-            ),
+            // ItemMenu(
+            //   title: Text('Iuran'),
+            //   icon: Icon(Icons.book),
+            //   color: Colors.white,
+            //   onTap: () => {
+            //     Get.to(IuranScreen(), transition: Transition.circularReveal)
+            //   },
+            // ),
             // ItemMenu(
             //   title: 'Prestasi',
             //   icon: Icons.book_online_outlined,
             //   color: 0xffFD637B,
-            //   onTap: () => Get.to(PrestasiScreen()),
+            //   onTap: () => Get.to(RekapNilaiScreen()),
             // ),
             ItemMenu(
                 onTap: () => Get.to(ProfileAnakScreen(),
