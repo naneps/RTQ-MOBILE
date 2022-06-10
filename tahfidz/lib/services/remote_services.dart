@@ -18,7 +18,7 @@ import 'package:tahfidz/model/santri_by.dart';
 class RemoteServices {
   static var baseUrl = "http://api.rtq-freelance.my.id/api-v1";
 
-  static Future<List<Jenjang>?> fetchJenjang(String token) async {
+  static Future<List<Jenjang>> fetchJenjang(String token, filter) async {
     try {
       var url = Uri.parse('$baseUrl/jenjang/view/all');
       var resposne = await http
@@ -27,13 +27,14 @@ class RemoteServices {
         var jsonString = resposne.body;
         return jenjangFromJson(jsonString);
       } else {
-        return null;
+        return [];
       }
     } on Exception catch (e) {
       // TODO
       print("Fetch jenjang :$e");
+      return [];
     }
-    return null;
+    // return null;
   }
 
   static Future<List<Cabang>?> fetchCabang(String token) async {
@@ -118,7 +119,7 @@ class RemoteServices {
         var jsonString = resposne.body;
         return halaqohFromJson(jsonString);
       }
-      return [];
+      // return [];
     } catch (e) {
       print("Catch Fetch Halaqoh : $e");
     }
