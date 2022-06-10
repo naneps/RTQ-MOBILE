@@ -2,26 +2,20 @@
 
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/constants.dart';
-import 'package:tahfidz/controllers/halaqoh_controllers.dart';
 import 'package:tahfidz/model/Jenjang.dart';
 import 'package:tahfidz/services/remote_services.dart';
 
-import '../../../../model/halaqoh.dart';
-
 class DropdownJenjang extends StatefulWidget {
-  DropdownJenjang({Key? key}) : super(key: key);
+  DropdownJenjang({Key? key, this.onChange}) : super(key: key);
   final userToken = SpUtil.getString('token');
+  dynamic onChange;
   @override
   State<DropdownJenjang> createState() => _DropdownJenjangState();
 }
 
 class _DropdownJenjangState extends State<DropdownJenjang> {
-  // JenjangController jenjangController = Get.put(JenjangController());
-  HalaqohController halaqohController = Get.put(HalaqohController());
-  // Halaqoh? selectedHalaqoh;
   @override
   Widget build(BuildContext context) {
     // print("BUild Dropdown");
@@ -38,11 +32,7 @@ class _DropdownJenjangState extends State<DropdownJenjang> {
       onFind: (filter) {
         return RemoteServices.fetchJenjang(widget.userToken!, filter);
       },
-      onChanged: (data) {
-        setState(() {
-          // halaqohController.setSelectedHalaqoh(data!);
-        });
-      },
+      onChanged: widget.onChange,
       dropdownBuilder: _customDropDownExample,
       popupItemBuilder: _customPopupItemBuilderExample2,
       searchFieldProps: TextFieldProps(
