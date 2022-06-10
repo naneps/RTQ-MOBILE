@@ -36,4 +36,7 @@ class Jenjang {
         "created_at": createdAt!.toIso8601String(),
         "updated_at": updatedAt!.toIso8601String(),
       };
+  bool isEqual(Jenjang model) {
+    return id == model.id;
+  }
 }
