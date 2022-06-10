@@ -2,30 +2,37 @@
 
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sp_util/sp_util.dart';
-import 'package:tahfidz/data/helper.dart';
-import 'package:tahfidz/model/absen.dart';
-import 'package:tahfidz/model/iuran.dart';
-import 'package:tahfidz/model/nilai.dart';
+
 import 'dart:convert';
 
-import 'package:tahfidz/model/pelajaran.dart';
 import 'package:http/http.dart' as http;
-import 'package:tahfidz/model/user.dart';
-import 'dart:convert';
 
 void main() async {
   try {
     String baseUrl = "http://api.rtq-freelance.my.id/api-v1";
     String token =
-        "93aa3b8bf4d495e941712c7e35d878f91197eb4122071474430d86bbb896a93648e86be44ce9c34e";
+        "4f1ff4c6320d1b1eaf1fea8b6331cc18229ef5d79c207bd05b9c78d388392306390efdc9331c0174";
     String id = "1";
 
     // print(await getAbesnToday());
     // await updateNilai(idNilai: "2", idAsatidz: "1", nilai: "40");
+    Future rekapPenilaian() async {
+      var url = Uri.parse("$baseUrl/penilaian/view/1");
+      var response = await http.get(url, headers: {
+        "Authorization": token,
+        "Content-Type": "application/json"
+      });
+      if ( response.statusCode == 200) {
+        var data = json.decode(response.body);
+        print(data);
+      }
+        
+      }
+    
+    }
+
+    // await rekapPenilaian();
 
     // await storeIuran(idSantri: "1", nominal: "1000");
   } on Exception catch (e) {

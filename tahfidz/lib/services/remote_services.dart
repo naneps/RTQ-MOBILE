@@ -457,4 +457,16 @@ class RemoteServices {
       return null;
     }
   }
+
+  static Future rekapPenilaian() async {
+    var url = Uri.parse("$baseUrl/penilaian/view/1");
+    var response = await http.get(url, headers: {
+      "Authorization": SpUtil.getString('token')!,
+      "Content-Type": "application/json"
+    });
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      return data;
+    }
+  }
 }
