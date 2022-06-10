@@ -6,7 +6,9 @@ import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/dropdown_jenjang.dart';
 import 'package:tahfidz/controllers/jenjang_controllers.dart';
 import 'package:tahfidz/model/kategori_penilaian.dart';
+import 'package:tahfidz/model/pelajaran.dart';
 import 'package:tahfidz/services/remote_services.dart';
+import 'package:tahfidz/views/walisantri/prestasi/components/widget_pelajaran.dart';
 
 class RekapNilaiScreen extends StatefulWidget {
   const RekapNilaiScreen({Key? key}) : super(key: key);
@@ -65,6 +67,9 @@ class _RekapNilaiScreenState extends State<RekapNilaiScreen> {
               style: GoogleFonts.poppins(
                   color: kFontColor, fontSize: 18, fontWeight: FontWeight.w600),
             ),
+            SizedBox(
+              height: 30,
+            ),
             (jenjangController.getSelectedJenjang().id == null)
                 ? Center(
                     child: Container(
@@ -93,24 +98,79 @@ class _RekapNilaiScreenState extends State<RekapNilaiScreen> {
                             if (listKategoriPenilaian == null) {
                               return Container();
                             } else {
-                              return ListTile(
-                                contentPadding: EdgeInsets.all(0),
-                                leading: CircleAvatar(
-                                    backgroundColor: Colors.transparent,
-                                    child: Icon(
-                                      Icons.location_on_rounded,
-                                      color: mainColor,
-                                      size: 40,
-                                    )),
-                                title: Text(
-                                  listKategoriPenilaian![index]
-                                          .kategoriPenilaian ??
-                                      "",
-                                  style: GoogleFonts.poppins(
-                                      color: kFontColor,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600),
-                                ),
+                              return Column(
+                                // mainAxisAlignment: M,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Hasil Penilaian ${listKategoriPenilaian![index].kategoriPenilaian ?? ""}",
+                                    style: GoogleFonts.poppins(
+                                        color: kFontColor,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  FutureBuilder<List<Pelajaran>?>(
+                                      future: RemoteServices.filterPelajaran(
+                                        token: SpUtil.getString('token'),
+                                        idJenjang: jenjangController
+                                            .getSelectedJenjang()
+                                            .id
+                                            .toString(),
+                                        idKategoriPenilaian:
+                                            listKategoriPenilaian![index]
+                                                .id
+                                                .toString(),
+                                      ),
+                                      builder: (context, snapshot) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return Center(
+                                            child: CircularProgressIndicator(
+                                              backgroundColor:
+                                                  const Color.fromARGB(
+                                                      255, 191, 191, 191),
+                                              valueColor:
+                                                  AlwaysStoppedAnimation<Color>(
+                                                      mainColor),
+                                            ),
+                                          );
+                                        } else if (snapshot.hasData) {
+                                          return SizedBox(
+                                            // color: Colors.amberAccent,
+                                            height: Get.height / 2,
+                                            width: double.infinity,
+                                            child: ListView.builder(
+                                              itemCount: snapshot.data?.length,
+                                              itemBuilder: (context, index) {
+                                                Pelajaran pelajaran =
+                                                    snapshot.data![index];
+                                                return WidgetPelajaran(
+                                                  nomor: index + 1,
+                                                  pelajaran: pelajaran,
+                                                );
+                                              },
+                                            ),
+                                          );
+                                        } else {
+                                          return Container(
+                                            height: 50,
+                                            padding: EdgeInsets.all(10),
+                                            color: Color.fromARGB(
+                                                255, 234, 96, 87),
+                                            // height: 200,
+                                            width: Get.width,
+                                            child: Text(
+                                              "Data Pelajaran La",
+                                              textAlign: TextAlign.center,
+                                              style: GoogleFonts.poppins(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 16,
+                                                  color: Colors.white),
+                                            ),
+                                          );
+                                        }
+                                      })
+                                ],
                               );
                             }
                           }),
