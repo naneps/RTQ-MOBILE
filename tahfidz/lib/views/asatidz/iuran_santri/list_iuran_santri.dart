@@ -4,9 +4,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/custom_text_field.dart';
+import 'package:tahfidz/controllers/cabang_controller.dart';
 import 'package:tahfidz/controllers/iuran_controller.dart';
+import 'package:tahfidz/controllers/jenjang_controllers.dart';
 import 'package:tahfidz/data/helper.dart';
-import 'package:tahfidz/model/iuran.dart';
+import 'package:tahfidz/model/santri_by.dart';
 import 'package:tahfidz/services/remote_services.dart';
 
 class ListIuranSantri extends StatelessWidget {
@@ -14,11 +16,13 @@ class ListIuranSantri extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var argumen = Get.arguments;
+    JenjangController jenjangController = Get.put(JenjangController());
+    CabangController cabangController = Get.put(CabangController());
     IuranController controller = Get.put(IuranController());
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'List Iuran Santri',
+          'Iuran Santri',
           style: GoogleFonts.poppins(
             fontSize: 18,
             fontWeight: FontWeight.w500,
@@ -35,29 +39,44 @@ class ListIuranSantri extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Daftar Santri",
+              "Daftar Santri ",
               style: GoogleFonts.poppins(
                   fontSize: 18, fontWeight: FontWeight.w500),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              children: [
+                Text(
+                    "Jenjang ${jenjangController.getSelectedJenjang().jenjang} "),
+                // Text(argumen['jenjang'])
+              ],
             ),
             const SizedBox(
               height: 10,
             ),
             Expanded(
-                child: FutureBuilder(
+                child: FutureBuilder<List<SantriBy>?>(
               future: RemoteServices.filterSantri(
-                idJenjang: argumen['id_jenjang'],
+                idJenjang: argumen['id_jenjang'].toString(),
                 token: SpUtil.getString('token'),
-                kdHalaqoh: argumen['kd_halaqoh'],
+                kdHalaqoh: argumen['kd_halaqoh'].toString(),
               ),
-              builder: (context, AsyncSnapshot snapshot) {
+              builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
+                }
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Text('Error: ${snapshot.error}'),
+                  );
                 } else {
                   return snapshot.hasData
                       ? ListView.builder(
-                          itemCount: snapshot.data.length,
+                          itemCount: snapshot.data?.length,
                           itemBuilder: (context, index) {
                             return Container(
                                 padding: const EdgeInsets.symmetric(
@@ -83,7 +102,7 @@ class ListIuranSantri extends StatelessWidget {
                                     Column(
                                       children: [
                                         Text(
-                                          "${snapshot.data[index].namaLengkap}",
+                                          "${snapshot.data![index].namaLengkap}",
                                           style: GoogleFonts.poppins(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w500,
@@ -94,7 +113,7 @@ class ListIuranSantri extends StatelessWidget {
                                     // Text("${snapshot.data[index].namaLengkap}"),
                                     FutureBuilder(
                                       future: RemoteServices.getNominalIuran(
-                                        snapshot.data[index].id.toString(),
+                                        snapshot.data![index].id.toString(),
                                       ),
                                       builder: (context,
                                           AsyncSnapshot snapshotIuran) {
@@ -122,8 +141,8 @@ class ListIuranSantri extends StatelessWidget {
                                           return TextButton(
                                               onPressed: () {
                                                 showInputIuran(
-                                                    idSantri:
-                                                        snapshot.data[index].id,
+                                                    idSantri: snapshot
+                                                        .data![index].id,
                                                     nominal: controller
                                                         .iuranController.text,
                                                     controller: controller
@@ -149,10 +168,23 @@ class ListIuranSantri extends StatelessWidget {
                           },
                         )
                       : Center(
-                          child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation(
-                              kMainColor,
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
                             ),
+                            child: Container(
+                                color: Color.fromARGB(255, 255, 225, 137),
+                                width: 150,
+                                padding: EdgeInsets.all(15),
+                                child: Text(
+                                  'Tidak Ada Data Santri',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 16,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                )),
                           ),
                         );
                 }
