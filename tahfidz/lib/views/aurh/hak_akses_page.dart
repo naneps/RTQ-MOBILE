@@ -62,7 +62,8 @@ class _HakAksesPageState extends State<HakAksesPage> {
               width: double.infinity,
               margin: const EdgeInsets.only(bottom: 20),
               child: Text(
-                "Masuk Sebagai apakah Adna hayoo ???",
+                "Untuk mengakses RTQ App, silahkan pilih hak akses yang tersedia",
+                textAlign: TextAlign.center,
                 style: GoogleFonts.poppins(
                   color: kFontColor,
                   fontSize: 16,
