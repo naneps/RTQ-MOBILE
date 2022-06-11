@@ -8,7 +8,6 @@ import 'package:tahfidz/model/Jenjang.dart';
 import 'package:tahfidz/model/absen.dart';
 import 'package:tahfidz/model/cabang.dart';
 import 'package:tahfidz/model/halaqoh.dart';
-import 'package:tahfidz/model/iuran.dart';
 import 'package:tahfidz/model/kategori_penilaian.dart';
 import 'package:tahfidz/model/nilai.dart';
 import 'package:tahfidz/model/pelajaran.dart';
@@ -87,24 +86,6 @@ class RemoteServices {
       }
     } catch (e) {
       print("Catch Filter Santri Santri : $e");
-    }
-    return null;
-  }
-
-  static Future<List<Iuran>?> fetchIuran() async {
-    try {
-      var url = Uri.parse(
-          'https://623aa9b8b5292b8bfcb807ee.mockapi.io/rtq/api/authors');
-      var resposne = await http.get(
-        url,
-      );
-      print("StatusCode Fetch Iuran : ${resposne.statusCode}");
-      if (resposne.statusCode == 200) {
-        var jsonString = resposne.body;
-        return iuranFromJson(jsonString);
-      }
-    } catch (e) {
-      print("Catch Fetch Iuran : $e");
     }
     return null;
   }
@@ -464,6 +445,22 @@ class RemoteServices {
       "Authorization": SpUtil.getString('token')!,
       "Content-Type": "application/json"
     });
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      return data;
+    }
+  }
+
+  static Future rekapIuranSantri(String id) async {
+    var url = Uri.parse("$baseUrl/iuran/detail/$id");
+    var response = await http.get(
+      url,
+      headers: {
+        "Authorization": SpUtil.getString('token')!,
+        "Content-Type": "application/json"
+      },
+    );
+    ;
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
       return data;

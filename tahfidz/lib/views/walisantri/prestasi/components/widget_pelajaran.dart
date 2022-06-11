@@ -21,8 +21,6 @@ class _WidgetPelajaranState extends State<WidgetPelajaran> {
   final argumen = Get.arguments;
   @override
   Widget build(BuildContext context) {
-    // print("args card pe;ajaran  $args");
-    // print(widget.pelajaran!.id);
     return Container(
       margin: const EdgeInsets.only(top: 5),
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
