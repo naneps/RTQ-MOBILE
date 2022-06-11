@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
+import 'package:tahfidz/views/walisantri/iuran/iuran_screen.dart';
 import 'package:tahfidz/views/walisantri/prestasi/rekap_nilai.dart';
 import 'package:tahfidz/views/walisantri/profile_santri/components/widget_button.dart';
 
@@ -102,7 +103,7 @@ class CardSantri extends StatelessWidget {
               ),
               WudgetButton(
                 ontap: () {
-                  print(nama);
+                  Get.to(IuranScreen(), arguments: {'id': id, 'nama': nama});
                 },
                 label: "Rekap Iuran",
                 color: const Color.fromARGB(255, 0, 206, 27),
