@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:line_icons/line_icon.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/controllers/halaqoh_controllers.dart';
 import 'package:tahfidz/controllers/jenjang_controllers.dart';
@@ -38,7 +37,7 @@ class _IuranSantriScreenState extends State<IuranSantriScreen> {
           style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        backgroundColor: mainColor,
+        backgroundColor: Colors.transparent,
         elevation: 0,
       ),
       body: Padding(
@@ -47,18 +46,20 @@ class _IuranSantriScreenState extends State<IuranSantriScreen> {
           // mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              // alignment: Alignment.center,
-              width: Get.width,
-              // height: 60,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                color: Colors.white,
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25),
               ),
-              child: DropwDownCabang(),
+              child: DropwDownCabang(
+                onChange: (value) {
+                  setState(() {
+                    halaqohController.setSelectedHalaqoh(value);
+                  });
+                },
+              ),
             ),
             Text(
-              "Validasi Iuran Santri",
+              "V",
               style: GoogleFonts.poppins(
                   color: greyColor, fontSize: 18, fontWeight: FontWeight.bold),
             ),
@@ -74,40 +75,44 @@ class _IuranSantriScreenState extends State<IuranSantriScreen> {
                       itemCount: jenjangController.listJenjang.length,
                       itemBuilder: (context, index) {
                         // print(jenjangController.listJenjang[index].jenjang);
-                        return CardJenjang(
-                          nomor: index,
-                          onTap: () async {
-                            // ignore: unnecessary_null_comparison
-                            if (halaqohController
-                                    .getSelectedHalaqoh()
-                                    .kodeHalaqah ==
-                                null) {
-                              Get.snackbar(
-                                "Peringatan",
-                                "Pilih Cabang Dahulu",
-                                icon: const Icon(
-                                  Icons.error,
-                                  color: Colors.white,
-                                ),
-                                // snackStyle: SnackStyle.,
-                                backgroundColor: redColor,
-                                colorText: Colors.white,
-                                borderRadius: 10,
-                                snackPosition: SnackPosition.TOP,
-                                duration: const Duration(seconds: 2),
-                              );
-                            } else {
-                              await Get.to(ListIuranSantri(), arguments: {
-                                'id_jenjang': jenjangController
-                                    .listJenjang[index].id
-                                    .toString(),
-                                'kd_halaqoh': halaqohController
-                                    .getSelectedHalaqoh()
-                                    .kodeHalaqah
-                              });
-                            }
-                          },
-                          jenjang: jenjangController.listJenjang[index],
+                        return Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25)),
+                          child: CardJenjang(
+                            nomor: index,
+                            onTap: () async {
+                              // ignore: unnecessary_null_comparison
+                              if (halaqohController
+                                      .getSelectedHalaqoh()
+                                      .kodeHalaqah ==
+                                  null) {
+                                Get.snackbar(
+                                  "Peringatan",
+                                  "Pilih Cabang Dahulu",
+                                  icon: const Icon(
+                                    Icons.error,
+                                    color: Colors.white,
+                                  ),
+                                  // snackStyle: SnackStyle.,
+                                  backgroundColor: redColor,
+                                  colorText: Colors.white,
+                                  borderRadius: 10,
+                                  snackPosition: SnackPosition.TOP,
+                                  duration: const Duration(seconds: 2),
+                                );
+                              } else {
+                                await Get.to(ListIuranSantri(), arguments: {
+                                  'id_jenjang': jenjangController
+                                      .listJenjang[index].id
+                                      .toString(),
+                                  'kd_halaqoh': halaqohController
+                                      .getSelectedHalaqoh()
+                                      .kodeHalaqah
+                                });
+                              }
+                            },
+                            jenjang: jenjangController.listJenjang[index],
+                          ),
                         );
                       },
                     );
