@@ -35,7 +35,7 @@ class SantriBy {
         namaHalaqah: json["nama_halaqah"],
         jenjang: json["jenjang"],
         alamat: json["alamat"],
-        foto: json["foto"] == null ? null : json["foto"],
+        foto: json["foto"],
       );
 
   Map<String, dynamic> toJson() => {
