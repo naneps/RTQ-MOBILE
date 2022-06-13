@@ -17,11 +17,12 @@ import 'package:tahfidz/model/santri_by.dart';
 class RemoteServices {
   static var baseUrl = "http://api.rtq-freelance.my.id/api-v1";
 
-  static Future<List<Jenjang>> fetchJenjang(String token, filter) async {
+  static Future<List<Jenjang>> fetchJenjang(filter) async {
     try {
       var url = Uri.parse('$baseUrl/jenjang/view/all');
-      var resposne = await http
-          .get(url, headers: {HttpHeaders.authorizationHeader: token});
+      var resposne = await http.get(url, headers: {
+        HttpHeaders.authorizationHeader: SpUtil.getString('token')!
+      });
       if (resposne.statusCode == 200) {
         var jsonString = resposne.body;
         return jenjangFromJson(jsonString);
@@ -81,7 +82,8 @@ class RemoteServices {
       print("StatusCode Filter Santri : ${resposne.statusCode}");
       if (resposne.statusCode == 200) {
         var jsonString = resposne.body;
-        print(resposne.body);
+        // print(resposne.body);
+        // print(santriByFromJson(jsonString).first.namaLengkap);
         return santriByFromJson(jsonString);
       }
     } catch (e) {
@@ -129,18 +131,22 @@ class RemoteServices {
   static Future<bool?> createAbsen(
       Map<String, String> body, File filepath) async {
     try {
-      String addimageUrl = '$baseUrl/absensi/asatidz';
+      String url = '$baseUrl/absensi/asatidz';
       Map<String, String> headers = {
-        'authorization': SpUtil.getString('token')!,
+        HttpHeaders.authorizationHeader: SpUtil.getString("token")!,
+        // "Authorization": SpUtil.getString('token')!,
         'Content-Type': 'multipart/form-data',
       };
-      var request = http.MultipartRequest('POST', Uri.parse(addimageUrl))
+      // print("body ")
+      var request = http.MultipartRequest('POST', Uri.parse(url))
         ..fields.addAll(body)
         ..headers.addAll(headers)
-        ..files.add(await http.MultipartFile.fromPath('image', filepath.path));
+        ..files.add(await http.MultipartFile.fromPath('gambar', filepath.path));
       var response = await request.send();
-
-      // print(response.statusCode);
+      print(response.stream); // print(request.files.);
+      print("stausCode CreateAbsen : ${response.statusCode}");
+      // print(response.request.persistentConnection);
+      // print(response.request);
       if (response.statusCode == 201) {
         return true;
       } else {
@@ -178,13 +184,13 @@ class RemoteServices {
     return await Geolocator.getCurrentPosition();
   }
 
-  static Future<List<KategoriPenilaian>> fetchKategoriPenilaian(
-      String token) async {
+  static Future<List<KategoriPenilaian>> fetchKategoriPenilaian() async {
     try {
       var url = Uri.parse(
           'http://api.rtq-freelance.my.id/api-v1/kategori/pelajaran/view/all');
-      var resposne = await http
-          .get(url, headers: {HttpHeaders.authorizationHeader: token});
+      var resposne = await http.get(url, headers: {
+        HttpHeaders.authorizationHeader: SpUtil.getString('token')!
+      });
       print("StatusCode Fetch Kategori Penilaian : ${resposne.statusCode}");
       if (resposne.statusCode == 200) {
         var jsonString = resposne.body;
@@ -199,12 +205,13 @@ class RemoteServices {
   }
 
   static Future<List<Pelajaran>?> filterPelajaran(
-      {String? token, String? idJenjang, String? idKategoriPenilaian}) async {
+      {String? idJenjang, String? idKategoriPenilaian}) async {
     try {
       var url =
           Uri.parse('$baseUrl/pelajaran/view/$idKategoriPenilaian/$idJenjang');
-      var resposne = await http
-          .get(url, headers: {HttpHeaders.authorizationHeader: token!});
+      var resposne = await http.get(url, headers: {
+        HttpHeaders.authorizationHeader: SpUtil.getString('token')!
+      });
       print("StatusCode Filter Pelajaran : ${resposne.statusCode}");
       if (resposne.statusCode == 200) {
         var jsonString = resposne.body;
@@ -356,9 +363,11 @@ class RemoteServices {
         HttpHeaders.authorizationHeader: SpUtil.getString('token')!,
         HttpHeaders.contentTypeHeader: "application/json"
       });
-      print(response.statusCode);
+      print("Absen Today " + response.statusCode.toString());
+      print(response.body);
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
+        print(response.body);
         return Absen.fromJson(data);
       } else {
         print("Error");
