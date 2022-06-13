@@ -108,6 +108,10 @@ class _RekapAbsensiPageState extends State<RekapAbsensiPage> {
                               abesn: snapshot.data![index],
                             );
                           });
+                    } else if (snapshot.hasError) {
+                      return Text("error");
+                    } else if (!snapshot.hasData) {
+                      return Text("Data Absen Kosong");
                     } else {
                       return Container();
                     }
