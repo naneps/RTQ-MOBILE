@@ -41,7 +41,7 @@ class CardIuranSantri extends StatelessWidget {
             ),
             Expanded(
               child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 20),
+                margin: const EdgeInsets.symmetric(horizontal: 20),
                 child: Center(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
