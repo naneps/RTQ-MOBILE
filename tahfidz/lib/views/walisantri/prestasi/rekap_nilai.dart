@@ -25,8 +25,7 @@ class _RekapNilaiScreenState extends State<RekapNilaiScreen> {
     // TODO: implement initState
     super.initState();
 
-    RemoteServices.fetchKategoriPenilaian(SpUtil.getString('token')!)
-        .then((value) {
+    RemoteServices.fetchKategoriPenilaian().then((value) {
       value.forEach((element) {
         listKategoriPenilaian!.add(element);
       });
@@ -110,7 +109,6 @@ class _RekapNilaiScreenState extends State<RekapNilaiScreen> {
                                 ),
                                 FutureBuilder<List<Pelajaran>?>(
                                   future: RemoteServices.filterPelajaran(
-                                    token: SpUtil.getString('token'),
                                     idJenjang: jenjangController
                                         .getSelectedJenjang()
                                         .id
