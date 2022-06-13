@@ -55,6 +55,7 @@ class _MyAbsenState extends State<MyAbsen> {
                 child: FutureBuilder(
                   future: RemoteServices.getAbesnToday(),
                   builder: (context, snapshot) {
+                    print(snapshot.data);
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       // r eturn Center(child:,)
                       return const Center(
