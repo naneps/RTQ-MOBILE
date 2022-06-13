@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/constants.dart';
+import 'package:tahfidz/controllers/halaqoh_controllers.dart';
+import 'package:tahfidz/data/helper.dart';
 import 'package:tahfidz/model/Jenjang.dart';
 
 class CardJenjang extends StatelessWidget {
@@ -12,13 +16,15 @@ class CardJenjang extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final HalaqohController halaqohController = Get.put(HalaqohController());
     int count = 1;
     return InkWell(
       onTap: onTap,
       child: Container(
           margin: const EdgeInsets.only(top: 10),
-          padding: const EdgeInsets.all(10),
-          height: 90,
+          padding:
+              const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 10),
+          height: 100,
           width: MediaQuery.of(context).size.width,
           decoration: const BoxDecoration(
               color: Colors.white,
@@ -69,12 +75,18 @@ class CardJenjang extends StatelessWidget {
                               color: greyColor),
                         ),
                       ),
-                      Text(
-                        "Pelajaran",
-                        style: GoogleFonts.poppins(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            color: greyColor),
+                      FutureBuilder(
+                        future: getTotalPelajaran(jenjang!.id.toString()),
+                        builder: (context, snapshot) {
+                          print(snapshot.data);
+                          return Text(
+                            "Pelajaran : ${snapshot.data}",
+                            style: GoogleFonts.poppins(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                                color: greyColor),
+                          );
+                        },
                       )
                     ],
                   ),
@@ -82,22 +94,75 @@ class CardJenjang extends StatelessWidget {
               ),
               Expanded(
                 flex: 4,
-                child: Container(
-                  padding: const EdgeInsets.only(left: 10, right: 10),
-                  height: 30,
-                  width: 150,
-                  margin: const EdgeInsets.only(left: 50, right: 10),
-                  decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      borderRadius: BorderRadius.circular(30)),
-                  child: Center(
-                      child: Text(
-                    "10 Santri }",
-                    style: GoogleFonts.poppins(
-                        color: Colors.white,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500),
-                  )),
+                child: FutureBuilder<String>(
+                  future: getTotalSantriIn(
+                      idJenjang: jenjang!.id.toString(),
+                      kdHalaqoh:
+                          halaqohController.getSelectedHalaqoh().kodeHalaqah),
+                  builder: (context, snapshot) {
+                    // print(snapshot.data);
+                    if (!snapshot.hasData) {
+                      return Container(
+                        // height: 100,
+                        padding: const EdgeInsets.all(10),
+                        margin: const EdgeInsets.only(left: 30, right: 10),
+                        decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 179, 194, 255),
+                            borderRadius: BorderRadius.circular(30)),
+                        child: Text.rich(
+                          TextSpan(
+                            children: [
+                              TextSpan(
+                                text: 'Jumlah Santri ',
+                                style: GoogleFonts.poppins(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                    color: kFontColor),
+                              ),
+                              TextSpan(
+                                text: "0",
+                                style: GoogleFonts.poppins(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700,
+                                    color: kFontColor),
+                              ),
+                            ],
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      );
+                    }
+                    String totalSantri = snapshot.data.toString();
+                    return Container(
+                      // height: 100,
+                      padding: const EdgeInsets.all(10),
+                      margin: const EdgeInsets.only(left: 30, right: 10),
+                      decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 202, 255, 179),
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                              text: 'Jumlah Santri ',
+                              style: GoogleFonts.poppins(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                  color: kFontColor),
+                            ),
+                            TextSpan(
+                              text: totalSantri,
+                              style: GoogleFonts.poppins(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  color: kFontColor),
+                            ),
+                          ],
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    );
+                  },
                 ),
               ),
             ],

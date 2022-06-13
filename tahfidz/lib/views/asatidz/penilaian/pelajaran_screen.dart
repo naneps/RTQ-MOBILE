@@ -25,8 +25,7 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
     // TODO: implement initState
     super.initState();
     selectedItem;
-    listPelajaran =
-        RemoteServices.fetchKategoriPenilaian(SpUtil.getString('token')!);
+    listPelajaran = RemoteServices.fetchKategoriPenilaian();
   }
 
   // var get = Get
@@ -55,8 +54,7 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
           horizontal: 15,
         ),
         child: FutureBuilder<List<KategoriPenilaian>>(
-          future:
-              RemoteServices.fetchKategoriPenilaian(SpUtil.getString("token")!),
+          future: RemoteServices.fetchKategoriPenilaian(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
@@ -108,9 +106,7 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
   Widget buildListPelajara({String? idKategori}) {
     return FutureBuilder<List<Pelajaran>?>(
       future: RemoteServices.filterPelajaran(
-          token: SpUtil.getString("token")!,
-          idJenjang: args[0].toString(),
-          idKategoriPenilaian: idKategori),
+          idJenjang: args[0].toString(), idKategoriPenilaian: idKategori),
       builder: ((context, snapshot) {
         print(snapshot.data);
         if (snapshot.connectionState == ConnectionState.waiting) {

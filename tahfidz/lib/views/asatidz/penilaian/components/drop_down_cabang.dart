@@ -11,8 +11,9 @@ import 'package:tahfidz/services/remote_services.dart';
 import '../../../../model/halaqoh.dart';
 
 class DropwDownCabang extends StatefulWidget {
-  DropwDownCabang({Key? key}) : super(key: key);
+  DropwDownCabang({Key? key, this.onChange}) : super(key: key);
   final userToken = SpUtil.getString('token');
+  dynamic onChange;
   @override
   State<DropwDownCabang> createState() => _DropwDownCabangState();
 }
@@ -20,6 +21,7 @@ class DropwDownCabang extends StatefulWidget {
 class _DropwDownCabangState extends State<DropwDownCabang> {
   // JenjangController jenjangController = Get.put(JenjangController());
   HalaqohController halaqohController = Get.put(HalaqohController());
+
   // Halaqoh? selectedHalaqoh;
   @override
   Widget build(BuildContext context) {
@@ -37,11 +39,7 @@ class _DropwDownCabangState extends State<DropwDownCabang> {
       onFind: (filter) {
         return RemoteServices.fetchHalaqoh(widget.userToken!, filter);
       },
-      onChanged: (data) {
-        setState(() {
-          halaqohController.setSelectedHalaqoh(data!);
-        });
-      },
+      onChanged: widget.onChange,
       dropdownBuilder: _customDropDownExample,
       popupItemBuilder: _customPopupItemBuilderExample2,
       searchFieldProps: TextFieldProps(

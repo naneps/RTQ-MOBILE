@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sp_util/sp_util.dart';
-import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/custom_text_field.dart';
 import 'package:tahfidz/controllers/cabang_controller.dart';
 import 'package:tahfidz/controllers/iuran_controller.dart';

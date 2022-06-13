@@ -54,7 +54,13 @@ class _JenjangScreenState extends State<JenjangScreen> {
                 borderRadius: BorderRadius.circular(30),
                 color: Colors.white,
               ),
-              child: DropwDownCabang(),
+              child: DropwDownCabang(
+                onChange: (value) {
+                  setState(() {
+                    halaqohController.setSelectedHalaqoh(value);
+                  });
+                },
+              ),
             ),
             const SizedBox(
               height: 15,
