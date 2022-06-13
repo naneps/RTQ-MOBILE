@@ -1,7 +1,12 @@
 import 'dart:convert';
+
 import 'dart:io';
 
+import 'package:sp_util/sp_util.dart';
+import 'package:tahfidz/model/kategori_penilaian.dart';
 import 'package:tahfidz/model/pelajaran.dart';
+import 'package:tahfidz/model/santri_by.dart';
+import 'package:tahfidz/services/remote_services.dart';
 
 var dataKategoriPenilaian = [
   {
@@ -321,19 +326,19 @@ filterNilai(String idPelajaran, String nis) {
 
 List<Map<String, dynamic>> dataAbensi = [];
 
-Future<bool> sendAbsen(DateTime tanggal, File gambar, String alamat) async {
-  print("Absen dikirim");
-  dataAbensi.add({
-    'tanggal': tanggal.day.toString() +
-        '-' +
-        tanggal.month.toString() +
-        '-' +
-        tanggal.year.toString(),
-    'gambar': gambar,
-    'alamat': alamat,
-  });
-  return true;
-}
+// Future<bool> sendAbsen(DateTime tanggal, File gambar, String alamat) async {
+//   print("Absen dikirim");
+//   dataAbensi.add({
+//     'tanggal': tanggal.day.toString() +
+//         '-' +
+//         tanggal.month.toString() +
+//         '-' +
+//         tanggal.year.toString(),
+//     'gambar': gambar,
+//     'alamat': alamat,
+//   });
+//   return true;
+// }
 
 Future<List<Map<String, dynamic>>> getAbensi() async {
   print("Absen diterima");
@@ -463,7 +468,39 @@ List<Map<String, dynamic>> hasilPenilaian = [
   },
 ];
 
+Future<String> getTotalSantriIn({String? kdHalaqoh, String? idJenjang}) async {
+  List<SantriBy> listSantri = [];
+  await RemoteServices.filterSantri(
+          idJenjang: idJenjang,
+          kdHalaqoh: kdHalaqoh,
+          token: SpUtil.getString('token'))
+      .then((value) {
+    value!.forEach((element) {
+      listSantri.add(element);
+    });
+  });
+  return listSantri.length.toString();
+}
 
+Future<String> getTotalPelajaran(
+  String idJenjang,
+) async {
+  List<Pelajaran> listPelajaran = [];
+  List<KategoriPenilaian> listKategori = [];
 
+  await RemoteServices.fetchKategoriPenilaian().then((value) async => {
+        for (var data in value)
+          {
+            await RemoteServices.filterPelajaran(
+              idJenjang: idJenjang,
+              idKategoriPenilaian: data.id.toString(),
+            ).then((value) => print(value))
+          }
+      });
+  // print(listPelajaran.length);
+
+  // });
+  return listPelajaran.length.toString();
+}
 
 // create  formatBulan
