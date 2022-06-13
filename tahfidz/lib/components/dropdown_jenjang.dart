@@ -30,7 +30,7 @@ class _DropdownJenjangState extends State<DropdownJenjang> {
           contentPadding: EdgeInsets.fromLTRB(12, 12, 12, 12),
           border: OutlineInputBorder(borderSide: BorderSide.none)),
       onFind: (filter) {
-        return RemoteServices.fetchJenjang(widget.userToken!, filter);
+        return RemoteServices.fetchJenjang(filter);
       },
       onChanged: widget.onChange,
       dropdownBuilder: _customDropDownExample,
