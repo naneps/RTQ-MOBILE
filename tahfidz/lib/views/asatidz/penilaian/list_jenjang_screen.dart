@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/controllers/halaqoh_controllers.dart';
 import 'package:tahfidz/controllers/jenjang_controllers.dart';
+import 'package:tahfidz/data/helper.dart';
 import 'package:tahfidz/views/asatidz/penilaian/components/card_jenjang.dart';
 import 'package:tahfidz/views/asatidz/penilaian/components/drop_down_cabang.dart';
 import 'package:tahfidz/views/asatidz/penilaian/list_santri_scren.dart';
@@ -125,6 +126,9 @@ class _JenjangScreenState extends State<JenjangScreen> {
                             }
                           },
                           jenjang: jenjangController.listJenjang[index],
+                          countPelajaran: getTotalPelajaran(jenjangController
+                              .listJenjang[index].id
+                              .toString()),
                         );
                       },
                     );

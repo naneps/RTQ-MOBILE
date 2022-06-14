@@ -74,7 +74,6 @@ class _ListSantriScreenState extends State<ListSantriScreen> {
               // Text("${widget.kodeHalaqoh}"),
               FutureBuilder(
                 future: RemoteServices.filterSantri(
-                  token: SpUtil.getString('token')!,
                   kdHalaqoh: args[1],
                   idJenjang: args[0],
                 ),

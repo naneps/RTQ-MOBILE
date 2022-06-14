@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/item-menu.dart';
 import 'package:tahfidz/views/asatidz/absen_mandiri/my_absensi_page.dart';
@@ -16,11 +17,11 @@ class SectionMenuAsatidz extends StatelessWidget {
     final widhtBody = MediaQuery.of(context).size.width;
     final heightBody = MediaQuery.of(context).size.height;
     return Container(
-      margin: EdgeInsets.only(top: 50),
+      margin: const EdgeInsets.only(top: 50),
       width: widhtBody,
       // color: Colors.black,
       height: heightBody / 2.5,
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: Container(
         // color: Colors.white,
         height: heightBody,
@@ -38,12 +39,13 @@ class SectionMenuAsatidz extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                     color: Colors.white),
               ),
-              icon: Icon(
-                Icons.dashboard_customize,
+              icon: const Icon(
+                Icons.money,
                 color: Colors.white,
+                size: 50,
               ),
               color: kMainColor,
-              onTap: () => Get.to(IuranSantriScreen(),
+              onTap: () => Get.to(const IuranSantriScreen(),
                   transition: Transition.circularReveal),
             ),
             ItemMenu(
@@ -55,11 +57,12 @@ class SectionMenuAsatidz extends StatelessWidget {
                       color: kMainColor),
                 ),
                 icon: Icon(
-                  Icons.book,
+                  LineIcons.bookOpen,
                   color: kMainColor,
+                  size: 50,
                 ),
                 color: Colors.white,
-                onTap: () => Get.to(AbsensiScreen(),
+                onTap: () => Get.to(const AbsensiScreen(),
                     transition: Transition.circularReveal)),
             ItemMenu(
                 title: Text(
@@ -70,11 +73,12 @@ class SectionMenuAsatidz extends StatelessWidget {
                       color: kMainColor),
                 ),
                 icon: Icon(
-                  Icons.book_online_outlined,
+                  LineIcons.alternatePencil,
                   color: kMainColor,
+                  size: 50,
                 ),
                 color: Colors.white,
-                onTap: () => Get.to(JenjangScreen(),
+                onTap: () => Get.to(const JenjangScreen(),
                     popGesture: true, transition: Transition.fadeIn)),
             ItemMenu(
               title: Text(
@@ -84,13 +88,14 @@ class SectionMenuAsatidz extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                     color: Colors.white),
               ),
-              icon: Icon(
-                Icons.report_off_rounded,
+              icon: const Icon(
+                LineIcons.retroCamera,
                 color: Colors.white,
+                size: 50,
               ),
               color: kMainColor,
-              onTap: () =>
-                  Get.to(MyAbsen(), transition: Transition.circularReveal),
+              onTap: () => Get.to(const MyAbsen(),
+                  transition: Transition.circularReveal),
             ),
           ],
         ),

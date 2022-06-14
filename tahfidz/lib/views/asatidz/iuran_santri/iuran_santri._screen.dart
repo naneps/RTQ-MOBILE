@@ -59,7 +59,7 @@ class _IuranSantriScreenState extends State<IuranSantriScreen> {
               ),
             ),
             Text(
-              "V",
+              "Daftar Jenjang",
               style: GoogleFonts.poppins(
                   color: greyColor, fontSize: 18, fontWeight: FontWeight.bold),
             ),
