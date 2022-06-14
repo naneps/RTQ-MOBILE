@@ -9,7 +9,8 @@ var kFontColor = const Color.fromARGB(255, 57, 62, 70);
 var kBackground = const Color.fromARGB(255, 247, 247, 247);
 var redColor = const Color.fromARGB(255, 255, 95, 84);
 var greenColor = const Color.fromARGB(255, 107, 246, 121);
-
+var greenSecond = Color.fromARGB(255, 196, 255, 176);
+var purpleColor = Color.fromARGB(255, 176, 192, 255);
 validateHakakses() {
   return Get.snackbar(
     'Peringatan',
