@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
+import 'package:tahfidz/data/helper.dart';
 
 class CardAbsensi extends StatelessWidget {
-  CardAbsensi({Key? key}) : super(key: key);
-  Color hadir = Colors.green;
-  Color izin = Colors.blue;
-  Color sakit = Colors.yellow;
-  Color alpa = Colors.red;
+  const CardAbsensi({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Card(
-      // color: mainColor,
-      elevation: 1,
-      shadowColor: Colors.transparent,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(30),
         ),
@@ -24,145 +19,32 @@ class CardAbsensi extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           // mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
 
-          children: [
-            Column(
+          children: List.generate(keteranganAbsen.length, (index) {
+            return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Draggable(
-                  feedback: SizedBox(
-                    width: 40,
-                    height: 40,
-                    child: Material(
-                      color: hadir.withOpacity(0.5),
-                      shape: StadiumBorder(),
-                      elevation: 4,
-                    ),
-                  ),
-                  data: hadir,
-                  child: SizedBox(
-                    width: 40,
-                    height: 40,
-                    child: Material(
-                      color: hadir,
-                      shape: StadiumBorder(),
-                      elevation: 4,
-                    ),
+                Container(
+                  height: 30,
+                  width: 30,
+                  decoration: BoxDecoration(
+                    color: keteranganAbsen[index]['color'],
+                    borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                SizedBox(
-                  height: 10,
+                const SizedBox(
+                  height: 15,
                 ),
-                Text("Hadir",
+                Text(dataKeteranganAbsen[index]['keterangan'],
                     style: GoogleFonts.poppins(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: greyColor))
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: kFontColor,
+                    )),
               ],
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Draggable(
-                  feedback: SizedBox(
-                    width: 40,
-                    height: 40,
-                    child: Material(
-                      color: izin.withOpacity(0.5),
-                      shape: StadiumBorder(),
-                      elevation: 4,
-                    ),
-                  ),
-                  data: izin,
-                  child: SizedBox(
-                    width: 40,
-                    height: 40,
-                    child: Material(
-                      color: izin,
-                      shape: StadiumBorder(),
-                      elevation: 4,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text("Izin",
-                    style: GoogleFonts.poppins(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: greyColor))
-              ],
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Draggable(
-                  feedback: SizedBox(
-                    width: 40,
-                    height: 40,
-                    child: Material(
-                      color: sakit.withOpacity(0.5),
-                      shape: StadiumBorder(),
-                      elevation: 4,
-                    ),
-                  ),
-                  data: sakit,
-                  child: SizedBox(
-                    width: 40,
-                    height: 40,
-                    child: Material(
-                      color: sakit,
-                      shape: StadiumBorder(),
-                      elevation: 4,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text("Sakit",
-                    style: GoogleFonts.poppins(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: greyColor))
-              ],
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Draggable(
-                  feedback: SizedBox(
-                    width: 40,
-                    height: 40,
-                    child: Material(
-                      color: alpa.withOpacity(0.5),
-                      shape: StadiumBorder(),
-                      elevation: 4,
-                    ),
-                  ),
-                  data: alpa,
-                  child: SizedBox(
-                    width: 40,
-                    height: 40,
-                    child: Material(
-                      color: alpa,
-                      shape: StadiumBorder(),
-                      elevation: 4,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text("Alpa",
-                    style: GoogleFonts.poppins(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: greyColor))
-              ],
-            ),
-          ],
+            );
+          }),
         ),
       ),
     );
