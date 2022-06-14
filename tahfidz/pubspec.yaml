@@ -26,6 +26,7 @@ dependencies:
   sp_util: null
   animated_text_kit: ^4.2.1
   table_calendar: ^3.0.6
+  syncfusion_flutter_calendar: ^20.1.59
 
 dev_dependencies:
   flutter_lints: ^1.0.0
