@@ -74,11 +74,12 @@ class RemoteServices {
   }
 
   static Future<List<SantriBy>?> filterSantri(
-      {String? token, String? kdHalaqoh, String? idJenjang}) async {
+      {String? kdHalaqoh, String? idJenjang}) async {
     try {
       var url = Uri.parse('$baseUrl/santri/view/$kdHalaqoh/$idJenjang');
-      var resposne = await http
-          .get(url, headers: {HttpHeaders.authorizationHeader: token!});
+      var resposne = await http.get(url, headers: {
+        HttpHeaders.authorizationHeader: SpUtil.getString('token')!
+      });
       print("StatusCode Filter Santri : ${resposne.statusCode}");
       if (resposne.statusCode == 200) {
         var jsonString = resposne.body;
@@ -119,6 +120,8 @@ class RemoteServices {
       if (response.statusCode == 200) {
         final jsonResponse = json.decode(response.body);
         // print(User.fromJson(jsonResponse));
+        var data = json.encode(jsonResponse);
+        print(data);
         return jsonResponse;
       } else {
         throw Exception('Failed to load data!');
@@ -131,6 +134,7 @@ class RemoteServices {
   static Future<bool?> createAbsen(
       Map<String, String> body, File filepath) async {
     try {
+      // bool isLoading = true;
       String url = '$baseUrl/absensi/asatidz';
       Map<String, String> headers = {
         HttpHeaders.authorizationHeader: SpUtil.getString("token")!,
