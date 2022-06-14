@@ -2,11 +2,35 @@ import 'dart:convert';
 
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/model/kategori_penilaian.dart';
 import 'package:tahfidz/model/pelajaran.dart';
 import 'package:tahfidz/model/santri_by.dart';
 import 'package:tahfidz/services/remote_services.dart';
+
+List<Map<String, dynamic>> keteranganAbsen = [
+  {
+    'id': '1',
+    'keterangan': 'Hadir',
+    'color': Colors.green,
+  },
+  {
+    'id': '2',
+    'keterangan': 'Izin',
+    'color': Colors.blue,
+  },
+  {
+    'id': '3',
+    'keterangan': 'Sakit',
+    'color': Colors.yellow,
+  },
+  {
+    'id': '4',
+    'keterangan': 'Alpa',
+    'color': Colors.red,
+  },
+];
 
 var dataKategoriPenilaian = [
   {
@@ -471,35 +495,33 @@ List<Map<String, dynamic>> hasilPenilaian = [
 Future<String> getTotalSantriIn({String? kdHalaqoh, String? idJenjang}) async {
   List<SantriBy> listSantri = [];
   await RemoteServices.filterSantri(
-          idJenjang: idJenjang,
-          kdHalaqoh: kdHalaqoh,
-          token: SpUtil.getString('token'))
-      .then((value) {
-    value!.forEach((element) {
+    idJenjang: idJenjang,
+    kdHalaqoh: kdHalaqoh,
+  ).then((value) {
+    for (var element in value!) {
       listSantri.add(element);
-    });
+    }
   });
   return listSantri.length.toString();
 }
 
 Future<String> getTotalPelajaran(
-  String idJenjang,
+  dynamic idJenjang,
 ) async {
   List<Pelajaran> listPelajaran = [];
   List<KategoriPenilaian> listKategori = [];
 
-  await RemoteServices.fetchKategoriPenilaian().then((value) async => {
-        for (var data in value)
-          {
-            await RemoteServices.filterPelajaran(
-              idJenjang: idJenjang,
-              idKategoriPenilaian: data.id.toString(),
-            ).then((value) => print(value))
-          }
-      });
-  // print(listPelajaran.length);
+  await RemoteServices.fetchKategoriPenilaian().then((value) {
+    for (var element in value) {
+      listKategori.add(element);
+    }
+  });
 
-  // });
+  for (var element in listKategori) {
+    await RemoteServices.filterPelajaran(
+        idJenjang: '$idJenjang', idKategoriPenilaian: '${element.id}');
+  }
+  // print(listKategori.length);
   return listPelajaran.length.toString();
 }
 
