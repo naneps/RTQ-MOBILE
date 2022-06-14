@@ -150,9 +150,11 @@ class _WidgetFotoState extends State<WidgetFoto> {
                       Icons.error,
                       color: Colors.white,
                     ));
+                // Get.showOverlay(asyncFunction: );
               } else {
                 await RemoteServices.createAbsen(body, widget.fileImage!)
                     .then((value) {
+                  // print(value);
                   if (value!) {
                     Get.snackbar(
                       'Berhasil',
