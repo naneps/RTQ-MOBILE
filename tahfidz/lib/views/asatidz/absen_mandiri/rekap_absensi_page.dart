@@ -16,6 +16,12 @@ class RekapAbsensiPage extends StatefulWidget {
 
 class _RekapAbsensiPageState extends State<RekapAbsensiPage> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
