@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/profile_avatar.dart';
 import 'package:tahfidz/controllers/asatid_controller.dart';
 import 'package:tahfidz/controllers/auth_controllers.dart';
-import 'package:tahfidz/model/asatidz.dart';
 import 'package:tahfidz/services/remote_services.dart';
 import 'package:tahfidz/views/aurh/hak_akses_page.dart';
-import 'package:tahfidz/views/aurh/login_page.dart';
 import 'package:tahfidz/views/asatidz/home/components/asatidz_menu.dart';
 import 'package:tahfidz/views/asatidz/profile/profile_screen.dart';
 import 'package:tahfidz/views/walisantri/home/components/menu_section.dart';
-
-import '../../../model/user.dart';
 
 class HomeScreen extends StatefulWidget {
   // const HomeScreen({Key? key}) : super(key: key);
@@ -43,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: mainColor,
         actions: [
           Container(
-            margin: EdgeInsets.only(right: 20),
+            margin: const EdgeInsets.only(right: 20),
             child: PopupMenuButton(
               onSelected: (value) => onSelected(context, value as int),
               itemBuilder: (context) => [
@@ -109,9 +104,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Container(
                         // color: mainColor,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
+                            borderRadius: const BorderRadius.only(
                               bottomLeft: Radius.circular(90),
-                              bottomRight: Radius.circular(90),
+                              bottomRight: const Radius.circular(90),
                             ),
                             color: mainColor),
                         // width: widhtBody,
@@ -131,14 +126,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.all(20),
+                          padding: const EdgeInsets.all(20),
                           child: FutureBuilder(
                             future: RemoteServices.getUserInfo(
                                 SpUtil.getString('token')!),
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
-                              print(snapshot.data);
-                              print(SpUtil.getString('token'));
                               if (snapshot.hasData) {
                                 return Column(
                                   // color: mainColor,
@@ -170,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ],
                                 );
                               } else {
-                                return Center(
+                                return const Center(
                                   child: CircularProgressIndicator(),
                                 );
                               }
@@ -182,7 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               showMenu(int.parse(SpUtil.getString('id_role')!))
