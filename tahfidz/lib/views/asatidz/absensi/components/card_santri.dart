@@ -1,112 +1,95 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
-import 'package:tahfidz/model/santri.dart';
-import 'package:tahfidz/views/asatidz/absensi/absensi_screen.dart';
-import 'package:tahfidz/views/asatidz/absensi/components/widget_indicator.dart';
+import 'package:tahfidz/data/helper.dart';
+import 'package:tahfidz/model/santri_by.dart';
+import 'package:tahfidz/views/asatidz/penilaian/pelajaran_screen.dart';
 
-class CardSantri extends StatelessWidget {
-  final Santri? santri;
-  dynamic onTap;
-  Color hadir = Colors.green;
-  Color izin = Colors.blue;
-  Color sakit = Colors.yellow;
-  Color alpa = Colors.red;
-  Color? absenIndikator;
-  CardSantri({this.absenIndikator, this.onTap, this.santri, Key? key})
+class CardAbsensiSantri extends StatelessWidget {
+  SantriBy santri;
+  String? idJenjang;
+  CardAbsensiSantri({required this.santri, this.idJenjang, Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: 10,
-        right: 10,
+    final size = MediaQuery.of(context).size;
+    return Container(
+      margin: const EdgeInsets.only(top: 15, left: 20, right: 20),
+      padding: const EdgeInsets.only(
+        left: 15,
+        right: 15,
       ),
-      child: Container(
-          margin: EdgeInsets.only(top: 15),
-          padding: EdgeInsets.only(
-            left: 25,
-            right: 25,
+      height: MediaQuery.of(context).size.height / 10,
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(
+            Radius.circular(15),
           ),
-          height: 70,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(
-                Radius.circular(35),
-              ),
-              boxShadow: [
-                BoxShadow(
-                    offset: Offset(2, 2),
-                    color: Colors.grey.withOpacity(0.4),
-                    blurRadius: 1)
-              ]),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                  height: 50,
-                  width: 50,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: CircleAvatar(
-                    backgroundImage: NetworkImage("${santri!.avatar}"),
-                  )),
-              SizedBox(width: 20),
-              Expanded(
-                flex: 4,
-                child: Container(
-                  // width: 400,
-                  margin: EdgeInsets.all(5),
-                  child: Column(
+          boxShadow: [
+            BoxShadow(
+                offset: Offset(2, 2),
+                color: Colors.grey.withOpacity(0.4),
+                blurRadius: 1)
+          ]),
+      child: Row(
+        // mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(width: 10),
+          Expanded(
+            flex: 2,
+            child: Container(
+              height: size.height,
+              // color: mainColor,
+              width: size.width,
+              margin: EdgeInsets.all(5),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Flexible(
-                        child: Text(
-                          "${santri!.name}",
-                          style: GoogleFonts.poppins(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              color: greyColor),
-                        ),
-                      ),
                       Text(
-                        "${santri!.jenjang}",
+                        "${santri.namaLengkap}",
                         style: GoogleFonts.poppins(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
                             color: greyColor),
-                      )
+                      ),
                     ],
                   ),
-                ),
+                ],
               ),
-              Container(
-                height: 30,
-                width: 30,
-                child: GestureDetector(
-                  onTap: onTap,
-                  child: InnerShadowBox(
-                    child: Container(
-                      height: 25,
-                      width: 25,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: absenIndikator,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          )
-          // child: ,
+            ),
           ),
+          Expanded(
+            flex: -1,
+            child: Container(
+              // height: 50,
+              // width: 30,
+              // color: Colors.black,
+              child: Container(
+                  height: 50,
+                  width: 100,
+                  child: FutureBuilder(
+                    future: getAbsenTodaySantri(santri.id.toString()),
+                    builder: (context, AsyncSnapshot snapshot) {
+                      print(snapshot.data);
+
+                      return Text(
+                          snapshot.data['keterangan']?.toString() ?? "0");
+                    },
+                  )),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

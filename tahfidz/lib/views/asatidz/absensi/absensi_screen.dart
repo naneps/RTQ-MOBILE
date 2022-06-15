@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
+import 'package:tahfidz/components/dropdown_jenjang.dart';
+import 'package:tahfidz/components/widget_empty.dart';
 
-import 'package:tahfidz/components/search_box.dart';
-import 'package:tahfidz/controllers/santri_controller.dart';
+import 'package:tahfidz/controllers/halaqoh_controllers.dart';
+import 'package:tahfidz/controllers/jenjang_controllers.dart';
+import 'package:tahfidz/model/Jenjang.dart';
+import 'package:tahfidz/model/halaqoh.dart';
 import 'package:tahfidz/model/santri.dart';
-import 'package:tahfidz/views/asatidz/absensi/components/indicator_absensi.dart';
+import 'package:tahfidz/model/santri_by.dart';
+import 'package:tahfidz/services/remote_services.dart';
 import 'package:tahfidz/views/asatidz/absensi/components/card_santri.dart';
 import 'package:tahfidz/views/asatidz/absensi/components/widget_indicator.dart';
+import 'package:tahfidz/views/asatidz/penilaian/components/drop_down_cabang.dart';
 
 class AbsensiScreen extends StatefulWidget {
   const AbsensiScreen({Key? key}) : super(key: key);
@@ -18,20 +24,16 @@ class AbsensiScreen extends StatefulWidget {
 }
 
 class _AbsensiScreenState extends State<AbsensiScreen> {
-  bool _isAccepted = false;
-  Color hadir = Colors.green;
-  Color izin = Colors.blue;
-  Color sakit = Colors.yellow;
-  Color alpa = Colors.red;
-
   Color? absenColor;
   String selectAbsen = 'hadir';
-  final SantriController santriController = Get.put(SantriController());
-  final _formkey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
-    final heightBody = MediaQuery.of(context).size.height;
-    final widhtBody = MediaQuery.of(context).size.width;
+    JenjangController jenjangController = Get.put(JenjangController());
+    HalaqohController halaqohController = Get.put(HalaqohController());
+    Jenjang selectedJenjang = jenjangController.getSelectedJenjang();
+    Halaqoh selectedCabang = halaqohController.getSelectedHalaqoh();
+
     return Scaffold(
       backgroundColor: kBackground,
       appBar: AppBar(
@@ -44,34 +46,116 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
           style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.w600),
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {},
-      // ),
       body: Column(
         children: [
-          SizedBox(height: 150, child: IndicatorAbsen(widhtBody: widhtBody)),
+          SizedBox(
+            height: 150,
+            child: IndicatorAbsen(widhtBody: Get.width),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
           Padding(
-            padding: const EdgeInsets.all(10),
-            child: SearchBox(
-              labelText: "Cari Santri",
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Card(
+              child: DropwDownCabang(
+                onChange: (value) {
+                  setState(() {
+                    halaqohController.setSelectedHalaqoh(value);
+                  });
+                },
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: DropdownJenjang(
+                onChange: (jenjang) {
+                  setState(() {
+                    jenjangController.setSelectedJenjang(jenjang);
+                  });
+                },
+              ),
             ),
           ),
           const SizedBox(
             height: 10,
           ),
+          Expanded(
+              child: (selectedCabang.kodeHalaqah == null ||
+                      selectedJenjang.id == null)
+                  ? Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: Container(
+                        // padding: EdgeInsets.all(15),
+                        // color: const Color.fromARGB(255, 193, 226, 255),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/images/santri.png',
+                              scale: 2,
+                            ),
+                            Text(
+                              "Pilih Cabang dan Jenjang Terlebih Dahulu",
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.poppins(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: kFontColor),
+                            )
+                          ],
+                        ),
+                      ),
+                    )
+                  : FutureBuilder<List<SantriBy>?>(
+                      future: RemoteServices.filterSantri(
+                          kdHalaqoh: halaqohController
+                              .getSelectedHalaqoh()
+                              .kodeHalaqah,
+                          idJenjang: jenjangController
+                              .getSelectedJenjang()
+                              .id
+                              .toString()),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Container();
+                        } else if (snapshot.hasData) {
+                          return ListView.builder(
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (context, index) => CardAbsensiSantri(
+                                santri: snapshot.data![index]),
+                          );
+                        }
+                        return const WidgetEmptySantri();
+                      },
+                    ))
         ],
       ),
     );
   }
 
   void _onButtonPressed(Santri santri) {
+    bool _isAccepted = false;
+    Color hadir = Colors.green;
+    Color izin = Colors.blue;
+    Color sakit = Colors.yellow;
+    Color alpa = Colors.red;
     showModalBottomSheet(
       // shape: RoundedRectangleBorder(),
       backgroundColor: Colors.transparent,
       context: context,
       builder: (context) {
         return Container(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(30),
@@ -89,7 +173,7 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
                   height: 40,
                   child: Material(
                     color: hadir,
-                    shape: StadiumBorder(),
+                    shape: const StadiumBorder(),
                     elevation: 4,
                   ),
                 ),
@@ -99,7 +183,7 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
                 height: 40,
                 child: Material(
                   color: izin,
-                  shape: StadiumBorder(),
+                  shape: const StadiumBorder(),
                   elevation: 4,
                 ),
               ),
@@ -108,7 +192,7 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
                 height: 40,
                 child: Material(
                   color: sakit,
-                  shape: StadiumBorder(),
+                  shape: const StadiumBorder(),
                   elevation: 4,
                 ),
               ),
@@ -117,7 +201,7 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
                 height: 40,
                 child: Material(
                   color: alpa,
-                  shape: StadiumBorder(),
+                  shape: const StadiumBorder(),
                   elevation: 4,
                 ),
               ),
