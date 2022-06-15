@@ -2,19 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/constants.dart';
-import 'package:tahfidz/data/helper.dart';
-import 'package:tahfidz/model/Jenjang.dart';
-import 'package:tahfidz/model/kategori_penilaian.dart';
 import 'package:tahfidz/model/santri_by.dart';
-import 'package:tahfidz/services/remote_services.dart';
 import 'package:tahfidz/views/asatidz/penilaian/pelajaran_screen.dart';
 
 class CardPenilaianSantri extends StatelessWidget {
   SantriBy santri;
-  String idJenjang;
-  CardPenilaianSantri({required this.santri, required this.idJenjang, Key? key})
+  String? idJenjang;
+  CardPenilaianSantri({required this.santri, this.idJenjang, Key? key})
       : super(key: key);
 
   @override
@@ -127,91 +122,3 @@ class CardPenilaianSantri extends StatelessWidget {
     );
   }
 }
-
-
-
-//  FutureBuilder(
-//                     future: RemoteServices.fetchKategoriPenilaian(
-//                         SpUtil.getString('token')!),
-//                     builder: (context, AsyncSnapshot snapshot) {
-//                       print('data kategori ${snapshot.data}');
-//                       // double value = snapshot.data.length!;
-//                       if (snapshot.connectionState == ConnectionState.waiting) {
-//                         return Center(
-//                           child: CircularProgressIndicator(
-//                               // value: double.parse(snapshot.data.length!),
-
-//                               backgroundColor: Colors.white,
-//                               valueColor:
-//                                   AlwaysStoppedAnimation<Color>(mainColor)),
-//                         );
-//                       }
-//                       // print(snapshot.data);
-//                       return ListView.builder(
-//                           // scrollDirection: Axis.horizontal,
-//                           itemCount: snapshot.data.length!,
-//                           itemBuilder: (context, index) {
-//                             return Container();
-//                           });
-//                     }),
-
-// TextButton(
-//                                   onPressed: () {
-//                                     Get.to(PelajaranScreen(), arguments: [
-//                                       kategori,
-//                                       idJenjang,
-//                                       santri
-//                                     ]);
-//                                   },
-//                                   child: Text(
-//                                     "${kategori.kategoriPenilaian}",
-//                                     textAlign: TextAlign.center,
-//                                     style: TextStyle(
-//                                         fontWeight: FontWeight.w600,
-//                                         color: Color.fromARGB(255, 42, 231, 0)),
-//                                   ),
-//                                 );
-
-// FutureBuilder(
-//                         future: RemoteServices.fetchKategoriPenilaian(
-//                             SpUtil.getString('token')!),
-//                         builder: (context, AsyncSnapshot snapshot) {
-//                           print('data kategori ${snapshot.data}');
-//                           // double value = snapshot.data.length!;
-//                           if (snapshot.connectionState ==
-//                               ConnectionState.waiting) {
-//                             return Center(
-//                               child: CircularProgressIndicator(
-//                                   // value: double.parse(snapshot.data.length!),
-
-//                                   backgroundColor: Colors.white,
-//                                   valueColor:
-//                                       AlwaysStoppedAnimation<Color>(mainColor)),
-//                             );
-//                           }
-//                           // print(snapshot.data);
-//                           return ListView.builder(
-//                               // scrollDirection: Axis.horizontal,
-//                               itemCount: snapshot.data.length!,
-//                               itemBuilder: (context, index) {
-//                                 KategoriPenilaian kategori =
-//                                     snapshot.data[index];
-//                                 // print(kategori);
-//                                 return TextButton(
-//                                   onPressed: () {
-//                                     Get.to(PelajaranScreen(), arguments: [
-//                                       kategori,
-//                                       idJenjang,
-//                                       santri
-//                                     ]);
-//                                   },
-//                                   child: Text(
-//                                     "${kategori.kategoriPenilaian}",
-//                                     textAlign: TextAlign.center,
-//                                     style: TextStyle(
-//                                         fontWeight: FontWeight.w600,
-//                                         color: Color.fromARGB(255, 42, 231, 0)),
-//                                   ),
-//                                 );
-//                               });
-//                         }),
