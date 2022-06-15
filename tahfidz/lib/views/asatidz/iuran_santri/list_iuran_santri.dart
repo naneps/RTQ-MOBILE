@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/custom_text_field.dart';
+import 'package:tahfidz/components/widget_empty.dart';
 import 'package:tahfidz/controllers/cabang_controller.dart';
 import 'package:tahfidz/controllers/iuran_controller.dart';
 import 'package:tahfidz/controllers/jenjang_controllers.dart';
@@ -59,7 +60,6 @@ class ListIuranSantri extends StatelessWidget {
                 child: FutureBuilder<List<SantriBy>?>(
               future: RemoteServices.filterSantri(
                 idJenjang: argumen['id_jenjang'].toString(),
-                token: SpUtil.getString('token'),
                 kdHalaqoh: argumen['kd_halaqoh'].toString(),
               ),
               builder: (context, snapshot) {
@@ -166,26 +166,7 @@ class ListIuranSantri extends StatelessWidget {
                                 ));
                           },
                         )
-                      : Center(
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Container(
-                                color: Color.fromARGB(255, 255, 225, 137),
-                                width: 150,
-                                padding: EdgeInsets.all(15),
-                                child: Text(
-                                  'Tidak Ada Data Santri',
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 16,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                )),
-                          ),
-                        );
+                      : const Center(child: WidgetEmptySantri());
                 }
               },
             )),
