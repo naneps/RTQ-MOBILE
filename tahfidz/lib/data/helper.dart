@@ -9,6 +9,46 @@ import 'package:tahfidz/model/pelajaran.dart';
 import 'package:tahfidz/model/santri_by.dart';
 import 'package:tahfidz/services/remote_services.dart';
 
+List<Map<String, dynamic>> dataAbsenSantri = [
+  {
+    "id": "1",
+    "id_santri": "1",
+    "keterangan": "hadir",
+    // "keterangan": ""
+    "tanggal": formatTanggal(DateTime.now()),
+  },
+  {
+    "id": "2",
+    "id_santri": "2",
+    "keterangan": "hadir",
+    // "keterangan": ""
+    "tanggal": DateTime.now().toString(),
+  }
+];
+
+// getAbsenTodaySantri() {
+//   var data = dataAbsenSantri.where((item) {
+//     return item["tanggal"].day == DateTime.now().day;
+//   });
+//   print(data);
+// }
+
+Future getAbsenTodaySantri(String id) async {
+  var absen = dataAbsenSantri.where((item) {
+    return item["tanggal"].day == DateTime.now().day;
+  });
+  var data;
+  for (var item in absen) {
+    if (item["id_santri"] == id) {
+      data = item;
+    } else {
+      data = null;
+    }
+  }
+
+  return jsonDecode(data);
+}
+
 List<Map<String, dynamic>> keteranganAbsen = [
   {
     'id': '1',
@@ -402,12 +442,12 @@ List<Map<String, dynamic>> datahakAkses = [
   {
     "id": '3',
     "hakAkses": 'Asatidz',
-    "gambar": 'assets/images/',
+    "gambar": 'asatidz.png',
   },
   {
     "id": '4',
     "hakAkses": 'Wali Santri',
-    "gambar": 'assets/images/ ',
+    "gambar": 'santri.png',
   },
 ];
 
