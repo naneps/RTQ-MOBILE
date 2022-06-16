@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/search_box.dart';
+import 'package:tahfidz/components/widget_empty.dart';
 import 'package:tahfidz/controllers/jenjang_controllers.dart';
 import 'package:tahfidz/services/remote_services.dart';
 import 'package:tahfidz/views/asatidz/penilaian/components/card_santri.dart';
@@ -89,13 +90,7 @@ class _ListSantriScreenState extends State<ListSantriScreen> {
                       ),
                     );
                   } else if (!snapshot.hasData) {
-                    return Center(
-                      child: Text("Data Santri Tidak Ada",
-                          style: GoogleFonts.poppins(
-                              fontSize: 16,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500)),
-                    );
+                    return Center(child: WidgetEmptySantri());
                   }
                   return SizedBox(
                     width: width,
