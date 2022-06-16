@@ -320,6 +320,7 @@ class RemoteServices {
         "Authorization": SpUtil.getString('token')!,
       },
     );
+    print('StatusCode Santri By Wali : ${response.body}');
     if (response.statusCode == 200) {
       var json = jsonDecode(response.body);
       // var data = jsonDecode(json);re\
