@@ -94,6 +94,7 @@ class _HakAksesPageState extends State<HakAksesPage> {
                       // print(datahakAkses[index]['id']);
                     },
                     // isSelected: false,
+                    image: datahakAkses[index]['gambar'],
                     id: datahakAkses[index]['id'].toString(),
                     title: datahakAkses[index]['hakAkses'],
                   );

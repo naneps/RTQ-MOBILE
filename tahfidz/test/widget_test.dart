@@ -7,35 +7,40 @@ import 'package:flutter_test/flutter_test.dart';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:tahfidz/data/helper.dart';
+import 'package:tahfidz/model/santri_by.dart';
+import 'package:tahfidz/services/remote_services.dart';
 
 void main() async {
   try {
     String baseUrl = "http://api.rtq-freelance.my.id/api-v1";
     String token =
-        "d7d5a5e67d8327d23ecc5d1039ce645c2dc66d6464084721a7b643ef8ccbf04377795dca3cea135e";
-    String id = "1";
+        "70985cb0c3eae7bb0d04ee33cc8d1aa29cc2dd8e1daf1836e17b6416b1a27cbf6c4b2b6d43b4068f";
+    // String id = "1";
 
-    // print(await getAbesnToday());
-    // await updateNilai(idNilai: "2", idAsatidz: "1", nilai: "40");
-    Future rekapIuranSantri(String id) async {
-      var url = Uri.parse("$baseUrl/iuran/detail/$id");
-      var response = await http.get(url, headers: {
-        "Authorization": token,
-        "Content-Type": "application/json"
+    Future getAbsenTodaySantri(String id) async {
+      var absen = dataAbsenSantri.where((item) {
+        return item["tanggal"].day == DateTime.now().day;
       });
-      print(response.statusCode);
-      print(response.body);
-      if (response.statusCode == 200) {
-        var data = json.decode(response.body);
-        print(data);
+      var data;
+      for (var item in absen) {
+        if (item["id_santri"] == id) {
+          data = item;
+        } else {
+          data = null;
+        }
       }
+
+      return jsonEncode(data);
     }
 
-    await rekapIuranSantri("1");
+    print(await getAbsenTodaySantri("2"));
+    // await getTotalSantri(token: token, idJenjang: "1", kdHalaqoh: "HLQSRJ001");
   } on Exception catch (e) {
     print(e);
   }
 }
+
 
     // await rekapPenilaian();
 

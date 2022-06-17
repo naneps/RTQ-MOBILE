@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/views/walisantri/iuran/iuran_screen.dart';
 import 'package:tahfidz/views/walisantri/prestasi/rekap_nilai.dart';
+import 'package:tahfidz/views/walisantri/prestasi/sertifikat_screen.dart';
 import 'package:tahfidz/views/walisantri/profile_santri/components/widget_button.dart';
 
 class CardSantri extends StatelessWidget {
@@ -16,17 +17,23 @@ class CardSantri extends StatelessWidget {
     this.nama,
     this.nis,
     this.halaqoh,
+    this.foto,
     // this.onTap,
+    this.id_jenjang,
     this.jenjang,
+    // this.fotoS
   }) : super(key: key);
 
   final Size size;
   String? id;
+  String? id_jenjang;
   String? nama;
+
   String? jenjang;
   String? halaqoh;
   String? foto;
   String? nis;
+  // String? fotoSantri;
 
   // VoidCallback? onTap;
   @override
@@ -56,9 +63,10 @@ class CardSantri extends StatelessWidget {
           CircleAvatar(
             radius: 55,
             backgroundColor: mainColor,
-            child: const CircleAvatar(
+            child: CircleAvatar(
               foregroundColor: Color.fromRGBO(200, 22, 23, 1),
-              backgroundImage: AssetImage('assets/images/avatar.png'),
+              backgroundImage: NetworkImage(foto ??
+                  'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?t=st=1655228023~exp=1655228623~hmac=2342e4f3e12010bfbeaf89dbfbc3be90a0e24349a2aac761c57ecd3a8c6d113d&w=740'),
               radius: 50,
             ),
           ),
@@ -96,7 +104,8 @@ class CardSantri extends StatelessWidget {
               ),
               WudgetButton(
                 ontap: () {
-                  print(nama);
+                  Get.to(SertifikatScreen(),
+                      arguments: {'id': id, 'nama': nama});
                 },
                 label: "Sertifikat",
                 color: const Color.fromARGB(255, 0, 206, 185),

@@ -3,11 +3,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
 
 class WidgetHakAkses extends StatefulWidget {
-  WidgetHakAkses({Key? key, this.title, this.id, this.onTap, this.isSelected})
+  WidgetHakAkses(
+      {Key? key, this.title, this.id, this.onTap, this.isSelected, this.image})
       : super(key: key);
 
   String? title;
   String? id;
+  String? image;
   bool? isSelected = false;
   VoidCallback? onTap;
   @override
@@ -35,6 +37,7 @@ class _WidgetHakAksesState extends State<WidgetHakAkses> {
               radius: 45,
               child: CircleAvatar(
                 radius: 40,
+                backgroundImage: AssetImage('assets/images/' + widget.image!),
               ),
             ),
             SizedBox(
