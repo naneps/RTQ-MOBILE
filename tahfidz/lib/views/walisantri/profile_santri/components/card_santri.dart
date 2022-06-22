@@ -13,7 +13,6 @@ class CardSantri extends StatelessWidget {
   CardSantri({
     Key? key,
     this.id,
-    required this.size,
     this.nama,
     this.nis,
     this.halaqoh,
@@ -24,7 +23,6 @@ class CardSantri extends StatelessWidget {
     // this.fotoS
   }) : super(key: key);
 
-  final Size size;
   String? id;
   String? id_jenjang;
   String? nama;
@@ -39,9 +37,10 @@ class CardSantri extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      alignment: Alignment.center,
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 19),
-      width: size.width,
-      height: size.width - 60,
+      width: Get.width,
+      // height: Get.height / 3,
       margin: const EdgeInsets.only(top: 5, bottom: 5),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -91,9 +90,8 @@ class CardSantri extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
+          Wrap(
+            // direction: Axis.vertical,
             children: [
               WudgetButton(
                 ontap: () {
