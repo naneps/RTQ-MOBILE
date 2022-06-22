@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:line_icons/line_icon.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/model/kategori_penilaian.dart';
 import 'package:tahfidz/model/pelajaran.dart';
@@ -53,22 +55,38 @@ List<Map<String, dynamic>> keteranganAbsen = [
   {
     'id': '1',
     'keterangan': 'Hadir',
-    'color': Colors.green,
+    'icon': Icon(
+      Icons.check_circle,
+      color: Colors.green,
+      size: 35,
+    ),
   },
   {
     'id': '2',
     'keterangan': 'Izin',
-    'color': Colors.blue,
+    'icon': Icon(
+      Icons.mail_rounded,
+      color: Colors.blue,
+      size: 35,
+    ),
   },
   {
     'id': '3',
     'keterangan': 'Sakit',
-    'color': Colors.yellow,
+    'icon': Icon(
+      Icons.sick,
+      color: Colors.amber,
+      size: 35,
+    ),
   },
   {
     'id': '4',
     'keterangan': 'Alpa',
-    'color': Colors.red,
+    'icon': Icon(
+      LineIcons.timesCircleAlt,
+      color: Colors.red,
+      size: 35,
+    ),
   },
 ];
 
@@ -448,29 +466,6 @@ List<Map<String, dynamic>> datahakAkses = [
     "id": '4',
     "hakAkses": 'Wali Santri',
     "gambar": 'santri.png',
-  },
-];
-
-List<Map<String, dynamic>> dataKeteranganAbsen = [
-  {
-    "id": '1',
-    "keterangan": 'Sakit',
-    "gambar": 'assets/images/',
-  },
-  {
-    "id": '2',
-    "keterangan": 'Izin',
-    "gambar": 'assets/images/',
-  },
-  {
-    "id": '3',
-    "keterangan": 'Alpha',
-    "gambar": 'assets/images/',
-  },
-  {
-    "id": '4',
-    "keterangan": 'Hadir',
-    "gambar": 'assets/images/',
   },
 ];
 
