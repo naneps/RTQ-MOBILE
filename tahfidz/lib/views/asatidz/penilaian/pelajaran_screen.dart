@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/model/kategori_penilaian.dart';
 import 'package:tahfidz/model/pelajaran.dart';
 import 'package:tahfidz/services/remote_services.dart';
 import 'package:tahfidz/views/asatidz/penilaian/components/card_pelajaran.dart';
+import 'package:tahfidz/views/walisantri/prestasi/sertifikat_screen.dart';
 
 class PelajaranScreen extends StatefulWidget {
   const PelajaranScreen({Key? key}) : super(key: key);
@@ -36,15 +36,25 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
     // print(kategori);
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Penilaian",
-          style: GoogleFonts.poppins(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
+        title: Container(
+          // margin: EdgeInsets.only(top: 50),
+          padding: EdgeInsets.all(15),
+          // color: Color.fromARGB(255, 255, 255, 255),
+          width: 250,
+          // height: 10,
+          child: Text(
+            "Penilaian ${args[1].namaLengkap}",
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            style: GoogleFonts.poppins(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: kFontColor,
+            ),
           ),
         ),
         centerTitle: true,
-        backgroundColor: mainColor,
+        backgroundColor: Colors.transparent,
         elevation: 0,
       ),
       backgroundColor: kBackground,
@@ -134,19 +144,13 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
           );
         } else {
           return Container(
-            padding: EdgeInsets.all(10),
-            color: Color.fromARGB(255, 234, 96, 87),
-            // height: 200,
-            width: Get.width,
-            child: Text(
-              "Data Pelajaran La",
-              textAlign: TextAlign.center,
-              style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                  color: Colors.white),
-            ),
-          );
+              padding: EdgeInsets.all(10),
+              // color: Color.fromARGB(255, 234, 96, 87),
+              // height: 200,
+              width: Get.width,
+              child: WidgetEmpty(
+                label: "Tidak Ada Data Pelajaran",
+              ));
         }
       }),
     );
