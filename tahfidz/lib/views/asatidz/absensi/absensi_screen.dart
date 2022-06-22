@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/dropdown_jenjang.dart';
-import 'package:tahfidz/components/widget_empty.dart';
 
 import 'package:tahfidz/controllers/halaqoh_controllers.dart';
 import 'package:tahfidz/controllers/jenjang_controllers.dart';
 import 'package:tahfidz/model/Jenjang.dart';
 import 'package:tahfidz/model/halaqoh.dart';
 import 'package:tahfidz/model/santri.dart';
-import 'package:tahfidz/model/santri_by.dart';
+
 import 'package:tahfidz/services/remote_services.dart';
 import 'package:tahfidz/views/asatidz/absensi/components/card_santri.dart';
+
 import 'package:tahfidz/views/asatidz/absensi/components/widget_indicator.dart';
 import 'package:tahfidz/views/asatidz/penilaian/components/drop_down_cabang.dart';
+
+import '../../../components/widget_empty.dart';
+import '../../../model/santri_by.dart';
 
 class AbsensiScreen extends StatefulWidget {
   const AbsensiScreen({Key? key}) : super(key: key);
@@ -115,27 +119,83 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
                         ),
                       ),
                     )
-                  : FutureBuilder<List<SantriBy>?>(
-                      future: RemoteServices.filterSantri(
-                          kdHalaqoh: halaqohController
-                              .getSelectedHalaqoh()
-                              .kodeHalaqah,
+                  : FutureBuilder(
+                      future: RemoteServices.cekAbsensiSantri(
                           idJenjang: jenjangController
                               .getSelectedJenjang()
                               .id
-                              .toString()),
-                      builder: (context, snapshot) {
+                              .toString(),
+                          kdHalaqoh: halaqohController
+                              .getSelectedHalaqoh()
+                              .kodeHalaqah),
+                      builder: (context, AsyncSnapshot snapshot) {
+                        // print(snapshot.data);
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
                           return Container();
                         } else if (snapshot.hasData) {
-                          return ListView.builder(
-                            itemCount: snapshot.data!.length,
-                            itemBuilder: (context, index) => CardAbsensiSantri(
-                                santri: snapshot.data![index]),
-                          );
+                          if (snapshot.data.isEmpty) {
+                            return Center(
+                              child: TextButton(
+                                onPressed: () async {
+                                  await RemoteServices.createAbsensiSantri(
+                                      idJenjang: jenjangController
+                                          .getSelectedJenjang()
+                                          .id
+                                          .toString(),
+                                      kdHalaqoh: halaqohController
+                                          .getSelectedHalaqoh()
+                                          .kodeHalaqah);
+                                  setState(() {});
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: greenColor,
+                                      borderRadius: BorderRadius.circular(16)),
+                                  padding: EdgeInsets.all(15),
+                                  child: Text(
+                                    "Buat Absen Santri !",
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 16, color: kFontColor),
+                                  ),
+                                ),
+                              ),
+                            );
+                          } else {
+                            // return)
+                            return FutureBuilder<List<SantriBy>?>(
+                              future: RemoteServices.filterSantri(
+                                  kdHalaqoh: halaqohController
+                                      .getSelectedHalaqoh()
+                                      .kodeHalaqah,
+                                  idJenjang: jenjangController
+                                      .getSelectedJenjang()
+                                      .id
+                                      .toString()),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return Container();
+                                } else if (snapshot.hasData) {
+                                  return ListView.builder(
+                                    itemCount: snapshot.data!.length,
+                                    itemBuilder: (context, index) =>
+                                        CardAbsensiSantri(
+                                            santri: snapshot.data![index]),
+                                  );
+                                }
+                                return const WidgetEmptySantri();
+                              },
+                            );
+                          }
+                          // if (snapshot.data) {
+                          //   print("belum absensi santri");
+
+                          // }
+                        } else if (!snapshot.hasData) {
+                          print("Data Kosong");
                         }
-                        return const WidgetEmptySantri();
+                        return Container();
                       },
                     ))
         ],
