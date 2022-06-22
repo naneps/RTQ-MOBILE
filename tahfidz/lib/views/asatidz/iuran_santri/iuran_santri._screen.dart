@@ -101,6 +101,12 @@ class _IuranSantriScreenState extends State<IuranSantriScreen> {
                                   duration: const Duration(seconds: 2),
                                 );
                               } else {
+                                setState(() {
+                                  jenjangController.setSelectedJenjang(
+                                      jenjangController.listJenjang[index]);
+                                  halaqohController.setSelectedHalaqoh(
+                                      halaqohController.getSelectedHalaqoh());
+                                });
                                 await Get.to(ListIuranSantri(), arguments: {
                                   'id_jenjang': jenjangController
                                       .listJenjang[index].id
