@@ -11,6 +11,8 @@ import 'package:http/http.dart' as http;
 class AuthController {
   final TextEditingController teleponeController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPassword = TextEditingController();
+  final TextEditingController oldPassword = TextEditingController();
 
   Future<bool?> login({
     int? idRole,
