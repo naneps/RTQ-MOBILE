@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/search_box.dart';
 import 'package:tahfidz/components/widget_empty.dart';
@@ -24,12 +23,11 @@ class _ListSantriScreenState extends State<ListSantriScreen> {
   // var idJenjang = args[0];
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: mainColor,
+      backgroundColor: kMainColor,
       appBar: AppBar(
-        shadowColor: Colors.transparent,
+        // shadowColor: Colors.transparent,
+        elevation: 0,
         backgroundColor: mainColor,
         title: Text(''),
         centerTitle: true,
@@ -37,8 +35,8 @@ class _ListSantriScreenState extends State<ListSantriScreen> {
       body: Padding(
         padding: const EdgeInsets.all(15),
         child: Container(
-          width: width,
-          height: height,
+          width: Get.width,
+          height: Get.height,
           // padding: EdgeInsets.all(10),
           // color: Colors.black,
 
@@ -93,8 +91,8 @@ class _ListSantriScreenState extends State<ListSantriScreen> {
                     return Center(child: WidgetEmptySantri());
                   }
                   return SizedBox(
-                    width: width,
-                    height: height / 1.5,
+                    width: Get.width,
+                    height: Get.height / 1.5,
                     child: ListView.builder(
                       itemCount: snapshot.data.length ?? 0,
                       itemBuilder: (context, index) {
