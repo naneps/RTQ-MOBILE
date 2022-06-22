@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sp_util/sp_util.dart';
+import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/custom_text_field.dart';
 import 'package:tahfidz/components/widget_empty.dart';
 import 'package:tahfidz/controllers/cabang_controller.dart';
+import 'package:tahfidz/controllers/halaqoh_controllers.dart';
 import 'package:tahfidz/controllers/iuran_controller.dart';
 import 'package:tahfidz/controllers/jenjang_controllers.dart';
 import 'package:tahfidz/data/helper.dart';
@@ -17,7 +19,8 @@ class ListIuranSantri extends StatelessWidget {
   Widget build(BuildContext context) {
     var argumen = Get.arguments;
     JenjangController jenjangController = Get.put(JenjangController());
-    CabangController cabangController = Get.put(CabangController());
+    // CabangController cabangController = Get.put(CabangController());
+    HalaqohController halaqohController = Get.put(HalaqohController());
     IuranController controller = Get.put(IuranController());
     return Scaffold(
       appBar: AppBar(
@@ -39,19 +42,27 @@ class ListIuranSantri extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Daftar Santri ",
+              "Jenjang ${jenjangController.getSelectedJenjang().jenjang}  ",
               style: GoogleFonts.poppins(
-                  fontSize: 18, fontWeight: FontWeight.w500),
+                fontSize: 18,
+              ),
             ),
+            Text(
+              "Cabang ${halaqohController.getSelectedHalaqoh().namaTempat}  ",
+              style: GoogleFonts.poppins(
+                fontSize: 18,
+              ),
+            ),
+
+            // Text(argumen['jenjang'])
+
             const SizedBox(
               height: 20,
             ),
-            Row(
-              children: [
-                Text(
-                    "Jenjang ${jenjangController.getSelectedJenjang().jenjang} "),
-                // Text(argumen['jenjang'])
-              ],
+            Text(
+              "Daftar Santri ",
+              style: GoogleFonts.poppins(
+                  fontSize: 18, fontWeight: FontWeight.w500),
             ),
             const SizedBox(
               height: 10,
@@ -178,47 +189,72 @@ class ListIuranSantri extends StatelessWidget {
 
   showInputIuran(
       {String? idSantri, String? nominal, TextEditingController? controller}) {
+    final _formKey = GlobalKey<FormState>();
     Get.bottomSheet(
       Container(
         padding: const EdgeInsets.all(15),
         height: Get.height / 4,
         color: Colors.white,
-        child: Column(
-          children: [
-            const Text("Tambah Iuran"),
-            CustomTextField(
-              hintText: "Nominal",
-              labelText: "Nominal",
-              controller: controller,
-            ),
-            Row(
-              children: [
-                ElevatedButton(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              const Text("Tambah Iuran"),
+              CustomTextField(
+                hintText: "Nominal",
+                labelText: "Nominal",
+                controller: controller,
+                inputType: TextInputType.phone,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Masukan Nominal';
+                  }
+                },
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  TextButton(
                     onPressed: () {
                       Get.back();
                     },
-                    child: const Text("Batal")),
-                ElevatedButton(
-                  onPressed: () async {
-                    await RemoteServices.storeIuran(
-                      idSantri: idSantri,
-                      nominal: nominal,
-                    ).then(
-                      (value) {
-                        print(value);
-                        if (value == true) {
-                          Get.back();
-                          Get.snackbar("Berhasil", "Berhasil menambahkan iuran",
-                              backgroundColor: Colors.green);
-                        }
-                      },
-                    );
-                  },
-                  child: const Text("Simpan"),
-                ),
-              ],
-            )
-          ],
+                    child: Text(
+                      "Batal",
+                      style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: redColor),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () async {
+                      await RemoteServices.storeIuran(
+                        idSantri: idSantri,
+                        nominal: nominal,
+                      ).then(
+                        (value) {
+                          print(value);
+                          if (value == true) {
+                            Get.back();
+                            Get.snackbar(
+                                "Berhasil", "Berhasil menambahkan iuran",
+                                backgroundColor: Colors.green);
+                          }
+                        },
+                      );
+                    },
+                    child: Text(
+                      "Simpan",
+                      style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: greenColor),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
