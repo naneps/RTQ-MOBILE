@@ -36,6 +36,7 @@ class _LoginPageState extends State<LoginPage> {
             // height: MediaQuery.of(context).size.height / 1,
             width: MediaQuery.of(context).size.width,
             child: Form(
+              key: _formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -80,6 +81,11 @@ class _LoginPageState extends State<LoginPage> {
                     icon: Icons.phone,
                     hintText: "Telepon",
                     labelText: "Telepon",
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Isi Nomor Telepon';
+                      }
+                    },
                   ),
                   const SizedBox(height: 30),
                   CustomTextField(
@@ -97,6 +103,11 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     hintText: "Kata Sandi",
                     labelText: "Kata Sandi",
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Isi Password';
+                      }
+                    },
                   ),
 
                   const SizedBox(height: 20),
@@ -104,20 +115,22 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () {
                         // print(authController.teleponeController.text);
                         // print(authController.passwordController.text);
-                        // if (_formKey.currentState!.validate()) {
-                        authController
-                            .login(
-                                idRole: int.parse(argumen['id']),
-                                telepon: authController.teleponeController.text,
-                                password:
-                                    authController.passwordController.text)
-                            .then((value) {
-                          if (!value!) {
-                            validateAuth();
-                          }
-                        });
-                        // }
-                        // print(authController.teleponeController.text);
+                        if (_formKey.currentState!.validate()) {
+                          authController
+                              .login(
+                                  idRole: int.parse(argumen['id']),
+                                  telepon:
+                                      authController.teleponeController.text,
+                                  password:
+                                      authController.passwordController.text)
+                              .then((value) {
+                            if (!value!) {
+                              validateAuth();
+                            }
+                          });
+                          // }
+                          // print(authController.teleponeController.text);
+                        }
                       },
                       child: Container(
                         decoration: BoxDecoration(
