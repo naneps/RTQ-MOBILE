@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:sp_util/sp_util.dart';
+import 'package:tahfidz/data/helper.dart';
 import 'package:tahfidz/model/Jenjang.dart';
 import 'package:tahfidz/model/absen.dart';
 import 'package:tahfidz/model/cabang.dart';
@@ -474,10 +476,94 @@ class RemoteServices {
         "Content-Type": "application/json"
       },
     );
-    ;
+
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
       return data;
     }
+  }
+
+  static Future cekAbsensiSantri({String? kdHalaqoh, String? idJenjang}) async {
+    try {
+      var url = Uri.parse('$baseUrl/absensi/santri/$idJenjang/$kdHalaqoh');
+      var resposne = await http.get(url, headers: {
+        HttpHeaders.authorizationHeader: SpUtil.getString('token')!
+      });
+      print("StatusCode cek asbsensi : ${resposne.statusCode}");
+      if (resposne.statusCode == 200) {
+        // print(resposne.body.isEmpty);
+
+        return resposne.body;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print("Catch Filter Santri Santri : $e");
+    }
+    return null;
+  }
+
+  static Future createAbsensiSantri(
+      {String? kdHalaqoh, String? idJenjang}) async {
+    try {
+      var url = Uri.parse('$baseUrl/absensi/santri/$idJenjang/$kdHalaqoh');
+      var resposne = await http.post(url, headers: {
+        HttpHeaders.authorizationHeader: SpUtil.getString('token')!
+      });
+      print("StatusCode create asbsensi : ${resposne.statusCode}");
+      if (resposne.statusCode == 200) {
+        // print(resposne.body.isEmpty);
+
+        return resposne.body;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print("Catch Filter Santri Santri : $e");
+    }
+    return null;
+  }
+
+  static Future getAbsenSantri({String? idSantri}) async {
+    try {
+      var url = Uri.parse('$baseUrl/absensi/santri/$idSantri');
+      var resposne = await http.get(url, headers: {
+        HttpHeaders.authorizationHeader: SpUtil.getString('token')!
+      });
+      print("StatusCode get asbsensi : ${resposne.statusCode}");
+      if (resposne.statusCode == 200) {
+        print(resposne.body);
+
+        return jsonDecode(resposne.body);
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print("Catch Filter Santri Santri : $e");
+    }
+    return null;
+  }
+
+  static Future<bool?> putAbsenSantri(
+      {int? idAbsensi, String? statusAbsen}) async {
+    print(statusAbsen);
+    try {
+      var url = Uri.parse('$baseUrl/absensi/santri/$idAbsensi');
+      var resposne = await http.put(url, headers: {
+        HttpHeaders.authorizationHeader: SpUtil.getString('token')!
+      }, body: {
+        'id_status_absen': statusAbsen
+      });
+      print("StatusCode put asbsensi : ${resposne.statusCode}");
+      if (resposne.statusCode == 200) {
+        // print(resposne.body.isEmpty);
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print("Catch Filter Santri Santri : $e");
+    }
+    return null;
   }
 }
