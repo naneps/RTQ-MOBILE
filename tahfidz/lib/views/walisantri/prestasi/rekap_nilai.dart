@@ -71,22 +71,22 @@ class _RekapNilaiScreenState extends State<RekapNilaiScreen> {
             ),
             (jenjangController.getSelectedJenjang().id == null)
                 ? Center(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: kMainColor.withBlue(130),
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      // margin: ,
-                      padding: const EdgeInsets.all(15),
-                      margin: EdgeInsets.only(top: Get.height / 4),
-
-                      child: Text(
-                        "Pilih Jenjang Terlebih Dahulu",
-                        style: GoogleFonts.poppins(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600),
-                      ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/santri.png',
+                          scale: 2,
+                        ),
+                        Text(
+                          "Pilih Jenjang Terlebih Dahulu",
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.poppins(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: kFontColor),
+                        )
+                      ],
                     ),
                   )
                 : Expanded(
