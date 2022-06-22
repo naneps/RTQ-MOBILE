@@ -10,7 +10,7 @@ import 'package:tahfidz/services/remote_services.dart';
 import 'package:tahfidz/views/aurh/hak_akses_page.dart';
 import 'package:tahfidz/views/asatidz/home/components/asatidz_menu.dart';
 import 'package:tahfidz/views/asatidz/profile/profile_screen.dart';
-import 'package:tahfidz/views/walisantri/home/components/menu_section.dart';
+import 'package:tahfidz/views/walisantri/profile_santri/profile_santri._screen.dart';
 
 class HomeScreen extends StatefulWidget {
   // const HomeScreen({Key? key}) : super(key: key);
@@ -81,106 +81,100 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       ),
-      body: Container(
-        // physics: BouncingScrollPhysics(),s
-        child: Container(
-          height: heightBody,
-          width: widhtBody,
-          // padding: EdgeInsets.all(20),
-          // color: Colors.black26,
-          child: Column(
-            children: [
-              Container(
-                height: heightBody / 3.5,
-                width: widhtBody,
-                // color: Colors.black,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Positioned(
-                      top: 0,
-                      height: 150,
-                      width: widhtBody,
-                      child: Container(
-                        // color: mainColor,
-                        decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.only(
-                              bottomLeft: Radius.circular(90),
-                              bottomRight: const Radius.circular(90),
-                            ),
-                            color: mainColor),
-                        // width: widhtBody,
-                      ),
+      body: SizedBox(
+        height: heightBody,
+        width: widhtBody,
+        // padding: EdgeInsets.all(20),
+        // color: Colors.black26,
+        child: Column(
+          children: [
+            Container(
+              height: heightBody / 4,
+              width: widhtBody,
+              // color: Colors.black,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Positioned(
+                    top: 0,
+                    height: 150,
+                    width: widhtBody,
+                    child: Container(
+                      // color: mainColor,
+                      decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.only(
+                            bottomLeft: Radius.circular(90),
+                            bottomRight: const Radius.circular(90),
+                          ),
+                          color: mainColor),
+                      // width: widhtBody,
                     ),
-                    Positioned(
-                      top: 0,
-                      height: 210,
-                      width: widhtBody / 1.2,
-                      child: Card(
-                        // color: mainColor,
-                        elevation: 4,
-                        // shadowColor: Colors.transparent,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(30),
-                          ),
+                  ),
+                  Positioned(
+                    top: 0,
+                    height: 210,
+                    width: widhtBody / 1.2,
+                    child: Card(
+                      // color: mainColor,
+                      elevation: 4,
+                      // shadowColor: Colors.transparent,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(30),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: FutureBuilder(
-                            future: RemoteServices.getUserInfo(
-                                SpUtil.getString('token')!),
-                            builder:
-                                (BuildContext context, AsyncSnapshot snapshot) {
-                              if (snapshot.hasData) {
-                                return Column(
-                                  // color: mainColor,
-                                  children: [
-                                    ProfilePicture(
-                                        sizeAvatar: 90,
-                                        sizeIcon: 0,
-                                        widthBtn: 0,
-                                        avatar: snapshot.data['gambar']),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      snapshot.data['nama'],
-                                      // SpUtil.getString('id_role')!,
-                                      style: GoogleFonts.poppins(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      snapshot.data['hak_akses']!,
-                                      style: GoogleFonts.poppins(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ],
-                                );
-                              } else {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              }
-                            },
-                          ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: FutureBuilder(
+                          future: RemoteServices.getUserInfo(
+                              SpUtil.getString('token')!),
+                          builder:
+                              (BuildContext context, AsyncSnapshot snapshot) {
+                            if (snapshot.hasData) {
+                              return Column(
+                                // color: mainColor,
+                                children: [
+                                  ProfilePicture(
+                                      sizeAvatar: 90,
+                                      sizeIcon: 0,
+                                      widthBtn: 0,
+                                      avatar: snapshot.data['gambar']),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    snapshot.data['nama'],
+                                    // SpUtil.getString('id_role')!,
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    snapshot.data['hak_akses']!,
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ],
+                              );
+                            } else {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                          },
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              showMenu(int.parse(SpUtil.getString('id_role')!))
-            ],
-          ),
+            ),
+            showMenu(int.parse(SpUtil.getString('id_role')!))
+          ],
         ),
       ),
     );
@@ -190,10 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
     AuthController authController = AuthController();
     switch (item) {
       case 0:
-        Get.to(ProfileScreen(
-          telepon: SpUtil.getString('no_hp'),
-          token: SpUtil.getString('token'),
-        ));
+        Get.to(ProfileScreen());
         break;
       case 1:
         await authController
@@ -216,7 +207,12 @@ class _HomeScreenState extends State<HomeScreen> {
     if (idRole == 3) {
       menu = const SectionMenuAsatidz();
     } else if (idRole == 4) {
-      menu = const SectionMenuSantri();
+      menu = Container(
+        width: Get.width,
+        height: Get.height / 1.7,
+        color: Colors.amber,
+        child: ProfileAnakScreen(),
+      );
     }
     return menu;
   }
