@@ -23,12 +23,10 @@ class WudgetButton extends StatelessWidget {
           color: color ?? kMainColor,
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Center(
-          child: Text(
-            label!,
-            style: GoogleFonts.poppins(
-                fontSize: 12, color: Colors.white, fontWeight: FontWeight.w600),
-          ),
+        child: Text(
+          label!,
+          style: GoogleFonts.poppins(
+              fontSize: 12, color: Colors.white, fontWeight: FontWeight.w600),
         ),
       ),
     );
