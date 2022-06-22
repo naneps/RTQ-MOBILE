@@ -22,6 +22,8 @@ class CardAbsensi extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
 
           children: List.generate(keteranganAbsen.length, (index) {
+            print(keteranganAbsen[index]['keterangan']);
+
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -29,14 +31,15 @@ class CardAbsensi extends StatelessWidget {
                   height: 30,
                   width: 30,
                   decoration: BoxDecoration(
-                    color: keteranganAbsen[index]['color'],
+                    // color: keteranganAbsen[index]['color'],
                     borderRadius: BorderRadius.circular(30),
                   ),
+                  child: keteranganAbsen[index]['icon'],
                 ),
                 const SizedBox(
                   height: 15,
                 ),
-                Text(dataKeteranganAbsen[index]['keterangan'],
+                Text(keteranganAbsen[index]['keterangan'],
                     style: GoogleFonts.poppins(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
