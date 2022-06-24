@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sp_util/sp_util.dart';
-import 'package:tahfidz/views/aurh/hak_akses_page.dart';
+import 'package:tahfidz/views/auth/hak_akses_page.dart';
 import 'package:tahfidz/views/asatidz/home/home_screen.dart';
 
 void main() async {
