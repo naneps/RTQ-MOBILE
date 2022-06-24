@@ -27,20 +27,20 @@ class _JenjangScreenState extends State<JenjangScreen> {
     return Scaffold(
       appBar: AppBar(
         shadowColor: Colors.transparent,
-        backgroundColor: mainColor,
         title: Text(
-          "Jenjang",
+          "Penilaian Santri",
           style: GoogleFonts.poppins(
-              letterSpacing: 2,
+              // letterSpacing: 2,
               fontSize: 16,
               color: Colors.white,
               fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
+      backgroundColor: kMainColor,
       body: Container(
-        padding: const EdgeInsets.all(20),
         color: mainColor,
+        padding: const EdgeInsets.all(20),
         height: height,
         width: width,
         child: Column(
