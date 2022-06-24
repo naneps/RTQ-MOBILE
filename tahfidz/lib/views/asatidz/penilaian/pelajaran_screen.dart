@@ -87,11 +87,20 @@ class _PelajaranScreenState extends State<PelajaranScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Penilaian " + snapshot.data![index].kategoriPenilaian!,
-                        style: GoogleFonts.poppins(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        alignment: Alignment.center,
+                        width: Get.width,
+                        // color:
+                        color: Color.fromARGB(255, 181, 220, 252),
+                        child: Text(
+                          "Penilaian " +
+                              snapshot.data![index].kategoriPenilaian!,
+                          style: GoogleFonts.poppins(
+                            fontSize: 16,
+                            color: kFontColor,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                       SizedBox(
