@@ -53,7 +53,7 @@ class _DropdownJenjangState extends State<DropdownJenjang> {
         ),
         child: const Center(
           child: Text(
-            'Halaqoh',
+            'Jenjang',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
