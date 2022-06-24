@@ -24,12 +24,20 @@ class _ListSantriScreenState extends State<ListSantriScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kMainColor,
+      backgroundColor: kBackground,
       appBar: AppBar(
         // shadowColor: Colors.transparent,
         elevation: 0,
-        backgroundColor: mainColor,
-        title: Text(''),
+        backgroundColor: Colors.transparent,
+        title: Text(
+          'Penilaian Santri',
+          style: GoogleFonts.poppins(
+            // letterSpacing: 2,
+            fontSize: 16,
+            color: kFontColor,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         centerTitle: true,
       ),
       body: Padding(
@@ -56,7 +64,7 @@ class _ListSantriScreenState extends State<ListSantriScreen> {
                       style: GoogleFonts.poppins(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white),
+                          color: kFontColor),
                     ),
                     Text(
                       " | ",
