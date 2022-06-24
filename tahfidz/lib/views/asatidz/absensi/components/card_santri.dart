@@ -90,58 +90,57 @@ class _CardAbsensiSantriState extends State<CardAbsensiSantri> {
                         );
                       }
                       return TextButton(
-                        onPressed: () {
-                          Get.bottomSheet(Container(
-                            padding: const EdgeInsets.all(15),
-                            height: 159,
-                            color: Colors.white,
-                            child: Column(
-                              children: [
-                                Text(
-                                  "Ubah Keterangan",
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: List.generate(
-                                    keteranganAbsen.length,
-                                    (index) => GestureDetector(
-                                      onTap: () async {
-                                        await RemoteServices.putAbsenSantri(
-                                                idAbsensi:
-                                                    snapshot.data['id_absensi'],
-                                                statusAbsen:
-                                                    keteranganAbsen[index]
-                                                        ['id'])
-                                            .then((value) {
-                                          if (value == true) {
-                                            // Get.back();
-                                            setState(() {});
-                                            Get.back();
-                                          }
-                                        });
-                                      },
-                                      child: SizedBox(
-                                          height: 30,
-                                          width: 30,
-                                          child: keteranganAbsen[index]
-                                              ['icon']),
+                          onPressed: () {
+                            Get.bottomSheet(Container(
+                              padding: const EdgeInsets.all(15),
+                              height: 159,
+                              color: Colors.white,
+                              child: Column(
+                                children: [
+                                  Text(
+                                    "Ubah Keterangan",
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                )
-                              ],
-                            ),
-                          ));
-                        },
-                        child: Text(snapshot.data['keterangan']),
-                      );
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: List.generate(
+                                      keteranganAbsen.length,
+                                      (index) => GestureDetector(
+                                        onTap: () async {
+                                          await RemoteServices.putAbsenSantri(
+                                                  idAbsensi: snapshot
+                                                      .data['id_absensi'],
+                                                  statusAbsen:
+                                                      keteranganAbsen[index]
+                                                          ['id'])
+                                              .then((value) {
+                                            if (value == true) {
+                                              // Get.back();
+                                              setState(() {});
+                                              Get.back();
+                                            }
+                                          });
+                                        },
+                                        child: SizedBox(
+                                            height: 30,
+                                            width: 30,
+                                            child: keteranganAbsen[index]
+                                                ['icon']),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ));
+                          },
+                          child: buildIndikator(snapshot.data['keterangan']));
                     },
                   )),
             ),
@@ -149,5 +148,13 @@ class _CardAbsensiSantriState extends State<CardAbsensiSantri> {
         ],
       ),
     );
+  }
+
+  buildIndikator(String keterangan) {
+    for (var element in keteranganAbsen) {
+      if (element['keterangan'] == keterangan) {
+        return element['icon'];
+      }
+    }
   }
 }
