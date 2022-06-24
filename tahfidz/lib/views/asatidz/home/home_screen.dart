@@ -7,7 +7,7 @@ import 'package:tahfidz/components/profile_avatar.dart';
 import 'package:tahfidz/controllers/asatid_controller.dart';
 import 'package:tahfidz/controllers/auth_controllers.dart';
 import 'package:tahfidz/services/remote_services.dart';
-import 'package:tahfidz/views/aurh/hak_akses_page.dart';
+import 'package:tahfidz/views/auth/hak_akses_page.dart';
 import 'package:tahfidz/views/asatidz/home/components/asatidz_menu.dart';
 import 'package:tahfidz/views/asatidz/profile/profile_screen.dart';
 import 'package:tahfidz/views/walisantri/profile_santri/profile_santri._screen.dart';
