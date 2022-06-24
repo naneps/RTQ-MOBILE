@@ -9,6 +9,7 @@ import 'package:tahfidz/model/kategori_penilaian.dart';
 import 'package:tahfidz/model/pelajaran.dart';
 import 'package:tahfidz/services/remote_services.dart';
 import 'package:tahfidz/views/walisantri/prestasi/components/widget_pelajaran.dart';
+import 'package:tahfidz/views/walisantri/prestasi/sertifikat_screen.dart';
 
 class RekapNilaiScreen extends StatefulWidget {
   const RekapNilaiScreen({Key? key}) : super(key: key);
@@ -62,7 +63,7 @@ class _RekapNilaiScreenState extends State<RekapNilaiScreen> {
               height: 30,
             ),
             Text(
-              "${(jenjangController.getSelectedJenjang().id == null ? "" : "Rekap Nilai ${jenjangController.getSelectedJenjang().jenjang ?? ""}")} ",
+              " ${(jenjangController.getSelectedJenjang().id == null ? "" : "Rekap Nilai ${jenjangController.getSelectedJenjang().jenjang ?? ""}")} ",
               style: GoogleFonts.poppins(
                   color: kFontColor, fontSize: 18, fontWeight: FontWeight.w600),
             ),
@@ -96,86 +97,85 @@ class _RekapNilaiScreenState extends State<RekapNilaiScreen> {
                           if (listKategoriPenilaian == null) {
                             return Container();
                           } else {
-                            return Column(
-                              // mainAxisAlignment: M,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Hasil Penilaian ${listKategoriPenilaian![index].kategoriPenilaian ?? ""}",
-                                  style: GoogleFonts.poppins(
-                                      color: kFontColor,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                FutureBuilder<List<Pelajaran>?>(
-                                  future: RemoteServices.filterPelajaran(
-                                    idJenjang: jenjangController
-                                        .getSelectedJenjang()
-                                        .id
-                                        .toString(),
-                                    idKategoriPenilaian:
-                                        listKategoriPenilaian![index]
-                                            .id
-                                            .toString(),
+                            return Card(
+                              child: Column(
+                                // mainAxisAlignment: M,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    alignment: Alignment.center,
+                                    padding: EdgeInsets.all(15),
+                                    width: Get.width,
+                                    color: Color.fromARGB(255, 107, 111, 227),
+                                    child: Text(
+                                      "Hasil Penilaian ${listKategoriPenilaian![index].kategoriPenilaian ?? ""}",
+                                      style: GoogleFonts.poppins(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
                                   ),
-                                  builder: (context, snapshot) {
-                                    if (snapshot.connectionState ==
-                                        ConnectionState.waiting) {
-                                      return Center(
-                                        child: CircularProgressIndicator(
-                                          backgroundColor: const Color.fromARGB(
-                                              255, 191, 191, 191),
-                                          valueColor:
-                                              AlwaysStoppedAnimation<Color>(
-                                                  mainColor),
-                                        ),
-                                      );
-                                    } else if (snapshot.hasData) {
-                                      return SizedBox(
-                                        // color: Colors.amberAccent,
-                                        height: Get.height / 2,
-                                        width: double.infinity,
-                                        child: ListView.builder(
-                                          itemCount: snapshot.data?.length,
-                                          itemBuilder: (context, index) {
-                                            Pelajaran pelajaran =
-                                                snapshot.data![index];
-                                            return Card(
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(25),
-                                              ),
-                                              child: WidgetPelajaran(
-                                                nomor: index + 1,
-                                                pelajaran: pelajaran,
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      );
-                                    } else {
-                                      return Container(
-                                        height: 50,
-                                        padding: EdgeInsets.all(10),
-                                        color: Color.fromARGB(255, 234, 96, 87),
-                                        // height: 200,
-                                        width: Get.width,
-                                        child: Text(
-                                          "Data Pelajaran Laka",
-                                          textAlign: TextAlign.center,
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 16,
-                                              color: Colors.white),
-                                        ),
-                                      );
-                                    }
-                                  },
-                                ),
-                                const SizedBox(
-                                  height: 50,
-                                )
-                              ],
+                                  FutureBuilder<List<Pelajaran>?>(
+                                    future: RemoteServices.filterPelajaran(
+                                      idJenjang: jenjangController
+                                          .getSelectedJenjang()
+                                          .id
+                                          .toString(),
+                                      idKategoriPenilaian:
+                                          listKategoriPenilaian![index]
+                                              .id
+                                              .toString(),
+                                    ),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.waiting) {
+                                        return Center(
+                                          child: CircularProgressIndicator(
+                                            backgroundColor:
+                                                const Color.fromARGB(
+                                                    255, 191, 191, 191),
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                                    mainColor),
+                                          ),
+                                        );
+                                      } else if (snapshot.hasData) {
+                                        return SizedBox(
+                                          // color: Colors.amberAccent,
+                                          height: Get.height / 2,
+                                          width: double.infinity,
+                                          child: ListView.builder(
+                                            itemCount: snapshot.data?.length,
+                                            itemBuilder: (context, index) {
+                                              Pelajaran pelajaran =
+                                                  snapshot.data![index];
+                                              return Card(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(25),
+                                                ),
+                                                child: WidgetPelajaran(
+                                                  nomor: index + 1,
+                                                  pelajaran: pelajaran,
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        );
+                                      } else {
+                                        return Center(
+                                          child: WidgetEmpty(
+                                              label: "Tidak Ada Pelajaran"),
+                                        );
+                                      }
+                                    },
+                                  ),
+                                  const SizedBox(
+                                    height: 50,
+                                  )
+                                ],
+                              ),
                             );
                           }
                         }),
