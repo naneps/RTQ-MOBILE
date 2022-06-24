@@ -16,8 +16,8 @@ class CardPenilaianSantri extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.only(top: 15),
-      padding: EdgeInsets.only(
+      margin: const EdgeInsets.only(top: 15),
+      padding: const EdgeInsets.only(
         left: 15,
         right: 15,
       ),
@@ -25,12 +25,12 @@ class CardPenilaianSantri extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(
-            Radius.circular(15),
+          borderRadius: const BorderRadius.all(
+            const Radius.circular(15),
           ),
           boxShadow: [
             BoxShadow(
-                offset: Offset(2, 2),
+                offset: const Offset(2, 2),
                 color: Colors.grey.withOpacity(0.4),
                 blurRadius: 1)
           ]),
@@ -38,14 +38,14 @@ class CardPenilaianSantri extends StatelessWidget {
         // mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           Expanded(
             flex: 2,
             child: Container(
               height: size.height,
               // color: mainColor,
               width: size.width,
-              margin: EdgeInsets.all(5),
+              margin: const EdgeInsets.all(5),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,7 +105,8 @@ class CardPenilaianSantri extends StatelessWidget {
                   width: 100,
                   child: TextButton(
                     onPressed: () {
-                      Get.to(PelajaranScreen(), arguments: [idJenjang, santri]);
+                      Get.to(const PelajaranScreen(),
+                          arguments: [idJenjang, santri]);
                     },
                     child: const Text(
                       "Penilaian",
