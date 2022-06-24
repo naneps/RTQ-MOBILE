@@ -15,7 +15,7 @@ class WidgetEmptySantri extends StatelessWidget {
           'assets/images/search.png',
           scale: 2,
         ),
-        Text("Data Santri Kosong",
+        Text("Tidak Ada Santri ",
             style: GoogleFonts.poppins(
                 fontSize: 18, fontWeight: FontWeight.bold, color: kFontColor))
       ],
