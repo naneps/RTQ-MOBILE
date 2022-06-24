@@ -27,9 +27,11 @@ class ProfilePicture extends StatelessWidget {
         // fit: StackFit.expand,
         // clipBehavior: Clip.none,
         children: [
-      
           // ),
-          Image.network(avatar!),
+
+          avatar == null
+              ? Image.asset('assets/images/asatidz.png')
+              : Image.network(avatar!),
           Positioned(
             right: 3,
             bottom: 3,
