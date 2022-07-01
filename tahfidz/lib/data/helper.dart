@@ -81,7 +81,7 @@ List<Map<String, dynamic>> keteranganAbsen = [
   },
   {
     'id': '4',
-    'keterangan': 'Alpa',
+    'keterangan': 'Alfa',
     'icon': Icon(
       LineIcons.timesCircleAlt,
       color: Colors.red,
