@@ -81,17 +81,17 @@ class _CardPelajaranState extends State<CardPelajaran> {
                           value: double.parse(nilai.nilai!),
                           divisions: 10,
                           onChanged: (value) async {
-                            // print("nilai $value");
-                            setState(() {
-                              nilai.nilai = value.toInt().toString();
-                            });
-                          },
-                          onChangeStart: (value) {
                             print("nilai $value");
-                            setState(() {
-                              nilai.nilai = value.toInt().toString();
-                            });
+                            // setState(() {
+                            //   nilai.nilai = value.toInt().toString();
+                            // });
                           },
+                          // onChangeStart: (value) {
+                          //   print("nilai $value");
+                          //   setState(() {
+                          //     nilai.nilai = value.toInt().toString();
+                          //   });
+                          // },
                           onChangeEnd: (value) async {
                             print("nilai $value");
                             setState(() {

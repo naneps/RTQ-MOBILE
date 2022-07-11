@@ -112,8 +112,8 @@ class _CardAbsensiSantriState extends State<CardAbsensiSantri> {
                                         MainAxisAlignment.spaceEvenly,
                                     children: List.generate(
                                       keteranganAbsen.length,
-                                      (index) => GestureDetector(
-                                        onTap: () async {
+                                      (index) => IconButton(
+                                        onPressed: () async {
                                           await RemoteServices.putAbsenSantri(
                                                   idAbsensi: snapshot
                                                       .data['id_absensi'],
@@ -128,7 +128,7 @@ class _CardAbsensiSantriState extends State<CardAbsensiSantri> {
                                             }
                                           });
                                         },
-                                        child: SizedBox(
+                                        icon: SizedBox(
                                             height: 30,
                                             width: 30,
                                             child: keteranganAbsen[index]
