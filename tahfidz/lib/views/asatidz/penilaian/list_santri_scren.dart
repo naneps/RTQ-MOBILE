@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/components/search_box.dart';
+import 'package:tahfidz/components/widget_empty.dart';
 import 'package:tahfidz/controllers/jenjang_controllers.dart';
 import 'package:tahfidz/services/remote_services.dart';
 import 'package:tahfidz/views/asatidz/penilaian/components/card_santri.dart';
@@ -23,25 +23,33 @@ class _ListSantriScreenState extends State<ListSantriScreen> {
   // var idJenjang = args[0];
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: mainColor,
+      backgroundColor: kBackground,
       appBar: AppBar(
-        shadowColor: Colors.transparent,
-        backgroundColor: mainColor,
-        title: Text(''),
+        // shadowColor: Colors.transparent,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        title: Text(
+          'Penilaian Santri',
+          style: GoogleFonts.poppins(
+            // letterSpacing: 2,
+            fontSize: 16,
+            color: kFontColor,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(15),
         child: Container(
-          width: width,
-          height: height,
+          width: Get.width,
+          height: Get.height,
           // padding: EdgeInsets.all(10),
           // color: Colors.black,
 
           child: Column(
+            // mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SearchBox(
@@ -56,7 +64,7 @@ class _ListSantriScreenState extends State<ListSantriScreen> {
                       style: GoogleFonts.poppins(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white),
+                          color: kFontColor),
                     ),
                     Text(
                       " | ",
@@ -65,20 +73,6 @@ class _ListSantriScreenState extends State<ListSantriScreen> {
                           fontWeight: FontWeight.bold,
                           color: Colors.white),
                     ),
-                    // Text(
-                    //   " ${args[0]} ",
-                    //   style: GoogleFonts.poppins(
-                    //       fontSize: 18,
-                    //       fontWeight: FontWeight.bold,
-                    //       color: Colors.white),
-                    // ),
-                    // Text(
-                    //   " ${args[1]} ",
-                    //   style: GoogleFonts.poppins(
-                    //       fontSize: 18,
-                    //       fontWeight: FontWeight.bold,
-                    //       color: Colors.white),
-                    // ),
                   ],
                 ),
               ),
@@ -86,10 +80,9 @@ class _ListSantriScreenState extends State<ListSantriScreen> {
               // Text("${widget.idJenjang}"),
               // Text("${widget.kodeHalaqoh}"),
               FutureBuilder(
-                future: RemoteServices.filterhSantri(
-                  SpUtil.getString('token')!,
-                  args[1],
-                  args[0],
+                future: RemoteServices.filterSantri(
+                  kdHalaqoh: args[1],
+                  idJenjang: args[0],
                 ),
                 builder: (context, AsyncSnapshot snapshot) {
                   // print(snapshot.data);
@@ -102,16 +95,12 @@ class _ListSantriScreenState extends State<ListSantriScreen> {
                         color: mainColor,
                       ),
                     );
-                  } else if (snapshot.data == []) {
-                    return Center(
-                      child: Text("Data Kosong",
-                          style: GoogleFonts.poppins(
-                              fontSize: 32, color: Colors.white)),
-                    );
+                  } else if (!snapshot.hasData) {
+                    return Center(child: WidgetEmptySantri());
                   }
                   return SizedBox(
-                    width: width,
-                    height: height / 1.5,
+                    width: Get.width,
+                    height: Get.height / 1.5,
                     child: ListView.builder(
                       itemCount: snapshot.data.length ?? 0,
                       itemBuilder: (context, index) {

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/controllers/halaqoh_controllers.dart';
 import 'package:tahfidz/controllers/jenjang_controllers.dart';
+import 'package:tahfidz/data/helper.dart';
 import 'package:tahfidz/views/asatidz/penilaian/components/card_jenjang.dart';
 import 'package:tahfidz/views/asatidz/penilaian/components/drop_down_cabang.dart';
 import 'package:tahfidz/views/asatidz/penilaian/list_santri_scren.dart';
@@ -25,13 +27,20 @@ class _JenjangScreenState extends State<JenjangScreen> {
     return Scaffold(
       appBar: AppBar(
         shadowColor: Colors.transparent,
-        backgroundColor: mainColor,
-        title: Text(" Jenjang "),
+        title: Text(
+          "Penilaian Santri",
+          style: GoogleFonts.poppins(
+              // letterSpacing: 2,
+              fontSize: 16,
+              color: Colors.white,
+              fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
       ),
+      backgroundColor: kMainColor,
       body: Container(
-        padding: EdgeInsets.all(20),
         color: mainColor,
+        padding: const EdgeInsets.all(20),
         height: height,
         width: width,
         child: Column(
@@ -46,9 +55,15 @@ class _JenjangScreenState extends State<JenjangScreen> {
                 borderRadius: BorderRadius.circular(30),
                 color: Colors.white,
               ),
-              child: DropwDownCabang(),
+              child: DropwDownCabang(
+                onChange: (value) {
+                  setState(() {
+                    halaqohController.setSelectedHalaqoh(value);
+                  });
+                },
+              ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             // Text("${halaqohController.getSelectedHalaqoh().namaDaerah}"),
@@ -66,24 +81,41 @@ class _JenjangScreenState extends State<JenjangScreen> {
             const SizedBox(
               height: 15,
             ),
-            Flexible(
-              child: Container(
-                width: width,
-                height: height,
-                child: Obx(
-                  () {
-                    if (jenjangController.isLoading.value) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else {
-                      return ListView.builder(
-                        itemCount: jenjangController.listJenjang.length,
-                        itemBuilder: (context, index) {
-                          print(jenjangController.listJenjang[index].jenjang);
-                          return CardJenjang(
-                            nomor: index,
-                            onTap: () async {
+            Expanded(
+              child: Obx(
+                () {
+                  if (jenjangController.isLoading.value) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    return ListView.builder(
+                      itemCount: jenjangController.listJenjang.length,
+                      itemBuilder: (context, index) {
+                        // print(jenjangController.listJenjang[index].jenjang);
+                        return CardJenjang(
+                          nomor: index,
+                          onTap: () async {
+                            // ignore: unnecessary_null_comparison
+                            if (halaqohController
+                                    .getSelectedHalaqoh()
+                                    .kodeHalaqah ==
+                                null) {
+                              Get.snackbar(
+                                "Peringatan",
+                                "Pilih Cabang Dahulu",
+                                icon: const Icon(
+                                  Icons.error,
+                                  color: Colors.white,
+                                ),
+                                // snackStyle: SnackStyle.,
+                                backgroundColor: redColor,
+                                colorText: Colors.white,
+                                borderRadius: 10,
+                                snackPosition: SnackPosition.TOP,
+                                duration: const Duration(seconds: 2),
+                              );
+                            } else {
                               await Get.to(ListSantriScreen(), arguments: [
                                 jenjangController.listJenjang[index].id
                                     .toString(),
@@ -91,14 +123,17 @@ class _JenjangScreenState extends State<JenjangScreen> {
                                     .getSelectedHalaqoh()
                                     .kodeHalaqah,
                               ]);
-                            },
-                            jenjang: jenjangController.listJenjang[index],
-                          );
-                        },
-                      );
-                    }
-                  },
-                ),
+                            }
+                          },
+                          jenjang: jenjangController.listJenjang[index],
+                          countPelajaran: getTotalPelajaran(jenjangController
+                              .listJenjang[index].id
+                              .toString()),
+                        );
+                      },
+                    );
+                  }
+                },
               ),
             ),
           ],

@@ -14,26 +14,35 @@ class Nilai {
   Nilai({
     this.id,
     this.idPelajaran,
-    this.nisSantri,
+    this.idSantri,
+    this.idAsatidz,
+    this.idKategori,
     this.nilai,
   });
 
-  String? id;
+  dynamic id;
   String? idPelajaran;
-  String? nisSantri;
-  double? nilai = 0;
+  String? idKategori;
+  String? idSantri;
+  String? idAsatidz;
+  String? nilai;
 
   factory Nilai.fromJson(Map<String, dynamic> json) => Nilai(
         id: json["id"],
         idPelajaran: json["id_pelajaran"],
-        nisSantri: json["nis_santri"],
-        nilai: json["nilai"].toDouble(),
+        idSantri: json["id_santri"],
+        idAsatidz: json["id_asatidz"],
+        idKategori: json['id_kategori_pelajaran'],
+        nilai: json["nilai"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "id_pelajaran": idPelajaran,
-        "nis_santri": nisSantri,
+        "id_santri": idSantri,
+        "id_asatidz": idAsatidz,
+        // "id_kategori_pelajaran": idKategori,
+        "id_kategori_pelajaran": idKategori,
         "nilai": nilai,
       };
 }

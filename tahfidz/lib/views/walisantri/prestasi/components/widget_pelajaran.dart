@@ -1,86 +1,103 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tahfidz/components/constants.dart';
+import 'package:sp_util/sp_util.dart';
+import 'package:tahfidz/components/widget_number.dart';
+import 'package:tahfidz/model/nilai.dart';
+import 'package:tahfidz/model/pelajaran.dart';
+import 'package:tahfidz/services/remote_services.dart';
 
-class WidgetPelajaran extends StatelessWidget {
-  WidgetPelajaran(
-      {Key? key, required this.width, this.pelajaran, this.nilai, this.nomor})
-      : super(key: key);
+class WidgetPelajaran extends StatefulWidget {
+  // double? nilai = 0;
+  int? nomor;
+  Pelajaran? pelajaran;
+  WidgetPelajaran({this.pelajaran, this.nomor, Key? key}) : super(key: key);
 
-  double? width;
-  String? pelajaran;
-  String? nilai;
-  String? nomor;
+  @override
+  State<WidgetPelajaran> createState() => _WidgetPelajaranState();
+}
+
+class _WidgetPelajaranState extends State<WidgetPelajaran> {
+  final argumen = Get.arguments;
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10),
-      margin: EdgeInsets.symmetric(vertical: 5),
-      height: 60,
-      width: width,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            spreadRadius: 0.2,
-            blurRadius: 5,
-            color: Colors.grey.withOpacity(0.8),
-            offset: const Offset(1, 2),
-          ),
-        ],
-      ),
+      margin: const EdgeInsets.only(top: 5),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+      height: 100,
+      width: MediaQuery.of(context).size.width,
+      decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(35))),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Image.asset(
-                  'assets/nomor.png',
-                  width: 45,
-                  height: 45,
-                  fit: BoxFit.cover,
-                ),
-                Text(
-                  "$nomor",
-                  style: GoogleFonts.poppins(fontSize: 16),
-                )
-              ],
-            ),
+          WidgetNumber(
+            number: widget.nomor.toString(),
           ),
-          Expanded(flex: 3, child: Container()),
-          Container(
-            alignment: Alignment.centerLeft,
-            width: 200,
-            height: 60,
-            // color: Colors.black,
-            child: Text(
-              "$pelajaran",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600),
-            ),
-          ),
-          Expanded(flex: 5, child: Container()),
-          Container(
-            width: 50,
-            height: 30,
-            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-            decoration: BoxDecoration(
-                color: mainColor, borderRadius: BorderRadius.circular(15)),
-            child: Center(
+          Expanded(
+            child: Container(
+              // color: Colors.blueAccent,
+              margin: const EdgeInsets.only(left: 10),
               child: Text(
-                "$nilai",
-                style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500),
+                widget.pelajaran!.namaPelajaran!,
+                style: GoogleFonts.poppins(
+                    fontSize: 12, fontWeight: FontWeight.w500),
               ),
             ),
           ),
+          SizedBox(
+            width: 100,
+            child: FutureBuilder<Nilai>(
+              future: RemoteServices.filterNilai(
+                  idPelajaran: widget.pelajaran!.id.toString(),
+                  idSantri: argumen['id'],
+                  token: SpUtil.getString('token')),
+              builder: (context, AsyncSnapshot snapshot) {
+                print("data nilai ${snapshot.data}");
+                if (snapshot.hasData) {
+                  Nilai nilai = snapshot.data;
+                  return Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    color: Color.fromARGB(255, 156, 255, 162),
+                    child: Text(nilai.nilai.toString(),
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w600,
+                        )),
+                  );
+                }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (!snapshot.hasData) {
+                  return Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    color: Color.fromARGB(255, 255, 239, 215),
+                    child: Text("Belum dinilai",
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w400,
+                        )),
+                  );
+                } else if (snapshot.hasError) {
+                  return const Center(
+                    child: Text("Error"),
+                  );
+                } else {
+                  return const Center(
+                    child: Text("Nilai Kosong"),
+                  );
+                }
+              },
+            ),
+          )
         ],
       ),
     );

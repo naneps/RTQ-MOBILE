@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lottie/lottie.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:tahfidz/main.dart';
 
@@ -25,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
             SizedBox(
               height: 300,
               width: 300,
-              child: Lottie.asset("assets/Coba.json", animate: true),
+              // child: Lottie.asset("assets/Coba.json", animate: true),
             ),
             Text(
               "Rumah Tahfidz",

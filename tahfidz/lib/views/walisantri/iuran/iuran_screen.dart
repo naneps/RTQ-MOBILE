@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
-import 'package:tahfidz/model/iuran.dart';
 import 'package:tahfidz/services/remote_services.dart';
+import 'package:tahfidz/views/asatidz/iuran_santri/iuran_santri._screen.dart';
 import 'package:tahfidz/views/walisantri/iuran/components/card_iuran.dart';
 
 class IuranScreen extends StatefulWidget {
@@ -17,83 +18,79 @@ class _IuranScreenState extends State<IuranScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    RemoteServices.fetchIuran();
   }
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    List<Iuran> listIuran = [];
-    listIuran.add(
-      Iuran(
-          status: "Sudah Diterima",
-          uang: "50000",
-          id: '1',
-          tglIuran: "20 Oktober 2002"),
-    );
-    listIuran.add(
-      Iuran(
-          status: "Sudah Diterima",
-          uang: "80000",
-          id: '1',
-          tglIuran: "20 Oktober 2022"),
-    );
-    listIuran.add(
-      Iuran(
-          status: "Belum di terima",
-          uang: "20000",
-          id: '1',
-          tglIuran: "20 Oktober 2002"),
-    );
+    final argumen = Get.arguments;
+    print(argumen['id']);
     return Scaffold(
-      backgroundColor: Color.fromARGB(228, 255, 255, 255),
+      backgroundColor: kBackground,
+      // backgroundColor: Color.fromARGB(228, 255, 255, 255),
       appBar: AppBar(
-        title: const Text("Rekap Iuran"),
         centerTitle: true,
-        backgroundColor: mainColor,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         // bottom: Preff ,
       ),
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(15),
-          child: Container(
-            width: size.width,
-            height: size.height,
-            // color: mainColor,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  child: Text(
-                    "Rekap iuran ",
-                    style: GoogleFonts.poppins(
-                        fontSize: 18, fontWeight: FontWeight.w600),
-                  ),
+      body: Padding(
+        padding: const EdgeInsets.all(15),
+        child: SizedBox(
+          width: Get.width,
+          height: Get.height,
+          // color: mainColor,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Rekap Iuran Bulanan ",
+                style: GoogleFonts.poppins(
+                  color: kFontColor,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
                 ),
-                FutureBuilder(
-                  future: RemoteServices.fetchIuran(),
-                  builder: (context, snapshot) {
-                    // Object? listIuran = snapshot.data;
-                    // AsyncSnapshot<List<Iuran>?> listIuran = snapshot.data
-                    print(snapshot.runtimeType);
-                    return Container(
-                      width: size.width,
-                      height: 500,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              FutureBuilder(
+                future: RemoteServices.rekapIuranSantri(argumen['id']),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          mainColor,
+                        ),
+                      ),
+                    );
+                  }
+                  if (snapshot.hasData) {
+                    if (snapshot.data.length == 0) {
+                      return Expanded(
+                          child: Center(child: Text("Belum Bayar Iuran")));
+                    }
+                    return Expanded(
                       child: ListView.builder(
-                        itemCount: listIuran.length,
+                        itemCount: snapshot.data.length,
                         itemBuilder: (context, index) {
-                          return CardIuran(
-                            size: size,
-                            iuran: listIuran[index],
+                          return CardIuranSantri(
+                            nominal: snapshot.data[index]['nominal_pembayaran']
+                                .toString(),
+                            tanggal: snapshot.data[index]['tanggal_pembayaran'],
+                            status: snapshot.data[index]['status_pembayaran'],
                           );
                         },
                       ),
                     );
-                  },
-                )
-              ],
-            ),
+                  } else {
+                    return Center(
+                      child: Text("Tidak ada data"),
+                    );
+                  }
+                },
+              )
+            ],
           ),
         ),
       ),

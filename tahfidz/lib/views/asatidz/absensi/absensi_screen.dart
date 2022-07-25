@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
+import 'package:tahfidz/components/dropdown_jenjang.dart';
 
-import 'package:tahfidz/components/search_box.dart';
-import 'package:tahfidz/controllers/santri_controller.dart';
+import 'package:tahfidz/controllers/halaqoh_controllers.dart';
+import 'package:tahfidz/controllers/jenjang_controllers.dart';
+import 'package:tahfidz/model/Jenjang.dart';
+import 'package:tahfidz/model/halaqoh.dart';
 import 'package:tahfidz/model/santri.dart';
-import 'package:tahfidz/views/asatidz/absensi/components/indicator_absensi.dart';
+
+import 'package:tahfidz/services/remote_services.dart';
 import 'package:tahfidz/views/asatidz/absensi/components/card_santri.dart';
+
+import 'package:tahfidz/views/asatidz/absensi/components/widget_indicator.dart';
+import 'package:tahfidz/views/asatidz/penilaian/components/drop_down_cabang.dart';
+
+import '../../../components/widget_empty.dart';
+import '../../../model/santri_by.dart';
 
 class AbsensiScreen extends StatefulWidget {
   const AbsensiScreen({Key? key}) : super(key: key);
@@ -17,22 +28,18 @@ class AbsensiScreen extends StatefulWidget {
 }
 
 class _AbsensiScreenState extends State<AbsensiScreen> {
-  bool _isAccepted = false;
-  Color hadir = Colors.green;
-  Color izin = Colors.blue;
-  Color sakit = Colors.yellow;
-  Color alpa = Colors.red;
-
   Color? absenColor;
   String selectAbsen = 'hadir';
-  final SantriController santriController = Get.put(SantriController());
-  final _formkey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
-    final heightBody = MediaQuery.of(context).size.height;
-    final widhtBody = MediaQuery.of(context).size.width;
+    JenjangController jenjangController = Get.put(JenjangController());
+    HalaqohController halaqohController = Get.put(HalaqohController());
+    Jenjang selectedJenjang = jenjangController.getSelectedJenjang();
+    Halaqoh selectedCabang = halaqohController.getSelectedHalaqoh();
+
     return Scaffold(
-      // backgroundColor: mainColor,
+      backgroundColor: kBackground,
       appBar: AppBar(
         // shadowColor: Colors.transparent,
         elevation: 0,
@@ -43,155 +50,156 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
           style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.w600),
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {},
-      // ),
       body: Column(
         children: [
-          Container(
-            height: heightBody / 6,
-            width: widhtBody,
-            // color: Colors.black,
-            child: Stack(
-              // fit: StackFit.expand,
-              // clipBehavior: Clip.antiAliasWithSaveLayer,
-              alignment: Alignment.center,
-              children: [
-                Positioned(
-                  top: 0,
-                  height: 100,
-                  width: widhtBody,
-                  child: Container(
-                    // color: mainColor,
-                    decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          bottomLeft: Radius.circular(90),
-                          bottomRight: Radius.circular(90),
-                        ),
-                        color: mainColor),
-                    // width: widhtBody,
-                  ),
-                ),
-                Positioned(
-                  top: 0,
-                  height: 150,
-                  width: widhtBody / 1.2,
-                  child: CardAbsensi(),
-                ),
-              ],
+          SizedBox(
+            height: 150,
+            child: IndicatorAbsen(widhtBody: Get.width),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Card(
+              child: DropwDownCabang(
+                onChange: (value) {
+                  setState(() {
+                    halaqohController.setSelectedHalaqoh(value);
+                  });
+                },
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(10),
-            child: SearchBox(
-              labelText: "Cari Santri",
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: DropdownJenjang(
+                onChange: (jenjang) {
+                  setState(() {
+                    jenjangController.setSelectedJenjang(jenjang);
+                  });
+                },
+              ),
             ),
           ),
           const SizedBox(
             height: 10,
           ),
-          Flexible(
-            child: SingleChildScrollView(
-              child: Container(
-                  width: widhtBody,
-                  height: heightBody / 2,
-                  // color: mainColor,
-                  child: Obx(
-                    () {
-                      if (santriController.isLoading.value) {
-                        return Center(
-                          child: CircularProgressIndicator(
-                            backgroundColor: Colors.yellow,
-                            strokeWidth: 10,
-                            // value: 1,
-                            color: mainColor,
-                          ),
-                        );
-                      }
-                      return ListView.builder(
-                        physics: BouncingScrollPhysics(),
-                        itemCount: santriController.listSantri.length,
-                        itemBuilder: (context, index) {
-                          return CardSantri(
-                            key: ObjectKey(
-                                santriController.listSantri[index].id),
-                            absenIndikator: absenColor,
-                            onTap: () => _onButtonPressed(
-                                santriController.listSantri[index]),
-                            santri: santriController.listSantri[index],
-                          );
-                        },
-                      );
-                    },
-                  )),
-            ),
-          ),
+          Expanded(
+              child: (selectedCabang.kodeHalaqah == null ||
+                      selectedJenjang.id == null)
+                  ? Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: Container(
+                        // padding: EdgeInsets.all(15),
+                        // color: const Color.fromARGB(255, 193, 226, 255),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/images/santri.png',
+                              scale: 2,
+                            ),
+                            Text(
+                              "Pilih Cabang dan Jenjang Terlebih Dahulu",
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.poppins(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: kFontColor),
+                            )
+                          ],
+                        ),
+                      ),
+                    )
+                  : FutureBuilder(
+                      future: RemoteServices.cekAbsensiSantri(
+                          idJenjang: jenjangController
+                              .getSelectedJenjang()
+                              .id
+                              .toString(),
+                          kdHalaqoh: halaqohController
+                              .getSelectedHalaqoh()
+                              .kodeHalaqah),
+                      builder: (context, AsyncSnapshot snapshot) {
+                        // print(snapshot.data);
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Container();
+                        } else if (snapshot.hasData) {
+                          if (snapshot.data.isEmpty) {
+                            return Center(
+                              child: TextButton(
+                                onPressed: () async {
+                                  await RemoteServices.createAbsensiSantri(
+                                      idJenjang: jenjangController
+                                          .getSelectedJenjang()
+                                          .id
+                                          .toString(),
+                                      kdHalaqoh: halaqohController
+                                          .getSelectedHalaqoh()
+                                          .kodeHalaqah);
+                                  setState(() {});
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: greenColor,
+                                      borderRadius: BorderRadius.circular(16)),
+                                  padding: EdgeInsets.all(15),
+                                  child: Text(
+                                    "Buat Absen Santri !",
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 16, color: kFontColor),
+                                  ),
+                                ),
+                              ),
+                            );
+                          } else {
+                            // return)
+                            return FutureBuilder<List<SantriBy>?>(
+                              future: RemoteServices.filterSantri(
+                                  kdHalaqoh: halaqohController
+                                      .getSelectedHalaqoh()
+                                      .kodeHalaqah,
+                                  idJenjang: jenjangController
+                                      .getSelectedJenjang()
+                                      .id
+                                      .toString()),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return Container();
+                                } else if (snapshot.hasData) {
+                                  return ListView.builder(
+                                    itemCount: snapshot.data!.length,
+                                    itemBuilder: (context, index) =>
+                                        CardAbsensiSantri(
+                                            santri: snapshot.data![index]),
+                                  );
+                                }
+                                return const WidgetEmptySantri();
+                              },
+                            );
+                          }
+                          // if (snapshot.data) {
+                          //   print("belum absensi santri");
+
+                          // }
+                        } else if (!snapshot.hasData) {
+                          print("Data Kosong");
+                        }
+                        return Container();
+                      },
+                    ))
         ],
       ),
-    );
-  }
-
-  void _onButtonPressed(Santri santri) {
-    showModalBottomSheet(
-      // shape: RoundedRectangleBorder(),
-      backgroundColor: Colors.transparent,
-      context: context,
-      builder: (context) {
-        return Container(
-          padding: EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(30),
-          ),
-          height: 150,
-          width: MediaQuery.of(context).size.width,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () => selectedItem(hadir, santri),
-                child: SizedBox(
-                  width: 40,
-                  height: 40,
-                  child: Material(
-                    color: hadir,
-                    shape: StadiumBorder(),
-                    elevation: 4,
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: 40,
-                height: 40,
-                child: Material(
-                  color: izin,
-                  shape: StadiumBorder(),
-                  elevation: 4,
-                ),
-              ),
-              SizedBox(
-                width: 40,
-                height: 40,
-                child: Material(
-                  color: sakit,
-                  shape: StadiumBorder(),
-                  elevation: 4,
-                ),
-              ),
-              SizedBox(
-                width: 40,
-                height: 40,
-                child: Material(
-                  color: alpa,
-                  shape: StadiumBorder(),
-                  elevation: 4,
-                ),
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 
@@ -200,39 +208,5 @@ class _AbsensiScreenState extends State<AbsensiScreen> {
       absenColor = color;
     });
     // dispose();
-  }
-}
-
-class InnerShadowBox extends StatelessWidget {
-  final Widget? child;
-  InnerShadowBox({this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 30,
-      width: 30,
-      decoration: BoxDecoration(
-        boxShadow: [
-          //CSS: inset 0px 4px 6px rgba(8, 56, 73, 0.5)
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5), // shadow color
-            offset: Offset(4, 4),
-          ),
-          BoxShadow(
-            offset: Offset(0, 4),
-
-            blurRadius: 3,
-            // color: Colors.grey, // shadow color
-            color: Color(0xFFF9F8F9), // background color
-          ),
-        ],
-        borderRadius: BorderRadius.circular(25),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 5, left: 5),
-        child: child,
-      ),
-    );
   }
 }

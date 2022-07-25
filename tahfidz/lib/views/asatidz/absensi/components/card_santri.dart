@@ -1,111 +1,160 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tahfidz/components/constants.dart';
-import 'package:tahfidz/model/santri.dart';
-import 'package:tahfidz/views/asatidz/absensi/absensi_screen.dart';
+import 'package:tahfidz/data/helper.dart';
+import 'package:tahfidz/model/santri_by.dart';
+import 'package:tahfidz/services/remote_services.dart';
+import 'package:tahfidz/views/asatidz/penilaian/pelajaran_screen.dart';
 
-class CardSantri extends StatelessWidget {
-  final Santri? santri;
-  dynamic onTap;
-  Color hadir = Colors.green;
-  Color izin = Colors.blue;
-  Color sakit = Colors.yellow;
-  Color alpa = Colors.red;
-  Color? absenIndikator;
-  CardSantri({this.absenIndikator, this.onTap, this.santri, Key? key})
+class CardAbsensiSantri extends StatefulWidget {
+  SantriBy santri;
+  String? idJenjang;
+  CardAbsensiSantri({required this.santri, this.idJenjang, Key? key})
       : super(key: key);
 
   @override
+  State<CardAbsensiSantri> createState() => _CardAbsensiSantriState();
+}
+
+class _CardAbsensiSantriState extends State<CardAbsensiSantri> {
+  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: 10,
-        right: 10,
+    final size = MediaQuery.of(context).size;
+    return Container(
+      margin: const EdgeInsets.only(top: 15, left: 20, right: 20),
+      padding: const EdgeInsets.only(
+        left: 15,
+        right: 15,
       ),
-      child: Container(
-          margin: EdgeInsets.only(top: 15),
-          padding: EdgeInsets.only(
-            left: 25,
-            right: 25,
+      height: MediaQuery.of(context).size.height / 10,
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: const BorderRadius.all(
+            Radius.circular(15),
           ),
-          height: 70,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(
-                Radius.circular(35),
-              ),
-              boxShadow: [
-                BoxShadow(
-                    offset: Offset(2, 2),
-                    color: Colors.grey.withOpacity(0.4),
-                    blurRadius: 1)
-              ]),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                  height: 50,
-                  width: 50,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: CircleAvatar(
-                    backgroundImage: NetworkImage("${santri!.avatar}"),
-                  )),
-              SizedBox(width: 20),
-              Expanded(
-                flex: 4,
-                child: Container(
-                  // width: 400,
-                  margin: EdgeInsets.all(5),
-                  child: Column(
+          boxShadow: [
+            BoxShadow(
+                offset: const Offset(2, 2),
+                color: Colors.grey.withOpacity(0.4),
+                blurRadius: 1)
+          ]),
+      child: Row(
+        // mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const SizedBox(width: 10),
+          Expanded(
+            flex: 2,
+            child: Container(
+              height: size.height,
+              // color: mainColor,
+              width: size.width,
+              margin: const EdgeInsets.all(5),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Flexible(
-                        child: Text(
-                          "${santri!.name}",
-                          style: GoogleFonts.poppins(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              color: greyColor),
-                        ),
-                      ),
                       Text(
-                        "${santri!.jenjang}",
+                        "${widget.santri.namaLengkap}",
                         style: GoogleFonts.poppins(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
                             color: greyColor),
-                      )
+                      ),
                     ],
                   ),
-                ),
+                ],
               ),
-              Container(
-                height: 30,
-                width: 30,
-                child: GestureDetector(
-                  onTap: onTap,
-                  child: InnerShadowBox(
-                    child: Container(
-                      height: 25,
-                      width: 25,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: absenIndikator,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          )
-          // child: ,
+            ),
           ),
+          Expanded(
+            flex: -1,
+            child: Center(
+              child: Container(
+                  height: 50,
+                  width: 100,
+                  child: FutureBuilder(
+                    future: RemoteServices.getAbsenSantri(
+                        idSantri: widget.santri.id),
+                    builder: (context, AsyncSnapshot snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return TextButton(
+                          onPressed: () {
+                            Get.bottomSheet(Container(
+                              padding: const EdgeInsets.all(15),
+                              height: 159,
+                              color: Colors.white,
+                              child: Column(
+                                children: [
+                                  Text(
+                                    "Ubah Keterangan",
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: List.generate(
+                                      keteranganAbsen.length,
+                                      (index) => IconButton(
+                                        onPressed: () async {
+                                          await RemoteServices.putAbsenSantri(
+                                                  idAbsensi: snapshot
+                                                      .data['id_absensi'],
+                                                  statusAbsen:
+                                                      keteranganAbsen[index]
+                                                          ['id'])
+                                              .then((value) {
+                                            if (value == true) {
+                                              // Get.back();
+                                              setState(() {});
+                                              Get.back();
+                                            }
+                                          });
+                                        },
+                                        icon: SizedBox(
+                                            height: 30,
+                                            width: 30,
+                                            child: keteranganAbsen[index]
+                                                ['icon']),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ));
+                          },
+                          child: buildIndikator(snapshot.data['keterangan']));
+                    },
+                  )),
+            ),
+          ),
+        ],
+      ),
     );
+  }
+
+  buildIndikator(String keterangan) {
+    for (var element in keteranganAbsen) {
+      if (element['keterangan'] == keterangan) {
+        return element['icon'];
+      }
+    }
   }
 }

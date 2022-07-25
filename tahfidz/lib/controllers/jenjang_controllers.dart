@@ -6,6 +6,8 @@ import 'package:tahfidz/services/remote_services.dart';
 class JenjangController extends GetxController {
   var listJenjang = <Jenjang>[].obs;
   var isLoading = true.obs;
+
+  Jenjang? _selectedJenjang = Jenjang();
   @override
   void onInit() {
     // TODO: implement onInit
@@ -16,8 +18,7 @@ class JenjangController extends GetxController {
   void fetchJenjang() async {
     try {
       isLoading(true);
-      var classes =
-          await RemoteServices.fetchJenjang(SpUtil.getString('token')!);
+      var classes = await RemoteServices.fetchJenjang(SpUtil.getString(''));
       if (classes != null) {
         listJenjang.value = classes;
         // print(listJenjang);
@@ -30,5 +31,11 @@ class JenjangController extends GetxController {
     }
   }
 
+  Jenjang getSelectedJenjang() => _selectedJenjang!;
+
+  void setSelectedJenjang(Jenjang jenjang) {
+    _selectedJenjang = jenjang;
+    update();
+  }
   // void fetchPelajaranFromJenjang() async {}
 }

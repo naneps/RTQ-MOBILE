@@ -1,88 +1,42 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:get/get_navigation/get_navigation.dart';
-import 'package:get/instance_manager.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:sp_util/sp_util.dart';
-import 'package:tahfidz/data/dumy+data.dart';
+import 'package:tahfidz/data/helper.dart';
 import 'package:tahfidz/model/Jenjang.dart';
-import 'package:tahfidz/model/asatidz.dart';
+import 'package:tahfidz/model/absen.dart';
 import 'package:tahfidz/model/cabang.dart';
 import 'package:tahfidz/model/halaqoh.dart';
-import 'package:tahfidz/model/iuran.dart';
 import 'package:tahfidz/model/kategori_penilaian.dart';
 import 'package:tahfidz/model/nilai.dart';
 import 'package:tahfidz/model/pelajaran.dart';
 import 'package:tahfidz/model/santri.dart';
 import 'package:tahfidz/model/santri_by.dart';
-import 'package:tahfidz/model/user.dart';
-import 'package:tahfidz/views/asatidz/home/home_screen.dart';
 
 class RemoteServices {
-  // static var client = http.Client();
-  // static var baseUrl = "http://10.0.112.110:3000/";
   static var baseUrl = "http://api.rtq-freelance.my.id/api-v1";
 
-  static Future<bool?> loginProses(TextEditingController controllerTelepon,
-      TextEditingController controllerPassword) async {
-    try {
-      var response = await http.post(
-          Uri.parse("http://api.rtq-freelance.my.id/api-v1/login"),
-          // Uri.parse(baseUrl + 'api-v1/login'),
-          body: {
-            'no_hp': controllerTelepon.text,
-            'password': controllerPassword.text
-          });
-
-      if (response.statusCode == 200) {
-        var user = userFromJson(response.body);
-
-        if (int.parse(user.idRole!) == 3) {
-          Get.off(HomeScreen());
-          SpUtil.putBool('status', true);
-          SpUtil.putString("nama", user.nama.toString());
-          SpUtil.putString("id", user.id.toString());
-          SpUtil.putString("keterangan", user.keterangan.toString());
-          SpUtil.putString("no_hp", user.noHp.toString());
-          SpUtil.putString("token", user.token.toString());
-          SpUtil.putString("id_role", user.idRole.toString());
-        } else if (int.parse(user.idRole!) == 4) {
-          Get.off(HomeScreen());
-          SpUtil.putBool('status', true);
-          SpUtil.putString("nama", user.nama.toString());
-          SpUtil.putString("keterangan", user.keterangan.toString());
-          SpUtil.putString("no_hp", user.noHp.toString());
-          SpUtil.putString("token", user.token.toString());
-          SpUtil.putString("id_role", user.idRole.toString());
-        }
-        return true;
-      } else {
-        return false;
-      }
-    } catch (e) {
-      print('Error Login Proses : $e.');
-    }
-  }
-
-  static Future<List<Jenjang>?> fetchJenjang(String token) async {
+  static Future<List<Jenjang>> fetchJenjang(filter) async {
     try {
       var url = Uri.parse('$baseUrl/jenjang/view/all');
-      var resposne = await http
-          .get(url, headers: {HttpHeaders.authorizationHeader: token});
-      print("fetch jenjang code ${resposne.body}");
+      var resposne = await http.get(url, headers: {
+        HttpHeaders.authorizationHeader: SpUtil.getString('token')!
+      });
       if (resposne.statusCode == 200) {
         var jsonString = resposne.body;
         return jenjangFromJson(jsonString);
       } else {
-        return null;
+        return [];
       }
     } on Exception catch (e) {
       // TODO
       print("Fetch jenjang :$e");
+      return [];
     }
+    // return null;
   }
 
   static Future<List<Cabang>?> fetchCabang(String token) async {
@@ -90,8 +44,9 @@ class RemoteServices {
       var url = Uri.parse('$baseUrl/cabang/view/all');
       var resposne = await http
           .get(url, headers: {HttpHeaders.authorizationHeader: token});
-      print("Status Code Fetch Cabang : ${resposne.statusCode}");
-      print("Body Fetch Cabang : ${resposne.body}");
+      if (kDebugMode) {
+        print("Status Code Fetch Cabang : ${resposne.statusCode}");
+      }
       if (resposne.statusCode == 200) {
         var jsonString = resposne.body;
         return cabangsFromJson(jsonString);
@@ -99,6 +54,8 @@ class RemoteServices {
     } catch (e) {
       print("Catch FetchCabang : $e");
     }
+    return null;
+    // return null;
     // return cabangsFromJson(jsonString);
   }
 
@@ -115,40 +72,27 @@ class RemoteServices {
     } catch (e) {
       print("Catch FetchSantri : $e");
     }
+    return null;
   }
 
-  static Future<List<SantriBy>?> filterhSantri(
-      String token, String? kdHalaqoh, String? idJenjang) async {
+  static Future<List<SantriBy>?> filterSantri(
+      {String? kdHalaqoh, String? idJenjang}) async {
     try {
       var url = Uri.parse('$baseUrl/santri/view/$kdHalaqoh/$idJenjang');
-      var resposne = await http
-          .get(url, headers: {HttpHeaders.authorizationHeader: token});
+      var resposne = await http.get(url, headers: {
+        HttpHeaders.authorizationHeader: SpUtil.getString('token')!
+      });
       print("StatusCode Filter Santri : ${resposne.statusCode}");
       if (resposne.statusCode == 200) {
         var jsonString = resposne.body;
-        print(resposne.body);
+        // print(resposne.body);
+        // print(santriByFromJson(jsonString).first.namaLengkap);
         return santriByFromJson(jsonString);
       }
     } catch (e) {
       print("Catch Filter Santri Santri : $e");
     }
-  }
-
-  static Future<List<Iuran>?> fetchIuran() async {
-    try {
-      var url = Uri.parse(
-          'https://623aa9b8b5292b8bfcb807ee.mockapi.io/rtq/api/authors');
-      var resposne = await http.get(
-        url,
-      );
-      print("StatusCode Fetch Iuran : ${resposne.statusCode}");
-      if (resposne.statusCode == 200) {
-        var jsonString = resposne.body;
-        return iuranFromJson(jsonString);
-      }
-    } catch (e) {
-      print("Catch Fetch Iuran : $e");
-    }
+    return null;
   }
 
   static Future<List<Halaqoh>> fetchHalaqoh(String token, filter) async {
@@ -159,27 +103,28 @@ class RemoteServices {
       print("StatusCode Fetch Halaqoh : ${resposne.statusCode}");
       if (resposne.statusCode == 200) {
         var jsonString = resposne.body;
-        print("respone body halqoh : $jsonString");
         return halaqohFromJson(jsonString);
       }
-      return [];
+      // return [];
     } catch (e) {
       print("Catch Fetch Halaqoh : $e");
     }
     return [];
   }
 
-  static Future<Asatidz?> getUserInfo(String token) async {
+  static Future getUserInfo(String token) async {
     try {
       var url = Uri.parse('$baseUrl/profil/user/detail');
       var response = await http
           .get(url, headers: {HttpHeaders.authorizationHeader: token});
-      print("StatusCode getUserInfo : ${response.statusCode}");
+      print("StatusCode getUserInfo :m ${response.statusCode}");
 
       if (response.statusCode == 200) {
         final jsonResponse = json.decode(response.body);
-
-        return Asatidz.fromJson(jsonResponse);
+        // print(User.fromJson(jsonResponse));
+        var data = json.encode(jsonResponse);
+        print(data);
+        return jsonResponse;
       } else {
         throw Exception('Failed to load data!');
       }
@@ -188,29 +133,35 @@ class RemoteServices {
     }
   }
 
-  static Future<bool?> addImage(Map<String, String> body, File filepath) async {
+  static Future<bool?> createAbsen(
+      Map<String, String> body, File filepath) async {
     try {
-      DateTime date = DateTime.now();
-      ;
-      String addimageUrl = '/$baseUrl/absensi/asatidz';
+      // bool isLoading = true;
+      String url = '$baseUrl/absensi/asatidz';
       Map<String, String> headers = {
+        HttpHeaders.authorizationHeader: SpUtil.getString("token")!,
+        // "Authorization": SpUtil.getString('token')!,
         'Content-Type': 'multipart/form-data',
       };
-      var request = http.MultipartRequest('POST', Uri.parse(addimageUrl))
+      // print("body ")
+      var request = http.MultipartRequest('POST', Uri.parse(url))
         ..fields.addAll(body)
         ..headers.addAll(headers)
-        ..files.add(await http.MultipartFile.fromPath('image', filepath.path));
+        ..files.add(await http.MultipartFile.fromPath('gambar', filepath.path));
       var response = await request.send();
-
-      print(response.statusCode);
+      print(response.stream); // print(request.files.);
+      print("stausCode CreateAbsen : ${response.statusCode}");
+      // print(response.request.persistentConnection);
+      // print(response.request);
       if (response.statusCode == 201) {
         return true;
       } else {
         return false;
       }
-    } catch (e) {
-      print("Add image $e");
+    } on Exception catch (e) {
+      print("Catch Add image $e");
     }
+    return null;
     // return null;
   }
 
@@ -239,28 +190,13 @@ class RemoteServices {
     return await Geolocator.getCurrentPosition();
   }
 
-  static Future<List<Pelajaran>?> fetchPelajaran() async {
-    try {
-      var url = Uri.parse(
-          'https://623aa9b8b5292b8bfcb807ee.mockapi.io/rtq/api/pelajaran');
-      var resposne = await http.get(url);
-      print("StatusCode Fetch Pelajaran : ${resposne.statusCode}");
-      if (resposne.statusCode == 200) {
-        var jsonString = resposne.body;
-        return pelajaranFromJson(jsonString);
-      }
-    } catch (e) {
-      print("Catch Fetch Pelajaran : $e");
-    }
-  }
-
-  static Future<List<KategoriPenilaian>> fetchKategoriPenilaian(
-      String token) async {
+  static Future<List<KategoriPenilaian>> fetchKategoriPenilaian() async {
     try {
       var url = Uri.parse(
           'http://api.rtq-freelance.my.id/api-v1/kategori/pelajaran/view/all');
-      var resposne = await http
-          .get(url, headers: {HttpHeaders.authorizationHeader: token});
+      var resposne = await http.get(url, headers: {
+        HttpHeaders.authorizationHeader: SpUtil.getString('token')!
+      });
       print("StatusCode Fetch Kategori Penilaian : ${resposne.statusCode}");
       if (resposne.statusCode == 200) {
         var jsonString = resposne.body;
@@ -275,12 +211,13 @@ class RemoteServices {
   }
 
   static Future<List<Pelajaran>?> filterPelajaran(
-      String token, String? idJenjang, String? idKategoriPenilaian) async {
+      {String? idJenjang, String? idKategoriPenilaian}) async {
     try {
       var url =
-          Uri.parse('$baseUrl/pelajaran/view/$idJenjang/$idKategoriPenilaian');
-      var resposne = await http
-          .get(url, headers: {HttpHeaders.authorizationHeader: token});
+          Uri.parse('$baseUrl/pelajaran/view/$idKategoriPenilaian/$idJenjang');
+      var resposne = await http.get(url, headers: {
+        HttpHeaders.authorizationHeader: SpUtil.getString('token')!
+      });
       print("StatusCode Filter Pelajaran : ${resposne.statusCode}");
       if (resposne.statusCode == 200) {
         var jsonString = resposne.body;
@@ -290,35 +227,343 @@ class RemoteServices {
     } catch (e) {
       print("Catc.h Filter Pelajaran : $e");
     }
+    return null;
   }
 
-  static Future<Nilai> filterNilai({String? idPelajaran, String? nis}) async {
-    Nilai? nilai = Nilai();
+  static Future<Nilai> filterNilai(
+      {String? token, String? idPelajaran, String? idSantri}) async {
+    Nilai? nilai;
+    try {
+      var url = Uri.parse('$baseUrl/penilaian/view/$idPelajaran/$idSantri');
+      var resposne = await http
+          .get(url, headers: {HttpHeaders.authorizationHeader: token!});
+      print("StatusCode Filter Nilai : ${resposne.body}");
 
-    for (var i = 0; i < dataNilai.length; i++) {
-      if (dataNilai[i]['id_pelajaran'] == idPelajaran &&
-          dataNilai[i]['nis_santri'] == nis) {
-        var json = jsonEncode(dataNilai[i]);
-        var hasilFiletr = jsonDecode(json);
-        // print(hasilFiletr);
-        nilai = Nilai.fromJson(hasilFiletr);
-        // print(nilai);
-        // print(" json :$json");
-        // print(" hasil filter :$hasilFiletr");
-        // print(pelajaran[i].pelajaran);
-        break;
+      if (resposne.statusCode == 200) {
+        var json = jsonDecode(resposne.body);
+        print("json : $json");
+
+        nilai = Nilai.fromJson(json);
       }
+    } catch (e) {
+      print("Catc.h Filter Nilai : $e");
     }
-    // print(pelajaran[0].pelajaran);
-
     return nilai!;
   }
 
-  static setNilai(String idNilai, double nilai) {
-    for (var i = 0; i < dataNilai.length; i++) {
-      if (dataNilai[i]['id'] == idNilai) {
-        dataNilai[i]['nilai'] = nilai;
+  static Future<void> createNilai(
+      {String? token,
+      String? idSantri,
+      String? idPelajaran,
+      String? idAsatidz,
+      String? idKategori,
+      String? nilai}) async {
+    var body = {
+      'nilai': nilai,
+    };
+    var json = jsonEncode(body);
+
+    try {
+      var url = Uri.parse(
+          '$baseUrl/penilaian/store/$idPelajaran/$idSantri/$idKategori/$idAsatidz');
+      var response = await http.post(url,
+          headers: {
+            HttpHeaders.authorizationHeader: token!,
+            // "Content-Type": "application/json",
+            HttpHeaders.contentTypeHeader: "application/json"
+          },
+          body: json);
+
+      print("StatusCode Create Nilai : ${response.body}");
+    } catch (e) {
+      print("Catc.h Create Nilai : $e");
+    }
+  }
+
+  static Future<bool?> updateNilai(
+      {String? token,
+      String? idNilai,
+      String? idAsatidz,
+      dynamic nilai}) async {
+    try {
+      var body = {
+        'nilai': nilai,
+      };
+      var json = jsonEncode(body);
+      var url = Uri.parse('$baseUrl/penilaian/put/$idNilai/$idAsatidz');
+      var response = await http.put(url,
+          headers: {
+            HttpHeaders.authorizationHeader: token!,
+            // "Content-Type": "application/json",
+            HttpHeaders.contentTypeHeader: "application/json"
+          },
+          body: json);
+
+      print("StatusCode update Nilai : ${response.statusCode}");
+      if (response.statusCode == 200) {
+        print("Update Nilai Berhasil");
+        return true;
+      } else {
+        print("Update Nilai Gagal");
+        return false;
+      }
+    } catch (e) {
+      print("Catc.h Create Nilai : $e");
+    }
+    return null;
+  }
+
+  static Future getSantriByWali() async {
+    final response = await http.get(
+      Uri.parse(
+        "$baseUrl/santri/view/all/wali-santri",
+      ),
+      headers: {
+        "Authorization": SpUtil.getString('token')!,
+      },
+    );
+    print('StatusCode Santri By Wali : ${response.body}');
+    if (response.statusCode == 200) {
+      var json = jsonDecode(response.body);
+      // var data = jsonDecode(json);re\
+
+      print(json);
+      return json;
+    } else {
+      print(response.statusCode);
+    }
+  }
+
+  static Future<List<Absen>?> fetchRekapAbsen() async {
+    try {
+      var url = Uri.parse('$baseUrl/absensi/asatidz/rekap');
+      var response = await http.get(url, headers: {
+        "Authorization": SpUtil.getString('token')!,
+        "Content-Type": "application/json",
+      });
+
+      // print(response.statusCode);
+      if (response.statusCode == 200) {
+        var jsonResponse = jsonDecode(response.body);
+
+        List<Absen> abesn = [];
+        for (var i in jsonResponse) {
+          abesn.add(Absen.fromJson(i));
+        }
+        print(abesn);
+        return abesn;
+      } else {
+        if (kDebugMode) {
+          print("Error");
+        }
+      }
+    } catch (e) {
+      print(e);
+    }
+    return null;
+  }
+
+  static Future<Absen?> getAbesnToday() async {
+    try {
+      var url = Uri.parse('$baseUrl/absensi/asatidz');
+      var response = await http.get(url, headers: {
+        HttpHeaders.authorizationHeader: SpUtil.getString('token')!,
+        HttpHeaders.contentTypeHeader: "application/json"
+      });
+      print("Absen Today " + response.statusCode.toString());
+      print(response.body);
+      if (response.statusCode == 200) {
+        var data = json.decode(response.body);
+        print(response.body);
+        return Absen.fromJson(data);
+      } else {
+        print("Error");
+      }
+    } catch (e) {
+      if (e.toString().contains("SocketException")) {
+        if (kDebugMode) {
+          print("No Internet Connection");
+        }
+      } else {
+        if (kDebugMode) {
+          print(e);
+        }
       }
     }
+    return null;
+  }
+
+  static Future<bool?> storeIuran({String? idSantri, String? nominal}) async {
+    print("Store Iuran");
+    var url = Uri.parse("$baseUrl/iuran/store");
+    var response = await http.post(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": SpUtil.getString('token')!
+      },
+      body: json.encode({
+        "id_asatidz": SpUtil.getString('id'),
+        "id_santri": idSantri,
+        "nominal": nominal,
+      }),
+    );
+    print("StatusCode Store Iuran : ${response.statusCode}");
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  static Future getIuranSantri({String? idSantri}) async {
+    var url = Uri.parse("$baseUrl/iuran/detail/$idSantri");
+    var response = await http.get(
+      url,
+      headers: {
+        HttpHeaders.authorizationHeader: SpUtil.getString('token')!,
+      },
+    );
+    print("StatusCode Get Iuran : ${response.statusCode}");
+    if (response.statusCode == 200) {
+      print(jsonDecode(response.body));
+
+      return jsonDecode(response.body);
+      // print(response.body);
+      // return Iuran.fromJson(json.decode(response.body));
+    } else {
+      return null;
+    }
+  }
+
+  static Future getNominalIuran(String? idIuran) async {
+    var url = Uri.parse("$baseUrl/iuran/cek/nominal/$idIuran");
+    var response = await http.get(
+      url,
+      headers: {
+        HttpHeaders.authorizationHeader: SpUtil.getString('token')!,
+      },
+    );
+    print("StatusCode Get nominal Iuran : ${response.statusCode}");
+    print(response.body);
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+      // print(response.body);
+      // return Iuran.fromJson(json.decode(response.body));
+    } else {
+      return null;
+    }
+  }
+
+  static Future rekapPenilaian() async {
+    var url = Uri.parse("$baseUrl/penilaian/view/1");
+    var response = await http.get(url, headers: {
+      "Authorization": SpUtil.getString('token')!,
+      "Content-Type": "application/json"
+    });
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      return data;
+    }
+  }
+
+  static Future rekapIuranSantri(String id) async {
+    var url = Uri.parse("$baseUrl/iuran/detail/$id");
+    var response = await http.get(
+      url,
+      headers: {
+        "Authorization": SpUtil.getString('token')!,
+        "Content-Type": "application/json"
+      },
+    );
+
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      return data;
+    }
+  }
+
+  static Future cekAbsensiSantri({String? kdHalaqoh, String? idJenjang}) async {
+    try {
+      var url = Uri.parse('$baseUrl/absensi/santri/$idJenjang/$kdHalaqoh');
+      var resposne = await http.get(url, headers: {
+        HttpHeaders.authorizationHeader: SpUtil.getString('token')!
+      });
+      print("StatusCode cek asbsensi : ${resposne.statusCode}");
+      if (resposne.statusCode == 200) {
+        // print(resposne.body.isEmpty);
+
+        return resposne.body;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print("Catch Filter Santri Santri : $e");
+    }
+    return null;
+  }
+
+  static Future createAbsensiSantri(
+      {String? kdHalaqoh, String? idJenjang}) async {
+    try {
+      var url = Uri.parse('$baseUrl/absensi/santri/$idJenjang/$kdHalaqoh');
+      var resposne = await http.post(url, headers: {
+        HttpHeaders.authorizationHeader: SpUtil.getString('token')!
+      });
+      print("StatusCode create asbsensi : ${resposne.statusCode}");
+      if (resposne.statusCode == 200) {
+        // print(resposne.body.isEmpty);
+
+        return resposne.body;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print("Catch Filter Santri Santri : $e");
+    }
+    return null;
+  }
+
+  static Future getAbsenSantri({String? idSantri}) async {
+    try {
+      var url = Uri.parse('$baseUrl/absensi/santri/$idSantri');
+      var resposne = await http.get(url, headers: {
+        HttpHeaders.authorizationHeader: SpUtil.getString('token')!
+      });
+      print("StatusCode get asbsensi : ${resposne.statusCode}");
+      if (resposne.statusCode == 200) {
+        print(resposne.body);
+
+        return jsonDecode(resposne.body);
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print("Catch Filter Santri Santri : $e");
+    }
+    return null;
+  }
+
+  static Future<bool?> putAbsenSantri(
+      {int? idAbsensi, String? statusAbsen}) async {
+    print(statusAbsen);
+    try {
+      var url = Uri.parse('$baseUrl/absensi/santri/$idAbsensi');
+      var resposne = await http.put(url, headers: {
+        HttpHeaders.authorizationHeader: SpUtil.getString('token')!
+      }, body: {
+        'id_status_absen': statusAbsen
+      });
+      print("StatusCode put asbsensi : ${resposne.statusCode}");
+      if (resposne.statusCode == 200) {
+        // print(resposne.body.isEmpty);
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print("Catch Filter Santri Santri : $e");
+    }
+    return null;
   }
 }

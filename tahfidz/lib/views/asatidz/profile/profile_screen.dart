@@ -1,27 +1,15 @@
-// ignore_for_file: deprecated_member_use
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/retry.dart';
-import 'package:http/http.dart' as http;
 import 'package:sp_util/sp_util.dart';
-// import 'package:progress_dialog/progress_dialog.dart';
 import 'package:tahfidz/components/constants.dart';
+import 'package:tahfidz/components/custom_text_field.dart';
 import 'package:tahfidz/components/profile_avatar.dart';
-import 'package:tahfidz/controllers/asatid_controller.dart';
-import 'package:tahfidz/controllers/profile_controller.dart';
-import 'package:tahfidz/model/asatidz.dart';
-
-import 'package:tahfidz/services/remote_services.dart';
+import 'package:tahfidz/controllers/auth_controllers.dart';
 
 class ProfileScreen extends StatefulWidget {
-  final String? telepon;
-  final String? token;
-
-  ProfileScreen({this.telepon, this.token});
+  ProfileScreen();
   // const ProfileScreen({Key? key}) : super(key: key);
 
   @override
@@ -29,29 +17,10 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  bool showPassword = false;
-
-  AsatidController asatidController = Get.put(AsatidController());
-  Asatidz? asatidz;
-  // final tahun_lahir = dataTiru.year;
-
-  String? avatar;
-
-  // Gender _gender = Gender.lakiLaki;
-  @override
-  void initState() {
-    super.initState();
-    RemoteServices.getUserInfo(SpUtil.getString('token')!);
-    // asatidz = asatidController.dataAsatid;
-    // getUser();
-    // profileController.getProfil(widget.telepon!);
-  }
-
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    final heightBody = MediaQuery.of(context).size.height;
-    final widthBody = MediaQuery.of(context).size.width;
-
+    AuthController _authController = Get.put(AuthController());
     return Scaffold(
       backgroundColor: Colors.white,
       body: Scaffold(
@@ -70,308 +39,176 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           centerTitle: true,
         ),
-        body: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
+        body: Padding(
+          padding: const EdgeInsets.all(15.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(
-                width: widthBody,
-                height: heightBody / 3.5,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Positioned(
-                      top: 0,
-                      child: Container(
-                        width: widthBody,
-                        height: 145,
-                        // margin: const EdgeInsets.all(100.0),
-                        decoration: BoxDecoration(
-                          color: mainColor,
-                          borderRadius: const BorderRadius.only(
-                            bottomRight: Radius.circular(90.0),
-                            bottomLeft: Radius.circular(90.0),
+              Card(
+                elevation: 5,
+                shape: const CircleBorder(),
+                child: ProfilePicture(
+                  avatar: SpUtil.getString('gambar'),
+                  sizeAvatar: Get.width / 2.5,
+                  widthBtn: 0,
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Card(
+                elevation: 2,
+                child: CustomTextField(
+                  hintText: SpUtil.getString('nama'),
+                  readOnly: true,
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Card(
+                elevation: 2,
+                child: CustomTextField(
+                  hintText: SpUtil.getString('jenis_kelamin') == 'L'
+                      ? 'Laki-Laki'
+                      : 'Perempuan',
+                  readOnly: true,
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Card(
+                elevation: 2,
+                child: CustomTextField(
+                  hintText: SpUtil.getString('alamat'),
+                  readOnly: true,
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Card(
+                elevation: 2,
+                child: CustomTextField(
+                  hintText: SpUtil.getString('nama'),
+                  readOnly: true,
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Card(
+                elevation: 2,
+                child: CustomTextField(
+                  hintText: SpUtil.getString('nama'),
+                  readOnly: true,
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              TextButton(
+                  onPressed: () {
+                    Get.bottomSheet(
+                        Container(
+                          padding: EdgeInsets.all(15),
+                          height: Get.height / 2.5,
+                          color: Colors.white,
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              children: [
+                                CustomTextField(
+                                  controller: _authController.oldPassword,
+                                  labelText: "Password Lama",
+                                  validator: (value) {
+                                    if (value.isEmpty) {
+                                      return 'Isi Password Lama';
+                                    }
+                                  },
+                                ),
+                                CustomTextField(
+                                  controller:
+                                      _authController.passwordController,
+                                  labelText: "Password Baru",
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Isi Password Baru';
+                                    }
+                                  },
+                                ),
+                                CustomTextField(
+                                  controller: _authController.confirmPassword,
+                                  labelText: "Konfirmasi Password",
+                                  validator: (value) {
+                                    if (value.isEmpty) {
+                                      return 'Konfirmasi Password';
+                                    } else if (_authController
+                                            .confirmPassword !=
+                                        _authController.passwordController) {
+                                      return 'Konfirmasi Password tidak sesuai';
+                                    }
+                                  },
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    TextButton(
+                                      onPressed: () {},
+                                      child: Text(
+                                        "Batal",
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                            color: redColor),
+                                      ),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        if (_formKey.currentState!.validate()) {
+                                          print("ok");
+                                        }
+                                      },
+                                      child: Text(
+                                        "Simpan",
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                            color: greenColor),
+                                      ),
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
                           ),
                         ),
-                      ),
+                        isScrollControlled: true);
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: greenSecond,
                     ),
-                    Positioned(
-                      bottom: 50,
-                      child: FutureBuilder(
-                        future: RemoteServices.getUserInfo(widget.token!),
-                        builder:
-                            (BuildContext context, AsyncSnapshot snapshot) {
-                          asatidz = snapshot.data;
-
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            // print(snapshot.data);
-                            return Center(
-                              child: CircularProgressIndicator(
-                                backgroundColor: Colors.yellow,
-                                strokeWidth: 10,
-                                // value: 1,
-                                color: mainColor,
-                              ),
-                            );
-                          } else if (snapshot.hasError) {
-                            return Center(
-                              child: CircularProgressIndicator(
-                                backgroundColor: Colors.yellow,
-                                strokeWidth: 10,
-                                // value: 1,
-                                color: mainColor,
-                              ),
-                            );
-                          }
-                          return Card(
-                            elevation: 5,
-                            shape: const CircleBorder(),
-                            child: ProfilePicture(
-                                sizeAvatar: 150, avatar: asatidz!.gambar
-                                // sizeBtn: 0,
-                                ),
-                          );
-                        },
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                // color: mainColor,
-                width: widthBody,
-                height: heightBody / 1.6,
-                padding: const EdgeInsets.all(20),
-                child: SingleChildScrollView(
-                  // reverse: true,
-                  // physics: const FixedExtentScrollPhysics(),
-
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Column(
-                      children: [
-                        // buildTextField("Nama", asatidz!.nama.toString(), false,
-                        //     false, ProfileController.nama),
-                        buildTextField(
-                            "Telepon",
-                            ProfileController.telepon.text,
-                            false,
-                            false,
-                            ProfileController.telepon),
-                        buildTextField("Alamat", ProfileController.alamat.text,
-                            false, false, ProfileController.alamat),
-                        buildTextField(
-                            "Tanggal Lahir",
-                            ProfileController.tanggalLahir.text,
-                            false,
-                            false,
-                            ProfileController.tanggalLahir),
-                        buildTextField(
-                            "Tempat Lahir",
-                            ProfileController.tempatLahir.text,
-                            false,
-                            false,
-                            ProfileController.tempatLahir),
-                        // buildRadioGender(),
-                        // example(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            OutlineButton(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 50),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                              onPressed: () {
-                                Get.back();
-                              },
-                              child: const Text("Batal",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      letterSpacing: 2.2,
-                                      color: Colors.black)),
-                            ),
-                            ButtonSave()
-                          ],
-                        ),
-                      ],
+                    padding: const EdgeInsets.all(15),
+                    child: Text(
+                      "Edit Password",
+                      style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          color: kFontColor,
+                          fontWeight: FontWeight.w600),
                     ),
-                  ),
-                ),
-              )
+                  ))
             ],
           ),
         ),
       ),
     );
   }
-
-  Widget buildTextField(String labelText, String placeholder,
-      bool isPasswordTextField, bool type, dynamic controller) {
-    const typekey = TextInputType.number;
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 35.0),
-      child: TextField(
-        controller: controller,
-
-        obscureText: isPasswordTextField ? showPassword : false,
-        // ignore: dead_code
-        keyboardType: (type == true) ? typekey : null,
-        decoration: InputDecoration(
-            suffixIcon: isPasswordTextField
-                ? IconButton(
-                    onPressed: () {
-                      setState(() {
-                        showPassword = !showPassword;
-                      });
-                    },
-                    icon: const Icon(
-                      Icons.remove_red_eye,
-                      color: Colors.grey,
-                    ),
-                  )
-                : null,
-            contentPadding: const EdgeInsets.only(bottom: 3),
-            labelText: labelText,
-            labelStyle: GoogleFonts.poppins(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-            hintText: placeholder,
-            hintStyle: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            )),
-      ),
-    );
-  }
-
-  void dataFailed() {
-    Fluttertoast.showToast(
-        msg: "Data gagal diambil!",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0);
-  }
 }
-
-class ButtonSave extends StatelessWidget {
-  const ButtonSave({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(top: 10, bottom: 10),
-      child: ElevatedButton(
-        child: Container(
-          // color: mainColor,
-          width: 120,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.save_as_sharp,
-                size: 26,
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Text(
-                "Simpan !",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-              )
-            ],
-          ),
-        ),
-        style: ElevatedButton.styleFrom(
-          elevation: 4,
-          primary: greenColor,
-          // onPrimary: mainColor,
-          padding: EdgeInsets.all(10),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(20),
-            ),
-          ),
-        ),
-        onPressed: () {
-          // print(imageFile!);
-        },
-      ),
-    );
-  }
-}
-
-
-// FutureBuilder(
-//                         future: RemoteServices.getUserInfo(widget.token!),
-//                         builder:
-//                             (BuildContext context, AsyncSnapshot snapshot) {
-//                           asatidz = snapshot.data;
-
-//                           if (snapshot.connectionState ==
-//                               ConnectionState.waiting) {
-//                             // print(snapshot.data);
-//                             return Center(
-//                               child: CircularProgressIndicator(
-//                                 backgroundColor: Colors.yellow,
-//                                 strokeWidth: 10,
-//                                 // value: 1,
-//                                 color: mainColor,
-//                               ),
-//                             );
-//                           } else if (snapshot.hasError) {
-//                             return Center(
-//                               child: CircularProgressIndicator(
-//                                 backgroundColor: Colors.yellow,
-//                                 strokeWidth: 10,
-//                                 // value: 1,
-//                                 color: mainColor,
-//                               ),
-//                             );
-//                           }
-//                           return Card(
-//                             elevation: 5,
-//                             shape: const CircleBorder(),
-//                             child: ProfilePicture(
-//                                 sizeAvatar: 150, avatar: asatidz!.gambar
-//                                 // sizeBtn: 0,
-//                                 ),
-//                           );
-//                         },
-//                       ),
-
-
-
-
-// Obx(
-//                           () {
-//                             // asatidz = asatidController.dataAsatid;
-
-//                             if (asatidController.isLoading.value) {
-//                               return Center(
-//                                 child: CircularProgressIndicator(
-//                                   backgroundColor: Colors.yellow,
-//                                   strokeWidth: 10,
-//                                   // value: 1,
-//                                   color: mainColor,
-//                                 ),
-//                               );
-//                             }
-//                             return Card(
-//                                 elevation: 5,
-//                                 shape: const CircleBorder(),
-//                                 child: ProfilePicture(
-//                                   avatar: asatidController.dataAsatid.gambar
-//                                       .toString(),
-//                                 ));
-//                           },
-//                         )),
