@@ -35,7 +35,7 @@ class User {
   DateTime? tanggalLahir;
   String? jenisKelamin;
   String? token;
-  String? status;
+  int? status;
   String? keterangan;
   int? idRole;
 

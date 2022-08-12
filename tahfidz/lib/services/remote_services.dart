@@ -17,7 +17,7 @@ import 'package:tahfidz/model/santri.dart';
 import 'package:tahfidz/model/santri_by.dart';
 
 class RemoteServices {
-  static var baseUrl = "http://api.rtq-freelance.my.id/api-v1";
+  static var baseUrl = "https://api.rtqulilalbab.com/api-v1";
 
   static Future<List<Jenjang>> fetchJenjang(filter) async {
     try {

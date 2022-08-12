@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:tahfidz/components/constants.dart';
 import 'package:tahfidz/model/user.dart';
+import 'package:tahfidz/services/remote_services.dart';
 import 'package:tahfidz/views/asatidz/home/home_screen.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,8 +20,8 @@ class AuthController {
     String? telepon,
     String? password,
   }) async {
-    var response = await http
-        .post(Uri.parse("http://api.rtq-freelance.my.id/api-v1/login"),
+    var response =
+        await http.post(Uri.parse('https://api.rtqulilalbab.com/api-v1/login'),
             // .post(Uri.parse("http://192.168.43.108:8000/api-v1/login"),
             // Uri.parse(baseUrl + 'api-v1/login'),
             body: {
@@ -28,7 +29,7 @@ class AuthController {
           'password': password,
           'id_role': idRole.toString(),
         });
-    // print(response.body);
+    print(response.body);
 
     try {
       if (response.statusCode == 200) {
@@ -79,7 +80,7 @@ class AuthController {
   Future<bool?> logOut({String? telepon, String? token}) async {
     var response = await http.post(
       Uri.parse(
-        "http://api.rtq-freelance.my.id/api-v1/logout/${SpUtil.getString('no_hp')}",
+        "https://api.rtqulilalbab.com/api-v1/logout/${SpUtil.getString('no_hp')}",
       ),
       headers: {HttpHeaders.authorizationHeader: SpUtil.getString('token')!},
     );
